@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+click = "*"
+pandas = "*"
+pysolr = "*"
+
+[dev-packages]
+pylint = "*"
+mypy = "*"
+
+[requires]
+python_version = "3.7"
