@@ -15,9 +15,12 @@ You can then use the script to convert a csv into a json document that follows t
 
 This repo includes a docker-compose.yml file that will run local instances of solr and ursus for use in testing this script. To use them (first install [docker](https://docs.docker.com/install/) and [docker compose](https://docs.docker.com/compose/install/)):
 
-```docker-compose up --detach```
+```
+docker-compose up --detach
+docker-compose run web bundle exec rails db:setup
+```
 
-Give it a minute or so for solr to get up and running, then point feed_ursus.py directly at the new solr
+Give it a minute or so for solr to get up and running, then point feed_ursus.py directly at the new solr:
 
 ```pipenv run feed_ursus.py [path/to/your.csv] --solr_url http://localhost:6983/solr/californica```
 
