@@ -21,4 +21,10 @@ Give it a minute or so for solr to get up and running, then point feed_ursus.py 
 
 ```pipenv run feed_ursus.py [path/to/your.csv] --solr_url http://localhost:6983/solr/californica```
 
-When the command finishes running, you can see your new site at http://localhost:6003!
+When the command finishes running, you can see your new site at http://localhost:6003
+
+# Caveats
+
+## IIIF Manifests
+
+When importing a work, the script will always assume that a IIIF manifest exists at https://iiif.library.ucla.edu/[ark]/manifest, where [ark] is the URL-encoded Archival Resource Key of the work. This link should work, as long as a manifest has been pushed to that location by importing the work into [Fester](https://github.com/UCLALibrary/fester) or [Californica](https://github.com/UCLALibrary/californica). If you haven't done one of those, obviously, the link will fail and the image won't be visible, but metadata will import and be visible. A manifest can then be created and pushed to the expected location without re-running feed_ursus.py.
