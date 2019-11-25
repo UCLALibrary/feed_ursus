@@ -13,7 +13,7 @@ You can then use the script to convert a csv into a json document that follows t
 
 ```pipenv run feed_ursus.py [path/to/your.csv]```
 
-This repo includes a docker-compose.yml file that will run local instances of solr and ursus for use in testing this script. To use them (assuming you have installed docker and docker compose):
+This repo includes a docker-compose.yml file that will run local instances of solr and ursus for use in testing this script. To use them (first install [docker](https://docs.docker.com/install/) and [docker compose](https://docs.docker.com/compose/install/)):
 
 ```docker-compose up --detach```
 
