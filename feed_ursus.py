@@ -61,9 +61,9 @@ def map_record(record) -> Dict:
   if record.get('IIIF Access URL'):
     new_record['thumbnail_url_ss'] = record['IIIF Access URL'] + '/full/!200,200/0/default.jpg'
 
-  new_record['discover_access_group_ssim'] = ["public"]
-  new_record['read_access_group_ssim'] = ["public"]
-  new_record['download_access_person_ssim'] = ["frodo@example.com"]
+  new_record['discover_access_group_ssim'] = ['public']
+  new_record['read_access_group_ssim'] = ['public']
+  new_record['download_access_person_ssim'] = ['public']
   new_record['iiif_manifest_url_ssi'] = f'https://iiif.library.ucla.edu/{urllib.parse.quote_plus(record["Item ARK"])}/manifest'
 
   # facet fields

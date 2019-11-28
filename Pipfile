@@ -11,6 +11,7 @@ pysolr = "*"
 [dev-packages]
 pylint = "*"
 mypy = "*"
+pytest = "*"
 
 [requires]
 python_version = "3.7"
