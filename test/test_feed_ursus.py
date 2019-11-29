@@ -1,3 +1,5 @@
+"""Tests for feed_ursus.py"""
+
 import pytest  # type: ignore
 
 import feed_ursus
@@ -5,10 +7,12 @@ import feed_ursus
 
 @pytest.mark.xfail()
 def test_load_csv():
+    """test for function load_csv"""
     raise NotImplementedError
 
 
 def test_map_field_name(monkeypatch):
+    """maps a CSV column header to a Solr field name"""
     monkeypatch.setitem(
         feed_ursus.mapper.FIELDS, "Test DLCS Field", "test_ursus_field_tesim"
     )
@@ -16,7 +20,10 @@ def test_map_field_name(monkeypatch):
 
 
 class TestMapFieldValue:
+    """function map_field_value"""
+
     def test_parses_array(self, monkeypatch):
+        """parses value to an array of strings separated by '|~|'"""
         monkeypatch.setitem(
             feed_ursus.mapper.FIELDS, "Test DLCS Field", "test_ursus_field_tesim"
         )
@@ -27,6 +34,7 @@ class TestMapFieldValue:
         ]
 
     def test_calls_function(self, monkeypatch):
+        """If mapper defines a function map_[SOLR_NAME], calls that function."""
         monkeypatch.setitem(
             feed_ursus.mapper.FIELDS, "Test DLCS Field", "test_ursus_field_tesim"
         )
@@ -43,7 +51,10 @@ class TestMapFieldValue:
 
 
 class TestMapRecord:
+    """function map_record"""
+
     def test_maps_record(self, monkeypatch):
+        """maps the record for Ursus"""
         monkeypatch.setitem(
             feed_ursus.mapper.FIELDS, "Test DLCS Field", "test_ursus_field_tesim"
         )
@@ -55,11 +66,13 @@ class TestMapRecord:
         assert result["test_ursus_field_tesim"] == ["lasigd", "asdfg"]
 
     def test_sets_id(self):
+        """sets 'id' equal to 'Item ARK'/'ark_ssi'"""
         assert (
             feed_ursus.map_record({"Item ARK": "ark:/123/abc"})["id"] == "ark:/123/abc"
         )
 
     def test_sets_thumbnail(self):
+        """sets a thumbnail URL"""
         result = feed_ursus.map_record(
             {
                 "Item ARK": "ark:/123/abc",
@@ -72,12 +85,14 @@ class TestMapRecord:
         )
 
     def test_sets_access(self):
+        """sets permissive values for blacklight-access-control"""
         result = feed_ursus.map_record({"Item ARK": "ark:/123/abc"})
         assert result["discover_access_group_ssim"] == ["public"]
         assert result["read_access_group_ssim"] == ["public"]
         assert result["download_access_person_ssim"] == ["public"]
 
     def test_sets_iiif_manifest_url(self):
+        """sets a IIIF manifest URL based on the ARK"""
         result = feed_ursus.map_record({"Item ARK": "ark:/123/abc"})
         assert (
             result["iiif_manifest_url_ssi"]
@@ -97,6 +112,7 @@ class TestMapRecord:
         ],
     )
     def test_sets_facet_fields(self, column_name, facet_field_name):
+        """Copies *_tesim to *_sim fields for facets"""
         value = "value aksjg"
         result = feed_ursus.map_record({"Item ARK": "ark:/123/abc", column_name: value})
         assert result[facet_field_name] == [value]

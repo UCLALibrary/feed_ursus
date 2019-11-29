@@ -1,4 +1,17 @@
+# -*- coding: utf-8 -*-
+"""Mapping logic for UCLA CSV->Blacklight conversion."""
+
+
 def map_ark_ssi(ark):
+    """Mapping for "Item ARK". Ensures it is a single-valued field.
+
+    Args:
+        ark: Input CSV cell.
+
+    Returns:
+        A string containing the ARK. Not an array, since this is not a multi-
+        valued field.
+    """
     return ark
 
 

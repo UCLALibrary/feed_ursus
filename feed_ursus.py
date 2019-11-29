@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""Convert UCLA Library CSV files for Ursus, our Blacklight installation."""
+
 import collections
 import urllib.parse
 import pprint
@@ -19,6 +22,12 @@ import mapper
     help="URL of a solr instance, e.g. http://localhost:6983/solr/californica",
 )
 def load_csv(filename: str, solr_url: typing.Optional[str]):
+    """Load data from a csv.
+
+    Args:
+        filename: A CSV file.
+        solr_url: URL of a solr instance.
+    """
     solr_client = Solr(solr_url, always_commit=True) if solr_url else None
 
     df = pandas.read_csv(filename)
@@ -46,10 +55,34 @@ def load_csv(filename: str, solr_url: typing.Optional[str]):
 
 
 def map_field_name(field_name: str) -> str:
+    """Map a CSV column name to an Ursus solr field.
+
+    Args:
+        field_name: The name of the field in input CSV.
+
+    Returns:
+        The field name as expected by Ursus.
+    """
     return mapper.FIELDS[field_name]
 
 
-def map_field_value(field_name: str, value: str) -> typing.List[str]:
+def map_field_value(field_name: str, value: str) -> typing.Any:
+    """Map value from a CSV cell to an object that will be passed to solr.
+
+    If the 'mapper' module defines a function map_[SOLR_FIELD_NAME]
+    (e.g. map_ark_ssi), then that function is called with a single argument,
+    [value]. Otherwise value is assumed to be a list of terms separated by the
+    MARC code '|~|'.
+
+    Args:
+        field_name: The field name as it appears in CSV.
+        value: the value from the CSV cell.
+
+    Returns:
+        A value to be submitted to solr. By default this is a list of strings,
+        however map_[SOLR_FIELD_NAME] functions can return other types.
+
+    """
     function_name = "map_" + map_field_name(field_name)
     if hasattr(mapper, function_name):
         return getattr(mapper, function_name)(value)
@@ -59,7 +92,16 @@ def map_field_value(field_name: str, value: str) -> typing.List[str]:
         return value.split("|~|")
 
 
-def map_record(record) -> typing.Dict[str, typing.Any]:
+def map_record(record: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+    """Maps a metadata record from CSV to Ursus Solr.
+
+    Args:
+        record: A mapping representing the CSV record.
+
+    Returns:
+        A mapping representing the record to submit to Solr.
+
+    """
     new_record: typing.Dict[str, typing.Any] = collections.defaultdict(list)
     new_record.update(
         {
