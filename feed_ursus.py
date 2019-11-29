@@ -4,7 +4,6 @@
 
 import collections
 import urllib.parse
-import pprint
 import typing
 
 import click
@@ -30,15 +29,15 @@ def load_csv(filename: str, solr_url: typing.Optional[str]):
     """
     solr_client = Solr(solr_url, always_commit=True) if solr_url else None
 
-    df = pandas.read_csv(filename)
-    df = df.where(df.notnull(), None)
+    data_frame = pandas.read_csv(filename)
+    data_frame = data_frame.where(data_frame.notnull(), None)
 
     first_row = True
 
     if not solr_client:
         print("[", end="")
 
-    for _, row in df.iterrows():
+    for _, row in data_frame.iterrows():
         if first_row:
             first_row = False
         elif not solr_client:
@@ -86,10 +85,9 @@ def map_field_value(field_name: str, value: str) -> typing.Any:
     function_name = "map_" + map_field_name(field_name)
     if hasattr(mapper, function_name):
         return getattr(mapper, function_name)(value)
-    elif value is None:
+    if value is None:
         return []
-    else:
-        return value.split("|~|")
+    return value.split("|~|")
 
 
 def map_record(record: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:

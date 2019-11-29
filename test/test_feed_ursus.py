@@ -1,4 +1,5 @@
 """Tests for feed_ursus.py"""
+# pylint: disable=no-self-use
 
 import pytest  # type: ignore
 
@@ -24,6 +25,7 @@ class TestMapFieldValue:
 
     def test_parses_array(self, monkeypatch):
         """parses value to an array of strings separated by '|~|'"""
+
         monkeypatch.setitem(
             feed_ursus.mapper.FIELDS, "Test DLCS Field", "test_ursus_field_tesim"
         )
@@ -35,6 +37,7 @@ class TestMapFieldValue:
 
     def test_calls_function(self, monkeypatch):
         """If mapper defines a function map_[SOLR_NAME], calls that function."""
+        # pylint: disable=no-member
         monkeypatch.setitem(
             feed_ursus.mapper.FIELDS, "Test DLCS Field", "test_ursus_field_tesim"
         )
@@ -45,9 +48,7 @@ class TestMapFieldValue:
             raising=False,
         )
         feed_ursus.map_field_value("Test DLCS Field", "one|~|two|~|three")
-        assert (
-            feed_ursus.mapper.map_test_ursus_field_tesim("abc") == "lkghsdh"
-        )  # pylint: disable=no-member
+        assert feed_ursus.mapper.map_test_ursus_field_tesim("abc") == "lkghsdh"
 
 
 class TestMapRecord:
