@@ -9,8 +9,10 @@ pandas = "*"
 pysolr = "*"
 
 [dev-packages]
-pylint = "*"
 mypy = "*"
+pytest = "*"
+pytest-mypy = "*"
+pytest-pylint = "*"
 
 [requires]
 python_version = "3.7"
