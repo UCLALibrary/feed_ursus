@@ -13,6 +13,10 @@ from pysolr import Solr  # type: ignore
 import mapper
 
 
+DLCSRecord = typing.Dict[str, typing.Any]
+UrsusRecord = typing.Dict[str, typing.Any]
+
+
 @click.command()
 @click.argument("filename")
 @click.option(
@@ -31,19 +35,22 @@ def load_csv(filename: str, solr_url: typing.Optional[str]):
 
     data_frame = pandas.read_csv(filename)
     data_frame = data_frame.where(data_frame.notnull(), None)
-
-    first_row = True
+    collection_rows = data_frame[data_frame["Object Type"] == "Collection"]
+    collection_names = {
+        row["Item ARK"]: row["Title"] for _, row in collection_rows.iterrows()
+    }
 
     if not solr_client:
         print("[", end="")
 
+    first_row = True
     for _, row in data_frame.iterrows():
         if first_row:
             first_row = False
         elif not solr_client:
             print(", ")
 
-        mapped_record = map_record(row)
+        mapped_record = map_record(row, collection_names)
         if solr_client:
             solr_client.add([mapped_record])
         else:
@@ -90,7 +97,10 @@ def map_field_value(field_name: str, value: str) -> typing.Any:
     return value.split("|~|")
 
 
-def map_record(record: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.Any]:
+# pylint: disable=bad-continuation
+def map_record(
+    record: DLCSRecord, collection_names: typing.Dict[str, str]
+) -> UrsusRecord:
     """Maps a metadata record from CSV to Ursus Solr.
 
     Args:
@@ -122,6 +132,11 @@ def map_record(record: typing.Dict[str, typing.Any]) -> typing.Dict[str, typing.
     new_record[
         "iiif_manifest_url_ssi"
     ] = f'https://iiif.library.ucla.edu/{urllib.parse.quote_plus(record["Item ARK"])}/manifest'
+
+    # collection name
+    if "Parent ARK" in record and record["Parent ARK"] in collection_names:
+        dlcs_collection_name = collection_names[record["Parent ARK"]]
+        new_record["dlcs_collection_name_tesim"] = [dlcs_collection_name]
 
     # facet fields
     new_record["genre_sim"].extend(new_record["genre_tesim"])
