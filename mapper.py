@@ -12,7 +12,10 @@ def map_ark_ssi(ark):
         A string containing the ARK. Not an array, since this is not a multi-
         valued field.
     """
-    return ark
+    ark_prefix = 'ark:/'
+    if ark.startswith(ark_prefix, 0):
+        return ark
+    return ark_prefix + ark
 
 
 FIELDS = {
