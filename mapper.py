@@ -14,7 +14,10 @@ def ark(row: typing.Mapping[str, str]) -> str:
     Returns:
         The item ARK.
     """
-    return row["Item ARK"]
+    ark_prefix = "ark:/"
+    if row["Item ARK"].startswith(ark_prefix, 0):
+        return row["Item ARK"]
+    return ark_prefix + row["Item ARK"]
 
 
 def iiif_manifest_url(row: typing.Mapping[str, str]) -> str:
@@ -29,7 +32,7 @@ def iiif_manifest_url(row: typing.Mapping[str, str]) -> str:
     Returns:
         IIIF Manifest URL.
     """
-    iiif_identifier = urllib.parse.quote_plus(row["Item ARK"])
+    iiif_identifier = urllib.parse.quote_plus(ark(row))
     return f"https://iiif.library.ucla.edu/{iiif_identifier}/manifest"
 
 
