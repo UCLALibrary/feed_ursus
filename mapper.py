@@ -124,6 +124,7 @@ FIELD_MAPPING: MappingDict = {
     "location_tesim": "Coverage.geographic",
     "longitude_tesim": "Description.longitude",
     "lyricist_tesim": "Name.lyricist",
+    "masthead_parameters_ssi": "Masthead",
     "medium_tesim": "Format.medium",
     "named_subject_tesim": [
         "Name.subject",
