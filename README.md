@@ -27,10 +27,28 @@ docker-compose run web bundle exec rails db:setup
 Give it a minute or so for solr to get up and running, then point feed_ursus.py directly at the new solr:
 
 ```
-pipenv run feed_ursus.py [path/to/your.csv] --solr_url http://localhost:6983/solr/californica
+pipenv run ./feed_ursus.py [path/to/your.csv] --solr_url http://localhost:6983/solr/californica
 ```
 
 When the command finishes running, you can see your new site at http://localhost:6003
+
+# Running the test suite
+
+First, install the dev dependencies and enter the virtualenv:
+```
+pipenv install --dev
+pipenv shell
+```
+
+Then you can simply run:
+```
+pytest
+```
+
+This will run:
+- [pylint](https://www.pylint.org/), a linter, via [pytest-pylint](https://github.com/carsongee/pytest-pylint)
+- [mypy](http://mypy-lang.org/), a static type checker, via [pytest-mypy](https://github.com/dbader/pytest-mypy/)
+- the test suite, written using [pytest](https://docs.pytest.org/en/latest/)
 
 # Caveats
 
