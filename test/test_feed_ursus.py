@@ -12,24 +12,17 @@ def test_load_csv():
     raise NotImplementedError
 
 
-def test_map_field_name(monkeypatch):
-    """maps a CSV column header to a Solr field name"""
-    monkeypatch.setitem(
-        feed_ursus.mapper.FIELDS, "Test DLCS Field", "test_ursus_field_tesim"
-    )
-    assert feed_ursus.map_field_name("Test DLCS Field") == "test_ursus_field_tesim"
-
-
 class TestMapFieldValue:
-    """function map_field_value"""
+    """tests for function map_field_value"""
 
     def test_parses_array(self, monkeypatch):
         """parses value to an array of strings separated by '|~|'"""
 
         monkeypatch.setitem(
-            feed_ursus.mapper.FIELDS, "Test DLCS Field", "test_ursus_field_tesim"
+            feed_ursus.mapper.FIELD_MAPPING, "test_ursus_field_tesim", "Test DLCS Field"
         )
-        assert feed_ursus.map_field_value("Test DLCS Field", "one|~|two|~|three") == [
+        input_record = {"Test DLCS Field": "one|~|two|~|three"}
+        assert feed_ursus.map_field_value(input_record, "test_ursus_field_tesim") == [
             "one",
             "two",
             "three",
@@ -39,16 +32,12 @@ class TestMapFieldValue:
         """If mapper defines a function map_[SOLR_NAME], calls that function."""
         # pylint: disable=no-member
         monkeypatch.setitem(
-            feed_ursus.mapper.FIELDS, "Test DLCS Field", "test_ursus_field_tesim"
-        )
-        monkeypatch.setattr(
-            feed_ursus.mapper,
-            "map_test_ursus_field_tesim",
+            feed_ursus.mapper.FIELD_MAPPING,
+            "test_ursus_field_tesim",
             lambda x: "lkghsdh",
-            raising=False,
         )
-        feed_ursus.map_field_value("Test DLCS Field", "one|~|two|~|three")
-        assert feed_ursus.mapper.map_test_ursus_field_tesim("abc") == "lkghsdh"
+        result = feed_ursus.map_field_value({}, "test_ursus_field_tesim")
+        assert result == "lkghsdh"
 
 
 class TestMapRecord:
@@ -58,16 +47,31 @@ class TestMapRecord:
 
     def test_maps_record(self, monkeypatch):
         """maps the record for Ursus"""
-        monkeypatch.setitem(
-            feed_ursus.mapper.FIELDS, "Test DLCS Field", "test_ursus_field_tesim"
+        monkeypatch.setattr(
+            feed_ursus.mapper,
+            "FIELD_MAPPING",
+            {
+                "id": lambda r: r["Item ARK"],
+                "test_ursus_field_tesim": "Test DLCS Field",
+            },
         )
         result = feed_ursus.map_record(
             {"Item ARK": "ark:/123/abc", "Test DLCS Field": "lasigd|~|asdfg"},
             self.COLLECTION_NAMES,
         )
-        assert result["id"] == "ark:/123/abc"
-        assert result["ark_ssi"] == "ark:/123/abc"
-        assert result["test_ursus_field_tesim"] == ["lasigd", "asdfg"]
+
+        assert result == {
+            "genre_sim": None,
+            "human_readable_language_sim": None,
+            "human_readable_resource_type_sim": None,
+            "id": "ark:/123/abc",
+            "location_sim": None,
+            "member_of_collections_ssim": None,
+            "named_subject_sim": None,
+            "subject_sim": None,
+            "test_ursus_field_tesim": ["lasigd", "asdfg"],
+            "year_isim": None,
+        }
 
     def test_sets_id(self):
         """sets 'id' equal to 'Item ARK'/'ark_ssi'"""

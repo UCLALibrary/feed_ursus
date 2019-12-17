@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 """Convert UCLA Library CSV files for Ursus, our Blacklight installation."""
 
-import collections
-import urllib.parse
 import typing
 
 import click
@@ -60,47 +58,63 @@ def load_csv(filename: str, solr_url: typing.Optional[str]):
         print("]")
 
 
-def map_field_name(field_name: str) -> str:
-    """Map a CSV column name to an Ursus solr field.
-
-    Args:
-        field_name: The name of the field in input CSV.
-
-    Returns:
-        The field name as expected by Ursus.
-    """
-    return mapper.FIELDS[field_name]
-
-
-def map_field_value(field_name: str, value: str) -> typing.Any:
+def map_field_value(row: DLCSRecord, field_name: str) -> typing.Any:
     """Map value from a CSV cell to an object that will be passed to solr.
 
-    If the 'mapper' module defines a function map_[SOLR_FIELD_NAME]
-    (e.g. map_ark_ssi), then that function is called with a single argument,
-    [value]. Otherwise value is assumed to be a list of terms separated by the
-    MARC code '|~|'.
+    Mapping logic is defined by the FIELD_MAPPING dict, defined in mappery.py.
+    Keys of FIELD_MAPPING are output field names as used in Ursus. Values can
+    vary, and the behavior of map_field_value() will depend on that value.
+
+    If FIELD_MAPPING[field_name] is a string, then it will be interpreted as
+    the title of a CSV column to map. The value of that column will be split
+    using the MARC delimiter '|~|', and a list of one or more strings will be
+    returned (or an empty list, if the CSV column was empty).
+
+    If FIELD_MAPPING[field_name] is a list of strings, then they will all be
+    interpreted as CSV column names to be mapped. Each column will be processed
+    as above, and the resulting lists will be concatenated.
+
+    Finally, FIELD_MAPPING[field_name] can be a function, most likely defined
+    in mappery.py. If this is the case, that function will be called with the
+    input row (as a dict) as its only argument. That function should return a
+    type that matches the type of the solr field. This is the only way to
+    map to types other than lists of strings.
 
     Args:
-        field_name: The field name as it appears in CSV.
-        value: the value from the CSV cell.
+        row: An input row containing a DLCS record.
+        field_name: The name of the Ursus/Solr field to map.
 
     Returns:
         A value to be submitted to solr. By default this is a list of strings,
         however map_[SOLR_FIELD_NAME] functions can return other types.
-
     """
-    function_name = "map_" + map_field_name(field_name)
-    if hasattr(mapper, function_name):
-        return getattr(mapper, function_name)(value)
-    if value is None:
-        return []
-    return value.split("|~|")
+    mapping: mapper.MappigDictValue = mapper.FIELD_MAPPING[field_name]
+
+    if mapping is None:
+        return None
+
+    if callable(mapping):
+        return mapping(row)
+
+    if isinstance(mapping, str):
+        mapping = [mapping]
+
+    if not isinstance(mapping, typing.Collection):
+        raise TypeError(
+            f"FIELD_MAPPING[field_name] must be iterable, unless it is None, Callable, or a string."
+        )
+
+    output: typing.List[str] = []
+    for csv_field in mapping:
+        input_value = row.get(csv_field)
+        if input_value:
+            output.extend(input_value.split("|~|"))
+
+    return [value for value in output if value]  # remove untruthy values like ''
 
 
 # pylint: disable=bad-continuation
-def map_record(
-    record: DLCSRecord, collection_names: typing.Dict[str, str]
-) -> UrsusRecord:
+def map_record(row: DLCSRecord, collection_names: typing.Dict[str, str]) -> UrsusRecord:
     """Maps a metadata record from CSV to Ursus Solr.
 
     Args:
@@ -110,49 +124,27 @@ def map_record(
         A mapping representing the record to submit to Solr.
 
     """
-    new_record: typing.Dict[str, typing.Any] = collections.defaultdict(list)
-    new_record.update(
-        {
-            map_field_name(key): map_field_value(key, value)
-            for key, value in record.items()
-            if key in mapper.FIELDS.keys() and value
-        }
-    )
-
-    new_record["id"] = new_record["ark_ssi"]
-
-    if record.get("IIIF Access URL"):
-        new_record["thumbnail_url_ss"] = (
-            record["IIIF Access URL"] + "/full/!200,200/0/default.jpg"
-        )
-
-    new_record["discover_access_group_ssim"] = ["public"]
-    new_record["read_access_group_ssim"] = ["public"]
-    new_record["download_access_person_ssim"] = ["public"]
-    new_record[
-        "iiif_manifest_url_ssi"
-    ] = f'https://iiif.library.ucla.edu/{urllib.parse.quote_plus(record["Item ARK"])}/manifest'
+    record: UrsusRecord = {
+        field_name: map_field_value(row, field_name)
+        for field_name in mapper.FIELD_MAPPING
+    }
 
     # collection name
-    if "Parent ARK" in record and record["Parent ARK"] in collection_names:
-        dlcs_collection_name = collection_names[record["Parent ARK"]]
-        new_record["dlcs_collection_name_tesim"] = [dlcs_collection_name]
+    if "Parent ARK" in row and row["Parent ARK"] in collection_names:
+        dlcs_collection_name = collection_names[row["Parent ARK"]]
+        record["dlcs_collection_name_tesim"] = [dlcs_collection_name]
 
     # facet fields
-    new_record["genre_sim"].extend(new_record["genre_tesim"])
-    new_record["human_readable_language_sim"].extend(new_record["language_tesim"])
-    new_record["human_readable_resource_type_sim"].extend(
-        new_record["resource_type_tesim"]
-    )
-    new_record["location_sim"].extend(new_record["location_tesim"])
-    new_record["member_of_collections_ssim"].extend(
-        new_record["dlcs_collection_name_tesim"]
-    )
-    new_record["named_subject_sim"].extend(new_record["named_subject_tesim"])
-    new_record["subject_sim"].extend(new_record["subject_tesim"])
-    new_record["year_isim"].extend(new_record["year_tesim"])
+    record["genre_sim"] = record.get("genre_tesim")
+    record["human_readable_language_sim"] = record.get("language_tesim")
+    record["human_readable_resource_type_sim"] = record.get("resource_type_tesim")
+    record["location_sim"] = record.get("location_tesim")
+    record["member_of_collections_ssim"] = record.get("dlcs_collection_name_tesim")
+    record["named_subject_sim"] = record.get("named_subject_tesim")
+    record["subject_sim"] = record.get("subject_tesim")
+    record["year_isim"] = record.get("year_tesim")
 
-    return new_record
+    return record
 
 
 if __name__ == "__main__":
