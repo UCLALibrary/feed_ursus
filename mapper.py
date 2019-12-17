@@ -42,6 +42,7 @@ FIELDS = {
     "Illustrations note": "illustrations_note_tesim",
     "Item ARK": "ark_ssi",
     "Language": "language_tesim",
+    "Masthead": "masthead_parameters_ssi",
     "Name.architect": "architect_tesim",
     "Name.composer": "composer_tesim",
     "Name.lyricist": "lyricist_tesim",
