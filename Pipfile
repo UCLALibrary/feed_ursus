@@ -7,6 +7,7 @@ name = "pypi"
 click = "*"
 pandas = "*"
 pysolr = "*"
+pyyaml = "*"
 
 [dev-packages]
 mypy = "*"

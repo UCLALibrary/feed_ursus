@@ -1,0 +1,23 @@
+terms:
+  - id: http://id.loc.gov/vocabulary/resourceTypes/car
+    term: cartographic
+  - id: http://id.loc.gov/vocabulary/resourceTypes/col
+    term: collection
+  - id: http://id.loc.gov/vocabulary/resourceTypes/mix
+    term: mixed material
+  - id: http://id.loc.gov/vocabulary/resourceTypes/mov
+    term: moving image
+  - id: http://id.loc.gov/vocabulary/resourceTypes/not
+    term: notated music
+  - id: http://id.loc.gov/vocabulary/resourceTypes/aud
+    term: sound recording
+  - id: http://id.loc.gov/vocabulary/resourceTypes/aum
+    term: sound recording-musical
+  - id: http://id.loc.gov/vocabulary/resourceTypes/aun
+    term: sound recording-nonmusical
+  - id: http://id.loc.gov/vocabulary/resourceTypes/img
+    term: still image
+  - id: http://id.loc.gov/vocabulary/resourceTypes/txt
+    term: text
+  - id: http://id.loc.gov/vocabulary/resourceTypes/art
+    term: three dimensional object
