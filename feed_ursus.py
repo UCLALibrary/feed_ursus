@@ -2,7 +2,10 @@
 # -*- coding: utf-8 -*-
 """Convert UCLA Library CSV files for Ursus, our Blacklight installation."""
 
+import os
+import re
 import typing
+import yaml
 
 import click
 import pandas  # type: ignore
@@ -10,6 +13,8 @@ from pysolr import Solr  # type: ignore
 
 import mapper
 
+
+# Custom Types
 
 DLCSRecord = typing.Dict[str, typing.Any]
 UrsusRecord = typing.Dict[str, typing.Any]
@@ -29,6 +34,8 @@ def load_csv(filename: str, solr_url: typing.Optional[str]):
         filename: A CSV file.
         solr_url: URL of a solr instance.
     """
+    config = {"controlled_fields": load_field_config("./fields")}
+
     solr_client = Solr(solr_url, always_commit=True) if solr_url else None
 
     data_frame = pandas.read_csv(filename)
@@ -48,7 +55,7 @@ def load_csv(filename: str, solr_url: typing.Optional[str]):
         elif not solr_client:
             print(", ")
 
-        mapped_record = map_record(row, collection_names)
+        mapped_record = map_record(row, collection_names, config=config)
         if solr_client:
             solr_client.add([mapped_record])
         else:
@@ -58,7 +65,31 @@ def load_csv(filename: str, solr_url: typing.Optional[str]):
         print("]")
 
 
-def map_field_value(row: DLCSRecord, field_name: str) -> typing.Any:
+def load_field_config(base_path: str = "./fields") -> typing.Dict:
+    """Load configuration of controlled metadata fields.
+
+    Args:
+        base_path: Path to a directory containing [field].yml files.
+
+    Returns:
+        A dict with field configuration.
+    """
+    field_config: typing.Dict = {}
+    for path, _, files in os.walk(base_path):
+        for file_name in files:
+            field_name = os.path.splitext(file_name)[0]
+            with open(os.path.join(path, file_name), "r") as stream:
+                field_config[field_name] = yaml.safe_load(stream)
+            field_config[field_name]["terms"] = {
+                t["id"]: t["term"] for t in field_config[field_name]["terms"]
+            }
+    return field_config
+
+
+# pylint: disable=bad-continuation
+def map_field_value(
+    row: DLCSRecord, field_name: str, config: typing.Dict
+) -> typing.Any:
     """Map value from a CSV cell to an object that will be passed to solr.
 
     Mapping logic is defined by the FIELD_MAPPING dict, defined in mappery.py.
@@ -110,11 +141,18 @@ def map_field_value(row: DLCSRecord, field_name: str) -> typing.Any:
         if input_value:
             output.extend(input_value.split("|~|"))
 
+    field_name_without_suffix = re.sub(r"_\w+$", "", field_name)
+    if field_name_without_suffix in config.get("controlled_fields", {}):
+        terms = config["controlled_fields"][field_name_without_suffix]["terms"]
+        output = [terms.get(value, value) for value in output]
+
     return [value for value in output if value]  # remove untruthy values like ''
 
 
 # pylint: disable=bad-continuation
-def map_record(row: DLCSRecord, collection_names: typing.Dict[str, str]) -> UrsusRecord:
+def map_record(
+    row: DLCSRecord, collection_names: typing.Dict[str, str], config: typing.Dict
+) -> UrsusRecord:
     """Maps a metadata record from CSV to Ursus Solr.
 
     Args:
@@ -125,7 +163,7 @@ def map_record(row: DLCSRecord, collection_names: typing.Dict[str, str]) -> Ursu
 
     """
     record: UrsusRecord = {
-        field_name: map_field_value(row, field_name)
+        field_name: map_field_value(row, field_name, config=config)
         for field_name in mapper.FIELD_MAPPING
     }
 

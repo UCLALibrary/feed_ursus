@@ -1,0 +1,12 @@
+# Note that UCLA is not authorized to use rightsstatements.org values.
+# This file overrides the default URI values.
+terms:
+- id: http://vocabs.library.ucla.edu/rights/copyrighted
+  term: "copyrighted"
+  active: true
+- id: http://vocabs.library.ucla.edu/rights/unknown
+  term: "unknown"
+  active: true
+- id: http://vocabs.library.ucla.edu/rights/publicDomain
+  term: "public domain"
+  active: true

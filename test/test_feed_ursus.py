@@ -22,7 +22,10 @@ class TestMapFieldValue:
             feed_ursus.mapper.FIELD_MAPPING, "test_ursus_field_tesim", "Test DLCS Field"
         )
         input_record = {"Test DLCS Field": "one|~|two|~|three"}
-        assert feed_ursus.map_field_value(input_record, "test_ursus_field_tesim") == [
+        result = feed_ursus.map_field_value(
+            input_record, "test_ursus_field_tesim", config={}
+        )
+        assert result == [
             "one",
             "two",
             "three",
@@ -36,7 +39,7 @@ class TestMapFieldValue:
             "test_ursus_field_tesim",
             lambda x: "lkghsdh",
         )
-        result = feed_ursus.map_field_value({}, "test_ursus_field_tesim")
+        result = feed_ursus.map_field_value({}, "test_ursus_field_tesim", config={})
         assert result == "lkghsdh"
 
 
@@ -58,6 +61,7 @@ class TestMapRecord:
         result = feed_ursus.map_record(
             {"Item ARK": "ark:/123/abc", "Test DLCS Field": "lasigd|~|asdfg"},
             self.COLLECTION_NAMES,
+            config={},
         )
 
         assert result == {
@@ -76,7 +80,7 @@ class TestMapRecord:
     def test_sets_id(self):
         """sets 'id' equal to 'Item ARK'/'ark_ssi'"""
         result = feed_ursus.map_record(
-            {"Item ARK": "ark:/123/abc"}, self.COLLECTION_NAMES,
+            {"Item ARK": "ark:/123/abc"}, self.COLLECTION_NAMES, config={}
         )
         assert result["id"] == "ark:/123/abc"
 
@@ -88,6 +92,7 @@ class TestMapRecord:
                 "IIIF Access URL": "https://test.iiif.server/url",
             },
             self.COLLECTION_NAMES,
+            config={},
         )
         assert (
             result["thumbnail_url_ss"]
@@ -97,7 +102,7 @@ class TestMapRecord:
     def test_sets_access(self):
         """sets permissive values for blacklight-access-control"""
         result = feed_ursus.map_record(
-            {"Item ARK": "ark:/123/abc"}, self.COLLECTION_NAMES,
+            {"Item ARK": "ark:/123/abc"}, self.COLLECTION_NAMES, config={}
         )
         assert result["discover_access_group_ssim"] == ["public"]
         assert result["read_access_group_ssim"] == ["public"]
@@ -106,7 +111,7 @@ class TestMapRecord:
     def test_sets_iiif_manifest_url(self):
         """sets a IIIF manifest URL based on the ARK"""
         result = feed_ursus.map_record(
-            {"Item ARK": "ark:/123/abc"}, self.COLLECTION_NAMES,
+            {"Item ARK": "ark:/123/abc"}, self.COLLECTION_NAMES, config={}
         )
         assert (
             result["iiif_manifest_url_ssi"]
@@ -119,6 +124,7 @@ class TestMapRecord:
         result = feed_ursus.map_record(
             {"Item ARK": "ark:/123/abc", "Parent ARK": "ark:/123/collection"},
             self.COLLECTION_NAMES,
+            config={},
         )
         assert result["dlcs_collection_name_tesim"] == ["Test Collection KGSL"]
         assert result["member_of_collections_ssim"] == ["Test Collection KGSL"]
@@ -129,7 +135,6 @@ class TestMapRecord:
             ("Coverage.geographic", "location_sim"),
             ("Language", "human_readable_language_sim"),
             ("Name.subject", "named_subject_sim"),
-            ("Relation.isPartOf", "member_of_collections_ssim"),
             ("Subject", "subject_sim"),
             ("Type.genre", "genre_sim"),
             ("Type.typeOfResource", "human_readable_resource_type_sim"),
@@ -139,6 +144,8 @@ class TestMapRecord:
         """Copies *_tesim to *_sim fields for facets"""
         value = "value aksjg"
         result = feed_ursus.map_record(
-            {"Item ARK": "ark:/123/abc", column_name: value}, self.COLLECTION_NAMES,
+            {"Item ARK": "ark:/123/abc", column_name: value},
+            self.COLLECTION_NAMES,
+            config={},
         )
         assert result[facet_field_name] == [value]
