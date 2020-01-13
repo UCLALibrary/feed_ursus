@@ -68,8 +68,12 @@ def thumbnail_url(row: typing.Mapping[str, str]) -> typing.Optional[str]:
     Returns:
         The thumbnail URL.
     """
+    if row.get("Thumbnail URL"):
+        return row["Thumbnail URL"]
+
     if row.get("IIIF Access URL"):
         return row["IIIF Access URL"] + "/full/!200,200/0/default.jpg"
+
     return None
 
 
