@@ -34,15 +34,19 @@ def load_csv(filename: str, solr_url: typing.Optional[str]):
         filename: A CSV file.
         solr_url: URL of a solr instance.
     """
-    config = {"controlled_fields": load_field_config("./fields")}
 
     solr_client = Solr(solr_url, always_commit=True) if solr_url else None
 
     data_frame = pandas.read_csv(filename)
     data_frame = data_frame.where(data_frame.notnull(), None)
     collection_rows = data_frame[data_frame["Object Type"] == "Collection"]
-    collection_names = {
-        row["Item ARK"]: row["Title"] for _, row in collection_rows.iterrows()
+
+    config = {
+        "collection_names": {
+            row["Item ARK"]: row["Title"] for _, row in collection_rows.iterrows()
+        },
+        "controlled_fields": load_field_config("./fields"),
+        "data_frame": data_frame,
     }
 
     if not solr_client:
@@ -55,7 +59,7 @@ def load_csv(filename: str, solr_url: typing.Optional[str]):
         elif not solr_client:
             print(", ")
 
-        mapped_record = map_record(row, collection_names, config=config)
+        mapped_record = map_record(row, config=config)
         if solr_client:
             solr_client.add([mapped_record])
         else:
@@ -150,9 +154,7 @@ def map_field_value(
 
 
 # pylint: disable=bad-continuation
-def map_record(
-    row: DLCSRecord, collection_names: typing.Dict[str, str], config: typing.Dict
-) -> UrsusRecord:
+def map_record(row: DLCSRecord, config: typing.Dict) -> UrsusRecord:
     """Maps a metadata record from CSV to Ursus Solr.
 
     Args:
@@ -168,8 +170,8 @@ def map_record(
     }
 
     # collection name
-    if "Parent ARK" in row and row["Parent ARK"] in collection_names:
-        dlcs_collection_name = collection_names[row["Parent ARK"]]
+    if "Parent ARK" in row and row["Parent ARK"] in config["collection_names"]:
+        dlcs_collection_name = config["collection_names"][row["Parent ARK"]]
         record["dlcs_collection_name_tesim"] = [dlcs_collection_name]
 
     # facet fields
