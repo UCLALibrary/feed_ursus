@@ -2,6 +2,7 @@
 # pylint: disable=no-self-use
 
 import pytest  # type: ignore
+from pandas import DataFrame  # type: ignore
 
 import feed_ursus
 
@@ -72,6 +73,7 @@ class TestMapRecord:
             "member_of_collections_ssim": None,
             "named_subject_sim": None,
             "subject_sim": None,
+            "thumbnail_url_ss": None,
             "test_ursus_field_tesim": ["lasigd", "asdfg"],
             "year_isim": None,
         }
@@ -144,3 +146,65 @@ class TestMapRecord:
             {"Item ARK": "ark:/123/abc", column_name: value}, config=self.CONFIG,
         )
         assert result[facet_field_name] == [value]
+
+
+class TestThumbnailFromChild:
+    """Tests for feed_ursus.thumbnail_from_child."""
+
+    def test_uses_title(self):
+        """Returns the thumbnail from child row 'f. 001r'"""
+
+        data = DataFrame(
+            data={
+                "Item ARK": ["ark:/work/1", "ark:/child/2", "ark:/child/1"],
+                "Parent ARK": ["ark:/collection/1", "ark:/work/1", "ark:/work/1"],
+                "Thumbnail URL": [None, "/thumb2.jpg", "/thumb1.jpg"],
+                "Title": [None, "f. 001v", "f. 001r"],
+            }
+        )
+        record = {"ark_ssi": "ark:/work/1"}
+        result = feed_ursus.thumbnail_from_child(record, config={"data_frame": data})
+        assert result == "/thumb1.jpg"
+
+    def test_uses_mapper(self):
+        """Uses the mapper to generate a thumbnail from access_copy, if necessary"""
+
+        data = DataFrame(
+            data={
+                "Item ARK": ["ark:/work/1", "ark:/child/1"],
+                "Parent ARK": ["ark:/collection/1", "ark:/work/1"],
+                "IIIF Access URL": [None, "http://iiif.url/123"],
+                "Title": [None, "f. 001r"],
+            }
+        )
+        record = {"ark_ssi": "ark:/work/1"}
+        result = feed_ursus.thumbnail_from_child(record, config={"data_frame": data})
+        assert result == "http://iiif.url/123/full/!200,200/0/default.jpg"
+
+    def test_defaults_to_first(self):
+        """Returns the thumbnail from first child row if it can't find 'f. 001r'"""
+        data = DataFrame(
+            data={
+                "Item ARK": ["ark:/work/1", "ark:/child/2", "ark:/child/1"],
+                "Parent ARK": ["ark:/collection/1", "ark:/work/1", "ark:/work/1"],
+                "Thumbnail URL": [None, "/thumb2.jpg", "/thumb1.jpg"],
+                "Title": [None, "f. 001v", "f. 002r"],
+            }
+        )
+        record = {"ark_ssi": "ark:/work/1"}
+        result = feed_ursus.thumbnail_from_child(record, config={"data_frame": data})
+        assert result == "/thumb2.jpg"
+
+    def test_with_no_children_returns_none(self):
+        """If there are no child rows, return None"""
+        data = DataFrame(
+            data={
+                "Item ARK": ["ark:/work/1"],
+                "Parent ARK": ["ark:/collection/1"],
+                "Thumbnail URL": [None],
+                "Title": [None],
+            }
+        )
+        record = {"ark_ssi": "ark:/work/1"}
+        result = feed_ursus.thumbnail_from_child(record, config={"data_frame": data})
+        assert result is None

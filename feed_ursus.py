@@ -169,6 +169,11 @@ def map_record(row: DLCSRecord, config: typing.Dict) -> UrsusRecord:
         for field_name in mapper.FIELD_MAPPING
     }
 
+    # thumbnail
+    record["thumbnail_url_ss"] = record.get("thumbnail_url_ss") or thumbnail_from_child(
+        record, config=config
+    )
+
     # collection name
     if "Parent ARK" in row and row["Parent ARK"] in config["collection_names"]:
         dlcs_collection_name = config["collection_names"][row["Parent ARK"]]
@@ -185,6 +190,41 @@ def map_record(row: DLCSRecord, config: typing.Dict) -> UrsusRecord:
     record["year_isim"] = record.get("year_tesim")
 
     return record
+
+
+def thumbnail_from_child(
+    record: UrsusRecord, config: typing.Dict
+) -> typing.Optional[str]:
+    """Picks a thumbnail by looking for child rows in the CSV.
+
+    Tries the following strategies in order, returning the first that succeeds:
+    - Thumbnail of a child record titled "f. 001r"
+    - Thumbnail of the first child record
+    - None
+
+    Args:
+        record: A mapping representing the CSV record.
+        config: A config object.
+
+    Returns:
+        A string containing the thumbnail URL
+    """
+
+    if "data_frame" not in config:
+        return None
+
+    ark = record["ark_ssi"]
+    data = config["data_frame"]
+    children = data[data["Parent ARK"] == ark]
+    representative = children[children["Title"] == "f. 001r"]
+    if representative.shape[0] == 0:
+        representative = children
+
+    for _, row in representative.iterrows():
+        thumb = mapper.thumbnail_url(row)
+        if thumb:
+            return thumb
+    return None
 
 
 if __name__ == "__main__":
