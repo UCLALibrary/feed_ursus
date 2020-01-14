@@ -34,15 +34,19 @@ def load_csv(filename: str, solr_url: typing.Optional[str]):
         filename: A CSV file.
         solr_url: URL of a solr instance.
     """
-    config = {"controlled_fields": load_field_config("./fields")}
 
     solr_client = Solr(solr_url, always_commit=True) if solr_url else None
 
     data_frame = pandas.read_csv(filename)
     data_frame = data_frame.where(data_frame.notnull(), None)
     collection_rows = data_frame[data_frame["Object Type"] == "Collection"]
-    collection_names = {
-        row["Item ARK"]: row["Title"] for _, row in collection_rows.iterrows()
+
+    config = {
+        "collection_names": {
+            row["Item ARK"]: row["Title"] for _, row in collection_rows.iterrows()
+        },
+        "controlled_fields": load_field_config("./fields"),
+        "data_frame": data_frame,
     }
 
     if not solr_client:
@@ -50,12 +54,15 @@ def load_csv(filename: str, solr_url: typing.Optional[str]):
 
     first_row = True
     for _, row in data_frame.iterrows():
+        if row["Object Type"] in ("ChildWork", "Page"):
+            continue
+
         if first_row:
             first_row = False
         elif not solr_client:
             print(", ")
 
-        mapped_record = map_record(row, collection_names, config=config)
+        mapped_record = map_record(row, config=config)
         if solr_client:
             solr_client.add([mapped_record])
         else:
@@ -150,9 +157,7 @@ def map_field_value(
 
 
 # pylint: disable=bad-continuation
-def map_record(
-    row: DLCSRecord, collection_names: typing.Dict[str, str], config: typing.Dict
-) -> UrsusRecord:
+def map_record(row: DLCSRecord, config: typing.Dict) -> UrsusRecord:
     """Maps a metadata record from CSV to Ursus Solr.
 
     Args:
@@ -167,9 +172,14 @@ def map_record(
         for field_name in mapper.FIELD_MAPPING
     }
 
+    # thumbnail
+    record["thumbnail_url_ss"] = record.get("thumbnail_url_ss") or thumbnail_from_child(
+        record, config=config
+    )
+
     # collection name
-    if "Parent ARK" in row and row["Parent ARK"] in collection_names:
-        dlcs_collection_name = collection_names[row["Parent ARK"]]
+    if "Parent ARK" in row and row["Parent ARK"] in config["collection_names"]:
+        dlcs_collection_name = config["collection_names"][row["Parent ARK"]]
         record["dlcs_collection_name_tesim"] = [dlcs_collection_name]
 
     # facet fields
@@ -183,6 +193,41 @@ def map_record(
     record["year_isim"] = record.get("year_tesim")
 
     return record
+
+
+def thumbnail_from_child(
+    record: UrsusRecord, config: typing.Dict
+) -> typing.Optional[str]:
+    """Picks a thumbnail by looking for child rows in the CSV.
+
+    Tries the following strategies in order, returning the first that succeeds:
+    - Thumbnail of a child record titled "f. 001r"
+    - Thumbnail of the first child record
+    - None
+
+    Args:
+        record: A mapping representing the CSV record.
+        config: A config object.
+
+    Returns:
+        A string containing the thumbnail URL
+    """
+
+    if "data_frame" not in config:
+        return None
+
+    ark = record["ark_ssi"]
+    data = config["data_frame"]
+    children = data[data["Parent ARK"] == ark]
+    representative = children[children["Title"] == "f. 001r"]
+    if representative.shape[0] == 0:
+        representative = children
+
+    for _, row in representative.iterrows():
+        thumb = mapper.thumbnail_url(row)
+        if thumb:
+            return thumb
+    return None
 
 
 if __name__ == "__main__":
