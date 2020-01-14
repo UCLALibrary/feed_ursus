@@ -54,6 +54,9 @@ def load_csv(filename: str, solr_url: typing.Optional[str]):
 
     first_row = True
     for _, row in data_frame.iterrows():
+        if row["Object Type"] in ("ChildWork", "Page"):
+            continue
+
         if first_row:
             first_row = False
         elif not solr_client:
