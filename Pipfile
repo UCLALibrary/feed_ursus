@@ -8,6 +8,7 @@ click = "*"
 pandas = "*"
 pysolr = "*"
 pyyaml = "*"
+requests = "*"
 
 [dev-packages]
 mypy = "*"
