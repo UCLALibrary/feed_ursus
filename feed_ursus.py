@@ -10,6 +10,7 @@ import yaml
 import click
 import pandas  # type: ignore
 from pysolr import Solr  # type: ignore
+import requests
 
 import mapper
 
@@ -173,8 +174,10 @@ def map_record(row: DLCSRecord, config: typing.Dict) -> UrsusRecord:
     }
 
     # thumbnail
-    record["thumbnail_url_ss"] = record.get("thumbnail_url_ss") or thumbnail_from_child(
-        record, config=config
+    record["thumbnail_url_ss"] = (
+        record.get("thumbnail_url_ss")
+        or thumbnail_from_child(record, config=config)
+        or thumbnail_from_manifest(record)
     )
 
     # collection name
@@ -228,6 +231,37 @@ def thumbnail_from_child(
         if thumb:
             return thumb
     return None
+
+
+def thumbnail_from_manifest(record: UrsusRecord) -> typing.Optional[str]:
+    """Picks a thumbnail downloading the IIIF manifest.
+
+    Args:
+        record: A mapping representing the CSV record.
+
+    Returns:
+        A string containing the thumbnail URL
+    """
+
+    try:
+        manifest_url = record.get("iiif_manifest_url_ssi")
+        if not isinstance(manifest_url, str):
+            return None
+        response = requests.get(manifest_url)
+        manifest = response.json()
+
+        canvases = {
+            c["label"]: c["images"][0]["resource"]["service"]["@id"]
+            for seq in manifest["sequences"]
+            for c in seq["canvases"]
+        }
+
+        return (
+            canvases.get("f. 001r") or list(canvases.values())[0]
+        ) + "/full/!200,200/0/default.jpg"
+
+    except:  # pylint: disable=bare-except
+        return None
 
 
 if __name__ == "__main__":

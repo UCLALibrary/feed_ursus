@@ -1,10 +1,12 @@
 """Tests for feed_ursus.py"""
 # pylint: disable=no-self-use
 
+
 import pytest  # type: ignore
 from pandas import DataFrame  # type: ignore
 
 import feed_ursus
+import test.fixtures as fixtures  # pylint: disable=wrong-import-order
 
 
 @pytest.mark.xfail()
@@ -207,4 +209,68 @@ class TestThumbnailFromChild:
         )
         record = {"ark_ssi": "ark:/work/1"}
         result = feed_ursus.thumbnail_from_child(record, config={"data_frame": data})
+        assert result is None
+
+
+class TestThumbnailFromManifest:
+    """Function thumbnail_from_manifest"""
+
+    record = {"iiif_manifest_url_ssi": "http://test.manifest/url/"}
+
+    def test_picks_folio_1r(self, monkeypatch):
+        "uses the page titled 'f. 001r', if found"
+        monkeypatch.setattr(
+            feed_ursus.requests, "get", lambda x: fixtures.GOOD_MANIFEST
+        )
+
+        result = feed_ursus.thumbnail_from_manifest(self.record)
+        assert (
+            result
+            == "https://iiif.sinaimanuscripts.library.ucla.edu/iiif/2/ark%3A%2F21198%2Fz14b44n8%2Fzw07hs0c/full/!200,200/0/default.jpg"  # pylint: disable=line-too-long
+        )
+
+    def test_picks_first_page(self, monkeypatch):
+        "uses the first image if 'f. 001r' is not found"
+        monkeypatch.setattr(
+            feed_ursus.requests, "get", lambda x: fixtures.MANIFEST_WITHOUT_F001R
+        )
+
+        result = feed_ursus.thumbnail_from_manifest(self.record)
+        assert (
+            result
+            == "https://iiif.sinaimanuscripts.library.ucla.edu/iiif/2/ark%3A%2F21198%2Fz14b44n8%2Fhm957748/full/!200,200/0/default.jpg"  # pylint: disable=line-too-long
+        )
+
+    def test_request_fails(self, monkeypatch):
+        "returns None if HTTP request fails"
+
+        monkeypatch.setattr(
+            feed_ursus.requests, "get", lambda x: fixtures.MockResponse(None, 404)
+        )
+
+        result = feed_ursus.thumbnail_from_manifest(self.record)
+        assert result is None
+
+    def test_manifest_without_images(self, monkeypatch):
+        "returns None if manifest contains no images"
+
+        monkeypatch.setattr(
+            feed_ursus.requests, "get", lambda x: fixtures.MANIFEST_WITHOUT_IMAGES
+        )
+
+        result = feed_ursus.thumbnail_from_manifest(self.record)
+        assert result is None
+
+    def test_bad_data(self, monkeypatch):
+        "returns None if manifest isn't parsable"
+
+        monkeypatch.setattr(feed_ursus.requests, "get", lambda x: fixtures.BAD_MANIFEST)
+
+        result = feed_ursus.thumbnail_from_manifest(self.record)
+        assert result is None
+
+    def test_no_manifest_url(self):
+        "returns None if the record doesn't include field 'iiif_m'"
+
+        result = feed_ursus.thumbnail_from_manifest({})
         assert result is None
