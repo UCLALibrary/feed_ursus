@@ -31,12 +31,9 @@ services:
 
   solr:
     build: .
-    volumes:
-      - solr_data:/opt/solr/server/solr/mycores/californica/data
     ports:
       - "127.0.0.1:6983:8983"
 
 
 volumes:
-  solr_data:
   mysql_data:
