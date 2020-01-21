@@ -13,6 +13,7 @@ from pysolr import Solr  # type: ignore
 import requests
 
 import mapper
+import year_parser
 
 
 # Custom Types
@@ -193,7 +194,7 @@ def map_record(row: DLCSRecord, config: typing.Dict) -> UrsusRecord:
     record["member_of_collections_ssim"] = record.get("dlcs_collection_name_tesim")
     record["named_subject_sim"] = record.get("named_subject_tesim")
     record["subject_sim"] = record.get("subject_tesim")
-    record["year_isim"] = record.get("year_tesim")
+    record["year_isim"] = year_parser.integer_years(record.get("normalized_date_tesim"))
 
     return record
 
