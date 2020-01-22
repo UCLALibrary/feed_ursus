@@ -196,6 +196,15 @@ def map_record(row: DLCSRecord, config: typing.Dict) -> UrsusRecord:
     record["subject_sim"] = record.get("subject_tesim")
     record["year_isim"] = year_parser.integer_years(record.get("normalized_date_tesim"))
 
+    # sort fields
+    titles = record.get("title_tesim")
+    if isinstance(titles, typing.Sequence) and len(titles) >= 1:
+        record["sort_title_ssort"] = titles[0]
+
+    years = record.get("year_isim")
+    if isinstance(years, typing.Sequence) and len(years) >= 1:
+        record["sort_year_isi"] = min(years)
+
     return record
 
 
