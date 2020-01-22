@@ -77,7 +77,7 @@ class TestMapRecord:
             "subject_sim": None,
             "thumbnail_url_ss": None,
             "test_ursus_field_tesim": ["lasigd", "asdfg"],
-            "year_isim": None,
+            "year_isim": [],
         }
 
     def test_sets_id(self):
