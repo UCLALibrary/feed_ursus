@@ -107,10 +107,12 @@ FIELD_MAPPING: MappingDict = {
     "dlcs_collection_name_tesim": "Relation.isPartOf",
     "extent_tesim": "Format.extent",
     "featured_image_ssi": ["Featured image"],
+    "features_tesim": "Features",
     "foliation_ssi": ["Foliation note", "Foliation"],
     "funding_note_tesim": "Description.fundingNote",
     "genre_tesim": ["Type.genre", "Genre"],
     "has_model_ssim": object_type,
+    "human_readable_language_tesim": "Language",
     "human_readable_rights_statement_tesim": "Rights.copyrightStatus",
     "iiif_manifest_url_ssi": iiif_manifest_url,
     "iiif_range_ssi": "IIIF Range",
@@ -118,7 +120,6 @@ FIELD_MAPPING: MappingDict = {
     "iiif_viewing_hint_ssi": "viewingHint",
     "illuminator_tesim": ["Illuminator", "Name.illuminator"],
     "illustrations_note_tesim": ["Illustrations note", "Description.illustrations"],
-    "language_tesim": "Language",
     "latitude_tesim": "Description.latitude",
     "local_identifier_ssm": [
         "Alternate Identifier.local",
@@ -164,6 +165,7 @@ FIELD_MAPPING: MappingDict = {
     ],
     "rights_statement_tesim": "Rights.copyrightStatus",
     "scribe_tesim": "Name.scribe",
+    "script_tesim": "Script",
     "sequence_isi": "Item Sequence",
     "services_contact_ssm": "Rights.servicesContact",
     "subject_tesim": "Subject",
@@ -179,7 +181,8 @@ FIELD_MAPPING: MappingDict = {
     "title_tesim": "Title",
     "toc_tesim": ["Table of Contents", "Description.tableOfContents"],
     "uniform_title_tesim": "AltTitle.uniform",
-    # "visibility_ssi": "Visibility",  # Don't import until Callisto supports!
+    "visibility_ssi": "Visibility",
+    "writing_system_tesim": "Writing system",
     # Set permissive values for blacklight_access_control
     "discover_access_group_ssim": lambda x: ["public"],
     "read_access_group_ssim": lambda x: ["public"],
