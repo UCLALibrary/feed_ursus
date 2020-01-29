@@ -187,13 +187,18 @@ def map_record(row: DLCSRecord, config: typing.Dict) -> UrsusRecord:
         record["dlcs_collection_name_tesim"] = [dlcs_collection_name]
 
     # facet fields
+    record["features_sim"] = record.get("features_tesim")
     record["genre_sim"] = record.get("genre_tesim")
-    record["human_readable_language_sim"] = record.get("language_tesim")
+    record["human_readable_language_sim"] = record.get("human_readable_language_tesim")
     record["human_readable_resource_type_sim"] = record.get("resource_type_tesim")
     record["location_sim"] = record.get("location_tesim")
     record["member_of_collections_ssim"] = record.get("dlcs_collection_name_tesim")
     record["named_subject_sim"] = record.get("named_subject_tesim")
+    record["place_of_origin_sim"] = record.get("place_of_origin_tesim")
+    record["script_sim"] = record.get("script_tesim")
     record["subject_sim"] = record.get("subject_tesim")
+    record["support_sim"] = record.get("support_tesim")
+    record["writing_system_sim"] = record.get("writing_system_sim")
     record["year_isim"] = year_parser.integer_years(record.get("normalized_date_tesim"))
 
     # sort fields

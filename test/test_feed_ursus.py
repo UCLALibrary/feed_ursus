@@ -67,6 +67,7 @@ class TestMapRecord:
         )
 
         assert result == {
+            "features_sim": None,
             "genre_sim": None,
             "human_readable_language_sim": None,
             "human_readable_resource_type_sim": None,
@@ -74,9 +75,13 @@ class TestMapRecord:
             "location_sim": None,
             "member_of_collections_ssim": None,
             "named_subject_sim": None,
+            "place_of_origin_sim": None,
+            "script_sim": None,
             "subject_sim": None,
-            "thumbnail_url_ss": None,
+            "support_sim": None,
             "test_ursus_field_tesim": ["lasigd", "asdfg"],
+            "thumbnail_url_ss": None,
+            "writing_system_sim": None,
             "year_isim": [],
         }
 
