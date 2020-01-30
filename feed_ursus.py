@@ -150,12 +150,18 @@ def map_field_value(
         if input_value:
             output.extend(input_value.split("|~|"))
 
-    field_name_without_suffix = re.sub(r"_\w+$", "", field_name)
-    if field_name_without_suffix in config.get("controlled_fields", {}):
-        terms = config["controlled_fields"][field_name_without_suffix]["terms"]
+    bare_field_name = get_bare_field_name(field_name)
+    if bare_field_name in config.get("controlled_fields", {}):
+        terms = config["controlled_fields"][bare_field_name]["terms"]
         output = [terms.get(value, value) for value in output]
 
     return [value for value in output if value]  # remove untruthy values like ''
+
+
+def get_bare_field_name(field_name: str) -> str:
+    """Strips the solr suffix and initial 'human_readable_' from a field name."""
+
+    return re.sub(r"_[^_]+$", "", field_name).replace("human_readable_", "")
 
 
 # pylint: disable=bad-continuation

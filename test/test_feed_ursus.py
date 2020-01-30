@@ -46,6 +46,15 @@ class TestMapFieldValue:
         assert result == "lkghsdh"
 
 
+def test_get_bare_field_name():
+    """function get_bare_field_name"""
+
+    assert (
+        feed_ursus.get_bare_field_name("human_readable_test_field_name_tesim")
+        == "test_field_name"
+    )
+
+
 class TestMapRecord:
     """function map_record"""
 
