@@ -204,7 +204,7 @@ def map_record(row: DLCSRecord, config: typing.Dict) -> UrsusRecord:
     record["script_sim"] = record.get("script_tesim")
     record["subject_sim"] = record.get("subject_tesim")
     record["support_sim"] = record.get("support_tesim")
-    record["writing_system_sim"] = record.get("writing_system_sim")
+    record["writing_system_sim"] = record.get("writing_system_tesim")
     record["year_isim"] = year_parser.integer_years(record.get("normalized_date_tesim"))
 
     # sort fields
