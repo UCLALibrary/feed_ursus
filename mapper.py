@@ -59,6 +59,28 @@ def object_type(row: typing.Mapping[str, str]) -> str:
     return row["Object Type"]
 
 
+def preservation_copy(row: typing.Mapping[str, str]) -> typing.Optional[str]:
+    """A path to the original digital asset in the 'Masters/' netapp mount.
+
+    If the File Name starts with "Masters/", it will be used as is. Otherwise,
+    it will be prepended with "Masters/dlmasters/", in order to match the
+    content of DLCS exports.
+
+    Args:
+        row: An input CSV record.
+
+    Returns:
+        String representing a path, or None.
+    """
+
+    file_path = row.get("File Name")
+    if not file_path:
+        return None
+    if not str(file_path).startswith("Masters/"):
+        return "Masters/" + file_path
+    return file_path
+
+
 def thumbnail_url(row: typing.Mapping[str, str]) -> typing.Optional[str]:
     """A thumbnail URL.
 
@@ -150,7 +172,7 @@ FIELD_MAPPING: MappingDict = {
         "Personal or Corporate Name.photographer",
     ],
     "place_of_origin_tesim": ["Place of origin", "Publisher.placeOfOrigin"],
-    "preservation_copy_ssi": "File Name",
+    "preservation_copy_ssi": preservation_copy,
     "provenance_tesim": ["Provenance", "Description.history"],
     "publisher_tesim": "Publisher.publisherName",
     "repository_tesim": [
