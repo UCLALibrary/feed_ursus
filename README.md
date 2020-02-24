@@ -42,7 +42,7 @@ pipenv shell
 
 Then you can simply run:
 ```
-pytest
+pytest --mypy --pylint
 ```
 
 This will run:
