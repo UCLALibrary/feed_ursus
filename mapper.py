@@ -99,6 +99,65 @@ def thumbnail_url(row: typing.Mapping[str, str]) -> typing.Optional[str]:
     return None
 
 
+def visibility(row: typing.Mapping[str, str]) -> typing.Optional[str]:
+    """Object visibility.
+
+    A single-value field that must contain one of the allowed values.
+
+    This field is not required. If leave the value blank, it will default to
+    `public` visibility. If you omit the column, this will trigger a more
+    complicated procedure to determine the visibility of DLCS imports (see
+    below).
+
+    Allowed values:
+    - `public` - All users can view the record
+    - `authenticated` - Logged in users can view the record
+    - `sinai` - For Sinai Library items. All californica users can vsiew the
+       metadata, but not the files. Hidden from the public-facing site as of
+       Nov 2019.
+    - `discovery` - A synonym of `sinai`. Not recommended for new data.
+    - `private` - Only admin users or users who have been granted special
+       permission may view the record
+
+    If there is no column with the header "Visibility", then the importer will
+    look for the field "Item Status". Visibility will be made `public` if the
+    status is "Completed" or
+    "Completed with minimal metadata", or (by default) if the column cannot be
+    found or is blank for a row.
+
+    "Item Status" is *only* used if "Visiblity" is completely omitted from the
+    csv. If the column is included but left blank, then a default of `public`
+    will be applied to a row regardless of any "Item Status" value.
+
+    Args:
+        row: An input CSV record.
+
+    Returns:
+        The visibility value.
+    """
+
+    visibility_mapping = {
+        "authenticated": "authenticated",
+        "discovery": "sinai",
+        "open": "open",
+        "private": "restricted",
+        "public": "open",
+        "registered": "authenticated",
+        "restricted": "restricted",
+        "sinai": "sinai",
+        "ucla": "authenticated",
+    }
+
+    if "Visibility" in row:
+        value_from_csv = row["Visibility"].strip().lower()
+        return visibility_mapping[value_from_csv]
+
+    if row["Item Status"] in ["Completed", "Completed with minimal metadata"]:
+        return "open"
+
+    return "restricted"
+
+
 MappigDictValue = typing.Union[None, typing.Callable, str, typing.List[str]]
 MappingDict = typing.Dict[str, MappigDictValue]
 
