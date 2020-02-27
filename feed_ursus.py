@@ -210,7 +210,7 @@ def map_record(row: DLCSRecord, config: typing.Dict) -> UrsusRecord:
     # sort fields
     titles = record.get("title_tesim")
     if isinstance(titles, typing.Sequence) and len(titles) >= 1:
-        record["sort_title_ssort"] = titles[0]
+        record["title_alpha_numeric_ssort"] = titles[0]
 
     years = record.get("year_isim")
     if isinstance(years, typing.Sequence) and len(years) >= 1:
