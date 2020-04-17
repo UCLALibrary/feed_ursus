@@ -57,6 +57,22 @@ def test_range():
         1943,
     ]
 
+    #Parses YYY/YYYY into a range of years.
+
+    assert year_parser.integer_years(["990/1000"]) == [
+        990,
+        991,
+        992,
+        993,
+        994,
+        995,
+        996,
+        997,
+        998,
+        999,
+        1000
+    ]
+
 
 def test_range_with_months():
     """Months can be included in range elements, but are ingored."""
