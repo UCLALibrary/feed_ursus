@@ -7,7 +7,7 @@ import typing
 
 
 RANGE = re.compile(r"(.*)/(.*)")
-YEAR = re.compile(r"\b(\d\d\d\d)\b")
+YEAR = re.compile(r"\b(\d\d\d\d|\d\d\d)\b")
 
 
 def integer_years(dates: typing.Any) -> typing.List[int]:
