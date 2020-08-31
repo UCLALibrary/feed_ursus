@@ -92,7 +92,22 @@ class TestMapRecord:
             "thumbnail_url_ss": None,
             "writing_system_sim": None,
             "year_isim": [],
-        }
+            "architect_sim": None,
+            "author_sim": None,
+            "calligrapher_sim": None,
+            "commentator_sim": None,
+            "composer_sim": None,
+            "editor_sim": None,
+            "engraver_sim": None,
+            "illuminator_sim": None,
+            "illustrator_sim": None,
+            "lyricist_sim": None,
+            "printmaker_sim": None,
+            "rubricator_sim": None,
+            "scribe_sim": None,
+            "uniform_title_sim": None,
+            "translator_sim": None
+            }
 
     def test_sets_id(self):
         """sets 'id' equal to 'Item ARK'/'ark_ssi'"""
