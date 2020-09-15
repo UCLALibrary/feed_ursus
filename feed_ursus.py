@@ -219,7 +219,10 @@ def map_record(row: DLCSRecord, config: typing.Dict) -> UrsusRecord:
     record["printmaker_sim"] = record.get("printmaker_tesim")
     record["rubricator_sim"] = record.get("rubricator_tesim")
     record["scribe_sim"] = record.get("scribe_tesim")
+    record["script_sim"] = record.get("script_tesim")
+    record["support_sim"] = record.get("support_tesim")
     record["uniform_title_sim"] = record.get("uniform_title_tesim")
+    record["writing_system_sim"] = record.get("writing_system_tesim")
     record["translator_sim"] = record.get("translator_tesim")
 
     # sort fields
