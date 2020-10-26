@@ -106,7 +106,15 @@ class TestMapRecord:
             "rubricator_sim": None,
             "scribe_sim": None,
             "uniform_title_sim": None,
-            "translator_sim": None
+            "translator_sim": None,
+            "associated_name_sim": None,
+            "delivery": None,
+            "descriptive_title": None,
+            "form_sim": None,
+            "hand_note": None,
+            "image_count": None,
+            "references": None,
+            "shelfmark_sim": None
             }
 
     def test_sets_id(self):
