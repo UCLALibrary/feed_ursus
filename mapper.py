@@ -263,7 +263,7 @@ FIELD_MAPPING: MappingDict = {
     "summary_tesim": ["Summary", "Description.abstract"],
     "support_tesim": "Support",
     "tagline_ssi": ["Tagline"],
-    "thumbnail_url_ss": thumbnail_url,
+    "thumbnail_url_ssi": thumbnail_url,
     "title_tesim": "Title",
     "toc_tesim": ["Table of Contents", "Description.tableOfContents"],
     "uniform_title_tesim": "AltTitle.uniform",

@@ -89,7 +89,7 @@ class TestMapRecord:
             "subject_sim": None,
             "support_sim": None,
             "test_ursus_field_tesim": ["lasigd", "asdfg"],
-            "thumbnail_url_ss": None,
+            "thumbnail_url_ssi": None,
             "writing_system_sim": None,
             "year_isim": [],
             "architect_sim": None,
@@ -134,7 +134,7 @@ class TestMapRecord:
             config=self.CONFIG,
         )
         assert (
-            result["thumbnail_url_ss"]
+            result["thumbnail_url_ssi"]
             == "https://test.iiif.server/url/full/!200,200/0/default.jpg"
         )
 

@@ -181,8 +181,8 @@ def map_record(row: DLCSRecord, config: typing.Dict) -> UrsusRecord:
     }
 
     # THUMBNAIL
-    record["thumbnail_url_ss"] = (
-        record.get("thumbnail_url_ss")
+    record["thumbnail_url_ssi"] = (
+        record.get("thumbnail_url_ssi")
         or thumbnail_from_child(record, config=config)
         or thumbnail_from_manifest(record)
     )
