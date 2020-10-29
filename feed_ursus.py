@@ -148,7 +148,10 @@ def map_field_value(
     for csv_field in mapping:
         input_value = row.get(csv_field)
         if input_value:
-            output.extend(input_value.split("|~|"))
+            if isinstance(input_value, str):
+                output.extend(input_value.split("|~|"))
+            else:
+                output.append(input_value)
 
     bare_field_name = get_bare_field_name(field_name)
     if bare_field_name in config.get("controlled_fields", {}):
@@ -221,7 +224,7 @@ def map_record(row: DLCSRecord, config: typing.Dict) -> UrsusRecord:
     record["associated_name_sim"] = record.get("associated_name_tesim")
 
     # Physical Description
-    record["form_sim"] = record.get("form_tesim")
+    record["form_sim"] = record.get("form_ssi")
     record["support_sim"] = record.get("support_tesim")
 
     # Keywords
