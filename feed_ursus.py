@@ -148,7 +148,10 @@ def map_field_value(
     for csv_field in mapping:
         input_value = row.get(csv_field)
         if input_value:
-            output.extend(input_value.split("|~|"))
+            if isinstance(input_value, str):
+                output.extend(input_value.split("|~|"))
+            else:
+                output.append(input_value)
 
     bare_field_name = get_bare_field_name(field_name)
     if bare_field_name in config.get("controlled_fields", {}):
@@ -180,52 +183,65 @@ def map_record(row: DLCSRecord, config: typing.Dict) -> UrsusRecord:
         for field_name in mapper.FIELD_MAPPING
     }
 
-    # thumbnail
+    # THUMBNAIL
     record["thumbnail_url_ss"] = (
         record.get("thumbnail_url_ss")
         or thumbnail_from_child(record, config=config)
         or thumbnail_from_manifest(record)
     )
 
-    # collection name
+    # COLLECTION NAME
     if "Parent ARK" in row and row["Parent ARK"] in config["collection_names"]:
         dlcs_collection_name = config["collection_names"][row["Parent ARK"]]
         record["dlcs_collection_name_tesim"] = [dlcs_collection_name]
 
-    # facet fields
-    record["features_sim"] = record.get("features_tesim")
-    record["genre_sim"] = record.get("genre_tesim")
-    record["human_readable_language_sim"] = record.get("human_readable_language_tesim")
-    record["human_readable_resource_type_sim"] = record.get("resource_type_tesim")
-    record["location_sim"] = record.get("location_tesim")
-    record["member_of_collections_ssim"] = record.get("dlcs_collection_name_tesim")
-    record["named_subject_sim"] = record.get("named_subject_tesim")
-    record["place_of_origin_sim"] = record.get("place_of_origin_tesim")
-    record["script_sim"] = record.get("script_tesim")
-    record["subject_sim"] = record.get("subject_tesim")
-    record["support_sim"] = record.get("support_tesim")
-    record["writing_system_sim"] = record.get("writing_system_tesim")
-    record["year_isim"] = year_parser.integer_years(record.get("normalized_date_tesim"))
+    # FACET FIELDS
+    # Item Overview
+    record["uniform_title_sim"] = record.get("uniform_title_tesim")
     record["architect_sim"] = record.get("architect_tesim")
     record["author_sim"] = record.get("author_tesim")
-    record["calligrapher_sim"] = record.get("calligrapher_tesim")
-    record["commentator_sim"] = record.get("commentator_tesim")
-    record["composer_sim"] = record.get("composer_tesim")
-    record["editor_sim"] = record.get("editor_tesim")
-    record["engraver_sim"] = record.get("engraver_tesim")
     record["illuminator_sim"] = record.get("illuminator_tesim")
-    record["illustrator_sim"] = record.get("illustrator_tesim")
-    record["lyricist_sim"] = record.get("lyricist_tesim")
-    record["printmaker_sim"] = record.get("printmaker_tesim")
-    record["rubricator_sim"] = record.get("rubricator_tesim")
     record["scribe_sim"] = record.get("scribe_tesim")
-    record["script_sim"] = record.get("script_tesim")
-    record["support_sim"] = record.get("support_tesim")
-    record["uniform_title_sim"] = record.get("uniform_title_tesim")
-    record["writing_system_sim"] = record.get("writing_system_tesim")
+    record["rubricator_sim"] = record.get("rubricator_tesim")
+    record["commentator_sim"] = record.get("commentator_tesim")
     record["translator_sim"] = record.get("translator_tesim")
+    record["lyricist_sim"] = record.get("lyricist_tesim")
+    record["composer_sim"] = record.get("composer_tesim")
+    record["illustrator_sim"] = record.get("illustrator_tesim")
+    record["editor_sim"] = record.get("editor_tesim")
+    record["calligrapher_sim"] = record.get("calligrapher_tesim")
+    record["engraver_sim"] = record.get("engraver_tesim")
+    record["printmaker_sim"] = record.get("printmaker_tesim")
+    record["human_readable_language_sim"] = record.get("human_readable_language_tesim")
+    # explicit
+    record["features_sim"] = record.get("features_tesim")
+    # incipit
+    # inscription
+    record["script_sim"] = record.get("script_tesim")
+    record["writing_system_sim"] = record.get("writing_system_tesim")
+    record["year_isim"] = year_parser.integer_years(record.get("normalized_date_tesim"))
+    record["place_of_origin_sim"] = record.get("place_of_origin_tesim")
+    record["associated_name_sim"] = record.get("associated_name_tesim")
 
-    # sort fields
+    # Physical Description
+    record["form_sim"] = record.get("form_ssi")
+    record["support_sim"] = record.get("support_tesim")
+
+    # Keywords
+    record["genre_sim"] = record.get("genre_tesim")
+    record["subject_sim"] = record.get("subject_tesim")
+    record["location_sim"] = record.get("location_tesim")
+    record["named_subject_sim"] = record.get("named_subject_tesim")
+
+    # Find This Item
+
+    # Access Condition
+    record["human_readable_resource_type_sim"] = record.get("resource_type_tesim")
+    record["member_of_collections_ssim"] = record.get("dlcs_collection_name_tesim")
+
+    # Searchable but not Viewable
+
+    # SORT FIELDS
     titles = record.get("title_tesim")
     if isinstance(titles, typing.Sequence) and len(titles) >= 1:
         record["sort_title_ssort"] = titles[0]
@@ -235,7 +251,6 @@ def map_record(row: DLCSRecord, config: typing.Dict) -> UrsusRecord:
         record["sort_year_isi"] = min(years)
 
     return record
-
 
 def thumbnail_from_child(
     record: UrsusRecord, config: typing.Dict
@@ -271,7 +286,6 @@ def thumbnail_from_child(
             return thumb
     return None
 
-
 def thumbnail_from_manifest(record: UrsusRecord) -> typing.Optional[str]:
     """Picks a thumbnail downloading the IIIF manifest.
 
@@ -301,7 +315,6 @@ def thumbnail_from_manifest(record: UrsusRecord) -> typing.Optional[str]:
 
     except:  # pylint: disable=bare-except
         return None
-
 
 if __name__ == "__main__":
     load_csv()  # pylint: disable=no-value-for-parameter
