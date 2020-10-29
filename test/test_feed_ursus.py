@@ -89,7 +89,7 @@ class TestMapRecord:
             "subject_sim": None,
             "support_sim": None,
             "test_ursus_field_tesim": ["lasigd", "asdfg"],
-            "thumbnail_url_ssi": None,
+            "thumbnail_url_ss": None,
             "writing_system_sim": None,
             "year_isim": [],
             "architect_sim": None,
@@ -108,13 +108,7 @@ class TestMapRecord:
             "uniform_title_sim": None,
             "translator_sim": None,
             "associated_name_sim": None,
-            "delivery": None,
-            "descriptive_title": None,
-            "form_sim": None,
-            "hand_note": None,
-            "image_count": None,
-            "references": None,
-            "shelfmark_sim": None
+            "form_sim": None
             }
 
     def test_sets_id(self):
@@ -134,7 +128,7 @@ class TestMapRecord:
             config=self.CONFIG,
         )
         assert (
-            result["thumbnail_url_ssi"]
+            result["thumbnail_url_ss"]
             == "https://test.iiif.server/url/full/!200,200/0/default.jpg"
         )
 

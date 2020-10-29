@@ -181,8 +181,8 @@ def map_record(row: DLCSRecord, config: typing.Dict) -> UrsusRecord:
     }
 
     # THUMBNAIL
-    record["thumbnail_url_ssi"] = (
-        record.get("thumbnail_url_ssi")
+    record["thumbnail_url_ss"] = (
+        record.get("thumbnail_url_ss")
         or thumbnail_from_child(record, config=config)
         or thumbnail_from_manifest(record)
     )
@@ -194,8 +194,6 @@ def map_record(row: DLCSRecord, config: typing.Dict) -> UrsusRecord:
 
     # FACET FIELDS
     # Item Overview
-    record["shelfmark_sim"] = record.get("shelfmark_tesim")
-    record["descriptive_title"] = record.get("descriptive_title")
     record["uniform_title_sim"] = record.get("uniform_title_tesim")
     record["architect_sim"] = record.get("architect_tesim")
     record["author_sim"] = record.get("author_tesim")
@@ -216,13 +214,11 @@ def map_record(row: DLCSRecord, config: typing.Dict) -> UrsusRecord:
     record["features_sim"] = record.get("features_tesim")
     # incipit
     # inscription
-    record["hand_note"] = record.get("hand_note") # writing_and_hands
     record["script_sim"] = record.get("script_tesim")
     record["writing_system_sim"] = record.get("writing_system_tesim")
     record["year_isim"] = year_parser.integer_years(record.get("normalized_date_tesim"))
     record["place_of_origin_sim"] = record.get("place_of_origin_tesim")
     record["associated_name_sim"] = record.get("associated_name_tesim")
-    record["references"] = record.get("references")
 
     # Physical Description
     record["form_sim"] = record.get("form_tesim")
@@ -241,8 +237,6 @@ def map_record(row: DLCSRecord, config: typing.Dict) -> UrsusRecord:
     record["member_of_collections_ssim"] = record.get("dlcs_collection_name_tesim")
 
     # Searchable but not Viewable
-    record["delivery"] = record.get("delivery")
-    record["image_count"] = record.get("image_count")
 
     # SORT FIELDS
     titles = record.get("title_tesim")
