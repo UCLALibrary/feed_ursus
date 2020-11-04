@@ -232,6 +232,7 @@ FIELD_MAPPING: MappingDict = {
         "Subject.personalName",
     ],
     "normalized_date_tesim": "Date.normalized",
+    "other_versions_tesim": "Other version(s)",
     "page_layout_ssim": "Page layout",
     "photographer_tesim": [
         "Name.photographer",
