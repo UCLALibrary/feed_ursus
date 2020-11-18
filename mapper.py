@@ -186,7 +186,7 @@ FIELD_MAPPING: MappingDict = {
     "condition_note_tesim": ["Condition note", "Description.condition"],
     "contents_note_tesim": "Contents note",
     "date_created_tesim": "Date.creation",
-    "delivery_ssi":"delivery",
+    "delivery_tesim":"delivery",
     "description_tesim": "Description.note",
     "descriptive_title_tesim": "Descriptive title",
     "dimensions_tesim": "Format.dimensions",
