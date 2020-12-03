@@ -14,7 +14,7 @@ import requests
 
 import mapper
 import year_parser
-
+import date_parser
 
 # Custom Types
 
@@ -64,7 +64,7 @@ def load_csv(filename: str, solr_url: typing.Optional[str]):
         elif not solr_client:
             print(", ")
 
-        mapped_record = map_record(row, config=config)
+        mapped_record = map_record(row, solr_client, config=config)
         if solr_client:
             solr_client.add([mapped_record])
         else:
@@ -166,9 +166,12 @@ def get_bare_field_name(field_name: str) -> str:
 
     return re.sub(r"_[^_]+$", "", field_name).replace("human_readable_", "")
 
+def solr_transformed_dates(solr_client: Solr, parsed_dates: typing.List):
+    """ the dates  in sorted list are transformed to solr format  """
+    return [solr_client._from_python(date) for date in parsed_dates] # pylint: disable=protected-access
 
 # pylint: disable=bad-continuation
-def map_record(row: DLCSRecord, config: typing.Dict) -> UrsusRecord:
+def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> UrsusRecord:
     """Maps a metadata record from CSV to Ursus Solr.
 
     Args:
@@ -220,6 +223,8 @@ def map_record(row: DLCSRecord, config: typing.Dict) -> UrsusRecord:
     record["script_sim"] = record.get("script_tesim")
     record["writing_system_sim"] = record.get("writing_system_tesim")
     record["year_isim"] = year_parser.integer_years(record.get("normalized_date_tesim"))
+    record["date_dtsim"] = solr_transformed_dates(solr_client,
+    (date_parser.get_dates(record.get("normalized_date_tesim"))))
     record["place_of_origin_sim"] = record.get("place_of_origin_tesim")
     record["associated_name_sim"] = record.get("associated_name_tesim")
 
@@ -246,10 +251,20 @@ def map_record(row: DLCSRecord, config: typing.Dict) -> UrsusRecord:
     if isinstance(titles, typing.Sequence) and len(titles) >= 1:
         record["sort_title_ssort"] = titles[0]
 
+    # used a solr copyfield for shelfmark sorting
+    # shelfmarks = record.get("shelfmark_ssi")
+    # print(shelfmarks)
+    # if isinstance(shelfmarks, typing.Sequence) and len(shelfmarks) >= 1:
+        # print(shelfmarks[0])
+        # record["shelfmark_aplha_numeric_ssort"] = shelfmarks[0]
+
     years = record.get("year_isim")
     if isinstance(years, typing.Sequence) and len(years) >= 1:
         record["sort_year_isi"] = min(years)
 
+    dates = record.get("date_dtsim")
+    if isinstance(dates, typing.Sequence) and len(dates) >= 1:
+        record["date_dtsort"] = dates[0]
     return record
 
 def thumbnail_from_child(

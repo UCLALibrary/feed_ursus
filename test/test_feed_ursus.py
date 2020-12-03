@@ -4,7 +4,7 @@
 
 import pytest  # type: ignore
 from pandas import DataFrame  # type: ignore
-
+from pysolr import Solr  # type: ignore
 import feed_ursus
 import test.fixtures as fixtures  # pylint: disable=wrong-import-order
 
@@ -59,7 +59,7 @@ class TestMapRecord:
     """function map_record"""
 
     CONFIG = {"collection_names": {"ark:/123/collection": "Test Collection KGSL"}}
-
+    solr_client = Solr("http://localhost:6983/solr/californica", always_commit=True)
     def test_maps_record(self, monkeypatch):
         """maps the record for Ursus"""
         monkeypatch.setattr(
@@ -72,7 +72,7 @@ class TestMapRecord:
         )
         result = feed_ursus.map_record(
             {"Item ARK": "ark:/123/abc", "Test DLCS Field": "lasigd|~|asdfg"},
-            config=self.CONFIG,
+            self.solr_client, config=self.CONFIG,
         )
 
         assert result == {
@@ -108,13 +108,14 @@ class TestMapRecord:
             "uniform_title_sim": None,
             "translator_sim": None,
             "associated_name_sim": None,
-            "form_sim": None
+            "form_sim": None,
+            "date_dtsim": []
             }
 
     def test_sets_id(self):
         """sets 'id' equal to 'Item ARK'/'ark_ssi'"""
         result = feed_ursus.map_record(
-            {"Item ARK": "ark:/123/abc"}, config=self.CONFIG,
+            {"Item ARK": "ark:/123/abc"}, self.solr_client, config=self.CONFIG,
         )
         assert result["id"] == "ark:/123/abc"
 
@@ -125,6 +126,7 @@ class TestMapRecord:
                 "Item ARK": "ark:/123/abc",
                 "IIIF Access URL": "https://test.iiif.server/url",
             },
+            self.solr_client,
             config=self.CONFIG,
         )
         assert (
@@ -135,7 +137,7 @@ class TestMapRecord:
     def test_sets_access(self):
         """sets permissive values for blacklight-access-control"""
         result = feed_ursus.map_record(
-            {"Item ARK": "ark:/123/abc"}, config=self.CONFIG,
+            {"Item ARK": "ark:/123/abc"}, self.solr_client, config=self.CONFIG,
         )
         assert result["discover_access_group_ssim"] == ["public"]
         assert result["read_access_group_ssim"] == ["public"]
@@ -144,7 +146,7 @@ class TestMapRecord:
     def test_sets_iiif_manifest_url(self):
         """sets a IIIF manifest URL based on the ARK"""
         result = feed_ursus.map_record(
-            {"Item ARK": "ark:/123/abc"}, config=self.CONFIG,
+            {"Item ARK": "ark:/123/abc"}, self.solr_client, config=self.CONFIG,
         )
         assert (
             result["iiif_manifest_url_ssi"]
@@ -156,6 +158,7 @@ class TestMapRecord:
 
         result = feed_ursus.map_record(
             {"Item ARK": "ark:/123/abc", "Parent ARK": "ark:/123/collection"},
+            self.solr_client,
             config=self.CONFIG,
         )
         assert result["dlcs_collection_name_tesim"] == ["Test Collection KGSL"]
@@ -176,7 +179,9 @@ class TestMapRecord:
         """Copies *_tesim to *_sim fields for facets"""
         value = "value aksjg"
         result = feed_ursus.map_record(
-            {"Item ARK": "ark:/123/abc", column_name: value}, config=self.CONFIG,
+            {"Item ARK": "ark:/123/abc", column_name: value},
+            self.solr_client,
+            config=self.CONFIG,
         )
         assert result[facet_field_name] == [value]
 
