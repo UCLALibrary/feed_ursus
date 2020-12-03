@@ -12,7 +12,7 @@ from dateutil import parser
 RANGE = re.compile(r"(.*)/(.*)")
 YEAR = re.compile(r"\b(\d\d\d\d|\d\d\d)\b")
 
-
+# pylint: disable=duplicate-code
 def get_dates(dates: typing.Any):
     """Maps a list of 'normalized_date' strings to a sorted list of integer years.
 
