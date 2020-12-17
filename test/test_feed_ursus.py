@@ -92,6 +92,7 @@ class TestMapRecord:
             "thumbnail_url_ss": None,
             "writing_system_sim": None,
             "year_isim": [],
+            "names_sim": None,
             "architect_sim": None,
             "author_sim": None,
             "calligrapher_sim": None,
