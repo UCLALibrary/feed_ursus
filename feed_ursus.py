@@ -216,6 +216,7 @@ def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> Ursus
     record["engraver_sim"] = record.get("engraver_tesim")
     record["printmaker_sim"] = record.get("printmaker_tesim")
     record["human_readable_language_sim"] = record.get("human_readable_language_tesim")
+    record["names_sim"] = name_fields(record)
     # explicit
     record["features_sim"] = record.get("features_tesim")
     # incipit
@@ -266,6 +267,34 @@ def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> Ursus
     if isinstance(dates, typing.Sequence) and len(dates) >= 1:
         record["date_dtsort"] = dates[0]
     return record
+
+def name_fields(record):
+    """combine fields for the names facet"""
+    record["names_sim"] = record.get("author_tesim")
+    if record.get("author_tesim") is not None:
+        if record.get("names_sim") is not None:
+            record["names_sim"] = record["names_sim"] + record.get("author_tesim")
+        else:
+            record["names_sim"] = record.get("author_tesim")
+
+    if record.get("scribe_tesim") is not None:
+        if record.get("names_sim") is not None:
+            record["names_sim"] = record["names_sim"] + record.get("scribe_tesim")
+        else:
+            record["names_sim"] = record.get("scribe_tesim")
+
+    if record.get("associated_name_tesim") is not None:
+        if record.get("names_sim") is not None:
+            record["names_sim"] = record["names_sim"] + record.get("associated_name_tesim")
+        else:
+            record["names_sim"] = record.get("associated_name_tesim")
+
+    if record.get("translator_tesim") is not None:
+        if record.get("names_sim") is not None:
+            record["names_sim"] = record["names_sim"] + record.get("translator_tesim")
+        else:
+            record["names_sim"] = record.get("translator_tesim")
+    return record["names_sim"]
 
 def thumbnail_from_child(
     record: UrsusRecord, config: typing.Dict
