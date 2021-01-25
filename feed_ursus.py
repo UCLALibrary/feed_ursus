@@ -263,6 +263,7 @@ def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> Ursus
     record["header_index_tesim"] = header_fields(record)
     record["name_fields_index_tesim"] = name_fields_index(record)
 
+# -----------------------------------------------------------------------
     years = record.get("year_isim")
     if isinstance(years, typing.Sequence) and len(years) >= 1:
         record["sort_year_isi"] = min(years)
@@ -325,7 +326,7 @@ def name_fields_index(record):
     scribe = (record.get("scribe_tesim", []))
     name_fields_combined = author + associated_name + scribe
     if (len(name_fields_combined)) > 0:
-        print(name_fields_combined)
+        return (name_fields_combined)
 
 #     return record.get("author_tesim", []) + record.get("associated_name_tesim", []) + record.get("scribe_tesim", [])
 
