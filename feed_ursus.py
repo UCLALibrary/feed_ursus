@@ -259,6 +259,11 @@ def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> Ursus
         # print(shelfmarks[0])
         # record["shelfmark_aplha_numeric_ssort"] = shelfmarks[0]
 
+    # SINAI INDEX
+    record["header_index_tesim"] = header_fields(record)
+    record["name_fields_index_tesim"] = name_fields_index(record)
+
+# -----------------------------------------------------------------------
     years = record.get("year_isim")
     if isinstance(years, typing.Sequence) and len(years) >= 1:
         record["sort_year_isi"] = min(years)
@@ -295,6 +300,30 @@ def name_fields(record):
         else:
             record["names_sim"] = record.get("translator_tesim")
     return record["names_sim"]
+
+# Sinai Index Page
+# record.get returns the default of en empty array if there is no record
+
+# combine fields for the header value
+
+def header_fields(record):
+    """Header: shelfmark_ssi: 'Shelfmark' && extent_tesim: 'Format'"""
+    shelfmark = record.get("shelfmark_ssi", [])
+    extent = record.get("extent_tesim", [])
+    return shelfmark + extent
+
+# TITLE: uniform_title_one | uniform_title_two | descriptive_title_one | descriptive_title_two
+
+# combine fields for the names value in the Name facet & for the index page
+# Name: author_tesim && associated_name_tesim && scribe_tesim
+
+def name_fields_index(record):
+    """NAME: author_one| author_two | associated_one | associated_two | scribe_one"""
+    author = record.get("author_tesim", [])
+    associated_name = record.get("associated_name_tesim", [])
+    scribe = record.get("scribe_tesim", [])
+    name_fields_combined = author + associated_name + scribe
+    return name_fields_combined
 
 def thumbnail_from_child(
     record: UrsusRecord, config: typing.Dict

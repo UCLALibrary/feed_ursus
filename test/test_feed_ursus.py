@@ -110,7 +110,9 @@ class TestMapRecord:
             "translator_sim": None,
             "associated_name_sim": None,
             "form_sim": None,
-            "date_dtsim": []
+            "date_dtsim": [],
+            "header_index_tesim": [],
+            "name_fields_index_tesim": []
             }
 
     def test_sets_id(self):
