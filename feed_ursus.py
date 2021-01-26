@@ -323,8 +323,7 @@ def name_fields_index(record):
     associated_name = record.get("associated_name_tesim", [])
     scribe = record.get("scribe_tesim", [])
     name_fields_combined = author + associated_name + scribe
-    if len(name_fields_combined) > 0:
-        return name_fields_combined
+    return name_fields_combined
 
 def thumbnail_from_child(
     record: UrsusRecord, config: typing.Dict

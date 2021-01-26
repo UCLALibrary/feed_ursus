@@ -112,7 +112,7 @@ class TestMapRecord:
             "form_sim": None,
             "date_dtsim": [],
             "header_index_tesim": [],
-            "name_fields_index_tesim": None
+            "name_fields_index_tesim": []
             }
 
     def test_sets_id(self):
