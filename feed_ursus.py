@@ -310,8 +310,7 @@ def header_fields(record):
     """Header: shelfmark_ssi: 'Shelfmark' && extent_tesim: 'Format'"""
     shelfmark = record.get("shelfmark_ssi", [])
     extent = record.get("extent_tesim", [])
-    header_fields_combined = shelfmark + extent
-    return header_fields_combined
+    return shelfmark + extent
 
 # TITLE: uniform_title_one | uniform_title_two | descriptive_title_one | descriptive_title_two
 
