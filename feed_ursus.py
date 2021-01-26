@@ -305,30 +305,31 @@ def name_fields(record):
 # record.get returns the default of en empty array if there is no record
 
 # combine fields for the header value
-# Header: shelfmark_ssi: 'Shelfmark' && extent_tesim: 'Format'
+
 def header_fields(record):
-    shelfmark = (record.get("shelfmark_ssi", []))
-    extent = (record.get("extent_tesim", []))
+    """Header: shelfmark_ssi: 'Shelfmark' && extent_tesim: 'Format'"""
+    shelfmark = record.get("shelfmark_ssi", [])
+    extent = record.get("extent_tesim", [])
     header_fields_combined = shelfmark + extent
-    if (len(header_fields_combined)) > 0:
-        return (header_fields_combined[0] + ' | ' + header_fields_combined[1])
-    else:
-        return (header_fields_combined[0])
+    if header_fields_combined != []:
+        if len(header_fields_combined) > 1:
+            return header_fields_combined[0] + ' | ' + header_fields_combined[1]
+        else:
+            return header_fields_combined[0]
 
 # TITLE: uniform_title_one | uniform_title_two | descriptive_title_one | descriptive_title_two
 
 # combine fields for the names value in the Name facet & for the index page
 # Name: author_tesim && associated_name_tesim && scribe_tesim
-# NAME: author_tesim_one| author_tesim_two | associated_name_one | associated_name_two | scribe_one
-def name_fields_index(record):
-    author = (record.get("author_tesim", []))
-    associated_name = (record.get("associated_name_tesim", []))
-    scribe = (record.get("scribe_tesim", []))
-    name_fields_combined = author + associated_name + scribe
-    if (len(name_fields_combined)) > 0:
-        return (name_fields_combined)
 
-#     return record.get("author_tesim", []) + record.get("associated_name_tesim", []) + record.get("scribe_tesim", [])
+def name_fields_index(record):
+    """NAME: author_one| author_two | associated_one | associated_two | scribe_one"""
+    author = record.get("author_tesim", [])
+    associated_name = record.get("associated_name_tesim", [])
+    scribe = record.get("scribe_tesim", [])
+    name_fields_combined = author + associated_name + scribe
+    if len(name_fields_combined) > 0:
+        return name_fields_combined
 
 def thumbnail_from_child(
     record: UrsusRecord, config: typing.Dict
