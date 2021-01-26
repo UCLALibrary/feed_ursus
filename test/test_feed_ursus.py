@@ -111,7 +111,7 @@ class TestMapRecord:
             "associated_name_sim": None,
             "form_sim": None,
             "date_dtsim": [],
-            "header_index_tesim": None,
+            "header_index_tesim": [],
             "name_fields_index_tesim": None
             }
 
