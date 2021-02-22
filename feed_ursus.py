@@ -217,6 +217,7 @@ def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> Ursus
     record["printmaker_sim"] = record.get("printmaker_tesim")
     record["human_readable_language_sim"] = record.get("human_readable_language_tesim")
     record["names_sim"] = name_fields(record)
+    record["keywords_sim"] = keywords_fields(record)
     # explicit
     record["features_sim"] = record.get("features_tesim")
     # incipit
@@ -311,6 +312,23 @@ def header_fields(record):
     shelfmark = record.get("shelfmark_ssi", [])
     extent = record.get("extent_tesim", [])
     return shelfmark + extent
+
+# Sinai Item Page
+# record.get returns the default of en empty array if there is no record
+
+# combine fields for the keywords value
+
+def keywords_fields(record):
+    """Keywords: genre_tesim: 'Genre' && features_tesim: 'Features' &&
+    place_of_origin_tesim: 'Place of Origin' && support_tesim: 'Support' &&
+    form_ssi: 'Form'
+    """
+    genre = record.get("genre_tesim", [])
+    features = record.get("features_tesim", [])
+    place_of_origin = record.get("place_of_origin_tesim", [])
+    support = record.get("support_tesim", [])
+    form = record.get("form_ssi", [])
+    return genre + features + place_of_origin + support + form
 
 # TITLE: uniform_title_one | uniform_title_two | descriptive_title_one | descriptive_title_two
 
