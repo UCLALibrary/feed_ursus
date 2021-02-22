@@ -113,6 +113,7 @@ class TestMapRecord:
             "date_dtsim": [],
             "header_index_tesim": [],
             "name_fields_index_tesim": [],
+            "keywords_tesim": [],
             "keywords_sim": []
             }
 
