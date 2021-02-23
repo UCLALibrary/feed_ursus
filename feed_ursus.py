@@ -217,6 +217,7 @@ def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> Ursus
     record["printmaker_sim"] = record.get("printmaker_tesim")
     record["human_readable_language_sim"] = record.get("human_readable_language_tesim")
     record["names_sim"] = name_fields(record)
+    #Keywords
     record["keywords_sim"] = keywords_fields(record)
     # explicit
     record["features_sim"] = record.get("features_tesim")
@@ -328,7 +329,8 @@ def keywords_fields(record):
     place_of_origin = record.get("place_of_origin_tesim", [])
     support = record.get("support_tesim", [])
     form = record.get("form_ssi", [])
-    return genre + features + place_of_origin + support + form
+    record["keywords_tesim"] = genre + features + place_of_origin + support + form
+    return record["keywords_tesim"]
 
 # TITLE: uniform_title_one | uniform_title_two | descriptive_title_one | descriptive_title_two
 
