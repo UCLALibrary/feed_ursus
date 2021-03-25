@@ -206,6 +206,7 @@ def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> Ursus
     record["illuminator_sim"] = record.get("illuminator_tesim")
     record["scribe_sim"] = record.get("scribe_tesim")
     record["rubricator_sim"] = record.get("rubricator_tesim")
+    record["contributor_sim"] = record.get("contributor_tesim")
     record["commentator_sim"] = record.get("commentator_tesim")
     record["translator_sim"] = record.get("translator_tesim")
     record["lyricist_sim"] = record.get("lyricist_tesim")
