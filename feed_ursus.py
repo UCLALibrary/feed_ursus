@@ -198,15 +198,13 @@ def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> Ursus
         dlcs_collection_name = config["collection_names"][row["Parent ARK"]]
         record["dlcs_collection_name_tesim"] = [dlcs_collection_name]
 
-    # FACET FIELDS
-    # Item Overview
+    # FIELDS
     record["uniform_title_sim"] = record.get("uniform_title_tesim")
     record["architect_sim"] = record.get("architect_tesim")
     record["author_sim"] = record.get("author_tesim")
     record["illuminator_sim"] = record.get("illuminator_tesim")
     record["scribe_sim"] = record.get("scribe_tesim")
     record["rubricator_sim"] = record.get("rubricator_tesim")
-    record["contributor_sim"] = record.get("contributor_tesim")
     record["commentator_sim"] = record.get("commentator_tesim")
     record["translator_sim"] = record.get("translator_tesim")
     record["lyricist_sim"] = record.get("lyricist_tesim")
@@ -218,7 +216,6 @@ def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> Ursus
     record["printmaker_sim"] = record.get("printmaker_tesim")
     record["human_readable_language_sim"] = record.get("human_readable_language_tesim")
     record["names_sim"] = name_fields(record)
-    #Keywords
     record["keywords_sim"] = keywords_fields(record)
     # explicit
     record["features_sim"] = record.get("features_tesim")
@@ -231,24 +228,18 @@ def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> Ursus
     (date_parser.get_dates(record.get("normalized_date_tesim"))))
     record["place_of_origin_sim"] = record.get("place_of_origin_tesim")
     record["associated_name_sim"] = record.get("associated_name_tesim")
-
-    # Physical Description
     record["form_sim"] = record.get("form_ssi")
     record["support_sim"] = record.get("support_tesim")
-
-    # Keywords
     record["genre_sim"] = record.get("genre_tesim")
     record["subject_sim"] = record.get("subject_tesim")
     record["location_sim"] = record.get("location_tesim")
     record["named_subject_sim"] = record.get("named_subject_tesim")
-
-    # Find This Item
-
-    # Access Condition
     record["human_readable_resource_type_sim"] = record.get("resource_type_tesim")
     record["member_of_collections_ssim"] = record.get("dlcs_collection_name_tesim")
 
-    # Searchable but not Viewable
+    # SINAI INDEX
+    record["header_index_tesim"] = header_fields(record)
+    record["name_fields_index_tesim"] = name_fields_index(record)
 
     # SORT FIELDS
     titles = record.get("title_tesim")
@@ -261,10 +252,6 @@ def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> Ursus
     # if isinstance(shelfmarks, typing.Sequence) and len(shelfmarks) >= 1:
         # print(shelfmarks[0])
         # record["shelfmark_aplha_numeric_ssort"] = shelfmarks[0]
-
-    # SINAI INDEX
-    record["header_index_tesim"] = header_fields(record)
-    record["name_fields_index_tesim"] = name_fields_index(record)
 
 # -----------------------------------------------------------------------
     years = record.get("year_isim")

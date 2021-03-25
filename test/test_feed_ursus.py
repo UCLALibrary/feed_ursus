@@ -97,7 +97,6 @@ class TestMapRecord:
             "author_sim": None,
             "calligrapher_sim": None,
             "commentator_sim": None,
-            "contributor_sim": None,
             "composer_sim": None,
             "editor_sim": None,
             "engraver_sim": None,
