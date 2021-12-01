@@ -114,7 +114,8 @@ class TestMapRecord:
             "header_index_tesim": [],
             "name_fields_index_tesim": [],
             "keywords_tesim": [],
-            "keywords_sim": []
+            "keywords_sim": [],
+            "collection_sim": None
             }
 
     def test_sets_id(self):
