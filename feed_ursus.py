@@ -171,7 +171,7 @@ def solr_transformed_dates(solr_client: Solr, parsed_dates: typing.List):
     return [solr_client._from_python(date) for date in parsed_dates] # pylint: disable=protected-access
 
 # pylint: disable=bad-continuation
-def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> UrsusRecord:
+def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> UrsusRecord: # pylint: disable=too-many-statements
     """Maps a metadata record from CSV to Ursus Solr.
 
     Args:
@@ -217,6 +217,7 @@ def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> Ursus
     record["human_readable_language_sim"] = record.get("human_readable_language_tesim")
     record["names_sim"] = name_fields(record)
     record["keywords_sim"] = keywords_fields(record)
+    record["collection_sim"] = record.get("collection_ssi")
     # explicit
     record["features_sim"] = record.get("features_tesim")
     # incipit
@@ -228,7 +229,7 @@ def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> Ursus
     (date_parser.get_dates(record.get("normalized_date_tesim"))))
     record["place_of_origin_sim"] = record.get("place_of_origin_tesim")
     record["associated_name_sim"] = record.get("associated_name_tesim")
-    record["form_sim"] = record.get("form_ssi")
+    record["form_sim"] = record.get("form_tesim")
     record["support_sim"] = record.get("support_tesim")
     record["genre_sim"] = record.get("genre_tesim")
     record["subject_sim"] = record.get("subject_tesim")
