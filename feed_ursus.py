@@ -171,7 +171,7 @@ def solr_transformed_dates(solr_client: Solr, parsed_dates: typing.List):
     return [solr_client._from_python(date) for date in parsed_dates] # pylint: disable=protected-access
 
 # pylint: disable=bad-continuation
-def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> UrsusRecord:
+def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> UrsusRecord: # pylint: disable=too-many-statements
     """Maps a metadata record from CSV to Ursus Solr.
 
     Args:
