@@ -320,7 +320,7 @@ def keywords_fields(record):
     form = record.get("form_ssi", [])
     record["keywords_tesim"] = genre + features + place_of_origin + support + form
     return record["keywords_tesim"]
-      
+
 # TITLE: uniform_title_one | uniform_title_two | descriptive_title_one | descriptive_title_two
 
 # combine fields for the names value in the Name facet & for the index page

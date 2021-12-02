@@ -198,7 +198,7 @@ FIELD_MAPPING: MappingDict = {
     "features_tesim": "Features",
     "foliation_tesim": ["Foliation note", "Foliation"],
     "form_tesim": "Form",
-    "format_extent_tesim": ["Format.extent", "Format.dimensions","Format.weight"],
+    "format_extent_tesim": ["Format.extent", "Format.dimensions", "Format.weight"],
     "funding_note_tesim": "Description.fundingNote",
     "genre_tesim": ["Type.genre", "Genre"],
     "hand_note_tesim": "Hand note",
