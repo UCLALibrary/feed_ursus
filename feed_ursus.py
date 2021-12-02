@@ -322,13 +322,13 @@ def keywords_fields(record):
     return record["keywords_tesim"]
 
 # Combine format fields for 
-def format_fields(record):
-    """EXTENT: weight| extent | dimensions"""
+def formats_fields(record):
+    """EXTENT: weight | extent | dimensions"""
     weight = record.get("weight_tesim", [])
     extent = record.get("extent_tesim", [])
     dimensions = record.get("dimensions_tesim", [])
-    record["format_tesim"] = extent + weight + dimensionns
-    return record["format_tesim"]
+    record["formats_tesim"] = extent + weight + dimensionns
+    return record["formats_tesim"]
 # TITLE: uniform_title_one | uniform_title_two | descriptive_title_one | descriptive_title_two
 
 # combine fields for the names value in the Name facet & for the index page
