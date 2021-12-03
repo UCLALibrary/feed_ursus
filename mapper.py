@@ -191,7 +191,6 @@ FIELD_MAPPING: MappingDict = {
     "delivery_tesim":"delivery",
     "description_tesim": "Description.note",
     "descriptive_title_tesim": "Descriptive title",
-    "dimensions_tesim": "Format.dimensions",
     "dlcs_collection_name_tesim": "Relation.isPartOf",
     "explicit_tesim": "Explicit",
     "extent_tesim": "Format.extent",
@@ -199,6 +198,7 @@ FIELD_MAPPING: MappingDict = {
     "features_tesim": "Features",
     "foliation_tesim": ["Foliation note", "Foliation"],
     "form_tesim": "Form",
+    "format_extent_tesim": ["Format.extent", "Format.dimensions", "Format.weight"],
     "funding_note_tesim": "Description.fundingNote",
     "genre_tesim": ["Type.genre", "Genre"],
     "hand_note_tesim": "Hand note",
@@ -281,7 +281,6 @@ FIELD_MAPPING: MappingDict = {
     "uniform_title_tesim": "AltTitle.uniform",
     "viscodex_ssi": "Viscodex",
     "visibility_ssi": "Visibility",
-    "weight_tesim": "Format.weight",
     "writing_system_tesim": "Writing system",
     # Set permissive values for blacklight_access_control
     "discover_access_group_ssim": lambda x: ["public"],
