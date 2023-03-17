@@ -147,10 +147,7 @@ def map_field_value(
     output: typing.List[str] = []
     for csv_field in mapping:
         input_value = row.get(csv_field)
-        # if csv_field == "folio_dimensions_tesim":
-        
         if input_value:
-            print(csv_field +" : "+input_value)
             if isinstance(input_value, str):
                 output.extend(input_value.split("|~|"))
             else:
@@ -188,7 +185,6 @@ def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> Ursus
         field_name: map_field_value(row, field_name, config=config)
         for field_name in mapper.FIELD_MAPPING
     }
-    # print(record)
 
     # THUMBNAIL
     record["thumbnail_url_ss"] = (
