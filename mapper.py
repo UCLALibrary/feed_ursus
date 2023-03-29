@@ -2,7 +2,7 @@
 """Mapping logic for UCLA CSV->Blacklight conversion."""
 
 import typing
-import urllib.parse
+# import urllib.parse
 
 
 def ark(row: typing.Mapping[str, str]) -> str:
@@ -32,8 +32,9 @@ def iiif_manifest_url(row: typing.Mapping[str, str]) -> str:
     Returns:
         IIIF Manifest URL.
     """
-    iiif_identifier = urllib.parse.quote_plus(ark(row))
-    return f"https://iiif.library.ucla.edu/{iiif_identifier}/manifest"
+    # iiif_identifier = urllib.parse.quote_plus(ark(row))
+    # return f"https://iiif.library.ucla.edu/{iiif_identifier}/manifest"
+    return row["IIIF Manifest URL"]
 
 
 def object_type(row: typing.Mapping[str, str]) -> str:
@@ -206,7 +207,7 @@ FIELD_MAPPING: MappingDict = {
     "has_model_ssim": object_type,
     "human_readable_language_tesim": "Language",
     "human_readable_rights_statement_tesim": "Rights.copyrightStatus",
-    "iiif_manifest_url_ssi": "IIIF Manifest URL",
+    "iiif_manifest_url_ssi": iiif_manifest_url,
     "iiif_range_ssi": "IIIF Range",
     "iiif_text_direction_ssi": "Text direction",
     "iiif_viewing_hint_ssi": "viewingHint",

@@ -121,7 +121,12 @@ class TestMapRecord:
     def test_sets_id(self):
         """sets 'id' equal to 'Item ARK'/'ark_ssi'"""
         result = feed_ursus.map_record(
-            {"Item ARK": "ark:/123/abc"}, self.solr_client, config=self.CONFIG,
+            {
+                "Item ARK": "ark:/123/abc",
+                "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest"
+            },
+            self.solr_client,
+            config=self.CONFIG,
         )
         assert result["id"] == "ark:/123/abc"
 
@@ -131,6 +136,7 @@ class TestMapRecord:
             {
                 "Item ARK": "ark:/123/abc",
                 "IIIF Access URL": "https://test.iiif.server/url",
+                "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest",
             },
             self.solr_client,
             config=self.CONFIG,
@@ -143,7 +149,12 @@ class TestMapRecord:
     def test_sets_access(self):
         """sets permissive values for blacklight-access-control"""
         result = feed_ursus.map_record(
-            {"Item ARK": "ark:/123/abc"}, self.solr_client, config=self.CONFIG,
+            {
+                "Item ARK": "ark:/123/abc",
+                "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest"
+            },
+            self.solr_client,
+            config=self.CONFIG,
         )
         assert result["discover_access_group_ssim"] == ["public"]
         assert result["read_access_group_ssim"] == ["public"]
@@ -152,7 +163,12 @@ class TestMapRecord:
     def test_sets_iiif_manifest_url(self):
         """sets a IIIF manifest URL based on the ARK"""
         result = feed_ursus.map_record(
-            {"Item ARK": "ark:/123/abc"}, self.solr_client, config=self.CONFIG,
+            {
+                "Item ARK": "ark:/123/abc",
+                "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest"
+            },
+            self.solr_client,
+            config=self.CONFIG,
         )
         assert (
             result["iiif_manifest_url_ssi"]
@@ -163,7 +179,11 @@ class TestMapRecord:
         """sets the collection name by using the collection row"""
 
         result = feed_ursus.map_record(
-            {"Item ARK": "ark:/123/abc", "Parent ARK": "ark:/123/collection"},
+            {
+                "Item ARK": "ark:/123/abc",
+                "Parent ARK": "ark:/123/collection",
+                "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest"
+            },
             self.solr_client,
             config=self.CONFIG,
         )
@@ -185,7 +205,11 @@ class TestMapRecord:
         """Copies *_tesim to *_sim fields for facets"""
         value = "value aksjg"
         result = feed_ursus.map_record(
-            {"Item ARK": "ark:/123/abc", column_name: value},
+            {
+                "Item ARK": "ark:/123/abc",
+                "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest",
+                column_name: value
+            },
             self.solr_client,
             config=self.CONFIG,
         )
