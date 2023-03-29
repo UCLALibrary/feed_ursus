@@ -1,5 +1,5 @@
 # feed_ursus
-Script to process CSVs into an Ursus-ready solr index.
+Script to process CSVs into an Sinai-ready solr index.
 
 # Using feed_ursus.py
 
