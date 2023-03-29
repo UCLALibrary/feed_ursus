@@ -2,7 +2,7 @@
 """Mapping logic for UCLA CSV->Blacklight conversion."""
 
 import typing
-import urllib.parse
+# import urllib.parse
 
 
 def ark(row: typing.Mapping[str, str]) -> str:
@@ -32,8 +32,9 @@ def iiif_manifest_url(row: typing.Mapping[str, str]) -> str:
     Returns:
         IIIF Manifest URL.
     """
-    iiif_identifier = urllib.parse.quote_plus(ark(row))
-    return f"https://iiif.library.ucla.edu/{iiif_identifier}/manifest"
+    # iiif_identifier = urllib.parse.quote_plus(ark(row))
+    # return f"https://iiif.library.ucla.edu/{iiif_identifier}/manifest"
+    return row["IIIF Manifest URL"]
 
 
 def object_type(row: typing.Mapping[str, str]) -> str:
