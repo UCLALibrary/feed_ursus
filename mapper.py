@@ -206,7 +206,7 @@ FIELD_MAPPING: MappingDict = {
     "has_model_ssim": object_type,
     "human_readable_language_tesim": "Language",
     "human_readable_rights_statement_tesim": "Rights.copyrightStatus",
-    "iiif_manifest_url_ssi": iiif_manifest_url,
+    "iiif_manifest_url_ssi": "IIIF Manifest URL",
     "iiif_range_ssi": "IIIF Range",
     "iiif_text_direction_ssi": "Text direction",
     "iiif_viewing_hint_ssi": "viewingHint",
