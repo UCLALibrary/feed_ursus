@@ -238,6 +238,7 @@ FIELD_MAPPING: MappingDict = {
     ],
     "normalized_date_tesim": "Date.normalized",
     "other_versions_tesim": "Other version(s)",
+    "overtext_manuscript_ssm":"Overtext manuscript",
     "page_layout_ssim": "Page layout",
     "photographer_tesim": [
         "Name.photographer",
@@ -248,6 +249,7 @@ FIELD_MAPPING: MappingDict = {
     "provenance_tesim": ["Provenance", "Description.history"],
     "publisher_tesim": "Publisher.publisherName",
     "references_tesim": "References",
+    "related_tesim": "Related",
     "repository_tesim": [
         "Repository",
         "repository",
