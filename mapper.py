@@ -219,7 +219,6 @@ FIELD_MAPPING: MappingDict = {
     "incipit_tesim": "Incipit",
     "ink_color_tesim": ["Ink Color", "Ink color"],
     "inscription_tesim": "Inscription",
-    "item_ark_ssi": "Item ARK",
     "latitude_tesim": "Description.latitude",
     "local_identifier_ssm": [
         "Alternate Identifier.local",
