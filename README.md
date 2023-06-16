@@ -3,7 +3,21 @@ Script to process CSVs into an Sinai-ready solr index.
 
 # Using feed_ursus.py
 
-First, make sure you have Python 3 available and [install pipenv](https://pipenv.kennethreitz.org/en/latest/#install-pipenv-today). Then you can use pipenv to install the project's dependencies in a new virtual environment: 
+First, make sure you have Python 3 available and [install pipenv](https://pipenv.kennethreitz.org/en/latest/#install-pipenv-today). 
+
+```
+brew install python
+```
+
+```
+python3 -m pip install --upgrade pip
+``` 
+
+```
+pip install --user pipenv
+```
+
+Then you can use pipenv to install the project's dependencies in a new virtual environment: 
 
 ```
 pipenv install
