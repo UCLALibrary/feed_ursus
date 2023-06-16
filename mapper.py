@@ -78,7 +78,7 @@ def preservation_copy(row: typing.Mapping[str, str]) -> typing.Optional[str]:
     if not file_path:
         return None
     if not str(file_path).startswith("Masters/"):
-        return "Masters/" + file_path
+        return f"Masters/{file_path}"
     return file_path
 
 
