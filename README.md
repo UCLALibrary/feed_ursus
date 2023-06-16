@@ -17,6 +17,12 @@ python3 -m pip install --upgrade pip
 pip install --user pipenv
 ```
 
+or
+
+```
+brew install pipenv
+```
+
 Then you can use pipenv to install the project's dependencies in a new virtual environment: 
 
 ```
