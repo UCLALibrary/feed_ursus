@@ -1,9 +1,9 @@
 """Tests for feed_ursus.py"""
 # pylint: disable=no-self-use
 
+import csv
 
 import pytest  # type: ignore
-from pandas import DataFrame  # type: ignore
 from pysolr import Solr  # type: ignore
 import feed_ursus
 import test.fixtures as fixtures  # pylint: disable=wrong-import-order
@@ -222,59 +222,100 @@ class TestThumbnailFromChild:
     def test_uses_title(self):
         """Returns the thumbnail from child row 'f. 001r'"""
 
-        data = DataFrame(
-            data={
-                "Item ARK": ["ark:/work/1", "ark:/child/2", "ark:/child/1"],
-                "Parent ARK": ["ark:/collection/1", "ark:/work/1", "ark:/work/1"],
-                "Thumbnail URL": [None, "/thumb2.jpg", "/thumb1.jpg"],
-                "Title": [None, "f. 001v", "f. 001r"],
-            }
-        )
+        child_works = feed_ursus.collate_child_works({
+            "ark:/work/1": {
+                "Object Type": "Work",
+                "Item ARK": "ark:/work/1",
+                "Parent ARK": "ark:/collection/1",
+                "Thumbnail URL": None,
+                "Title": None,
+            },
+            "ark:/child/2": {
+                "Object Type": "ChildWork",
+                "Item ARK": "ark:/child/2",
+                "Parent ARK": "ark:/work/1",
+                "Thumbnail URL": "/thumb2.jpg",
+                "Title": "f. 001v",
+            },
+            "ark:/child/1": {
+                "Object Type": "ChildWork",
+                "Item ARK": "ark:/child/1",
+                "Parent ARK": "ark:/work/1",
+                "Thumbnail URL": "/thumb1.jpg",
+                "Title": "f. 001r",
+            },
+        })
         record = {"ark_ssi": "ark:/work/1"}
-        result = feed_ursus.thumbnail_from_child(record, config={"data_frame": data})
+        
+        result = feed_ursus.thumbnail_from_child(record, config={"child_works": child_works})
         assert result == "/thumb1.jpg"
 
     def test_uses_mapper(self):
         """Uses the mapper to generate a thumbnail from access_copy, if necessary"""
 
-        data = DataFrame(
-            data={
-                "Item ARK": ["ark:/work/1", "ark:/child/1"],
-                "Parent ARK": ["ark:/collection/1", "ark:/work/1"],
-                "IIIF Access URL": [None, "http://iiif.url/123"],
-                "Title": [None, "f. 001r"],
-            }
-        )
+        child_works = feed_ursus.collate_child_works({
+            "ark:/work/1": {
+                "Item ARK": "ark:/work/1", "Parent ARK": "ark:/collection/1", "IIIF Access URL": None,
+                "Title": None,
+                "Object Type": "Work",
+            },
+            "ark:/child/1": {
+                "Item ARK": "ark:/child/1",
+                "Parent ARK": "ark:/work/1",
+                "IIIF Access URL": "http://iiif.url/123",
+                "Title": "f. 001r",
+                "Object Type": "ChildWork",
+            },
+        })
         record = {"ark_ssi": "ark:/work/1"}
-        result = feed_ursus.thumbnail_from_child(record, config={"data_frame": data})
+        
+        result = feed_ursus.thumbnail_from_child(record, config={"child_works": child_works})
         assert result == "http://iiif.url/123/full/!200,200/0/default.jpg"
 
     def test_defaults_to_first(self):
         """Returns the thumbnail from first child row if it can't find 'f. 001r'"""
-        data = DataFrame(
-            data={
-                "Item ARK": ["ark:/work/1", "ark:/child/2", "ark:/child/1"],
-                "Parent ARK": ["ark:/collection/1", "ark:/work/1", "ark:/work/1"],
-                "Thumbnail URL": [None, "/thumb2.jpg", "/thumb1.jpg"],
-                "Title": [None, "f. 001v", "f. 002r"],
-            }
-        )
+        child_works = feed_ursus.collate_child_works({
+            "ark:/work/1": {
+                "Item ARK": "ark:/work/1",
+                "Parent ARK": "ark:/collection/1",
+                "Thumbnail URL": None,
+                "Title": None,
+                "Object Type": "Work",
+            },
+            "ark:/child/2": {
+                "Item ARK": "ark:/child/2",
+                "Parent ARK": "ark:/work/1",
+                "Thumbnail URL": "/thumb2.jpg",
+                "Title": "f. 001v",
+                "Object Type": "ChildWork",
+            },
+            "ark:/child/1": {
+                "Item ARK": "ark:/child/1",
+                "Parent ARK": "ark:/work/1",
+                "Thumbnail URL": "/thumb1.jpg",
+                "Title": "f. 002r",
+                "Object Type": "ChildWork",
+            },
+        })
         record = {"ark_ssi": "ark:/work/1"}
-        result = feed_ursus.thumbnail_from_child(record, config={"data_frame": data})
+        
+        result = feed_ursus.thumbnail_from_child(record, config={"child_works": child_works})
         assert result == "/thumb2.jpg"
 
     def test_with_no_children_returns_none(self):
         """If there are no child rows, return None"""
-        data = DataFrame(
-            data={
-                "Item ARK": ["ark:/work/1"],
-                "Parent ARK": ["ark:/collection/1"],
-                "Thumbnail URL": [None],
-                "Title": [None],
-            }
-        )
+        child_works = feed_ursus.collate_child_works({
+            "ark:/work/1": {
+                "Item ARK": "ark:/work/1",
+                "Parent ARK": "ark:/collection/1",
+                "Thumbnail URL": None,
+                "Title": None,
+                "Object Type": "Work",
+            },
+        })
         record = {"ark_ssi": "ark:/work/1"}
-        result = feed_ursus.thumbnail_from_child(record, config={"data_frame": data})
+        
+        result = feed_ursus.thumbnail_from_child(record, config={"child_works": child_works})
         assert result is None
 
 

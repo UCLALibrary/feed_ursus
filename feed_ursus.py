@@ -2,15 +2,18 @@
 # -*- coding: utf-8 -*-
 """Convert UCLA Library CSV files for Ursus, our Blacklight installation."""
 
+import csv
+from collections import defaultdict
+import json
 import os
 import re
 import typing
 import yaml
 
 import click
-import pandas  # type: ignore
 from pysolr import Solr  # type: ignore
 import requests
+import rich.progress
 
 import mapper
 import year_parser
@@ -34,44 +37,40 @@ def load_csv(filename: str, solr_url: typing.Optional[str]):
 
     Args:
         filename: A CSV file.
-        solr_url: URL of a solr instance.
+        solr_url: API endpoint for a solr instance.
     """
 
-    solr_client = Solr(solr_url, always_commit=True) if solr_url else None
+    solr_client = Solr(solr_url, always_commit=True) if solr_url else Solr("")
 
-    data_frame = pandas.read_csv(filename)
-    data_frame = data_frame.where(data_frame.notnull(), None)
-    collection_rows = data_frame[data_frame["Object Type"] == "Collection"]
+    csv_data = { row["Item ARK"]: row for row in csv.DictReader(open(filename)) }
 
     config = {
         "collection_names": {
-            row["Item ARK"]: row["Title"] for _, row in collection_rows.iterrows()
+            row["Item ARK"]: row["Title"] for row in csv_data.values() if row["Object Type"] == "Collection"
         },
         "controlled_fields": load_field_config("./fields"),
-        "data_frame": data_frame,
+        "child_works": collate_child_works(csv_data),
     }
 
-    if not solr_client:
-        print("[", end="")
+    controlled_fields = load_field_config("./fields")
 
-    first_row = True
-    for _, row in data_frame.iterrows():
+    mapped_records = []
+    for row in rich.progress.track(csv_data.values(), description=f"Importing {filename}..."):
+        if row["Object Type"] not in ("ChildWork", "Page"):
+            mapped_records.append(map_record(row, solr_client, config=config))
+
+    if solr_url:
+        solr_client.add(mapped_records)
+    else:
+        print(json.dumps(mapped_records))
+
+def collate_child_works(csv_data: csv.DictReader) -> typing.Dict:
+    # link pages to their parent works
+    child_works = defaultdict(list)
+    for row in csv_data.values():
         if row["Object Type"] in ("ChildWork", "Page"):
-            continue
-
-        if first_row:
-            first_row = False
-        elif not solr_client:
-            print(", ")
-
-        mapped_record = map_record(row, solr_client, config=config)
-        if solr_client:
-            solr_client.add([mapped_record])
-        else:
-            print(mapped_record, end="")
-
-    if not solr_client:
-        print("]")
+            child_works[row["Parent ARK"]].append(row)
+    return child_works
 
 
 def load_field_config(base_path: str = "./fields") -> typing.Dict:
@@ -352,20 +351,26 @@ def thumbnail_from_child(
         A string containing the thumbnail URL
     """
 
-    if "data_frame" not in config:
+    if "child_works" not in config:
         return None
 
     ark = record["ark_ssi"]
-    data = config["data_frame"]
-    children = data[data["Parent ARK"] == ark]
-    representative = children[children["Title"] == "f. 001r"]
-    if representative.shape[0] == 0:
-        representative = children
+    children: list = config["child_works"][ark]
 
-    for _, row in representative.iterrows():
+    def sort_key(row: dict) -> str:
+        if row["Title"].startswith("f. "):
+            return "a" + row["Title"]  # prefer records of this form, in alphanumeric sort order
+        else:
+            return "z" + row["Title"]
+        
+    children.sort(key=sort_key)
+
+    for row in children:
         thumb = mapper.thumbnail_url(row)
         if thumb:
+            print(row["Title"])
             return thumb
+
     return None
 
 def thumbnail_from_manifest(record: UrsusRecord) -> typing.Optional[str]:
