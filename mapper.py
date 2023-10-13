@@ -187,7 +187,7 @@ FIELD_MAPPING: MappingDict = {
     "colophon_tesim": "Colophon",
     "composer_tesim": "Name.composer",
     "condition_note_tesim": ["Condition note", "Description.condition"],
-    "contents_ssi": "Contents",
+    "contents_tesim": "Contents",
     "contents_note_tesim": "Contents note",
     "contributor_tesim": ["Contributors"],
     "date_created_tesim": "Date.creation",
