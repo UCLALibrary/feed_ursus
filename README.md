@@ -3,11 +3,16 @@ Script to process CSVs into an Sinai-ready solr index.
 
 # Using feed_ursus.py
 
-We recommend installing with [poetry](https://python-poetry.org) and [pyenv](https://github.com/pyenv/pyenv), which can be installed with [homebrew](https://brew.sh):
+We recommend installing with [poetry](https://python-poetry.org) and [pyenv](https://github.com/pyenv/pyenv).  which can be installed with [homebrew](https://brew.sh):
 
 ```
-brew install poetry pyenv
+brew install pyenv
+curl -sSL https://install.python-poetry.org | python3 -
 ```
+
+You may need to add `export PATH="/Users/andy/.local/bin:$PATH"` to your shell profile.
+
+If you installed poetry using homebrew (as this document formerly recommended), you might run into some dependency issues. If this happens try `brew uninstall poetry` and the official installer as shown above
 
 To install dependencies in a virtual environment:
 
