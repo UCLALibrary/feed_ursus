@@ -4,7 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["Your Name <you@example.com>"]
 readme = "README.md"
-packages = [{include = "feed_ursus"}]
+packages = []
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -14,12 +14,16 @@ click = "^8.1.3"
 rich = "^13.4.1"
 python-dateutil = "^2.8.2"
 pyyaml = "^6.0.1"
+setuptools = "^74.0.0"
 
 [tool.poetry.group.dev.dependencies]
 mypy = "*"
 pytest = "*"
 pytest-mypy = "*"
 pytest-pylint = "*"
+
+[tool.poetry.scripts]
+feed_ursus = 'feed_ursus:load_csv'
 
 [build-system]
 requires = ["poetry-core"]

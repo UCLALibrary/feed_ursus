@@ -1,58 +1,90 @@
 # feed_ursus
 Script to process CSVs into an Sinai-ready solr index.
 
-# Using feed_ursus.py
+## Using feed_ursus
 
-We recommend installing with [poetry](https://python-poetry.org) and [pyenv](https://github.com/pyenv/pyenv).  which can be installed with [homebrew](https://brew.sh):
+### Installation
 
-```
-brew install pyenv
-curl -sSL https://install.python-poetry.org | python3 -
-```
-
-You may need to add `export PATH="/Users/andy/.local/bin:$PATH"` to your shell profile.
-
-If you installed poetry using homebrew (as this document formerly recommended), you might run into some dependency issues. If this happens try `brew uninstall poetry` and the official installer as shown above
-
-To install dependencies in a virtual environment:
+We recommend installing with [pipx](https://pipx.pypa.io/), and [pyenv](https://github.com/pyenv/pyenv) for alternative python versions:
 
 ```
-poetry install
+brew install pipx pyenv
+pipx ensurepath
 ```
 
-Then, to run commands inside the new virtual environment, you can either enter `poetry shell` to enter the virtual environment, or you can prefix your commands with `poetry run`.
-
-You can then use the script to convert a csv into a json document that follows the data model of an Ursus solr index:
+Then:
 
 ```
-poetry run feed_ursus.py [path/to/your.csv]
+pipx install git+https://github.com/uclalibrary/feed_ursus.git
 ```
 
-This repo includes a docker-compose.yml file that will run local instances of solr and ursus for use in testing this script. To use them (first install [docker](https://docs.docker.com/install/) and [docker compose](https://docs.docker.com/compose/install/)):
+Pipx will install feed_ursus in its own virtualenv, but make the command accessible from anywhere so you don't need to active the virtualenv yourself.
+
+### Use
+
+Convert a csv into a json document that follows the data model of an Ursus solr index:
+
+```
+feed_ursus [path/to/your.csv]
+```
+
+This repo includes a docker-compose.yml file that will run local instances of solr and ursus for use in testing this script. To use them, first install [docker](https://docs.docker.com/install/) and [docker compose](https://docs.docker.com/compose/install/). Then run:
 
 ```
 docker-compose up --detach
 docker-compose run web bundle exec rails db:setup
 ```
 
-Give it a minute or so for solr to get up and running, then point feed_ursus.py directly at the new solr:
+It might take a minute or so for solr to get up and running, at which point you should be able to see your new site at http://localhost:6003. Ursus will be empty, because you haven't loaded any data yet.
+
+To load data from a csv:
 
 ```
-poetry run ./feed_ursus.py [path/to/your.csv] --solr_url http://localhost:6983/solr/californica
+feed_ursus [path/to/your.csv] --solr_url http://localhost:6983/solr/californica
 ```
 
-When the command finishes running, you can see your new site at http://localhost:6003
+## Developing feed_ursus
 
-# Running the test suite
+For development, skip pipx and use [poetry](https://python-poetry.org) along with [pyenv](https://github.com/pyenv/pyenv).
 
-First, install the dev dependencies and enter the virtualenv:
+### Installing
+
+Get poetry and pyenv, if you don't have them already:
+
 ```
-poetry install --dev
+brew install pyenv
+curl -sSL https://install.python-poetry.org | python3 -
+```
+
+Then:
+
+```
+poetry install
+```
+
+### Using the development version
+
+```
+poetry run feed_ursus [path/to/your.csv] --solr_url http://localhost:6983/solr/californica
+```
+
+or
+
+```
 poetry shell
+feed_ursus [path/to/your.csv] --solr_url http://localhost:6983/solr/californica
 ```
 
-Then you can simply run:
+### Running the tests
+
 ```
+poetry run pytest --mypy --pylint
+```
+
+or
+
+```
+poetry shell
 pytest --mypy --pylint
 ```
 
