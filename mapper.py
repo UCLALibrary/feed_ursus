@@ -20,23 +20,6 @@ def ark(row: typing.Mapping[str, str]) -> str:
     return ark_prefix + row["Item ARK"]
 
 
-def iiif_manifest_url(row: typing.Mapping[str, str]) -> str:
-    """A URL containing the IIIF manifest, constructed using the IIIF serivce
-    URL and the item ARK. A manifest does not need to be present at this
-    URL - though of course if one is not, then UV will fail to load in Ursus
-    until a manifest is submitted.
-
-    Args:
-        row: An input CSV record.
-
-    Returns:
-        IIIF Manifest URL.
-    """
-    # iiif_identifier = urllib.parse.quote_plus(ark(row))
-    # return f"https://iiif.library.ucla.edu/{iiif_identifier}/manifest"
-    return row["IIIF Manifest URL"]
-
-
 def object_type(row: typing.Mapping[str, str]) -> str:
     """Object Type. Defaults to "Work", can also be 'ChildWork', or 'Collection'.
 
@@ -153,7 +136,7 @@ def visibility(row: typing.Mapping[str, str]) -> typing.Optional[str]:
         value_from_csv = row["Visibility"].strip().lower()
         return visibility_mapping[value_from_csv]
 
-    if row["Item Status"] in ["Completed", "Completed with minimal metadata"]:
+    if row.get("Item Status") in ["Completed", "Completed with minimal metadata"]:
         return "open"
 
     return "restricted"
@@ -209,7 +192,7 @@ FIELD_MAPPING: MappingDict = {
     "has_model_ssim": object_type,
     "human_readable_language_tesim": "Language",
     "human_readable_rights_statement_tesim": "Rights.copyrightStatus",
-    "iiif_manifest_url_ssi": iiif_manifest_url,
+    "iiif_manifest_url_ssi": "IIIF Manifest URL",
     "iiif_range_ssi": "IIIF Range",
     "iiif_text_direction_ssi": "Text direction",
     "iiif_viewing_hint_ssi": "viewingHint",

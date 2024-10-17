@@ -46,23 +46,22 @@ def load_csv(filename: str, solr_url: typing.Optional[str]):
 
     config = {
         "collection_names": {
-            row["Item ARK"]: row["Title"] for row in csv_data.values() if row["Object Type"] == "Collection"
+            row["Item ARK"]: row["Title"] for row in csv_data.values() if row.get("Object Type") == "Collection"
         },
         "controlled_fields": load_field_config("./fields"),
-        "child_works": collate_child_works(csv_data),
+        # "child_works": collate_child_works(csv_data),
     }
-
-    controlled_fields = load_field_config("./fields")
 
     mapped_records = []
     for row in rich.progress.track(csv_data.values(), description=f"Importing {filename}..."):
-        if row["Object Type"] not in ("ChildWork", "Page"):
+        if row.get("Object Type") not in ("ChildWork", "Page"):
             mapped_records.append(map_record(row, solr_client, config=config))
 
     if solr_url:
         solr_client.add(mapped_records)
     else:
         print(json.dumps(mapped_records))
+
 
 def collate_child_works(csv_data: csv.DictReader) -> typing.Dict:
     # link pages to their parent works
