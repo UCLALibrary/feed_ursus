@@ -3,6 +3,8 @@ Script to process CSVs into an Sinai-ready solr index.
 
 ## Using feed_ursus
 
+For basic use, you can install feed_ursus as a systemwide command directly from github, without having to first clone the repository.
+
 ### Installation
 
 We recommend installing with [pipx](https://pipx.pypa.io/), and [pyenv](https://github.com/pyenv/pyenv) for alternative python versions:
@@ -40,8 +42,12 @@ It might take a minute or so for solr to get up and running, at which point you 
 To load data from a csv:
 
 ```
-feed_ursus [path/to/your.csv] --solr_url http://localhost:6983/solr/californica
+feed_ursus [path/to/your.csv] --solr_url=http://localhost:6983/solr/californica --mapping=dlp
 ```
+
+### Mappers
+
+Different metadata mappings are included for general Digital Library use (`--mapping=dlp`) and for the Sinai Manuscripts Digital Library (`--mapping=sinai`). Because this script was originally used for the Sinai Manuscripts project, the default value is `sinai` for backwards compatibility.
 
 ## Developing feed_ursus
 

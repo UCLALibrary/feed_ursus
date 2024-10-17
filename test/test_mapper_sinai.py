@@ -1,4 +1,4 @@
-"""Tests for mapper.py"""
+"""Tests for mapper/sinai.py"""
 # pylint: disable=no-self-use
 
 
@@ -6,7 +6,7 @@ import random
 
 import pytest  # type: ignore
 
-import mapper
+import mapper.sinai as mapper
 
 
 class TestVisibility:

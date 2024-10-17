@@ -4,6 +4,7 @@
 
 import csv
 from collections import defaultdict
+from importlib import import_module
 import json
 import os
 import re
@@ -15,9 +16,9 @@ from pysolr import Solr  # type: ignore
 import requests
 import rich.progress
 
-import mapper
 import year_parser
 import date_parser
+mapper = None  # dynamically imported in load_csv, establish scope here
 
 # Custom Types
 
@@ -32,7 +33,8 @@ UrsusRecord = typing.Dict[str, typing.Any]
     default=None,
     help="URL of a solr instance, e.g. http://localhost:6983/solr/californica",
 )
-def load_csv(filename: str, solr_url: typing.Optional[str]):
+@click.option("--mapping", default="sinai", help="'sinai' (default, for backwards compatibility) or 'dlp'. Deterines the metadata field mapping")
+def load_csv(filename: str, solr_url: typing.Optional[str], mapping: str):
     """Load data from a csv.
 
     Args:
@@ -40,6 +42,8 @@ def load_csv(filename: str, solr_url: typing.Optional[str]):
         solr_url: API endpoint for a solr instance.
     """
 
+    global mapper
+    mapper = import_module(f"mapper.{mapping}")
     solr_client = Solr(solr_url, always_commit=True) if solr_url else Solr("")
 
     csv_data = { row["Item ARK"]: row for row in csv.DictReader(open(filename)) }
@@ -84,6 +88,9 @@ def load_field_config(base_path: str = "./fields") -> typing.Dict:
     field_config: typing.Dict = {}
     for path, _, files in os.walk(base_path):
         for file_name in files:
+            if not file_name.endswith(".yml") or file_name.endswith(".yaml"):
+                continue
+
             field_name = os.path.splitext(file_name)[0]
             with open(os.path.join(path, file_name), "r") as stream:
                 field_config[field_name] = yaml.safe_load(stream)
@@ -223,8 +230,10 @@ def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> Ursus
     record["script_sim"] = record.get("script_tesim")
     record["writing_system_sim"] = record.get("writing_system_tesim")
     record["year_isim"] = year_parser.integer_years(record.get("normalized_date_tesim"))
-    record["date_dtsim"] = solr_transformed_dates(solr_client,
-    (date_parser.get_dates(record.get("normalized_date_tesim"))))
+    record["date_dtsim"] = solr_transformed_dates(
+        solr_client,
+        (date_parser.get_dates(record.get("normalized_date_tesim")))
+    )
     record["place_of_origin_sim"] = record.get("place_of_origin_tesim")
     record["associated_name_sim"] = record.get("associated_name_tesim")
     record["form_sim"] = record.get("form_tesim")
@@ -235,6 +244,14 @@ def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> Ursus
     record["named_subject_sim"] = record.get("named_subject_tesim")
     record["human_readable_resource_type_sim"] = record.get("resource_type_tesim")
     record["member_of_collections_ssim"] = record.get("dlcs_collection_name_tesim")
+
+    record["combined_subject_ssim"] = [
+        *record.get("named_subject_tesim", []),
+        *record.get("subject_tesim", []),
+        *record.get("subject_topic_tesim", []),
+        *record.get("subject_geographic_tesim", []),
+        *record.get("subject_temporal_tesim", []),
+    ]
 
     # SINAI INDEX
     record["header_index_tesim"] = header_fields(record)
