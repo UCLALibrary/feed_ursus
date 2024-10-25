@@ -1,11 +1,11 @@
-"""Tests for feed_ursus.py"""
+"""Tests for feed_sinai.py"""
 # pylint: disable=no-self-use
 
 import csv
 
 import pytest  # type: ignore
 from pysolr import Solr  # type: ignore
-import feed_ursus
+import feed_sinai
 import test.fixtures as fixtures  # pylint: disable=wrong-import-order
 
 
@@ -22,11 +22,11 @@ class TestMapFieldValue:
         """parses value to an array of strings separated by '|~|'"""
 
         monkeypatch.setitem(
-            feed_ursus.mapper.FIELD_MAPPING, "test_ursus_field_tesim", "Test DLCS Field"
+            feed_sinai.mapper.FIELD_MAPPING, "test_sinai_field_tesim", "Test DLCS Field"
         )
         input_record = {"Test DLCS Field": "one|~|two|~|three"}
-        result = feed_ursus.map_field_value(
-            input_record, "test_ursus_field_tesim", config={}
+        result = feed_sinai.map_field_value(
+            input_record, "test_sinai_field_tesim", config={}
         )
         assert result == [
             "one",
@@ -38,11 +38,11 @@ class TestMapFieldValue:
         """If mapper defines a function map_[SOLR_NAME], calls that function."""
         # pylint: disable=no-member
         monkeypatch.setitem(
-            feed_ursus.mapper.FIELD_MAPPING,
-            "test_ursus_field_tesim",
+            feed_sinai.mapper.FIELD_MAPPING,
+            "test_sinai_field_tesim",
             lambda x: "lkghsdh",
         )
-        result = feed_ursus.map_field_value({}, "test_ursus_field_tesim", config={})
+        result = feed_sinai.map_field_value({}, "test_sinai_field_tesim", config={})
         assert result == "lkghsdh"
 
 
@@ -50,7 +50,7 @@ def test_get_bare_field_name():
     """function get_bare_field_name"""
 
     assert (
-        feed_ursus.get_bare_field_name("human_readable_test_field_name_tesim")
+        feed_sinai.get_bare_field_name("human_readable_test_field_name_tesim")
         == "test_field_name"
     )
 
@@ -61,16 +61,16 @@ class TestMapRecord:
     CONFIG = {"collection_names": {"ark:/123/collection": "Test Collection KGSL"}}
     solr_client = Solr("http://localhost:6983/solr/californica", always_commit=True)
     def test_maps_record(self, monkeypatch):
-        """maps the record for Ursus"""
+        """maps the record for Sinai"""
         monkeypatch.setattr(
-            feed_ursus.mapper,
+            feed_sinai.mapper,
             "FIELD_MAPPING",
             {
                 "id": lambda r: r["Item ARK"],
-                "test_ursus_field_tesim": "Test DLCS Field",
+                "test_sinai_field_tesim": "Test DLCS Field",
             },
         )
-        result = feed_ursus.map_record(
+        result = feed_sinai.map_record(
             {"Item ARK": "ark:/123/abc", "Test DLCS Field": "lasigd|~|asdfg"},
             self.solr_client, config=self.CONFIG,
         )
@@ -88,7 +88,7 @@ class TestMapRecord:
             "script_sim": None,
             "subject_sim": None,
             "support_sim": None,
-            "test_ursus_field_tesim": ["lasigd", "asdfg"],
+            "test_sinai_field_tesim": ["lasigd", "asdfg"],
             "thumbnail_url_ss": None,
             "writing_system_sim": None,
             "year_isim": [],
@@ -120,7 +120,7 @@ class TestMapRecord:
 
     def test_sets_id(self):
         """sets 'id' equal to 'Item ARK'/'ark_ssi'"""
-        result = feed_ursus.map_record(
+        result = feed_sinai.map_record(
             {
                 "Item ARK": "ark:/123/abc",
                 "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest"
@@ -132,7 +132,7 @@ class TestMapRecord:
 
     def test_sets_thumbnail(self):
         """sets a thumbnail URL"""
-        result = feed_ursus.map_record(
+        result = feed_sinai.map_record(
             {
                 "Item ARK": "ark:/123/abc",
                 "IIIF Access URL": "https://test.iiif.server/url",
@@ -148,7 +148,7 @@ class TestMapRecord:
 
     def test_sets_access(self):
         """sets permissive values for blacklight-access-control"""
-        result = feed_ursus.map_record(
+        result = feed_sinai.map_record(
             {
                 "Item ARK": "ark:/123/abc",
                 "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest"
@@ -162,7 +162,7 @@ class TestMapRecord:
 
     def test_sets_iiif_manifest_url(self):
         """sets a IIIF manifest URL based on the ARK"""
-        result = feed_ursus.map_record(
+        result = feed_sinai.map_record(
             {
                 "Item ARK": "ark:/123/abc",
                 "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest"
@@ -178,7 +178,7 @@ class TestMapRecord:
     def test_sets_collection(self):
         """sets the collection name by using the collection row"""
 
-        result = feed_ursus.map_record(
+        result = feed_sinai.map_record(
             {
                 "Item ARK": "ark:/123/abc",
                 "Parent ARK": "ark:/123/collection",
@@ -204,7 +204,7 @@ class TestMapRecord:
     def test_sets_facet_fields(self, column_name, facet_field_name):
         """Copies *_tesim to *_sim fields for facets"""
         value = "value aksjg"
-        result = feed_ursus.map_record(
+        result = feed_sinai.map_record(
             {
                 "Item ARK": "ark:/123/abc",
                 "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest",
@@ -217,12 +217,12 @@ class TestMapRecord:
 
 
 class TestThumbnailFromChild:
-    """Tests for feed_ursus.thumbnail_from_child."""
+    """Tests for feed_sinai.thumbnail_from_child."""
 
     def test_uses_title(self):
         """Returns the thumbnail from child row 'f. 001r'"""
 
-        child_works = feed_ursus.collate_child_works({
+        child_works = feed_sinai.collate_child_works({
             "ark:/work/1": {
                 "Object Type": "Work",
                 "Item ARK": "ark:/work/1",
@@ -247,13 +247,13 @@ class TestThumbnailFromChild:
         })
         record = {"ark_ssi": "ark:/work/1"}
         
-        result = feed_ursus.thumbnail_from_child(record, config={"child_works": child_works})
+        result = feed_sinai.thumbnail_from_child(record, config={"child_works": child_works})
         assert result == "/thumb1.jpg"
 
     def test_uses_mapper(self):
         """Uses the mapper to generate a thumbnail from access_copy, if necessary"""
 
-        child_works = feed_ursus.collate_child_works({
+        child_works = feed_sinai.collate_child_works({
             "ark:/work/1": {
                 "Item ARK": "ark:/work/1", "Parent ARK": "ark:/collection/1", "IIIF Access URL": None,
                 "Title": None,
@@ -269,12 +269,12 @@ class TestThumbnailFromChild:
         })
         record = {"ark_ssi": "ark:/work/1"}
         
-        result = feed_ursus.thumbnail_from_child(record, config={"child_works": child_works})
+        result = feed_sinai.thumbnail_from_child(record, config={"child_works": child_works})
         assert result == "http://iiif.url/123/full/!200,200/0/default.jpg"
 
     def test_defaults_to_first(self):
         """Returns the thumbnail from first child row if it can't find 'f. 001r'"""
-        child_works = feed_ursus.collate_child_works({
+        child_works = feed_sinai.collate_child_works({
             "ark:/work/1": {
                 "Item ARK": "ark:/work/1",
                 "Parent ARK": "ark:/collection/1",
@@ -299,12 +299,12 @@ class TestThumbnailFromChild:
         })
         record = {"ark_ssi": "ark:/work/1"}
         
-        result = feed_ursus.thumbnail_from_child(record, config={"child_works": child_works})
+        result = feed_sinai.thumbnail_from_child(record, config={"child_works": child_works})
         assert result == "/thumb2.jpg"
 
     def test_with_no_children_returns_none(self):
         """If there are no child rows, return None"""
-        child_works = feed_ursus.collate_child_works({
+        child_works = feed_sinai.collate_child_works({
             "ark:/work/1": {
                 "Item ARK": "ark:/work/1",
                 "Parent ARK": "ark:/collection/1",
@@ -315,7 +315,7 @@ class TestThumbnailFromChild:
         })
         record = {"ark_ssi": "ark:/work/1"}
         
-        result = feed_ursus.thumbnail_from_child(record, config={"child_works": child_works})
+        result = feed_sinai.thumbnail_from_child(record, config={"child_works": child_works})
         assert result is None
 
 
@@ -327,10 +327,10 @@ class TestThumbnailFromManifest:
     def test_picks_folio_1r(self, monkeypatch):
         "uses the page titled 'f. 001r', if found"
         monkeypatch.setattr(
-            feed_ursus.requests, "get", lambda x: fixtures.GOOD_MANIFEST
+            feed_sinai.requests, "get", lambda x: fixtures.GOOD_MANIFEST
         )
 
-        result = feed_ursus.thumbnail_from_manifest(self.record)
+        result = feed_sinai.thumbnail_from_manifest(self.record)
         assert (
             result
             == "https://iiif.sinaimanuscripts.library.ucla.edu/iiif/2/ark%3A%2F21198%2Fz14b44n8%2Fzw07hs0c/full/!200,200/0/default.jpg"  # pylint: disable=line-too-long
@@ -339,10 +339,10 @@ class TestThumbnailFromManifest:
     def test_picks_first_page(self, monkeypatch):
         "uses the first image if 'f. 001r' is not found"
         monkeypatch.setattr(
-            feed_ursus.requests, "get", lambda x: fixtures.MANIFEST_WITHOUT_F001R
+            feed_sinai.requests, "get", lambda x: fixtures.MANIFEST_WITHOUT_F001R
         )
 
-        result = feed_ursus.thumbnail_from_manifest(self.record)
+        result = feed_sinai.thumbnail_from_manifest(self.record)
         assert (
             result
             == "https://iiif.sinaimanuscripts.library.ucla.edu/iiif/2/ark%3A%2F21198%2Fz14b44n8%2Fhm957748/full/!200,200/0/default.jpg"  # pylint: disable=line-too-long
@@ -352,32 +352,32 @@ class TestThumbnailFromManifest:
         "returns None if HTTP request fails"
 
         monkeypatch.setattr(
-            feed_ursus.requests, "get", lambda x: fixtures.MockResponse(None, 404)
+            feed_sinai.requests, "get", lambda x: fixtures.MockResponse(None, 404)
         )
 
-        result = feed_ursus.thumbnail_from_manifest(self.record)
+        result = feed_sinai.thumbnail_from_manifest(self.record)
         assert result is None
 
     def test_manifest_without_images(self, monkeypatch):
         "returns None if manifest contains no images"
 
         monkeypatch.setattr(
-            feed_ursus.requests, "get", lambda x: fixtures.MANIFEST_WITHOUT_IMAGES
+            feed_sinai.requests, "get", lambda x: fixtures.MANIFEST_WITHOUT_IMAGES
         )
 
-        result = feed_ursus.thumbnail_from_manifest(self.record)
+        result = feed_sinai.thumbnail_from_manifest(self.record)
         assert result is None
 
     def test_bad_data(self, monkeypatch):
         "returns None if manifest isn't parsable"
 
-        monkeypatch.setattr(feed_ursus.requests, "get", lambda x: fixtures.BAD_MANIFEST)
+        monkeypatch.setattr(feed_sinai.requests, "get", lambda x: fixtures.BAD_MANIFEST)
 
-        result = feed_ursus.thumbnail_from_manifest(self.record)
+        result = feed_sinai.thumbnail_from_manifest(self.record)
         assert result is None
 
     def test_no_manifest_url(self):
         "returns None if the record doesn't include field 'iiif_m'"
 
-        result = feed_ursus.thumbnail_from_manifest({})
+        result = feed_sinai.thumbnail_from_manifest({})
         assert result is None

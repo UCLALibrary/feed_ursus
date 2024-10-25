@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Convert UCLA Library CSV files for Ursus, our Blacklight installation."""
+"""Convert UCLA Library CSV files for Sinai, our Blacklight installation."""
 
 import csv
 from collections import defaultdict
@@ -22,7 +22,7 @@ import date_parser
 # Custom Types
 
 DLCSRecord = typing.Dict[str, typing.Any]
-UrsusRecord = typing.Dict[str, typing.Any]
+SinaiRecord = typing.Dict[str, typing.Any]
 
 
 @click.command()
@@ -101,7 +101,7 @@ def map_field_value(
     """Map value from a CSV cell to an object that will be passed to solr.
 
     Mapping logic is defined by the FIELD_MAPPING dict, defined in mappery.py.
-    Keys of FIELD_MAPPING are output field names as used in Ursus. Values can
+    Keys of FIELD_MAPPING are output field names as used in Sinai. Values can
     vary, and the behavior of map_field_value() will depend on that value.
 
     If FIELD_MAPPING[field_name] is a string, then it will be interpreted as
@@ -121,7 +121,7 @@ def map_field_value(
 
     Args:
         row: An input row containing a DLCS record.
-        field_name: The name of the Ursus/Solr field to map.
+        field_name: The name of the Sinai/Solr field to map.
 
     Returns:
         A value to be submitted to solr. By default this is a list of strings,
@@ -170,8 +170,8 @@ def solr_transformed_dates(solr_client: Solr, parsed_dates: typing.List):
     return [solr_client._from_python(date) for date in parsed_dates] # pylint: disable=protected-access
 
 # pylint: disable=bad-continuation
-def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> UrsusRecord: # pylint: disable=too-many-statements
-    """Maps a metadata record from CSV to Ursus Solr.
+def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> SinaiRecord: # pylint: disable=too-many-statements
+    """Maps a metadata record from CSV to Sinai Solr.
 
     Args:
         record: A mapping representing the CSV record.
@@ -180,7 +180,7 @@ def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> Ursus
         A mapping representing the record to submit to Solr.
 
     """
-    record: UrsusRecord = {
+    record: SinaiRecord = {
         field_name: map_field_value(row, field_name, config=config)
         for field_name in mapper.FIELD_MAPPING
     }
@@ -334,7 +334,7 @@ def name_fields_index(record):
     return name_fields_combined
 
 def thumbnail_from_child(
-    record: UrsusRecord, config: typing.Dict
+    record: SinaiRecord, config: typing.Dict
 ) -> typing.Optional[str]:
     """Picks a thumbnail by looking for child rows in the CSV.
 
@@ -373,7 +373,7 @@ def thumbnail_from_child(
 
     return None
 
-def thumbnail_from_manifest(record: UrsusRecord) -> typing.Optional[str]:
+def thumbnail_from_manifest(record: SinaiRecord) -> typing.Optional[str]:
     """Picks a thumbnail downloading the IIIF manifest.
 
     Args:

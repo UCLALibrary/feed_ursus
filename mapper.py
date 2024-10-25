@@ -23,7 +23,7 @@ def ark(row: typing.Mapping[str, str]) -> str:
 def iiif_manifest_url(row: typing.Mapping[str, str]) -> str:
     """A URL containing the IIIF manifest, constructed using the IIIF serivce
     URL and the item ARK. A manifest does not need to be present at this
-    URL - though of course if one is not, then UV will fail to load in Ursus
+    URL - though of course if one is not, then UV will fail to load in Sinai
     until a manifest is submitted.
 
     Args:
