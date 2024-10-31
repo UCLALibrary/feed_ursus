@@ -17,12 +17,16 @@ terms:
   term: Afrihili (Artificial language)
 - id: afr
   term: Afrikaans
+- id: ahs
+  term: Ashe
 - id: ain
   term: Ainu
 - id: ajm
   term: Aljamía
 - id: aka
   term: Akan
+- id: akf
+  term: Akpa
 - id: akk
   term: Akkadian
 - id: alb
@@ -35,8 +39,14 @@ terms:
   term: Altai
 - id: amh
   term: Amharic
+- id: amuz1254
+  term: Amuzgo (Amusgo)
+- id: anc
+  term: Ngas
 - id: ang
   term: English, Old (ca. 450-1100)
+- id: ann
+  term: Obolo
 - id: anp
   term: Angika
 - id: apa
@@ -103,6 +113,8 @@ terms:
   term: Bengali
 - id: ber
   term: Berber (Other)
+- id: bhb
+  term: Bhili
 - id: bho
   term: Bhojpuri
 - id: bih
@@ -161,6 +173,8 @@ terms:
   term: Chagatai
 - id: chi
   term: Chinese
+- id: chin1484
+  term: Chinanteco
 - id: chk
   term: Chuukese
 - id: chm
@@ -179,6 +193,8 @@ terms:
   term: Chuvash
 - id: chy
   term: Cheyenne
+- id: cin
+  term: Cinta
 - id: cmc
   term: Chamic languages
 - id: cnr
@@ -217,6 +233,8 @@ terms:
   term: Dargwa
 - id: day
   term: Dayak
+- id: ddg
+  term: Fataluku
 - id: del
   term: Delaware
 - id: den
@@ -249,6 +267,8 @@ terms:
   term: Egyptian
 - id: eka
   term: Ekajuk
+- id: ekp
+  term: Ekpeye
 - id: elx
   term: Elamite
 - id: eng
@@ -305,6 +325,8 @@ terms:
   term: Fula
 - id: fur
   term: Friulian
+- id: fuv
+  term: Fulfude
 - id: gaa
   term: Gã
 - id: gae
@@ -348,9 +370,9 @@ terms:
 - id: grb
   term: Grebo
 - id: grc
-  term: Greek
+  term: Greek, Ancient (to 1453)
 - id: gre
-  term: Greek
+  term: Greek, Modern (1453-)
 - id: grn
   term: Guarani
 - id: gsw
@@ -369,6 +391,8 @@ terms:
   term: Hausa
 - id: haw
   term: Hawaiian
+- id: hch
+  term: Wixárika (Huichol)
 - id: heb
   term: Hebrew
 - id: her
@@ -385,6 +409,8 @@ terms:
   term: Hmong
 - id: hmo
   term: Hiri Motu
+- id: hne
+  term: Chhattisgarhi
 - id: hrv
   term: Croatian
 - id: hsb
@@ -401,8 +427,16 @@ terms:
   term: Icelandic
 - id: ido
   term: Ido
+- id: idu
+  term: Idoma
+- id: ige
+  term: Igede
+- id: igl
+  term: Igala
 - id: iii
   term: Sichuan Yi
+- id: ijn
+  term: Kalabari
 - id: ijo
   term: Ijo
 - id: iku
@@ -431,14 +465,26 @@ terms:
   term: Irish
 - id: iro
   term: Iroquoian (Other)
+- id: ish
+  term: Esan
+- id: iso
+  term: Isoko
 - id: ita
   term: Italian
+- id: its
+  term: Isekiri
 - id: jav
   term: Javanese
 - id: jbo
   term: Lojban (Artificial language)
 - id: jpn
   term: Japanese
+- id: jar
+  term: Jarawa (Nigeria)
+- id: jbu
+  term: Jukun Takum
+- id: jib
+  term: Jibu
 - id: jpr
   term: Judeo-Persian
 - id: jrb
@@ -475,6 +521,8 @@ terms:
   term: Khmer
 - id: kho
   term: Khotanese
+- id: kic
+  term: Kickapoo (Kikapú, Kikaapoa)
 - id: kik
   term: Kikuyu
 - id: kin
@@ -483,6 +531,8 @@ terms:
   term: Kyrgyz
 - id: kmb
   term: Kimbundu
+- id: koa
+  term: Khassonké
 - id: kok
   term: Konkani
 - id: kom
@@ -583,6 +633,10 @@ terms:
   term: Maasai
 - id: max
   term: Manx
+- id: maza1293
+  term: Mazahua
+- id: maza1295
+  term: Mazateco
 - id: may
   term: Malay
 - id: mdf
@@ -599,6 +653,10 @@ terms:
   term: Minangkabau
 - id: mis
   term: Miscellaneous languages
+- id: mixe1286
+  term: Mixe (Ayuuk)
+- id: mixt1422
+  term: Mixteco
 - id: mkh
   term: Mon-Khmer (Other)
 - id: mla
@@ -663,6 +721,8 @@ terms:
   term: Niger-Kordofanian (Other)
 - id: niu
   term: Niuean
+- id: nkx
+  term: Nkọrọọ
 - id: nno
   term: Norwegian (Nynorsk)
 - id: nob
@@ -679,6 +739,8 @@ terms:
   term: Northern Sotho
 - id: nub
   term: Nubian languages
+- id: nup
+  term: Nupe-Nupe-Tako
 - id: nwc
   term: Newari, Old
 - id: nya
@@ -695,6 +757,8 @@ terms:
   term: Occitan (post-1500)
 - id: oji
   term: Ojibwa
+- id: omq
+  term: Oto-Manguean Languages
 - id: ori
   term: Oriya
 - id: orm
@@ -851,6 +915,8 @@ terms:
   term: Sotho
 - id: spa
   term: Spanish
+- id: srb
+  term: Sora
 - id: srd
   term: Sardinian
 - id: srn
@@ -881,8 +947,10 @@ terms:
   term: Swazi
 - id: syc
   term: Syriac
+- id: sym
+  term: Maya Samo
 - id: syr
-  term: Syriac
+  term: Syriac, Modern
 - id: tag
   term: Tagalog
 - id: tah
@@ -901,6 +969,8 @@ terms:
   term: Telugu
 - id: tem
   term: Temne
+- id: tequ1244
+  term: Chontal de Oaxaca
 - id: ter
   term: Terena
 - id: tet
@@ -921,6 +991,8 @@ terms:
   term: Tiv
 - id: tkl
   term: Tokelauan
+- id: tlap1252
+  term: Tlapeneco (Me´phaa)
 - id: tlh
   term: Klingon (Artificial language)
 - id: tli
@@ -929,10 +1001,14 @@ terms:
   term: Tamashek
 - id: tog
   term: Tonga (Nyasa)
+- id: toj
+  term: Tojolabal
 - id: ton
   term: Tongan
 - id: tpi
   term: Tok Pisin
+- id: triq1251
+  term: Triqui (Trique)
 - id: tru
   term: Truk
 - id: tsi
@@ -959,6 +1035,8 @@ terms:
   term: Twi
 - id: tyv
   term: Tuvinian
+- id: tzo
+  term: Tsotsil (Tzotzil)
 - id: udm
   term: Udmurt
 - id: uga
@@ -973,6 +1051,8 @@ terms:
   term: Undetermined
 - id: urd
   term: Urdu
+- id: urh
+  term: Urhobo
 - id: uzb
   term: Uzbek
 - id: vai
@@ -1001,6 +1081,8 @@ terms:
   term: Walloon
 - id: wol
   term: Wolof
+- id: wtm
+  term: Mewati
 - id: xag
   term: Caucasian Albanian
 - id: xal
@@ -1027,6 +1109,8 @@ terms:
   term: Zhuang
 - id: znd
   term: Zande languages
+- id: zoqu1261
+  term: Zoque
 - id: zul
   term: Zulu
 - id: zun

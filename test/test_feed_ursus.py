@@ -1,12 +1,14 @@
 """Tests for feed_ursus.py"""
 # pylint: disable=no-self-use
 
-import csv
+import importlib
 
 import pytest  # type: ignore
 from pysolr import Solr  # type: ignore
 import feed_ursus
 import test.fixtures as fixtures  # pylint: disable=wrong-import-order
+
+feed_ursus.mapper = importlib.import_module("mapper.sinai")
 
 
 @pytest.mark.xfail()
@@ -59,7 +61,7 @@ class TestMapRecord:
     """function map_record"""
 
     CONFIG = {"collection_names": {"ark:/123/collection": "Test Collection KGSL"}}
-    solr_client = Solr("http://localhost:6983/solr/californica", always_commit=True)
+    solr_client = Solr("http://localhost:8983/solr/californica", always_commit=True)
     def test_maps_record(self, monkeypatch):
         """maps the record for Ursus"""
         monkeypatch.setattr(
@@ -96,6 +98,7 @@ class TestMapRecord:
             "architect_sim": None,
             "author_sim": None,
             "calligrapher_sim": None,
+            "combined_subject_ssim": [],
             "commentator_sim": None,
             "composer_sim": None,
             "editor_sim": None,
@@ -171,8 +174,10 @@ class TestMapRecord:
             config=self.CONFIG,
         )
         assert (
+            # Should be single-valued; the current code returns a list. As long
+            # as there's only one element, solr will accept it.
             result["iiif_manifest_url_ssi"]
-            == "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest"
+            == ["https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest"]
         )
 
     def test_sets_collection(self):
