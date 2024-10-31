@@ -239,7 +239,6 @@ FIELD_MAPPING: MappingDict = {
     "format_book_tesim": ["Format"],  # Defined in californica, not being used?
     "format_extent_tesim": ["Format.extent", "Format.dimensions", "Format.weight"],
     "funding_note_tesim": "Description.fundingNote",
-    "generic_type_sim"
     "genre_tesim": ["Type.genre", "Genre"],
     "geographic_coordinates_ssim": coordinates,
     "hand_note_tesim": "Hand note",

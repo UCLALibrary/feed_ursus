@@ -31,9 +31,9 @@ UrsusRecord = typing.Dict[str, typing.Any]
 @click.option(
     "--solr_url",
     default=None,
-    help="URL of a solr instance, e.g. http://localhost:6983/solr/californica",
+    help="URL of a solr instance, e.g. http://localhost:8983/solr/californica",
 )
-@click.option("--mapping", default="sinai", help="'sinai' (default, for backwards compatibility) or 'dlp'. Deterines the metadata field mapping")
+@click.option("--mapping", default="dlp", help="'sinai' or 'dlp'. Deterines the metadata field mapping")
 def load_csv(filename: str, solr_url: typing.Optional[str], mapping: str):
     """Load data from a csv.
 
@@ -163,7 +163,10 @@ def map_field_value(
         terms = config["controlled_fields"][bare_field_name]["terms"]
         output = [terms.get(value, value) for value in output]
 
-    return [value for value in output if value]  # remove untruthy values like ''
+    if field_name.endswith("m"):
+        return [value for value in output if value]  # remove untruthy values like '' or None
+    else:
+        return output[0] if len(output) >= 1 else None
 
 
 def get_bare_field_name(field_name: str) -> str:
@@ -314,7 +317,7 @@ def name_fields(record):
 
 def header_fields(record):
     """Header: shelfmark_ssi: 'Shelfmark' && extent_tesim: 'Format'"""
-    shelfmark = record.get("shelfmark_ssi", [])
+    shelfmark = [record["shelfmark_ssi"]] if "shelfmark_ssi" in record else []
     extent = record.get("extent_tesim", [])
     return shelfmark + extent
 
@@ -332,7 +335,8 @@ def keywords_fields(record):
     features = record.get("features_tesim", [])
     place_of_origin = record.get("place_of_origin_tesim", [])
     support = record.get("support_tesim", [])
-    form = record.get("form_ssi", [])
+    form = [record["form_ssi"]] if "form_ssi" in record else []
+
     record["keywords_tesim"] = genre + features + place_of_origin + support + form
     return record["keywords_tesim"]
 

@@ -37,12 +37,12 @@ docker-compose up --detach
 docker-compose run web bundle exec rails db:setup
 ```
 
-It might take a minute or so for solr to get up and running, at which point you should be able to see your new site at http://localhost:6003. Ursus will be empty, because you haven't loaded any data yet.
+It might take a minute or so for solr to get up and running, at which point you should be able to see your new site at http://localhost:3003. Ursus will be empty, because you haven't loaded any data yet.
 
 To load data from a csv:
 
 ```
-feed_ursus [path/to/your.csv] --solr_url=http://localhost:6983/solr/californica --mapping=dlp
+feed_ursus [path/to/your.csv] --solr_url=http://localhost:8983/solr/californica --mapping=dlp
 ```
 
 ### Mappers
@@ -71,14 +71,14 @@ poetry install
 ### Using the development version
 
 ```
-poetry run feed_ursus [path/to/your.csv] --solr_url http://localhost:6983/solr/californica
+poetry run feed_ursus [path/to/your.csv] --solr_url http://localhost:8983/solr/californica
 ```
 
 or
 
 ```
 poetry shell
-feed_ursus [path/to/your.csv] --solr_url http://localhost:6983/solr/californica
+feed_ursus [path/to/your.csv] --solr_url http://localhost:8983/solr/californica
 ```
 
 ### Running the tests

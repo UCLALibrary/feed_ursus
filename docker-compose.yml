@@ -16,7 +16,7 @@ services:
       SOLR_URL: http://solr:8983/solr/californica
       SOLR_TEST_URL: http://solr_test:8983/solr/californica
     ports:
-      - "127.0.0.1:6003:3000"
+      - "127.0.0.1:3003:3000"
     working_dir: /ursus
 
   db:
@@ -25,14 +25,14 @@ services:
       - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
       - mysql_data:/var/lib/mysql
     # ports:
-    #   - "127.0.0.1:6306:3306"
+    #   - "127.0.0.1:3306:3306"
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
 
   solr:
     build: .
     ports:
-      - "127.0.0.1:6983:8983"
+      - "127.0.0.1:8983:8983"
 
 
 volumes:

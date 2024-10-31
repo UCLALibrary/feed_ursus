@@ -61,7 +61,7 @@ class TestMapRecord:
     """function map_record"""
 
     CONFIG = {"collection_names": {"ark:/123/collection": "Test Collection KGSL"}}
-    solr_client = Solr("http://localhost:6983/solr/californica", always_commit=True)
+    solr_client = Solr("http://localhost:8983/solr/californica", always_commit=True)
     def test_maps_record(self, monkeypatch):
         """maps the record for Ursus"""
         monkeypatch.setattr(
