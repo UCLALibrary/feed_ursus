@@ -170,7 +170,7 @@ MappigDictValue = typing.Union[None, typing.Callable, str, typing.List[str]]
 MappingDict = typing.Dict[str, MappigDictValue]
 
 FIELD_MAPPING: MappingDict = {
-    "id": ark,
+    "id": lambda x: x["Item ARK"].replace("ark:/", "").replace("/", "-")[::-1],
     "access_copy_ssi": ["IIIF Access URL", "access_copy"],
     "alternative_title_tesim": [
         "AltTitle.other",
