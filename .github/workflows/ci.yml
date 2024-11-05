@@ -2,9 +2,9 @@ name: Run CI Suite
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   pytest:
@@ -14,12 +14,11 @@ jobs:
       - name: Set up Python 
         uses: actions/setup-python@v4
         with:
-          python-version: "3.7"
+          python-version: "3.11"
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pipenv
+          pip install poetry
+          poetry install
       - name: Test with pytest
-        run: |
-          pipenv install --dev
-          pipenv run pytest --mypy --pylint
+        run: poetry run pytest
