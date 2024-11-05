@@ -174,10 +174,8 @@ class TestMapRecord:
             config=self.CONFIG,
         )
         assert (
-            # Should be single-valued; the current code returns a list. As long
-            # as there's only one element, solr will accept it.
             result["iiif_manifest_url_ssi"]
-            == ["https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest"]
+            == "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest"
         )
 
     def test_sets_collection(self):
