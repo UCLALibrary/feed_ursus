@@ -1,6 +1,12 @@
 version: "3.6"
 
 services:
+  python:
+    build: .
+    working_dir: /eureka
+    volumes:
+      - ../eureka:/eureka
+
   web:
     image: uclalibrary/ursus
     hostname: ursus
@@ -16,7 +22,7 @@ services:
       SOLR_URL: http://solr:8983/solr/californica
       SOLR_TEST_URL: http://solr_test:8983/solr/californica
     ports:
-      - "127.0.0.1:3003:3000"
+      - "127.0.0.1:6003:3000"
     working_dir: /ursus
 
   db:
@@ -32,7 +38,7 @@ services:
   solr:
     build: .
     ports:
-      - "127.0.0.1:8983:8983"
+      - "127.0.0.1:6983:8983"
 
 
 volumes:
