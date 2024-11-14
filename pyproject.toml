@@ -22,6 +22,7 @@ pytest = "*"
 pytest-mypy = "*"
 pytest-pylint = "*"
 ipdb = "^0.13.13"
+pytest-sugar = "^1.0.0"
 
 [tool.poetry.scripts]
 feed_ursus = 'feed_ursus.feed_ursus:load_csv'
