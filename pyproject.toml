@@ -24,7 +24,7 @@ pytest-pylint = "*"
 ipdb = "^0.13.13"
 
 [tool.poetry.scripts]
-feed_ursus = 'feed_ursus:load_csv'
+feed_ursus = 'feed_ursus.feed_ursus:load_csv'
 
 [build-system]
 requires = ["poetry-core"]

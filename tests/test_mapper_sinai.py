@@ -6,7 +6,7 @@ import random
 
 import pytest  # type: ignore
 
-import mapper.sinai as mapper
+import feed_ursus.mapper.sinai as mapper
 
 
 class TestVisibility:
