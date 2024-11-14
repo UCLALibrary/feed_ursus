@@ -5,7 +5,7 @@ Creates a multi-valued 'year_isim' field by parsing 'normalized_date'.
 """
 
 import datetime
-import date_parser
+from feed_ursus import date_parser
 
 
 def test_iso_8601():

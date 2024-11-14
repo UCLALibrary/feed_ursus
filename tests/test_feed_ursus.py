@@ -5,10 +5,11 @@ import importlib
 
 import pytest  # type: ignore
 from pysolr import Solr  # type: ignore
-import feed_ursus
-import test.fixtures as fixtures  # pylint: disable=wrong-import-order
 
-feed_ursus.mapper = importlib.import_module("mapper.sinai")
+from feed_ursus import feed_ursus
+from . import fixtures  # pylint: disable=wrong-import-order
+
+feed_ursus.mapper = importlib.import_module("feed_ursus.mapper.sinai")
 
 
 @pytest.mark.xfail()

@@ -4,7 +4,7 @@ tests for year_parser.py
 Creates a multi-valued 'year_isim' field by parsing 'normalized_date'.
 """
 
-import year_parser
+from feed_ursus import year_parser
 
 
 def test_iso_8601():

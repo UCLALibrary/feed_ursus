@@ -16,8 +16,8 @@ from pysolr import Solr  # type: ignore
 import requests
 import rich.progress
 
-import year_parser
-import date_parser
+from . import year_parser
+from . import date_parser
 mapper = None  # dynamically imported in load_csv, establish scope here
 
 # Custom Types
@@ -43,7 +43,7 @@ def load_csv(filename: str, solr_url: typing.Optional[str], mapping: str):
     """
 
     global mapper
-    mapper = import_module(f"mapper.{mapping}")
+    mapper = import_module(f"feed_ursus.mapper.{mapping}")
     solr_client = Solr(solr_url, always_commit=True) if solr_url else Solr("")
 
     csv_data = { row["Item ARK"]: row for row in csv.DictReader(open(filename)) }
@@ -52,7 +52,7 @@ def load_csv(filename: str, solr_url: typing.Optional[str], mapping: str):
         "collection_names": {
             row["Item ARK"]: row["Title"] for row in csv_data.values() if row.get("Object Type") == "Collection"
         },
-        "controlled_fields": load_field_config("./fields"),
+        "controlled_fields": load_field_config("./mapper/fields"),
         # "child_works": collate_child_works(csv_data),
     }
 
