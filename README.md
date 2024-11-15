@@ -7,7 +7,7 @@ For basic use, you can install feed_ursus as a systemwide command directly from 
 
 ### Installation
 
-We recommend installing with [pipx](https://pipx.pypa.io/), and [pyenv](https://github.com/pyenv/pyenv) for alternative python versions:
+We recommend installing with [pipx](https://pipx.pypa.io/). On MacOS, you can install pipx (and python!) with [homebrew](https://brew.sh):
 
 ```
 brew install pipx pyenv
@@ -51,53 +51,60 @@ Different metadata mappings are included for general Digital Library use (`--map
 
 ## Developing feed_ursus
 
-For development, skip pipx and use [poetry](https://python-poetry.org) along with [pyenv](https://github.com/pyenv/pyenv).
-
 ### Installing
 
-Get poetry and pyenv, if you don't have them already:
+For development, clone the repository and use poetry to set up the virtualenv:
 
 ```
-brew install pyenv
-curl -sSL https://install.python-poetry.org | python3 -
-```
-
-Then:
-
-```
+git clone git@github.com:UCLALibrary/feed_ursus.git
+cd feed_ursus
+pipx install poetry
 poetry install
 ```
+
+Then, to activate the virtualenv:
+
+```
+poetry shell
+```
+
+The following will assume the virtualenv is active. You could also run e.g. `poetry run feed_ursus [path/to/your.csv]`
 
 ### Using the development version
 
 ```
-poetry run feed_ursus [path/to/your.csv] --solr_url http://localhost:8983/solr/californica
-```
-
-or
-
-```
-poetry shell
 feed_ursus [path/to/your.csv] --solr_url http://localhost:8983/solr/californica
 ```
 
 ### Running the tests
 
-```
-poetry run pytest --mypy --pylint
-```
-
-or
+Tests are written for [pytest](https://docs.pytest.org/en/latest/):
 
 ```
-poetry shell
-pytest --mypy --pylint
+pytest
 ```
 
-This will run:
-- [pylint](https://www.pylint.org/), a linter, via [pytest-pylint](https://github.com/carsongee/pytest-pylint)
-- [mypy](http://mypy-lang.org/), a static type checker, via [pytest-mypy](https://github.com/dbader/pytest-mypy/)
-- the test suite, written using [pytest](https://docs.pytest.org/en/latest/)
+### Running the formatter and linters:
+
+black (formatter) will run in check mode in ci, so make sure you run it before committing:
+```
+black .
+```
+
+flake8 (linter) isn't currently running in ci, but should be put back in soon:
+```
+flake8
+```
+
+pylint (linter) isn't currently running in ci, but should be put back in soon:
+```
+pylint
+```
+
+mypy (static type checker) isn't currently running in ci, but should be put back in soon:
+```
+mypy
+```
 
 # Caveats
 
