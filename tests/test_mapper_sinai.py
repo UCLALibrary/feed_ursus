@@ -1,4 +1,5 @@
 """Tests for mapper/sinai.py"""
+
 # pylint: disable=no-self-use
 
 

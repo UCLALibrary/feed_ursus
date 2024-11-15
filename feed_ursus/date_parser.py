@@ -8,8 +8,8 @@ from datetime import datetime
 from dateutil import parser
 
 
-
 NORMALIZED_RANGE = re.compile(r"(.*)/(.*)")
+
 
 def get_dates(normalized_dates: typing.Any):
     """Maps a list of 'normalized_date' strings to a sorted list of datetime.

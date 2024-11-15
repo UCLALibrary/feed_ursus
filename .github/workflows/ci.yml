@@ -6,7 +6,20 @@ on:
   pull_request:
     branches: [ main ]
 
+env:
+  DEFAULT_PYTHON_VERSION: 3.11
+
 jobs:
+  black:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+      - run: pip install black
+      - run: black --check .
+
   pytest:
     strategy:
       matrix:

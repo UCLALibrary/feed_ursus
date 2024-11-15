@@ -247,4 +247,3 @@ BAD_MANIFEST = MockResponse(
         ],
     },
 )
-

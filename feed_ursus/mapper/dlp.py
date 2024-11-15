@@ -2,15 +2,23 @@
 """Mapping logic for UCLA CSV->Blacklight conversion."""
 
 import typing
+
 # import urllib.parse
 
 
 def archival_collection(row: typing.Mapping[str, str]) -> str:
     return (
-        row['Archival Collection Title'] if 'Archival Collection Title' in row else ""
-        + f" ({row['Archival Collection Number']})" if 'Archival Collection Number' in row else ""
-        + f", Box {row['Box']}" if 'Box' in row else ""
-        + f", Folder {row['Folder']}" if 'Folder' in row else ""
+        row["Archival Collection Title"]
+        if "Archival Collection Title" in row
+        else (
+            "" + f" ({row['Archival Collection Number']})"
+            if "Archival Collection Number" in row
+            else (
+                "" + f", Box {row['Box']}"
+                if "Box" in row
+                else "" + f", Folder {row['Folder']}" if "Folder" in row else ""
+            )
+        )
     )
 
 
@@ -41,7 +49,7 @@ def coordinates(row: typing.Mapping[str, str]) -> typing.List[str]:
     if "Latitude" not in row or "Longitude" not in row:
         return []
 
-    return (row['Latitude'], row['Longitude'])
+    return (row["Latitude"], row["Longitude"])
 
 
 def object_type(row: typing.Mapping[str, str]) -> str:
@@ -193,8 +201,14 @@ FIELD_MAPPING: MappingDict = {
     "artist_sim": ["Artist", "Name.artist"],
     "associated_name_tesim": "Associated Name",
     "author_tesim": "Author",
-    "binding_note_tesim": ["Binding note", "Description.binding"],  # Sinaimanuscripts uses _tesim
-    "binding_note_ssi": ["Binding note", "Description.binding"],  # Californica uses _ssi; Ursus wants _ssi AND _tesim (but _tesim is unpopulated)
+    "binding_note_tesim": [
+        "Binding note",
+        "Description.binding",
+    ],  # Sinaimanuscripts uses _tesim
+    "binding_note_ssi": [
+        "Binding note",
+        "Description.binding",
+    ],  # Californica uses _ssi; Ursus wants _ssi AND _tesim (but _tesim is unpopulated)
     "binding_condition_tesim": "Binding condition",
     "calligrapher_tesim": ["Calligrapher", "Name.calligrapher"],
     "caption_tesim": "Description.caption",
@@ -206,8 +220,8 @@ FIELD_MAPPING: MappingDict = {
     "colophon_tesim": ["Colophon", "Description.colophon"],
     "commentator_tesim": ["Commentator", "Name.commentator"],
     "composer_tesim": "Name.composer",
-    "condition_note_tesim": ["Condition note", "Description.condition"], # Sinai
-    "condition_note_ssi": ["Condition note", "Description.condition"], # Californica
+    "condition_note_tesim": ["Condition note", "Description.condition"],  # Sinai
+    "condition_note_ssi": ["Condition note", "Description.condition"],  # Californica
     "content_disclaimer_ssm": "Content disclaimer",
     "contents_tesim": "Contents",
     "contents_note_tesim": "Contents note",
@@ -249,10 +263,12 @@ FIELD_MAPPING: MappingDict = {
     "human_readable_iiif_text_direction_ssi": "Text direction",
     "human_readable_iiif_viewing_hint_ssi": "viewingHint",
     "human_readable_language_tesim": "Language",
-    "human_readable_related_record_title_ssm": ['Related Records'],
-    "human_readable_resource_type_tesim":  "Type.typeOfResource",
+    "human_readable_related_record_title_ssm": ["Related Records"],
+    "human_readable_resource_type_tesim": "Type.typeOfResource",
     "human_readable_rights_statement_tesim": "Rights.copyrightStatus",
-    "identifier_tesim": ["Identifier"], # In the ursus code but idk if we use it, cf ark / local_identifier
+    "identifier_tesim": [
+        "Identifier"
+    ],  # In the ursus code but idk if we use it, cf ark / local_identifier
     "iiif_manifest_url_ssi": "IIIF Manifest URL",
     "iiif_range_ssi": "IIIF Range",
     "iiif_text_direction_ssi": "Text direction",
@@ -339,9 +355,9 @@ FIELD_MAPPING: MappingDict = {
     "recipient_sim": ["Recipient", "Name.recipient"],
     "recipient_tesim": ["Recipient", "Name.recipient"],
     "references_tesim": "References",
-    "related_tesim": "Related", # sinai
-    "related_record_ssm": ['Related Records'], # californica
-    "related_to_ssm": ["Related Items"], # californica
+    "related_tesim": "Related",  # sinai
+    "related_record_ssm": ["Related Records"],  # californica
+    "related_to_ssm": ["Related Items"],  # californica
     "repository_tesim": [
         "Repository",
         "repository",

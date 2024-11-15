@@ -18,6 +18,7 @@ import rich.progress
 
 from . import year_parser
 from . import date_parser
+
 mapper = None  # dynamically imported in load_csv, establish scope here
 
 # Custom Types
@@ -33,7 +34,11 @@ UrsusRecord = typing.Dict[str, typing.Any]
     default=None,
     help="URL of a solr instance, e.g. http://localhost:8983/solr/californica",
 )
-@click.option("--mapping", default="dlp", help="'sinai' or 'dlp'. Deterines the metadata field mapping")
+@click.option(
+    "--mapping",
+    default="dlp",
+    help="'sinai' or 'dlp'. Deterines the metadata field mapping",
+)
 def load_csv(filename: str, solr_url: typing.Optional[str], mapping: str):
     """Load data from a csv.
 
@@ -46,18 +51,22 @@ def load_csv(filename: str, solr_url: typing.Optional[str], mapping: str):
     mapper = import_module(f"feed_ursus.mapper.{mapping}")
     solr_client = Solr(solr_url, always_commit=True) if solr_url else Solr("")
 
-    csv_data = { row["Item ARK"]: row for row in csv.DictReader(open(filename)) }
+    csv_data = {row["Item ARK"]: row for row in csv.DictReader(open(filename))}
 
     config = {
         "collection_names": {
-            row["Item ARK"]: row["Title"] for row in csv_data.values() if row.get("Object Type") == "Collection"
+            row["Item ARK"]: row["Title"]
+            for row in csv_data.values()
+            if row.get("Object Type") == "Collection"
         },
         "controlled_fields": load_field_config("./mapper/fields"),
         # "child_works": collate_child_works(csv_data),
     }
 
     mapped_records = []
-    for row in rich.progress.track(csv_data.values(), description=f"Importing {filename}..."):
+    for row in rich.progress.track(
+        csv_data.values(), description=f"Importing {filename}..."
+    ):
         if row.get("Object Type") not in ("ChildWork", "Page"):
             mapped_records.append(map_record(row, solr_client, config=config))
 
@@ -164,7 +173,9 @@ def map_field_value(
         output = [terms.get(value, value) for value in output]
 
     if field_name.endswith("m"):
-        return [value for value in output if value]  # remove untruthy values like '' or None
+        return [
+            value for value in output if value
+        ]  # remove untruthy values like '' or None
     else:
         return output[0] if len(output) >= 1 else None
 
@@ -174,12 +185,18 @@ def get_bare_field_name(field_name: str) -> str:
 
     return re.sub(r"_[^_]+$", "", field_name).replace("human_readable_", "")
 
+
 def solr_transformed_dates(solr_client: Solr, parsed_dates: typing.List):
-    """ the dates  in sorted list are transformed to solr format  """
-    return [solr_client._from_python(date) for date in parsed_dates] # pylint: disable=protected-access
+    """the dates  in sorted list are transformed to solr format"""
+    return [
+        solr_client._from_python(date) for date in parsed_dates
+    ]  # pylint: disable=protected-access
+
 
 # pylint: disable=bad-continuation
-def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> UrsusRecord: # pylint: disable=too-many-statements
+def map_record(
+    row: DLCSRecord, solr_client: Solr, config: typing.Dict
+) -> UrsusRecord:  # pylint: disable=too-many-statements
     """Maps a metadata record from CSV to Ursus Solr.
 
     Args:
@@ -234,8 +251,7 @@ def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> Ursus
     record["writing_system_sim"] = record.get("writing_system_tesim")
     record["year_isim"] = year_parser.integer_years(record.get("normalized_date_tesim"))
     record["date_dtsim"] = solr_transformed_dates(
-        solr_client,
-        (date_parser.get_dates(record.get("normalized_date_tesim")))
+        solr_client, (date_parser.get_dates(record.get("normalized_date_tesim")))
     )
     record["place_of_origin_sim"] = record.get("place_of_origin_tesim")
     record["associated_name_sim"] = record.get("associated_name_tesim")
@@ -269,10 +285,10 @@ def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> Ursus
     # shelfmarks = record.get("shelfmark_ssi")
     # print(shelfmarks)
     # if isinstance(shelfmarks, typing.Sequence) and len(shelfmarks) >= 1:
-        # print(shelfmarks[0])
-        # record["shelfmark_aplha_numeric_ssort"] = shelfmarks[0]
+    # print(shelfmarks[0])
+    # record["shelfmark_aplha_numeric_ssort"] = shelfmarks[0]
 
-# -----------------------------------------------------------------------
+    # -----------------------------------------------------------------------
     years = record.get("year_isim")
     if isinstance(years, typing.Sequence) and len(years) >= 1:
         record["sort_year_isi"] = min(years)
@@ -281,6 +297,7 @@ def map_record(row: DLCSRecord, solr_client: Solr, config: typing.Dict) -> Ursus
     if isinstance(dates, typing.Sequence) and len(dates) >= 1:
         record["date_dtsort"] = dates[0]
     return record
+
 
 def name_fields(record):
     """combine fields for the names facet"""
@@ -299,7 +316,9 @@ def name_fields(record):
 
     if record.get("associated_name_tesim") is not None:
         if record.get("names_sim") is not None:
-            record["names_sim"] = record["names_sim"] + record.get("associated_name_tesim")
+            record["names_sim"] = record["names_sim"] + record.get(
+                "associated_name_tesim"
+            )
         else:
             record["names_sim"] = record.get("associated_name_tesim")
 
@@ -310,10 +329,12 @@ def name_fields(record):
             record["names_sim"] = record.get("translator_tesim")
     return record["names_sim"]
 
+
 # Sinai Index Page
 # record.get returns the default of en empty array if there is no record
 
 # combine fields for the header value
+
 
 def header_fields(record):
     """Header: shelfmark_ssi: 'Shelfmark' && extent_tesim: 'Format'"""
@@ -321,10 +342,12 @@ def header_fields(record):
     extent = record.get("extent_tesim", [])
     return shelfmark + extent
 
+
 # Sinai Item Page
 # record.get returns the default of en empty array if there is no record
 
 # combine fields for the keywords value
+
 
 def keywords_fields(record):
     """Keywords: genre_tesim: 'Genre' && features_tesim: 'Features' &&
@@ -340,10 +363,12 @@ def keywords_fields(record):
     record["keywords_tesim"] = genre + features + place_of_origin + support + form
     return record["keywords_tesim"]
 
+
 # TITLE: uniform_title_one | uniform_title_two | descriptive_title_one | descriptive_title_two
 
 # combine fields for the names value in the Name facet & for the index page
 # Name: author_tesim && associated_name_tesim && scribe_tesim
+
 
 def name_fields_index(record):
     """NAME: author_one| author_two | associated_one | associated_two | scribe_one"""
@@ -352,6 +377,7 @@ def name_fields_index(record):
     scribe = record.get("scribe_tesim", [])
     name_fields_combined = author + associated_name + scribe
     return name_fields_combined
+
 
 def thumbnail_from_child(
     record: UrsusRecord, config: typing.Dict
@@ -379,10 +405,12 @@ def thumbnail_from_child(
 
     def sort_key(row: dict) -> str:
         if row["Title"].startswith("f. "):
-            return "a" + row["Title"]  # prefer records of this form, in alphanumeric sort order
+            return (
+                "a" + row["Title"]
+            )  # prefer records of this form, in alphanumeric sort order
         else:
             return "z" + row["Title"]
-        
+
     children.sort(key=sort_key)
 
     for row in children:
@@ -392,6 +420,7 @@ def thumbnail_from_child(
             return thumb
 
     return None
+
 
 def thumbnail_from_manifest(record: UrsusRecord) -> typing.Optional[str]:
     """Picks a thumbnail downloading the IIIF manifest.
@@ -422,6 +451,7 @@ def thumbnail_from_manifest(record: UrsusRecord) -> typing.Optional[str]:
 
     except:  # pylint: disable=bare-except
         return None
+
 
 if __name__ == "__main__":
     load_csv()  # pylint: disable=no-value-for-parameter
