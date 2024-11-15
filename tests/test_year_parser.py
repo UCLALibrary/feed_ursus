@@ -57,7 +57,7 @@ def test_range():
         1943,
     ]
 
-    #Parses YYY/YYYY into a range of years.
+    # Parses YYY/YYYY into a range of years.
 
     assert year_parser.integer_years(["990/1000"]) == [
         990,
@@ -70,7 +70,7 @@ def test_range():
         997,
         998,
         999,
-        1000
+        1000,
     ]
 
 

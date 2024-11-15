@@ -2,6 +2,7 @@
 """Mapping logic for UCLA CSV->Blacklight conversion."""
 
 import typing
+
 # import urllib.parse
 
 
@@ -174,7 +175,7 @@ FIELD_MAPPING: MappingDict = {
     "contents_note_tesim": "Contents note",
     "contributor_tesim": ["Contributors"],
     "date_created_tesim": "Date.creation",
-    "delivery_tesim":"delivery",
+    "delivery_tesim": "delivery",
     "description_tesim": "Description.note",
     "descriptive_title_tesim": "Descriptive title",
     "dlcs_collection_name_tesim": "Relation.isPartOf",
@@ -223,7 +224,7 @@ FIELD_MAPPING: MappingDict = {
     ],
     "normalized_date_tesim": "Date.normalized",
     "other_versions_tesim": "Other version(s)",
-    "overtext_manuscript_ssm":"Overtext manuscript",
+    "overtext_manuscript_ssm": "Overtext manuscript",
     "page_layout_ssim": "Page layout",
     "photographer_tesim": [
         "Name.photographer",
@@ -252,7 +253,7 @@ FIELD_MAPPING: MappingDict = {
     "rights_statement_tesim": "Rights.copyrightStatus",
     "scribe_tesim": "Scribe",
     "script_tesim": "Script",
-    "script_note_tesim":["Script note", "Script Note"],
+    "script_note_tesim": ["Script note", "Script Note"],
     "sequence_isi": "Item Sequence",
     "services_contact_ssm": "Rights.servicesContact",
     "shelfmark_ssi": "Shelfmark",

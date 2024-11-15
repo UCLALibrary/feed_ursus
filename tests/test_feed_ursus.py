@@ -1,4 +1,5 @@
 """Tests for feed_ursus.py"""
+
 # pylint: disable=no-self-use
 
 import importlib
@@ -57,6 +58,7 @@ class TestMapRecord:
 
     CONFIG = {"collection_names": {"ark:/123/collection": "Test Collection KGSL"}}
     solr_client = Solr("http://localhost:8983/solr/californica", always_commit=True)
+
     def test_maps_record(self, monkeypatch):
         """maps the record for Ursus"""
         monkeypatch.setattr(
@@ -69,7 +71,8 @@ class TestMapRecord:
         )
         result = feed_ursus.map_record(
             {"Item ARK": "ark:/123/abc", "Test DLCS Field": "lasigd|~|asdfg"},
-            self.solr_client, config=self.CONFIG,
+            self.solr_client,
+            config=self.CONFIG,
         )
 
         assert result == {
@@ -113,15 +116,15 @@ class TestMapRecord:
             "name_fields_index_tesim": [],
             "keywords_tesim": [],
             "keywords_sim": [],
-            "collection_sim": None
-            }
+            "collection_sim": None,
+        }
 
     def test_sets_id(self):
         """sets 'id' equal to 'Item ARK'/'ark_ssi'"""
         result = feed_ursus.map_record(
             {
                 "Item ARK": "ark:/123/abc",
-                "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest"
+                "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest",
             },
             self.solr_client,
             config=self.CONFIG,
@@ -149,7 +152,7 @@ class TestMapRecord:
         result = feed_ursus.map_record(
             {
                 "Item ARK": "ark:/123/abc",
-                "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest"
+                "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest",
             },
             self.solr_client,
             config=self.CONFIG,
@@ -163,7 +166,7 @@ class TestMapRecord:
         result = feed_ursus.map_record(
             {
                 "Item ARK": "ark:/123/abc",
-                "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest"
+                "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest",
             },
             self.solr_client,
             config=self.CONFIG,
@@ -180,7 +183,7 @@ class TestMapRecord:
             {
                 "Item ARK": "ark:/123/abc",
                 "Parent ARK": "ark:/123/collection",
-                "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest"
+                "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest",
             },
             self.solr_client,
             config=self.CONFIG,
@@ -206,7 +209,7 @@ class TestMapRecord:
             {
                 "Item ARK": "ark:/123/abc",
                 "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest",
-                column_name: value
+                column_name: value,
             },
             self.solr_client,
             config=self.CONFIG,
@@ -220,100 +223,118 @@ class TestThumbnailFromChild:
     def test_uses_title(self):
         """Returns the thumbnail from child row 'f. 001r'"""
 
-        child_works = feed_ursus.collate_child_works({
-            "ark:/work/1": {
-                "Object Type": "Work",
-                "Item ARK": "ark:/work/1",
-                "Parent ARK": "ark:/collection/1",
-                "Thumbnail URL": None,
-                "Title": None,
-            },
-            "ark:/child/2": {
-                "Object Type": "ChildWork",
-                "Item ARK": "ark:/child/2",
-                "Parent ARK": "ark:/work/1",
-                "Thumbnail URL": "/thumb2.jpg",
-                "Title": "f. 001v",
-            },
-            "ark:/child/1": {
-                "Object Type": "ChildWork",
-                "Item ARK": "ark:/child/1",
-                "Parent ARK": "ark:/work/1",
-                "Thumbnail URL": "/thumb1.jpg",
-                "Title": "f. 001r",
-            },
-        })
+        child_works = feed_ursus.collate_child_works(
+            {
+                "ark:/work/1": {
+                    "Object Type": "Work",
+                    "Item ARK": "ark:/work/1",
+                    "Parent ARK": "ark:/collection/1",
+                    "Thumbnail URL": None,
+                    "Title": None,
+                },
+                "ark:/child/2": {
+                    "Object Type": "ChildWork",
+                    "Item ARK": "ark:/child/2",
+                    "Parent ARK": "ark:/work/1",
+                    "Thumbnail URL": "/thumb2.jpg",
+                    "Title": "f. 001v",
+                },
+                "ark:/child/1": {
+                    "Object Type": "ChildWork",
+                    "Item ARK": "ark:/child/1",
+                    "Parent ARK": "ark:/work/1",
+                    "Thumbnail URL": "/thumb1.jpg",
+                    "Title": "f. 001r",
+                },
+            }
+        )
         record = {"ark_ssi": "ark:/work/1"}
-        
-        result = feed_ursus.thumbnail_from_child(record, config={"child_works": child_works})
+
+        result = feed_ursus.thumbnail_from_child(
+            record, config={"child_works": child_works}
+        )
         assert result == "/thumb1.jpg"
 
     def test_uses_mapper(self):
         """Uses the mapper to generate a thumbnail from access_copy, if necessary"""
 
-        child_works = feed_ursus.collate_child_works({
-            "ark:/work/1": {
-                "Item ARK": "ark:/work/1", "Parent ARK": "ark:/collection/1", "IIIF Access URL": None,
-                "Title": None,
-                "Object Type": "Work",
-            },
-            "ark:/child/1": {
-                "Item ARK": "ark:/child/1",
-                "Parent ARK": "ark:/work/1",
-                "IIIF Access URL": "http://iiif.url/123",
-                "Title": "f. 001r",
-                "Object Type": "ChildWork",
-            },
-        })
+        child_works = feed_ursus.collate_child_works(
+            {
+                "ark:/work/1": {
+                    "Item ARK": "ark:/work/1",
+                    "Parent ARK": "ark:/collection/1",
+                    "IIIF Access URL": None,
+                    "Title": None,
+                    "Object Type": "Work",
+                },
+                "ark:/child/1": {
+                    "Item ARK": "ark:/child/1",
+                    "Parent ARK": "ark:/work/1",
+                    "IIIF Access URL": "http://iiif.url/123",
+                    "Title": "f. 001r",
+                    "Object Type": "ChildWork",
+                },
+            }
+        )
         record = {"ark_ssi": "ark:/work/1"}
-        
-        result = feed_ursus.thumbnail_from_child(record, config={"child_works": child_works})
+
+        result = feed_ursus.thumbnail_from_child(
+            record, config={"child_works": child_works}
+        )
         assert result == "http://iiif.url/123/full/!200,200/0/default.jpg"
 
     def test_defaults_to_first(self):
         """Returns the thumbnail from first child row if it can't find 'f. 001r'"""
-        child_works = feed_ursus.collate_child_works({
-            "ark:/work/1": {
-                "Item ARK": "ark:/work/1",
-                "Parent ARK": "ark:/collection/1",
-                "Thumbnail URL": None,
-                "Title": None,
-                "Object Type": "Work",
-            },
-            "ark:/child/2": {
-                "Item ARK": "ark:/child/2",
-                "Parent ARK": "ark:/work/1",
-                "Thumbnail URL": "/thumb2.jpg",
-                "Title": "f. 001v",
-                "Object Type": "ChildWork",
-            },
-            "ark:/child/1": {
-                "Item ARK": "ark:/child/1",
-                "Parent ARK": "ark:/work/1",
-                "Thumbnail URL": "/thumb1.jpg",
-                "Title": "f. 002r",
-                "Object Type": "ChildWork",
-            },
-        })
+        child_works = feed_ursus.collate_child_works(
+            {
+                "ark:/work/1": {
+                    "Item ARK": "ark:/work/1",
+                    "Parent ARK": "ark:/collection/1",
+                    "Thumbnail URL": None,
+                    "Title": None,
+                    "Object Type": "Work",
+                },
+                "ark:/child/2": {
+                    "Item ARK": "ark:/child/2",
+                    "Parent ARK": "ark:/work/1",
+                    "Thumbnail URL": "/thumb2.jpg",
+                    "Title": "f. 001v",
+                    "Object Type": "ChildWork",
+                },
+                "ark:/child/1": {
+                    "Item ARK": "ark:/child/1",
+                    "Parent ARK": "ark:/work/1",
+                    "Thumbnail URL": "/thumb1.jpg",
+                    "Title": "f. 002r",
+                    "Object Type": "ChildWork",
+                },
+            }
+        )
         record = {"ark_ssi": "ark:/work/1"}
-        
-        result = feed_ursus.thumbnail_from_child(record, config={"child_works": child_works})
+
+        result = feed_ursus.thumbnail_from_child(
+            record, config={"child_works": child_works}
+        )
         assert result == "/thumb2.jpg"
 
     def test_with_no_children_returns_none(self):
         """If there are no child rows, return None"""
-        child_works = feed_ursus.collate_child_works({
-            "ark:/work/1": {
-                "Item ARK": "ark:/work/1",
-                "Parent ARK": "ark:/collection/1",
-                "Thumbnail URL": None,
-                "Title": None,
-                "Object Type": "Work",
-            },
-        })
+        child_works = feed_ursus.collate_child_works(
+            {
+                "ark:/work/1": {
+                    "Item ARK": "ark:/work/1",
+                    "Parent ARK": "ark:/collection/1",
+                    "Thumbnail URL": None,
+                    "Title": None,
+                    "Object Type": "Work",
+                },
+            }
+        )
         record = {"ark_ssi": "ark:/work/1"}
-        
-        result = feed_ursus.thumbnail_from_child(record, config={"child_works": child_works})
+
+        result = feed_ursus.thumbnail_from_child(
+            record, config={"child_works": child_works}
+        )
         assert result is None
 
 
