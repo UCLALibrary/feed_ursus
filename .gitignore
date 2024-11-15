@@ -1,6 +1,3 @@
-# CSV Files are probably just being used for local testing
-**/*.csv
-
 # IDE / text editor files
 settings.json
 .vscode

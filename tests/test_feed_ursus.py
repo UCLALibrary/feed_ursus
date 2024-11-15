@@ -12,12 +12,6 @@ from . import fixtures  # pylint: disable=wrong-import-order
 feed_ursus.mapper = importlib.import_module("feed_ursus.mapper.sinai")
 
 
-@pytest.mark.xfail()
-def test_load_csv():
-    """test for function load_csv"""
-    raise NotImplementedError
-
-
 class TestMapFieldValue:
     """tests for function map_field_value"""
 
