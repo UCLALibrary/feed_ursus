@@ -36,9 +36,9 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
 
   solr:
-    build: .
+    image: uclalibrary/solr-ursus:7.4
     ports:
-      - "127.0.0.1:6983:8983"
+      - '127.0.0.1:6983:8983'
 
 
 volumes:
