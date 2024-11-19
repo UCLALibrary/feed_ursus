@@ -21,14 +21,26 @@ def test_feed_ursus():
     """Integration test for feed_ursus."""
     solr = Solr(SOLR_URL)
     solr.delete(id="xp6xn100zz-89112", commit=True)
+    solr.delete(id="82765200zz-89112", commit=True)
 
     runner = CliRunner()
     result = runner.invoke(
-        feed_ursus.load_csv, ["--solr_url", SOLR_URL, "tests/csv/anais_collection.csv"]
+        feed_ursus.load_csv,
+        [
+            "--solr_url",
+            SOLR_URL,
+            "tests/csv/anais_collection.csv",
+            "tests/csv/anais_work_simple.csv",
+        ],
     )
     assert result.exit_code == 0
 
-    doc_in_solr = solr.search("id:xp6xn100zz-89112", defType="lucene")
+    collection_record = solr.search("id:xp6xn100zz-89112", defType="lucene")
     # Doesn't run against a fresh solr index, so there's no guarantee the result comes from this run of the feed_ursus command.
     # But at least we can see that pysolr works and talks to solr in this environment.
-    assert doc_in_solr.docs[0]["title_tesim"] == ["Nin (Anais) Papers, circa 1910-1977"]
+    assert collection_record.docs[0]["title_tesim"] == [
+        "Nin (Anais) Papers, circa 1910-1977"
+    ]
+
+    work_record = solr.search("id:82765200zz-89112", defType="lucene").docs[0]
+    assert work_record["title_tesim"] == ["Nin, Joaquin. 1914 [photograph]"]
