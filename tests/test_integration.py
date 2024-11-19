@@ -4,7 +4,6 @@
 
 import importlib
 import os
-import time
 
 from click.testing import CliRunner
 from pysolr import Solr  # type: ignore
@@ -44,3 +43,7 @@ def test_feed_ursus():
 
     work_record = solr.search("id:82765200zz-89112", defType="lucene").docs[0]
     assert work_record["title_tesim"] == ["Nin, Joaquin. 1914 [photograph]"]
+    assert work_record["member_of_collections_ssim"] == [
+        "Nin (Anais) Papers, circa 1910-1977"
+    ]
+    assert work_record["member_of_collection_ids_ssim"] == ["xp6xn100zz-89112"]

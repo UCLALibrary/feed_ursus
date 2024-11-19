@@ -236,7 +236,7 @@ FIELD_MAPPING: MappingDict = {
     "dimensions_tesim": "Format.dimensions",
     "director_sim": ["Director", "Name.director"],
     "director_tesim": ["Director", "Name.director"],
-    "dlcs_collection_name_tesim": "Relation.isPartOf",
+    # "dlcs_collection_name_tesim": "",  # feed_ursus.py gets from "Parent ARK"
     "edition_ssm": "Edition",
     "editor_tesim": ["Editor", "Name.editor"],
     "electronic_locator_ss": ["External item record", "View Record"],
@@ -314,7 +314,11 @@ FIELD_MAPPING: MappingDict = {
     "masthead_parameters_ssi": "Masthead",
     "medium_tesim": "Format.medium",
     "medium_sim": "Format.medium",
-    "member_of_collection_ids_ssim": "Parent ARK",
+    "member_of_collection_ids_ssim": lambda x: [
+        ark.replace("ark:/", "").replace("/", "-")[::-1]
+        for ark in x.get("Parent ARK", "").split("|~|")
+        if ark  # Skip empty values like ''
+    ],
     "musician_sim": ["Musician", "Name.musician"],
     "musician_tesim": ["Musician", "Name.musician"],
     "named_subject_tesim": [
