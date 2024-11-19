@@ -63,7 +63,7 @@ def load_csv(
 
     config = {
         "collection_names": {
-            row["Item ARK"]: row["Title"]
+            row["Item ARK"].replace("ark:/", "").replace("/", "-")[::-1]: row["Title"]
             for row in csv_data.values()
             if row.get("Object Type") == "Collection"
         },
@@ -226,10 +226,11 @@ def map_record(
         or thumbnail_from_manifest(record)
     )
 
-    # COLLECTION NAME
-    if "Parent ARK" in row and row["Parent ARK"] in config["collection_names"]:
-        dlcs_collection_name = config["collection_names"][row["Parent ARK"]]
-        record["dlcs_collection_name_tesim"] = [dlcs_collection_name]
+    # COLLECTIONS
+    record["member_of_collections_ssim"] = [
+        config["collection_names"][id]
+        for id in record.get("member_of_collection_ids_ssim", [])
+    ]
 
     # FIELDS
     record["uniform_title_sim"] = record.get("uniform_title_tesim")
@@ -270,7 +271,6 @@ def map_record(
     record["location_sim"] = record.get("location_tesim")
     record["named_subject_sim"] = record.get("named_subject_tesim")
     record["human_readable_resource_type_sim"] = record.get("resource_type_tesim")
-    record["member_of_collections_ssim"] = record.get("dlcs_collection_name_tesim")
 
     record["combined_subject_ssim"] = [
         *record.get("named_subject_tesim", []),

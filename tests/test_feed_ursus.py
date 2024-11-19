@@ -75,7 +75,7 @@ def test_get_bare_field_name():
 class TestMapRecord:
     """function map_record"""
 
-    CONFIG = {"collection_names": {"ark:/123/collection": "Test Collection KGSL"}}
+    CONFIG = {"collection_names": {"noitcelloc-321": "Test Collection KGSL"}}
     solr_client = Solr("http://localhost:8983/solr/californica", always_commit=True)
 
     def test_maps_record(self, monkeypatch):
@@ -101,7 +101,7 @@ class TestMapRecord:
             "human_readable_resource_type_sim": None,
             "id": "ark:/123/abc",
             "location_sim": None,
-            "member_of_collections_ssim": None,
+            "member_of_collections_ssim": [],
             "named_subject_sim": None,
             "place_of_origin_sim": None,
             "script_sim": None,
@@ -139,7 +139,7 @@ class TestMapRecord:
         }
 
     def test_sets_id(self):
-        """sets 'id' equal to 'Item ARK'/'ark_ssi'"""
+        """sets 'id' to reversed ark"""
         result = feed_ursus.map_record(
             {
                 "Item ARK": "ark:/123/abc",
@@ -148,7 +148,7 @@ class TestMapRecord:
             self.solr_client,
             config=self.CONFIG,
         )
-        assert result["id"] == "ark:/123/abc"
+        assert result["id"] == "cba-321"
 
     def test_sets_thumbnail(self):
         """sets a thumbnail URL"""
@@ -207,7 +207,6 @@ class TestMapRecord:
             self.solr_client,
             config=self.CONFIG,
         )
-        assert result["dlcs_collection_name_tesim"] == ["Test Collection KGSL"]
         assert result["member_of_collections_ssim"] == ["Test Collection KGSL"]
 
     @pytest.mark.parametrize(
