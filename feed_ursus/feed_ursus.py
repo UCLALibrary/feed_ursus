@@ -28,7 +28,7 @@ UrsusRecord = typing.Dict[str, typing.Any]
 
 
 @click.command()
-@click.argument("filename")
+@click.argument("filenames", nargs=-1, type=click.Path(exists=True, dir_okay=False))
 @click.option(
     "--solr_url",
     default=None,
@@ -39,11 +39,13 @@ UrsusRecord = typing.Dict[str, typing.Any]
     default="dlp",
     help="'sinai' or 'dlp'. Deterines the metadata field mapping",
 )
-def load_csv(filename: str, solr_url: typing.Optional[str], mapping: str):
+def load_csv(
+    filenames: typing.List[click.Path], solr_url: typing.Optional[str], mapping: str
+):
     """Load data from a csv.
 
     Args:
-        filename: A CSV file.
+        filenames: A CSV file.
         solr_url: API endpoint for a solr instance.
     """
 
@@ -51,7 +53,13 @@ def load_csv(filename: str, solr_url: typing.Optional[str], mapping: str):
     mapper = import_module(f"feed_ursus.mapper.{mapping}")
     solr_client = Solr(solr_url, always_commit=True) if solr_url else Solr("")
 
-    csv_data = {row["Item ARK"]: row for row in csv.DictReader(open(filename))}
+    csv_data = {
+        row["Item ARK"]: row
+        for filename in rich.progress.track(
+            filenames, description=f"loading {len(filenames)} files..."
+        )
+        for row in csv.DictReader(open(filename, encoding="utf-8"))
+    }
 
     config = {
         "collection_names": {
@@ -65,7 +73,7 @@ def load_csv(filename: str, solr_url: typing.Optional[str], mapping: str):
 
     mapped_records = []
     for row in rich.progress.track(
-        csv_data.values(), description=f"Importing {filename}..."
+        csv_data.values(), description=f"Importing {len(csv_data)} records..."
     ):
         if row.get("Object Type") not in ("ChildWork", "Page"):
             mapped_records.append(map_record(row, solr_client, config=config))

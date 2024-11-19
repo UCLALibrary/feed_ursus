@@ -4,13 +4,32 @@
 
 import importlib
 
+import click.testing
 import pytest  # type: ignore
 from pysolr import Solr  # type: ignore
 
 from feed_ursus import feed_ursus
 from . import fixtures  # pylint: disable=wrong-import-order
 
-feed_ursus.mapper = importlib.import_module("feed_ursus.mapper.sinai")
+feed_ursus.mapper = importlib.import_module("feed_ursus.mapper.dlp")
+
+
+class TestLoadCsv:
+    """Tests for function load_csv"""
+
+    def test_file_exists(self):
+        """gets the contents of a CSV file"""
+        runner = click.testing.CliRunner()
+        result = runner.invoke(feed_ursus.load_csv, ["tests/csv/anais_collection.csv"])
+        assert result.exit_code == 0
+
+    def test_file_does_not_exist(self):
+        """raises an error if file does not exist"""
+
+        runner = click.testing.CliRunner()
+        result = runner.invoke(feed_ursus.load_csv, ["tests/fixtures/nonexistent.csv"])
+
+        assert result.exit_code == 2
 
 
 class TestMapFieldValue:
