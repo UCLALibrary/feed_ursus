@@ -26,6 +26,8 @@ mapper = None  # dynamically imported in load_csv, establish scope here
 DLCSRecord = typing.Dict[str, typing.Any]
 UrsusRecord = typing.Dict[str, typing.Any]
 
+ENV_PREFIX = "URSUS_"
+
 
 @click.command()
 @click.argument("filenames", nargs=-1, type=click.Path(exists=True, dir_okay=False))
@@ -35,12 +37,18 @@ UrsusRecord = typing.Dict[str, typing.Any]
     help="URL of a solr instance, e.g. http://localhost:8983/solr/californica",
 )
 @click.option(
+    "--dest",
+    default=None,
+    help="""Use solr URL from an environment variable.
+            For example, `feed_ursus --dest prod` will use URSUS_SOLR_URL_PROD""",
+)
+@click.option(
     "--mapping",
     default="dlp",
     help="'sinai' or 'dlp'. Deterines the metadata field mapping",
 )
 def load_csv(
-    filenames: typing.List[click.Path], solr_url: typing.Optional[str], mapping: str
+    filenames: typing.List[click.Path], solr_url: typing.Optional[str], dest: typing.Optional[str], mapping: str
 ):
     """Load data from a csv.
 
@@ -51,6 +59,18 @@ def load_csv(
 
     global mapper
     mapper = import_module(f"feed_ursus.mapper.{mapping}")
+
+    if dest:
+        if solr_url:
+            raise ValueError("Please provide only one of --solr_url or --dest")
+        else:
+            environment_variable_name = f"{ENV_PREFIX}SOLR_URL_{dest.upper()}"
+            if environment_variable_name not in os.environ:
+                raise ValueError(
+                    f"Environment variable {environment_variable_name} must be set to use --dest {dest}"
+                )
+            solr_url = os.getenv(environment_variable_name)
+
     solr_client = Solr(solr_url, always_commit=True) if solr_url else Solr("")
 
     csv_data = {

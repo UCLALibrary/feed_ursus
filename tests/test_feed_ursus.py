@@ -3,6 +3,7 @@
 # pylint: disable=no-self-use
 
 import importlib
+from unittest.mock import MagicMock
 
 import click.testing
 import pytest  # type: ignore
@@ -27,9 +28,48 @@ class TestLoadCsv:
         """raises an error if file does not exist"""
 
         runner = click.testing.CliRunner()
-        result = runner.invoke(feed_ursus.load_csv, ["tests/fixtures/nonexistent.csv"])
+        result = runner.invoke(feed_ursus, ["tests/fixtures/nonexistent.csv"])
 
         assert result.exit_code == 2
+
+    def test_dest_flag(self, monkeypatch):
+        """uses solr url from environment variable, based on --dest flag"""
+
+        monkeypatch.setenv("URSUS_SOLR_URL_MOCK", "http://localhost:8983/solr/californica")
+        MockSolr = MagicMock()
+        monkeypatch.setattr(feed_ursus, "Solr", MockSolr)
+
+        runner = click.testing.CliRunner()
+        result = runner.invoke(
+            feed_ursus.load_csv,
+            ["--dest", "mock", "tests/csv/anais_collection.csv"],
+        )
+        assert result.exit_code == 0
+        MockSolr.assert_called_with("http://localhost:8983/solr/californica", always_commit=True)
+
+    def test_dest_flag_and_solr_url(self, monkeypatch):
+        """raises an error if --solr_url and --dest are both provided"""
+
+        monkeypatch.setenv("URSUS_SOLR_URL_MOCK", "http://localhost:8983/solr/californica")
+        MockSolr = MagicMock()
+        monkeypatch.setattr(feed_ursus, "Solr", MockSolr)
+
+        runner = click.testing.CliRunner()
+        result = runner.invoke(
+            feed_ursus.load_csv,
+            ["--solr_url", "http://test.solr/solr/core", "--dest", "mock", "tests/csv/anais_collection.csv"],
+        )
+        assert result.exit_code == 1
+
+    def test_dest_flag_without_environment_variable(self):
+        """--dest [whatever] without URSUS_SOLR_URL_[WHATEVER] raises an error"""
+
+        runner = click.testing.CliRunner()
+        result = runner.invoke(
+            feed_ursus.load_csv,
+            ["--dest", "mock", "tests/csv/anais_collection.csv"],
+        )
+        assert result.exit_code == 1
 
 
 class TestMapFieldValue:
