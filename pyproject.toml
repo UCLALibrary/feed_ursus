@@ -28,7 +28,7 @@ pytest = "*"
 pytest-sugar = "^1.0.0"
 
 [tool.poetry.scripts]
-feed_ursus = 'feed_ursus.feed_ursus:load_csv'
+feed_ursus = 'feed_ursus.feed_ursus:feed_ursus'
 
 [build-system]
 requires = ["poetry-core"]

@@ -37,12 +37,12 @@ docker-compose up --detach
 docker-compose run web bundle exec rails db:setup
 ```
 
-It might take a minute or so for solr to get up and running, at which point you should be able to see your new site at http://localhost:3003. Ursus will be empty, because you haven't loaded any data yet.
+It might take a minute or so for solr to get up and running, at which point you should be able to see your new site at http://localhost:3000. Ursus will be empty, because you haven't loaded any data yet.
 
 To load data from a csv:
 
 ```
-feed_ursus [path/to/your.csv] --solr_url=http://localhost:8983/solr/californica --mapping=dlp
+feed_ursus --solr_url=http://localhost:8983/solr/californica --mapping=dlp load [path/to/your.csv] 
 ```
 
 ### Mappers
@@ -73,7 +73,7 @@ The following will assume the virtualenv is active. You could also run e.g. `poe
 ### Using the development version
 
 ```
-feed_ursus [path/to/your.csv] --solr_url http://localhost:8983/solr/californica
+feed_ursus --solr_url http://localhost:8983/solr/californica load [path/to/your.csv]
 ```
 
 ### Running the tests
