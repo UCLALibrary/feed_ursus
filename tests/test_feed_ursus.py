@@ -3,6 +3,7 @@
 # pylint: disable=no-self-use
 
 import importlib
+import unittest.mock
 
 import click.testing
 import pytest  # type: ignore
@@ -17,17 +18,24 @@ feed_ursus.mapper = importlib.import_module("feed_ursus.mapper.dlp")
 class TestLoadCsv:
     """Tests for function load_csv"""
 
-    def test_file_exists(self):
+    def test_file_exists(self, monkeypatch):
         """gets the contents of a CSV file"""
+
+        monkeypatch.setattr(feed_ursus, "Solr", unittest.mock.Mock())
         runner = click.testing.CliRunner()
-        result = runner.invoke(feed_ursus.load_csv, ["tests/csv/anais_collection.csv"])
+        result = runner.invoke(
+            feed_ursus.feed_ursus, ["load", "tests/csv/anais_collection.csv"]
+        )
         assert result.exit_code == 0
 
-    def test_file_does_not_exist(self):
+    def test_file_does_not_exist(self, monkeypatch):
         """raises an error if file does not exist"""
 
+        monkeypatch.setattr(feed_ursus, "Solr", unittest.mock.Mock())
         runner = click.testing.CliRunner()
-        result = runner.invoke(feed_ursus.load_csv, ["tests/fixtures/nonexistent.csv"])
+        result = runner.invoke(
+            feed_ursus.feed_ursus, ["load", "tests/fixtures/nonexistent.csv"]
+        )
 
         assert result.exit_code == 2
 

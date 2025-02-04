@@ -24,10 +24,11 @@ def test_feed_ursus():
 
     runner = CliRunner()
     result = runner.invoke(
-        feed_ursus.load_csv,
+        feed_ursus.feed_ursus,
         [
             "--solr_url",
             SOLR_URL,
+            "load",
             "tests/csv/anais_collection.csv",
             "tests/csv/anais_work_simple.csv",
         ],

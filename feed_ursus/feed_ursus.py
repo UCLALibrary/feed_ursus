@@ -5,14 +5,13 @@
 import csv
 from collections import defaultdict
 from importlib import import_module
-import json
 import os
 import re
 import typing
 import yaml
 
 import click
-from pysolr import Solr  # type: ignore
+from pysolr import Solr, SolrError  # type: ignore
 import requests
 import rich.progress
 
@@ -27,11 +26,10 @@ DLCSRecord = typing.Dict[str, typing.Any]
 UrsusRecord = typing.Dict[str, typing.Any]
 
 
-@click.command()
-@click.argument("filenames", nargs=-1, type=click.Path(exists=True, dir_okay=False))
+@click.group()
 @click.option(
     "--solr_url",
-    default=None,
+    default="http://localhost:8983/solr/californica",
     help="URL of a solr instance, e.g. http://localhost:8983/solr/californica",
 )
 @click.option(
@@ -39,19 +37,27 @@ UrsusRecord = typing.Dict[str, typing.Any]
     default="dlp",
     help="'sinai' or 'dlp'. Deterines the metadata field mapping",
 )
-def load_csv(
-    filenames: typing.List[click.Path], solr_url: typing.Optional[str], mapping: str
-):
+@click.pass_context
+def feed_ursus(ctx, solr_url: typing.Optional[str], mapping: str):
+    """CLI for managing a Solr index for Ursus."""
+
+    ctx.ensure_object(dict)
+    ctx.obj["solr_client"] = (
+        Solr(solr_url, always_commit=True) if solr_url else Solr("")
+    )
+    global mapper
+    mapper = import_module(f"feed_ursus.mapper.{mapping}")
+
+
+@feed_ursus.command("load")
+@click.argument("filenames", nargs=-1, type=click.Path(exists=True, dir_okay=False))
+@click.pass_context
+def load_csv(ctx, filenames: typing.List[click.Path]):
     """Load data from a csv.
 
     Args:
-        filenames: A CSV file.
-        solr_url: API endpoint for a solr instance.
+        filenames: A list of CSV filenames.
     """
-
-    global mapper
-    mapper = import_module(f"feed_ursus.mapper.{mapping}")
-    solr_client = Solr(solr_url, always_commit=True) if solr_url else Solr("")
 
     csv_data = {
         row["Item ARK"]: row
@@ -76,12 +82,51 @@ def load_csv(
         csv_data.values(), description=f"Importing {len(csv_data)} records..."
     ):
         if row.get("Object Type") not in ("ChildWork", "Page"):
-            mapped_records.append(map_record(row, solr_client, config=config))
+            mapped_records.append(
+                map_record(row, ctx.obj["solr_client"], config=config)
+            )
 
-    if solr_url:
-        solr_client.add(mapped_records)
-    else:
-        print(json.dumps(mapped_records))
+    ctx.obj["solr_client"].add(mapped_records)
+
+
+@feed_ursus.command()
+@click.argument("items", nargs=-1, type=str)
+@click.option(
+    "--yes/--no", is_flag=True, default=False, help="Skip confirmation prompts."
+)
+@click.pass_context
+def delete(ctx, items: typing.List[str], yes: bool):
+    """Delete records from a Solr index.
+
+    Args:
+        solr_url: URL of a solr instance.
+        items: List of items to delete. Can be ARKs, Solr IDs, or csv filenames.
+               If a csv filename is provided, all ARKs in the file will be deleted.
+    """
+    delete_ids: list[str] = []
+    for item in items:
+        if item.endswith(".csv"):
+            with open(item, "r", encoding="utf-8") as stream:
+                csv_data = csv.DictReader(stream)
+                delete_ids.extend(
+                    row["Item ARK"].replace("ark:/", "").replace("/", "-")[::-1]
+                    for row in csv_data
+                )
+        elif item.startswith("ark:/"):
+            delete_ids.append(item.replace("ark:/", "").replace("/", "-")[::-1])
+        else:
+            delete_ids.append(item)
+
+    # TODO check before delting collections
+    try:
+        n_total = (
+            ctx.obj["solr_client"].search("ark_ssi:*", defType="lucene", rows=0).hits
+        )
+    except SolrError:
+        n_total = "[unknown]"
+
+    if yes or click.confirm(f"Delete {len(delete_ids)} of {n_total} records?"):
+        ctx.obj["solr_client"].delete(id=delete_ids)
 
 
 def collate_child_works(csv_data: csv.DictReader) -> typing.Dict:
@@ -462,4 +507,4 @@ def thumbnail_from_manifest(record: UrsusRecord) -> typing.Optional[str]:
 
 
 if __name__ == "__main__":
-    load_csv()  # pylint: disable=no-value-for-parameter
+    feed_ursus()  # pylint: disable=no-value-for-parameter
