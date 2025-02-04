@@ -26,7 +26,7 @@ jobs:
         python-version: ['3.8', '3.9', '3.10', '3.11', '3.12', '3.13']
     runs-on: ubuntu-latest
     env:
-      SOLR_URL: http://127.0.0.1:6983/solr/californica
+      SOLR_URL: http://127.0.0.1:8983/solr/californica
     steps:
       - uses: actions/checkout@v3
       - name: Set up Docker Compose
