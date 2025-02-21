@@ -103,6 +103,8 @@ def delete(ctx, items: typing.List[str], yes: bool):
         items: List of items to delete. Can be ARKs, Solr IDs, or csv filenames.
                If a csv filename is provided, all ARKs in the file will be deleted.
     """
+    solr = ctx.obj["solr_client"]
+
     delete_ids: list[str] = []
     for item in items:
         if item.endswith(".csv"):
@@ -117,16 +119,39 @@ def delete(ctx, items: typing.List[str], yes: bool):
         else:
             delete_ids.append(item)
 
-    # TODO check before delting collections
-    try:
-        n_total = (
-            ctx.obj["solr_client"].search("ark_ssi:*", defType="lucene", rows=0).hits
-        )
-    except SolrError:
-        n_total = "[unknown]"
+    delete_work_ids, delete_collections = [], []
+    for record in requests.get(
+        f"{solr.url}/get?ids={','.join(delete_ids)}", timeout=10
+    ).json()["response"]["docs"]:
+        print(record, record["has_model_ssim"], record["has_model_ssim"][0])
+        if record["has_model_ssim"][0] == "Collection":
+            delete_collections.append(record)
+        else:
+            delete_work_ids.append(record["id"])
 
-    if yes or click.confirm(f"Delete {len(delete_ids)} of {n_total} records?"):
-        ctx.obj["solr_client"].delete(id=delete_ids)
+    try:
+        n_total_works = solr.search(
+            "has_model_ssim:Work", fq="ark_ssi:*", defType="lucene", rows=0
+        ).hits
+    except SolrError:
+        n_total_works = "[unknown]"
+
+    if yes or click.confirm(f"Delete {len(delete_work_ids)} of {n_total_works} Works?"):
+        solr.delete(id=delete_work_ids)
+
+    for collection in delete_collections:
+        n_children = solr.search(
+            f"member_of_collection_ids_ssim:{collection['id']}",
+            fq="ark_ssi:*",
+            defType="lucene",
+            rows=0,
+        ).hits
+        if yes or click.confirm(
+            f"Delete {n_children} collection {collection['title_tesim']}? {n_children} children will also be deleted."
+        ):
+            solr.delete(
+                q=f"id:{collection['id']} OR member_of_collection_ids_ssim:{collection['id']}"
+            )
 
 
 def collate_child_works(csv_data: csv.DictReader) -> typing.Dict:
