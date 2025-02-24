@@ -174,6 +174,22 @@ def visibility(row: typing.Mapping[str, str]) -> typing.Optional[str]:
     return "restricted"
 
 
+def access_group(row: typing.Mapping[str, str]) -> typing.List[str]:
+    """Access group.
+
+    Args:
+        row: An input CSV record.
+
+    Returns:
+        ["public"] if metadata will should viewable by all users, though there
+        might still be restrictions on viewing the media itself. Otherwise, []
+        which will render an item invisible in the public site.
+
+        (note: should we just not bother pushing these to solr?).
+    """
+    return ["public"] if visibility(row) in ["open", "sinai"] else []
+
+
 MappigDictValue = typing.Union[None, typing.Callable, str, typing.List[str]]
 MappingDict = typing.Dict[str, MappigDictValue]
 
@@ -430,7 +446,7 @@ FIELD_MAPPING: MappingDict = {
     "visibility_ssi": "Visibility",
     "writing_system_tesim": "Writing system",
     # Set permissive values for blacklight_access_control
-    "discover_access_group_ssim": lambda x: ["public"],
-    "read_access_group_ssim": lambda x: ["public"],
-    "download_access_person_ssim": lambda x: ["public"],
+    "discover_access_group_ssim": access_group,
+    "read_access_group_ssim": access_group,
+    "download_access_person_ssim": access_group,
 }
