@@ -179,6 +179,7 @@ class TestMapRecord:
         result = feed_ursus.map_record(
             {
                 "Item ARK": "ark:/123/abc",
+                "Visibility": "open",
                 "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest",
             },
             self.solr_client,
