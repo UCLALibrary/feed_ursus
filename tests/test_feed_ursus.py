@@ -144,6 +144,7 @@ class TestMapRecord:
             "keywords_tesim": [],
             "keywords_sim": [],
             "collection_sim": None,
+            "ingest_id_ssi": None,
         }
 
     def test_sets_id(self):
