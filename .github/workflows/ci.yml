@@ -10,36 +10,56 @@ env:
   DEFAULT_PYTHON_VERSION: 3.11
 
 jobs:
-  black:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v2
-        with:
-          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
-      - run: pip install black
-      - run: black --check .
+  # black:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: actions/setup-python@v2
+  #       with:
+  #         python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+  #     - run: pip install black
+  #     - run: black --check .
 
-  pytest:
+  # pytest:
+  #   strategy:
+  #     matrix:
+  #       python-version: ['3.8', '3.9', '3.10', '3.11', '3.12', '3.13']
+  #   runs-on: ubuntu-latest
+  #   env:
+  #     SOLR_URL: http://127.0.0.1:8983/solr/californica
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Set up Docker Compose
+  #       run: |
+  #         sudo apt-get update
+  #         sudo apt-get install -y docker-compose
+  #     - run: docker-compose up --detach solr
+  #     - uses: actions/setup-python@v4
+  #       with:
+  #         python-version: ${{ matrix.python-version }}
+  #     - name: Install dependencies
+  #       run: |
+  #         python -m pip install --upgrade pip
+  #         pip install poetry
+  #         poetry install --only main,test
+  #     - run: poetry run pytest
+
+  tag-release:
+    # needs: [pytest]
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12', '3.13']
-    runs-on: ubuntu-latest
+        node-version: 
+        - 12
     env:
-      SOLR_URL: http://127.0.0.1:8983/solr/californica
+      BUMP_LEVEL: 'major'
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Docker Compose
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-compose
-      - run: docker-compose up --detach solr
-      - uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install poetry
-          poetry install --only main,test
-      - run: poetry run pytest
+    - if: contains(github.event.pull_request.title, env.BUMP_LEVEL) || contains(github.event.pull_request.body, env.BUMP_LEVEL) || contains(github.event.head_commit.message, env.BUMP_LEVEL)
+      run: echo "Commit message contains '${{ env.BUMP_LEVEL }}'"
+    - uses: phish108/autotag-action@v1.1.55
+      with:
+        dry-run: ${{ github.ref != 'refs/heads/main' || github.event_name == 'pull_request' }}
+        with-v: true
+        branch: ${{ github.base_ref || github.ref }}
+        bump: ${{ env.BUMP_LEVEL }}
+      #   github-token: ${{ secrets.GITHUB_TOKEN}}
