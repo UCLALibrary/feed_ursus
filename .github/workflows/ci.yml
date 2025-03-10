@@ -43,6 +43,7 @@ jobs:
 
   check_labels:
     name: Check labels
+    needs: [draft-release]  # for autotagger
     runs-on: ubuntu-latest
     steps:
       - uses: docker://agilepathway/pull-request-label-checker:latest
@@ -50,7 +51,7 @@ jobs:
           any_of: major,minor,patch
           repo_token: ${{ secrets.GITHUB_TOKEN }}
 
-  draft-release-notes:
+  draft-release:
     needs: [pytest]
     permissions:
       contents: write # for release-drafter/release-drafter to create a github release
@@ -59,7 +60,7 @@ jobs:
       - uses: release-drafter/release-drafter@v6.1.0
         with:
           config-name: configs/release-drafter.yml
-          latest: true
-          publish: true
+          latest: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main'}}
+          publish: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main'}}
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
