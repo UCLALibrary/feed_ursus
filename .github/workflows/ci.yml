@@ -41,33 +41,25 @@ jobs:
         run: poetry install --only main,test
       - run: poetry run pytest
 
-  tag-release:
-    needs: [pytest]
+  check_labels:
+    name: Check labels
     runs-on: ubuntu-latest
-    env:
-      BUMP_LEVEL:
     steps:
-    - if: ${{ !env.BUMP_LEVEL && (contains(github.event.pull_request.title, '#norelease') || contains(github.event.pull_request.body, '#norelease') || contains(github.event.head_commit.message, '#norelease')) }}
-      run: echo "BUMP_LEVEL=#norelease" >> $GITHUB_ENV
-    - if: contains(github.event.pull_request.title, '#patch') || contains(github.event.pull_request.body, '#patch') || contains(github.event.head_commit.message, '#patch')
-      run: echo "BUMP_LEVEL=patch" >> $GITHUB_ENV
-    - if: contains(github.event.pull_request.title, '#minor') || contains(github.event.pull_request.body, '#minor') || contains(github.event.head_commit.message, '#minor')
-      run: echo "BUMP_LEVEL=minor" >> $GITHUB_ENV
-    - if: contains(github.event.pull_request.title, '#major') || contains(github.event.pull_request.body, '#major') || contains(github.event.head_commit.message, '#major')
-      run: echo "BUMP_LEVEL=major" >> $GITHUB_ENV
+      - uses: docker://agilepathway/pull-request-label-checker:latest
+        with:
+          any_of: major,minor,patch
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
 
-    - uses: actions/checkout@v3
-
-    - uses: phish108/autotag-action@v1.1.55
-      if: ${{ env.BUMP_LEVEL && env.BUMP_LEVEL != '#norelease' }}
-      with:
-        dry-run: ${{ github.ref != 'refs/heads/main' || github.event_name == 'pull_request' }}
-        with-v: true
-        bump: ${{ env.BUMP_LEVEL }}
-        github-token: ${{ secrets.ACCESS_TOKEN}}
-        branch: ${{ github.head_ref || github.ref_name }}
-
-    - if: ${{!env.BUMP_LEVEL && !(env.BUMP_LEVEL == '') && github.event_name == 'pull_request'}}
-      run: |
-        echo "PR title or body must contain one of '#major', '#minor', '#patch', or '#norelease'."
-        exit 1
+  draft-release-notes:
+    needs: [pytest]
+    permissions:
+      contents: write # for release-drafter/release-drafter to create a github release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: release-drafter/release-drafter@v6.1.0
+        with:
+          config-name: configs/release-drafter.yml
+          latest: true
+          publish: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
