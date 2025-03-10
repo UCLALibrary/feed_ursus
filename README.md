@@ -1,9 +1,9 @@
 # feed_ursus
-Script to process CSVs into an Ursus solr index.
+Command line tool to load CSV content into a Solr index for the UCLA Digital Library's frontend, Ursus (https://digital.library.ucla.edu/)
 
 ## Using feed_ursus
 
-For basic use, you can install feed_ursus as a systemwide command directly from github, without having to first clone the repository.
+For basic use, you can install feed_ursus as a systemwide command directly from pypi, without having to first clone the repository.
 
 ### Installation
 
@@ -17,7 +17,7 @@ pipx ensurepath
 Then:
 
 ```
-pipx install git+https://github.com/uclalibrary/feed_ursus.git
+pipx install feed_ursus
 ```
 
 Pipx will install feed_ursus in its own virtualenv, but make the command accessible from anywhere so you don't need to active the virtualenv yourself.
@@ -47,7 +47,7 @@ feed_ursus --solr_url=http://localhost:8983/solr/californica --mapping=dlp load 
 
 ### Mappers
 
-Different metadata mappings are included for general Digital Library use (`--mapping=dlp`) and for the Sinai Manuscripts Digital Library (`--mapping=sinai`). Because this script was originally used for the Sinai Manuscripts project, the default value is `sinai` for backwards compatibility.
+Different metadata mappings are included for general Digital Library use (`--mapping=dlp`) and for the Sinai Manuscripts Digital Library (`--mapping=sinai`). The default is "dlp" – "sinai" is not guaranteed to be up to date as the sinai project is using a forked version at https://github.com/uclalibrary/feed_sinai.
 
 ## Developing feed_ursus
 
@@ -59,6 +59,7 @@ For development, clone the repository and use poetry to set up the virtualenv:
 git clone git@github.com:UCLALibrary/feed_ursus.git
 cd feed_ursus
 pipx install poetry
+poetry self add poetry-git-version-plugin
 poetry install
 ```
 
