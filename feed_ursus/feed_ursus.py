@@ -5,6 +5,7 @@
 import csv
 from collections import defaultdict
 from importlib import import_module
+import importlib.metadata
 import os
 import re
 import typing
@@ -37,6 +38,7 @@ UrsusRecord = typing.Dict[str, typing.Any]
     default="dlp",
     help="'sinai' or 'dlp'. Deterines the metadata field mapping",
 )
+@click.version_option(version=importlib.metadata.version("feed_ursus"))
 @click.pass_context
 def feed_ursus(ctx, solr_url: typing.Optional[str], mapping: str):
     """CLI for managing a Solr index for Ursus."""

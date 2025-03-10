@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "feed-ursus"
 version = "0.0.0"
-description = ""
-authors = ["Your Name <you@example.com>"]
+description = "Command line tool to load CSV content into a Solr index for the UCLA Digital Library's frontend, Ursus (https://digital.library.ucla.edu/)"
+authors = ["Andy Wallace <andrewwallace@library.ucla.edu>"]
 readme = "README.md"
 packages = []
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.10"
 pysolr = "^3.8"
 requests = "^2.32.2"
 click = "^8.1.3"
