@@ -43,7 +43,7 @@ jobs:
 
   check_labels:
     name: Check labels
-    needs: [draft-release]  # for autotagger
+    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: docker://agilepathway/pull-request-label-checker:latest
@@ -52,6 +52,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
 
   draft-release:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: [pytest]
     permissions:
       contents: write # for release-drafter/release-drafter to create a github release
