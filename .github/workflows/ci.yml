@@ -43,6 +43,7 @@ jobs:
 
   check_labels:
     name: Check labels
+    if: github.event_name == 'pull_request'
     needs: [draft-release]  # for autotagger
     runs-on: ubuntu-latest
     steps:
