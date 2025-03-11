@@ -1,9 +1,8 @@
 name: Build and Release
 
 on:
-  push:
-    tags:
-      - 'v*.*.*'
+  release:
+    types: [published]
 
 env:
   DEFAULT_PYTHON_VERSION: 3.11
