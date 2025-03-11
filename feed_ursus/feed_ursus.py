@@ -4,8 +4,11 @@
 
 import csv
 from collections import defaultdict
+from datetime import datetime, timezone
+from getpass import getuser
 from importlib import import_module
 import importlib.metadata
+import json
 import os
 import re
 import typing
@@ -54,7 +57,7 @@ def feed_ursus(ctx, solr_url: typing.Optional[str], mapping: str):
 @feed_ursus.command("load")
 @click.argument("filenames", nargs=-1, type=click.Path(exists=True, dir_okay=False))
 @click.pass_context
-def load_csv(ctx, filenames: typing.List[click.Path]):
+def load_csv(ctx, filenames: typing.List[str]):
     """Load data from a csv.
 
     Args:
@@ -70,6 +73,7 @@ def load_csv(ctx, filenames: typing.List[click.Path]):
     }
 
     config = {
+        "ingest_id": f"{datetime.now(timezone.utc).isoformat()}-{getuser()}",
         "collection_names": {
             row["Item ARK"].replace("ark:/", "").replace("/", "-")[::-1]: row["Title"]
             for row in csv_data.values()
@@ -79,7 +83,22 @@ def load_csv(ctx, filenames: typing.List[click.Path]):
         # "child_works": collate_child_works(csv_data),
     }
 
-    mapped_records = []
+    mapped_records = [
+        {
+            "id": config["ingest_id"],
+            "is_ingest_bsi": True,
+            "feed_ursus_version_ssi": importlib.metadata.version("feed_ursus"),
+            "ingest_user_ssi": getuser(),
+            "csv_files_ss": json.dumps(
+                {
+                    filename: open(filename, encoding="utf-8").read()
+                    for filename in rich.progress.track(
+                        filenames, description=f"loading {len(filenames)} files..."
+                    )
+                }
+            ),
+        }
+    ]
     for row in rich.progress.track(
         csv_data.values(), description=f"Importing {len(csv_data)} records..."
     ):
@@ -290,6 +309,8 @@ def map_record(
         field_name: map_field_value(row, field_name, config=config)
         for field_name in mapper.FIELD_MAPPING
     }
+
+    record["ingest_id_ssi"] = config.get("ingest_id")
 
     # THUMBNAIL
     record["thumbnail_url_ss"] = (
