@@ -166,7 +166,7 @@ def visibility(row: typing.Mapping[str, str]) -> typing.Optional[str]:
 
     if "Visibility" in row:
         value_from_csv = row["Visibility"].strip().lower()
-        return visibility_mapping[value_from_csv]
+        return visibility_mapping.get(value_from_csv)
 
     if row.get("Item Status") in ["Completed", "Completed with minimal metadata"]:
         return "open"
