@@ -144,7 +144,7 @@ class TestMapRecord:
             "keywords_tesim": [],
             "keywords_sim": [],
             "collection_sim": None,
-            "ingest_by_ssi": "feed_ursus",
+            "record_origin_ssi": "feed_ursus",
             "ingest_id_ssi": None,
         }
 
