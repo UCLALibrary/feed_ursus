@@ -310,7 +310,7 @@ def map_record(
         for field_name in mapper.FIELD_MAPPING
     }
 
-    record["ingest_by_ssi"] = "feed_ursus"
+    record["record_origin_ssi"] = "feed_ursus"
     record["ingest_id_ssi"] = config.get("ingest_id")
 
     # THUMBNAIL
