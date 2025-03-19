@@ -399,7 +399,6 @@ FIELD_MAPPING: MappingDict = {
     "rights_country_tesim": "Rights.countryCreation",
     "rights_holder_tesim": [
         "Personal or Corporate Name.copyrightHolder",
-        "Rights.rightsHolderContact",
         "Rights.rightsHolderName",
     ],
     "rights_statement_tesim": "Rights.copyrightStatus",
@@ -410,7 +409,7 @@ FIELD_MAPPING: MappingDict = {
     "series_sim": "Series",
     "series_tesim": "Series",
     "sequence_isi": "Item Sequence",
-    "services_contact_ssm": "Rights.servicesContact",
+    "services_contact_ssm": ["Rights.servicesContact", "Rights.rightsHolderContact"],
     "shelfmark_ssi": "Shelfmark",
     "subject_cultural_object_sim": "Subject.culturalObject",
     "subject_cultural_object_tesim": "Subject.culturalObject",
