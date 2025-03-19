@@ -1,4 +1,5 @@
 # feed_ursus
+
 Command line tool to load CSV content into a Solr index for the UCLA Digital Library's frontend, Ursus (https://digital.library.ucla.edu/)
 
 ## Using feed_ursus
@@ -42,7 +43,7 @@ It might take a minute or so for solr to get up and running, at which point you 
 To load data from a csv:
 
 ```
-feed_ursus --solr_url=http://localhost:8983/solr/californica --mapping=dlp load [path/to/your.csv] 
+feed_ursus --solr_url=http://localhost:8983/solr/californica --mapping=dlp load [path/to/your.csv]
 ```
 
 ### Mappers
@@ -88,23 +89,60 @@ pytest
 ### Running the formatter and linters:
 
 black (formatter) will run in check mode in ci, so make sure you run it before committing:
+
 ```
 black .
 ```
 
 flake8 (linter) isn't currently running in ci, but should be put back in soon:
+
 ```
 flake8
 ```
 
 pylint (linter) isn't currently running in ci, but should be put back in soon:
+
 ```
 pylint
 ```
 
 mypy (static type checker) isn't currently running in ci, but should be put back in soon:
+
 ```
 mypy
+```
+
+### VSCode Debugger Configuration
+
+To debug with VSCode, the python environment has to be created within the project directory.
+
+If it exists, remove the existing setup and install in the project directory:
+
+- `poetry env list`
+- `poetry env remove <name of environment you want to delete>`
+- `poetry config virtualenvs.in-project true`
+- `poetry install`
+
+Add an appropriate `.vscode/launch.json`, this assumes you have the python debugger extension installed.
+
+```
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Run the feed_ursus module",
+            "type": "debugpy",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "module": "feed_ursus.feed_ursus",
+            "justMyCode": true,
+        }
+    ]
+}
 ```
 
 # Caveats
