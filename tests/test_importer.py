@@ -94,7 +94,7 @@ class TestMapRecord:
         result = feed_ursus.importer.Importer().map_record(
             {"Item ARK": "ark:/123/abc", "Test DLCS Field": "lasigd|~|asdfg"}
         )
-        
+
         id = result.pop("ingest_id_ssi")
         assert isinstance(id, str)
         assert len(id) >= 10
@@ -244,7 +244,7 @@ class TestThumbnailFromManifest:
         with requests_mock.Mocker() as m:
             m.get("http://test.manifest/url/", json=fixtures.GOOD_MANIFEST.json_data)
             result = feed_ursus.importer.thumbnail_from_manifest(self.record)
-        
+
         assert (
             result
             == "https://iiif.sinaimanuscripts.library.ucla.edu/iiif/2/ark%3A%2F21198%2Fz14b44n8%2Fzw07hs0c/full/!200,200/0/default.jpg"  # pylint: disable=line-too-long
@@ -254,10 +254,12 @@ class TestThumbnailFromManifest:
         "uses the first image if 'f. 001r' is not found"
 
         with requests_mock.Mocker() as m:
-            m.get("http://test.manifest/url/", json=fixtures.MANIFEST_WITHOUT_F001R.json_data
-        )
+            m.get(
+                "http://test.manifest/url/",
+                json=fixtures.MANIFEST_WITHOUT_F001R.json_data,
+            )
             result = feed_ursus.importer.thumbnail_from_manifest(self.record)
-        
+
         assert (
             result
             == "https://iiif.sinaimanuscripts.library.ucla.edu/iiif/2/ark%3A%2F21198%2Fz14b44n8%2Fhm957748/full/!200,200/0/default.jpg"  # pylint: disable=line-too-long
@@ -267,7 +269,9 @@ class TestThumbnailFromManifest:
         "returns None if HTTP request fails"
 
         monkeypatch.setattr(
-            feed_ursus.importer.requests, "get", lambda x: fixtures.MockResponse(None, 404)
+            feed_ursus.importer.requests,
+            "get",
+            lambda x: fixtures.MockResponse(None, 404),
         )
 
         result = feed_ursus.importer.thumbnail_from_manifest(self.record)
@@ -277,7 +281,9 @@ class TestThumbnailFromManifest:
         "returns None if manifest contains no images"
 
         monkeypatch.setattr(
-            feed_ursus.importer.requests, "get", lambda x: fixtures.MANIFEST_WITHOUT_IMAGES
+            feed_ursus.importer.requests,
+            "get",
+            lambda x: fixtures.MANIFEST_WITHOUT_IMAGES,
         )
 
         result = feed_ursus.importer.thumbnail_from_manifest(self.record)
@@ -286,7 +292,9 @@ class TestThumbnailFromManifest:
     def test_bad_data(self, monkeypatch):
         "returns None if manifest isn't parsable"
 
-        monkeypatch.setattr(feed_ursus.importer.requests, "get", lambda x: fixtures.BAD_MANIFEST)
+        monkeypatch.setattr(
+            feed_ursus.importer.requests, "get", lambda x: fixtures.BAD_MANIFEST
+        )
 
         result = feed_ursus.importer.thumbnail_from_manifest(self.record)
         assert result is None

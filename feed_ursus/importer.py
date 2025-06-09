@@ -30,12 +30,11 @@ class Importer:
     collection_names: dict
     controlled_fields: dict
 
-    def __init__(self, solr_url: str="http://localhost:8983/solr/californica"):
+    def __init__(self, solr_url: str = "http://localhost:8983/solr/californica"):
         self.solr_client = Solr(solr_url, always_commit=True)
         self.ingest_id = f"{datetime.now(timezone.utc).isoformat()}-{getuser()}"
         self.collection_names = dict()
         self.controlled_fields = dict()
-
 
     def load_csvs(self, filenames: typing.List[str]):
         """Load data from a csv.
@@ -79,14 +78,11 @@ class Importer:
             csv_data.values(), description=f"Importing {len(csv_data)} records..."
         ):
             if row.get("Object Type") not in ("ChildWork", "Page"):
-                mapped_records.append(
-                    self.map_record(row)
-                )
+                mapped_records.append(self.map_record(row))
 
         self.solr_client.add(mapped_records)
 
-
-    def delete(self, items: typing.List[str], skip_confirmation: bool=False):
+    def delete(self, items: typing.List[str], skip_confirmation: bool = False):
         """Delete records from a Solr index.
 
         Args:
@@ -125,7 +121,9 @@ class Importer:
         except SolrError:
             n_total_works = "[unknown]"
 
-        if skip_confirmation or click.confirm(f"Delete {len(delete_work_ids)} of {n_total_works} Works?"):
+        if skip_confirmation or click.confirm(
+            f"Delete {len(delete_work_ids)} of {n_total_works} Works?"
+        ):
             self.solr_client.delete(id=delete_work_ids)
 
         for collection in delete_collections:
@@ -141,7 +139,6 @@ class Importer:
                 self.solr_client.delete(
                     q=f"id:{collection['id']} OR member_of_collection_ids_ssim:{collection['id']}"
                 )
-
 
     # pylint: disable=bad-continuation
     def map_field_value(self, row: DLCSRecord, field_name: str) -> typing.Any:
@@ -211,9 +208,10 @@ class Importer:
         else:
             return output[0] if len(output) >= 1 else None
 
-
     # pylint: disable=bad-continuation
-    def map_record(self, row: DLCSRecord) -> UrsusRecord:  # pylint: disable=too-many-statements
+    def map_record(
+        self, row: DLCSRecord
+    ) -> UrsusRecord:  # pylint: disable=too-many-statements
         """Maps a metadata record from CSV to Ursus Solr.
 
         Args:
@@ -232,10 +230,9 @@ class Importer:
         record["ingest_id_ssi"] = self.ingest_id
 
         # THUMBNAIL
-        record["thumbnail_url_ss"] = (
-            record.get("thumbnail_url_ss")
-            or thumbnail_from_manifest(record)
-        )
+        record["thumbnail_url_ss"] = record.get(
+            "thumbnail_url_ss"
+        ) or thumbnail_from_manifest(record)
 
         # COLLECTIONS
         record["member_of_collections_ssim"] = [
@@ -259,7 +256,9 @@ class Importer:
         record["calligrapher_sim"] = record.get("calligrapher_tesim")
         record["engraver_sim"] = record.get("engraver_tesim")
         record["printmaker_sim"] = record.get("printmaker_tesim")
-        record["human_readable_language_sim"] = record.get("human_readable_language_tesim")
+        record["human_readable_language_sim"] = record.get(
+            "human_readable_language_tesim"
+        )
         record["names_sim"] = name_fields(record)
         record["keywords_sim"] = keywords_fields(record)
         record["collection_sim"] = record.get("collection_ssi")
@@ -269,9 +268,12 @@ class Importer:
         # inscription
         record["script_sim"] = record.get("script_tesim")
         record["writing_system_sim"] = record.get("writing_system_tesim")
-        record["year_isim"] = year_parser.integer_years(record.get("normalized_date_tesim"))
+        record["year_isim"] = year_parser.integer_years(
+            record.get("normalized_date_tesim")
+        )
         record["date_dtsim"] = solr_transformed_dates(
-            self.solr_client, (date_parser.get_dates(record.get("normalized_date_tesim")))
+            self.solr_client,
+            (date_parser.get_dates(record.get("normalized_date_tesim"))),
         )
         record["place_of_origin_sim"] = record.get("place_of_origin_tesim")
         record["associated_name_sim"] = record.get("associated_name_tesim")
@@ -348,10 +350,12 @@ def solr_transformed_dates(solr_client: Solr, parsed_dates: typing.List):
         solr_client._from_python(date) for date in parsed_dates
     ]  # pylint: disable=protected-access
 
+
 def get_bare_field_name(field_name: str) -> str:
     """Strips the solr suffix and initial 'human_readable_' from a field name."""
 
     return re.sub(r"_[^_]+$", "", field_name).replace("human_readable_", "")
+
 
 def name_fields(record):
     """combine fields for the names facet"""
