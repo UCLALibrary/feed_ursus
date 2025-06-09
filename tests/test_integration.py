@@ -2,15 +2,12 @@
 
 # pylint: disable=no-self-use
 
-import importlib
 import os
 
 from click.testing import CliRunner
 from pysolr import Solr  # type: ignore
 
 from feed_ursus import feed_ursus
-
-feed_ursus.mapper = importlib.import_module("feed_ursus.mapper.sinai")
 
 
 SOLR_URL = os.getenv("SOLR_URL", "http://localhost:8983/solr/californica")

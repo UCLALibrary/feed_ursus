@@ -7,7 +7,7 @@ import random
 
 import pytest  # type: ignore
 
-import feed_ursus.mapper.dlp as mapper
+import feed_ursus.mapper as mapper
 
 
 class TestVisibility:
