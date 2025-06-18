@@ -56,8 +56,9 @@ def feed_ursus(ctx, solr_url: typing.Optional[str], mapping: str):
 
 @feed_ursus.command("load")
 @click.argument("filenames", nargs=-1, type=click.Path(exists=True, dir_okay=False))
+@click.option("--batch/--not-batch", default=True, help="Enable or disable batch mode.")
 @click.pass_context
-def load_csv(ctx, filenames: typing.List[str]):
+def load_csv(ctx, filenames: typing.List[str], batch: bool):
     """Load data from a csv.
 
     Args:
@@ -80,7 +81,7 @@ def load_csv(ctx, filenames: typing.List[str]):
             if row.get("Object Type") == "Collection"
         },
         "controlled_fields": load_field_config("./mapper/fields"),
-        # "child_works": collate_child_works(csv_data),
+        "child_works": collate_child_works(csv_data),
     }
 
     mapped_records = [
@@ -89,14 +90,15 @@ def load_csv(ctx, filenames: typing.List[str]):
             "is_ingest_bsi": True,
             "feed_ursus_version_ssi": importlib.metadata.version("feed_ursus"),
             "ingest_user_ssi": getuser(),
-            "csv_files_ss": json.dumps(
-                {
-                    filename: open(filename, encoding="utf-8").read()
-                    for filename in rich.progress.track(
-                        filenames, description=f"loading {len(filenames)} files..."
-                    )
-                }
-            ),
+            # Hack, until a decision made on better logging
+            # "csv_files_ss": json.dumps(
+            #     {
+            #         filename: open(filename, encoding="utf-8").read()
+            #         for filename in rich.progress.track(
+            #             filenames, description=f"loading {len(filenames)} files..."
+            #         )
+            #     }
+            # ),
         }
     ]
     for row in rich.progress.track(
@@ -107,7 +109,28 @@ def load_csv(ctx, filenames: typing.List[str]):
                 map_record(row, ctx.obj["solr_client"], config=config)
             )
 
-    ctx.obj["solr_client"].add(mapped_records)
+    if batch:
+        print("Submitting records in batch mode...")
+        try:
+            ctx.obj["solr_client"].add(mapped_records)
+        except SolrError as e:
+            print(f"Error adding records in batch mode: {e}")
+
+    else:
+        print("Submitting records one by one...")
+        for mapped_record in mapped_records:
+            add_record(ctx.obj["solr_client"], mapped_record)
+
+
+def add_record(solr_client: Solr, mapped_record: UrsusRecord):
+    """Add a single record to the Solr index."""
+
+    try:
+        solr_client.add(mapped_record)
+        print(f"Added record {mapped_record['id']}")
+
+    except SolrError as e:
+        print(f"Error adding record {mapped_record['id']}: {e}")
 
 
 @feed_ursus.command()
@@ -556,4 +579,5 @@ def thumbnail_from_manifest(record: UrsusRecord) -> typing.Optional[str]:
 
 
 if __name__ == "__main__":
+    print("feed_ursus() executing, running from main()")
     feed_ursus()  # pylint: disable=no-value-for-parameter
