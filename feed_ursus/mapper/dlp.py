@@ -187,7 +187,12 @@ def access_group(row: typing.Mapping[str, str]) -> typing.List[str]:
 
         (note: should we just not bother pushing these to solr?).
     """
-    return ["public"] if visibility(row) in ["open", "sinai"] else []
+    # match https://github.com/UCLALibrary/ursus/blob/0b3197fb9189625f0892b83f38be86f5200e4ac7/app/controllers/catalog_controller.rb#L68
+    return (
+        ["public"]
+        if visibility(row) not in ["restricted", "discovery", "sinai"]
+        else []
+    )
 
 
 MappigDictValue = typing.Union[None, typing.Callable, str, typing.List[str]]
