@@ -2,56 +2,54 @@
 
 # pylint: disable=no-self-use
 
-import importlib
-import unittest.mock
+from unittest.mock import Mock
 
 import click.testing
 import pytest  # type: ignore
 from pysolr import Solr  # type: ignore
 
 from feed_ursus import feed_ursus
+import feed_ursus.importer
+from feed_ursus.importer import Importer, get_bare_field_name, collate_child_works
 from . import fixtures  # pylint: disable=wrong-import-order
 
-feed_ursus.mapper = importlib.import_module("feed_ursus.mapper.dlp")
+
+@pytest.fixture
+def importer() -> Importer:
+    importer = Importer(solr_url="", mapper_name="dlp")
+    importer.solr_client = Mock(Solr)
+    return importer
 
 
 class TestLoadCsv:
     """Tests for function load_csv"""
 
-    def test_file_exists(self, monkeypatch):
+    def test_file_exists(self, importer):
         """gets the contents of a CSV file"""
 
-        monkeypatch.setattr(feed_ursus, "Solr", unittest.mock.Mock())
-        runner = click.testing.CliRunner()
-        result = runner.invoke(
-            feed_ursus.feed_ursus, ["load", "tests/csv/anais_collection.csv"]
-        )
-        assert result.exit_code == 0
+        importer.load_csv(filenames=["tests/csv/anais_collection.csv"], batch=True)
+        importer.solr_client.add.assert_called_once()
 
-    def test_file_does_not_exist(self, monkeypatch):
+    def test_file_does_not_exist(self, importer):
         """raises an error if file does not exist"""
 
-        monkeypatch.setattr(feed_ursus, "Solr", unittest.mock.Mock())
-        runner = click.testing.CliRunner()
-        result = runner.invoke(
-            feed_ursus.feed_ursus, ["load", "tests/fixtures/nonexistent.csv"]
-        )
-
-        assert result.exit_code == 2
+        with pytest.raises(FileNotFoundError):
+            importer.load_csv(filenames=["tests/fixtures/nonexistent.csv"], batch=True)
 
 
 class TestMapFieldValue:
     """tests for function map_field_value"""
 
-    def test_parses_array(self, monkeypatch):
+    def test_parses_array(self, monkeypatch, importer):
         """parses value to an array of strings separated by '|~|'"""
 
         monkeypatch.setitem(
-            feed_ursus.mapper.FIELD_MAPPING, "test_ursus_field_tesim", "Test DLCS Field"
+            importer.mapper.FIELD_MAPPING, "test_ursus_field_tesim", "Test DLCS Field"
         )
         input_record = {"Test DLCS Field": "one|~|two|~|three"}
-        result = feed_ursus.map_field_value(
-            input_record, "test_ursus_field_tesim", config={}
+        result = importer.map_field_value(
+            input_record,
+            "test_ursus_field_tesim",
         )
         assert result == [
             "one",
@@ -59,15 +57,15 @@ class TestMapFieldValue:
             "three",
         ]
 
-    def test_calls_function(self, monkeypatch):
+    def test_calls_function(self, importer, monkeypatch):
         """If mapper defines a function map_[SOLR_NAME], calls that function."""
         # pylint: disable=no-member
         monkeypatch.setitem(
-            feed_ursus.mapper.FIELD_MAPPING,
+            importer.mapper.FIELD_MAPPING,
             "test_ursus_field_tesim",
             lambda x: "lkghsdh",
         )
-        result = feed_ursus.map_field_value({}, "test_ursus_field_tesim", config={})
+        result = importer.map_field_value({}, "test_ursus_field_tesim")
         assert result == "lkghsdh"
 
 
@@ -75,8 +73,7 @@ def test_get_bare_field_name():
     """function get_bare_field_name"""
 
     assert (
-        feed_ursus.get_bare_field_name("human_readable_test_field_name_tesim")
-        == "test_field_name"
+        get_bare_field_name("human_readable_test_field_name_tesim") == "test_field_name"
     )
 
 
@@ -84,22 +81,19 @@ class TestMapRecord:
     """function map_record"""
 
     CONFIG = {"collection_names": {"noitcelloc-321": "Test Collection KGSL"}}
-    solr_client = Solr("http://localhost:8983/solr/californica", always_commit=True)
 
-    def test_maps_record(self, monkeypatch):
+    def test_maps_record(self, importer, monkeypatch):
         """maps the record for Ursus"""
         monkeypatch.setattr(
-            feed_ursus.mapper,
+            importer.mapper,
             "FIELD_MAPPING",
             {
                 "id": lambda r: r["Item ARK"],
                 "test_ursus_field_tesim": "Test DLCS Field",
             },
         )
-        result = feed_ursus.map_record(
-            {"Item ARK": "ark:/123/abc", "Test DLCS Field": "lasigd|~|asdfg"},
-            self.solr_client,
-            config=self.CONFIG,
+        result = importer.map_record(
+            {"Item ARK": "ark:/123/abc", "Test DLCS Field": "lasigd|~|asdfg"}
         )
 
         assert result == {
@@ -148,75 +142,66 @@ class TestMapRecord:
             "ingest_id_ssi": None,
         }
 
-    def test_sets_id(self):
+    def test_sets_id(self, importer):
         """sets 'id' to reversed ark"""
-        result = feed_ursus.map_record(
+        result = importer.map_record(
             {
                 "Item ARK": "ark:/123/abc",
                 "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest",
-            },
-            self.solr_client,
-            config=self.CONFIG,
+            }
         )
         assert result["id"] == "cba-321"
 
-    def test_sets_thumbnail(self):
+    def test_sets_thumbnail(self, importer):
         """sets a thumbnail URL"""
-        result = feed_ursus.map_record(
+        result = importer.map_record(
             {
                 "Item ARK": "ark:/123/abc",
                 "IIIF Access URL": "https://test.iiif.server/url",
                 "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest",
             },
-            self.solr_client,
-            config=self.CONFIG,
         )
         assert (
             result["thumbnail_url_ss"]
             == "https://test.iiif.server/url/full/!200,200/0/default.jpg"
         )
 
-    def test_sets_access(self):
+    def test_sets_access(self, importer):
         """sets permissive values for blacklight-access-control"""
-        result = feed_ursus.map_record(
+        result = importer.map_record(
             {
                 "Item ARK": "ark:/123/abc",
                 "Visibility": "open",
                 "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest",
             },
-            self.solr_client,
-            config=self.CONFIG,
         )
         assert result["discover_access_group_ssim"] == ["public"]
         assert result["read_access_group_ssim"] == ["public"]
         assert result["download_access_person_ssim"] == ["public"]
 
-    def test_sets_iiif_manifest_url(self):
+    def test_sets_iiif_manifest_url(self, importer):
         """sets a IIIF manifest URL based on the ARK"""
-        result = feed_ursus.map_record(
+        result = importer.map_record(
             {
                 "Item ARK": "ark:/123/abc",
                 "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest",
-            },
-            self.solr_client,
-            config=self.CONFIG,
+            }
         )
         assert (
             result["iiif_manifest_url_ssi"]
             == "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest"
         )
 
-    def test_sets_collection(self):
+    def test_sets_collection(self, importer):
         """sets the collection name by using the collection row"""
 
-        result = feed_ursus.map_record(
+        importer.config.update(self.CONFIG)
+        result = importer.map_record(
             {
                 "Item ARK": "ark:/123/abc",
                 "Parent ARK": "ark:/123/collection",
                 "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest",
-            },
-            self.solr_client,
-            config=self.CONFIG,
+            }
         )
         assert result["member_of_collections_ssim"] == ["Test Collection KGSL"]
 
@@ -231,17 +216,15 @@ class TestMapRecord:
             ("Type.typeOfResource", "human_readable_resource_type_sim"),
         ],
     )
-    def test_sets_facet_fields(self, column_name, facet_field_name):
+    def test_sets_facet_fields(self, column_name, facet_field_name, importer):
         """Copies *_tesim to *_sim fields for facets"""
         value = "value aksjg"
-        result = feed_ursus.map_record(
+        result = importer.map_record(
             {
                 "Item ARK": "ark:/123/abc",
                 "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest",
                 column_name: value,
-            },
-            self.solr_client,
-            config=self.CONFIG,
+            }
         )
         assert result[facet_field_name] == [value]
 
@@ -249,10 +232,10 @@ class TestMapRecord:
 class TestThumbnailFromChild:
     """Tests for feed_ursus.thumbnail_from_child."""
 
-    def test_uses_title(self):
+    def test_uses_title(self, importer):
         """Returns the thumbnail from child row 'f. 001r'"""
 
-        child_works = feed_ursus.collate_child_works(
+        importer.config["child_works"] = collate_child_works(
             {
                 "ark:/work/1": {
                     "Object Type": "Work",
@@ -279,15 +262,13 @@ class TestThumbnailFromChild:
         )
         record = {"ark_ssi": "ark:/work/1"}
 
-        result = feed_ursus.thumbnail_from_child(
-            record, config={"child_works": child_works}
-        )
+        result = importer.thumbnail_from_child(record)
         assert result == "/thumb1.jpg"
 
-    def test_uses_mapper(self):
+    def test_uses_mapper(self, importer):
         """Uses the mapper to generate a thumbnail from access_copy, if necessary"""
 
-        child_works = feed_ursus.collate_child_works(
+        importer.config["child_works"] = collate_child_works(
             {
                 "ark:/work/1": {
                     "Item ARK": "ark:/work/1",
@@ -307,14 +288,12 @@ class TestThumbnailFromChild:
         )
         record = {"ark_ssi": "ark:/work/1"}
 
-        result = feed_ursus.thumbnail_from_child(
-            record, config={"child_works": child_works}
-        )
+        result = importer.thumbnail_from_child(record)
         assert result == "http://iiif.url/123/full/!200,200/0/default.jpg"
 
-    def test_defaults_to_first(self):
+    def test_defaults_to_first(self, importer):
         """Returns the thumbnail from first child row if it can't find 'f. 001r'"""
-        child_works = feed_ursus.collate_child_works(
+        importer.config["child_works"] = collate_child_works(
             {
                 "ark:/work/1": {
                     "Item ARK": "ark:/work/1",
@@ -341,14 +320,12 @@ class TestThumbnailFromChild:
         )
         record = {"ark_ssi": "ark:/work/1"}
 
-        result = feed_ursus.thumbnail_from_child(
-            record, config={"child_works": child_works}
-        )
+        result = importer.thumbnail_from_child(record)
         assert result == "/thumb2.jpg"
 
-    def test_with_no_children_returns_none(self):
+    def test_with_no_children_returns_none(self, importer):
         """If there are no child rows, return None"""
-        child_works = feed_ursus.collate_child_works(
+        importer.config["child_works"] = collate_child_works(
             {
                 "ark:/work/1": {
                     "Item ARK": "ark:/work/1",
@@ -361,71 +338,80 @@ class TestThumbnailFromChild:
         )
         record = {"ark_ssi": "ark:/work/1"}
 
-        result = feed_ursus.thumbnail_from_child(
-            record, config={"child_works": child_works}
-        )
+        result = importer.thumbnail_from_child(record)
         assert result is None
+
+
+@pytest.fixture
+def record():
+    return {"iiif_manifest_url_ssi": "http://test.manifest/url/"}
 
 
 class TestThumbnailFromManifest:
     """Function thumbnail_from_manifest"""
 
-    record = {"iiif_manifest_url_ssi": "http://test.manifest/url/"}
-
-    def test_picks_folio_1r(self, monkeypatch):
+    def test_picks_folio_1r(self, monkeypatch, importer, record):
         "uses the page titled 'f. 001r', if found"
         monkeypatch.setattr(
-            feed_ursus.requests, "get", lambda x: fixtures.GOOD_MANIFEST
+            feed_ursus.importer.requests, "get", lambda x: fixtures.GOOD_MANIFEST
         )
 
-        result = feed_ursus.thumbnail_from_manifest(self.record)
+        result = importer.thumbnail_from_manifest(record)
         assert (
             result
             == "https://iiif.sinaimanuscripts.library.ucla.edu/iiif/2/ark%3A%2F21198%2Fz14b44n8%2Fzw07hs0c/full/!200,200/0/default.jpg"  # pylint: disable=line-too-long
         )
 
-    def test_picks_first_page(self, monkeypatch):
+    def test_picks_first_page(self, monkeypatch, importer, record):
         "uses the first image if 'f. 001r' is not found"
         monkeypatch.setattr(
-            feed_ursus.requests, "get", lambda x: fixtures.MANIFEST_WITHOUT_F001R
+            feed_ursus.importer.requests,
+            "get",
+            lambda x: fixtures.MANIFEST_WITHOUT_F001R,
         )
 
-        result = feed_ursus.thumbnail_from_manifest(self.record)
+        result = importer.thumbnail_from_manifest(record)
         assert (
             result
             == "https://iiif.sinaimanuscripts.library.ucla.edu/iiif/2/ark%3A%2F21198%2Fz14b44n8%2Fhm957748/full/!200,200/0/default.jpg"  # pylint: disable=line-too-long
         )
 
-    def test_request_fails(self, monkeypatch):
+    def test_request_fails(self, monkeypatch, importer, record):
         "returns None if HTTP request fails"
 
         monkeypatch.setattr(
-            feed_ursus.requests, "get", lambda x: fixtures.MockResponse(None, 404)
+            feed_ursus.importer.requests,
+            "get",
+            lambda x: fixtures.MockResponse(None, 404),
         )
 
-        result = feed_ursus.thumbnail_from_manifest(self.record)
+        result = importer.thumbnail_from_manifest(record)
         assert result is None
 
-    def test_manifest_without_images(self, monkeypatch):
+    def test_manifest_without_images(self, monkeypatch, importer, record):
         "returns None if manifest contains no images"
 
         monkeypatch.setattr(
-            feed_ursus.requests, "get", lambda x: fixtures.MANIFEST_WITHOUT_IMAGES
+            feed_ursus.importer.requests,
+            "get",
+            lambda x: fixtures.MANIFEST_WITHOUT_IMAGES,
         )
 
-        result = feed_ursus.thumbnail_from_manifest(self.record)
+        result = importer.thumbnail_from_manifest(record)
         assert result is None
 
-    def test_bad_data(self, monkeypatch):
+    def test_bad_data(self, monkeypatch, importer, record):
         "returns None if manifest isn't parsable"
 
-        monkeypatch.setattr(feed_ursus.requests, "get", lambda x: fixtures.BAD_MANIFEST)
+        monkeypatch.setattr(
+            feed_ursus.importer.requests, "get", lambda x: fixtures.BAD_MANIFEST
+        )
 
-        result = feed_ursus.thumbnail_from_manifest(self.record)
+        result = importer.thumbnail_from_manifest(record)
         assert result is None
 
-    def test_no_manifest_url(self):
-        "returns None if the record doesn't include field 'iiif_m'"
+    def test_no_manifest_url(self, importer):
+        "returns None if the record doesn't include field 'iiif_manifest_url_ssi'"
 
-        result = feed_ursus.thumbnail_from_manifest({})
+        result = importer.thumbnail_from_manifest({})
         assert result is None
