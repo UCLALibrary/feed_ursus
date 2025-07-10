@@ -48,7 +48,8 @@ class TestMapFieldValue:
         )
         input_record = {"Test DLCS Field": "one|~|two|~|three"}
         result = importer.map_field_value(
-            input_record, "test_ursus_field_tesim",
+            input_record,
+            "test_ursus_field_tesim",
         )
         assert result == [
             "one",
@@ -72,8 +73,7 @@ def test_get_bare_field_name():
     """function get_bare_field_name"""
 
     assert (
-        get_bare_field_name("human_readable_test_field_name_tesim")
-        == "test_field_name"
+        get_bare_field_name("human_readable_test_field_name_tesim") == "test_field_name"
     )
 
 
@@ -92,7 +92,9 @@ class TestMapRecord:
                 "test_ursus_field_tesim": "Test DLCS Field",
             },
         )
-        result = importer.map_record({"Item ARK": "ark:/123/abc", "Test DLCS Field": "lasigd|~|asdfg"})
+        result = importer.map_record(
+            {"Item ARK": "ark:/123/abc", "Test DLCS Field": "lasigd|~|asdfg"}
+        )
 
         assert result == {
             "features_sim": None,
@@ -233,7 +235,7 @@ class TestThumbnailFromChild:
     def test_uses_title(self, importer):
         """Returns the thumbnail from child row 'f. 001r'"""
 
-        importer.config['child_works'] = collate_child_works(
+        importer.config["child_works"] = collate_child_works(
             {
                 "ark:/work/1": {
                     "Object Type": "Work",
@@ -266,7 +268,7 @@ class TestThumbnailFromChild:
     def test_uses_mapper(self, importer):
         """Uses the mapper to generate a thumbnail from access_copy, if necessary"""
 
-        importer.config['child_works'] = collate_child_works(
+        importer.config["child_works"] = collate_child_works(
             {
                 "ark:/work/1": {
                     "Item ARK": "ark:/work/1",
@@ -286,14 +288,12 @@ class TestThumbnailFromChild:
         )
         record = {"ark_ssi": "ark:/work/1"}
 
-        result = importer.thumbnail_from_child(
-            record
-        )
+        result = importer.thumbnail_from_child(record)
         assert result == "http://iiif.url/123/full/!200,200/0/default.jpg"
 
     def test_defaults_to_first(self, importer):
         """Returns the thumbnail from first child row if it can't find 'f. 001r'"""
-        importer.config['child_works'] = collate_child_works(
+        importer.config["child_works"] = collate_child_works(
             {
                 "ark:/work/1": {
                     "Item ARK": "ark:/work/1",
@@ -320,14 +320,12 @@ class TestThumbnailFromChild:
         )
         record = {"ark_ssi": "ark:/work/1"}
 
-        result = importer.thumbnail_from_child(
-            record
-        )
+        result = importer.thumbnail_from_child(record)
         assert result == "/thumb2.jpg"
 
     def test_with_no_children_returns_none(self, importer):
         """If there are no child rows, return None"""
-        importer.config['child_works'] = collate_child_works(
+        importer.config["child_works"] = collate_child_works(
             {
                 "ark:/work/1": {
                     "Item ARK": "ark:/work/1",
@@ -340,15 +338,14 @@ class TestThumbnailFromChild:
         )
         record = {"ark_ssi": "ark:/work/1"}
 
-        result = importer.thumbnail_from_child(
-            record
-        )
+        result = importer.thumbnail_from_child(record)
         assert result is None
 
 
 @pytest.fixture
 def record():
     return {"iiif_manifest_url_ssi": "http://test.manifest/url/"}
+
 
 class TestThumbnailFromManifest:
     """Function thumbnail_from_manifest"""
@@ -368,7 +365,9 @@ class TestThumbnailFromManifest:
     def test_picks_first_page(self, monkeypatch, importer, record):
         "uses the first image if 'f. 001r' is not found"
         monkeypatch.setattr(
-            feed_ursus.importer.requests, "get", lambda x: fixtures.MANIFEST_WITHOUT_F001R
+            feed_ursus.importer.requests,
+            "get",
+            lambda x: fixtures.MANIFEST_WITHOUT_F001R,
         )
 
         result = importer.thumbnail_from_manifest(record)
@@ -381,7 +380,9 @@ class TestThumbnailFromManifest:
         "returns None if HTTP request fails"
 
         monkeypatch.setattr(
-            feed_ursus.importer.requests, "get", lambda x: fixtures.MockResponse(None, 404)
+            feed_ursus.importer.requests,
+            "get",
+            lambda x: fixtures.MockResponse(None, 404),
         )
 
         result = importer.thumbnail_from_manifest(record)
@@ -391,7 +392,9 @@ class TestThumbnailFromManifest:
         "returns None if manifest contains no images"
 
         monkeypatch.setattr(
-            feed_ursus.importer.requests, "get", lambda x: fixtures.MANIFEST_WITHOUT_IMAGES
+            feed_ursus.importer.requests,
+            "get",
+            lambda x: fixtures.MANIFEST_WITHOUT_IMAGES,
         )
 
         result = importer.thumbnail_from_manifest(record)
@@ -400,7 +403,9 @@ class TestThumbnailFromManifest:
     def test_bad_data(self, monkeypatch, importer, record):
         "returns None if manifest isn't parsable"
 
-        monkeypatch.setattr(feed_ursus.importer.requests, "get", lambda x: fixtures.BAD_MANIFEST)
+        monkeypatch.setattr(
+            feed_ursus.importer.requests, "get", lambda x: fixtures.BAD_MANIFEST
+        )
 
         result = importer.thumbnail_from_manifest(record)
         assert result is None
