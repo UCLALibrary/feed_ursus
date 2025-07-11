@@ -17,15 +17,15 @@ class TestVisibility:
         ["visibility", "expected_visibility", "expected_access_group"],
         [
             # Mapping values
-            ("authenticated", "authenticated", []),
-            ("discovery", "sinai", ["public"]),
+            ("authenticated", "authenticated", ["public"]),
+            ("discovery", "sinai", []),
             ("open", "open", ["public"]),
             ("private", "restricted", []),
             ("public", "open", ["public"]),
-            ("registered", "authenticated", []),
+            ("registered", "authenticated", ["public"]),
             ("restricted", "restricted", []),
-            ("sinai", "sinai", ["public"]),
-            ("ucla", "authenticated", []),
+            ("sinai", "sinai", []),
+            ("ucla", "authenticated", ["public"]),
             # String cleanup
             (" open", "open", ["public"]),
             ("open       ", "open", ["public"]),
