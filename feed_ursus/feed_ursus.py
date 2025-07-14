@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 """Convert UCLA Library CSV files for Ursus, our Blacklight installation."""
 
+import asyncio
 import importlib.metadata
 import typing
 
@@ -32,16 +33,41 @@ def feed_ursus(ctx, solr_url: str, mapping: str):
 
 @feed_ursus.command("load")
 @click.argument("filenames", nargs=-1, type=click.Path(exists=True, dir_okay=False))
-@click.option("--batch/--not-batch", default=True, help="Enable or disable batch mode.")
+@click.option(
+    "--async/--not-async",
+    "use_async",
+    default=False,
+    help="Enable or disable batch mode.",
+)
+@click.option(
+    "--batch/--not-batch",
+    default=True,
+    help="Enable or disable batch mode (only applies if --async is False).",
+)
+@click.option(
+    "--batch_size",
+    default=10,
+    type=int,
+    help="number of records per POST request to solr (only applies if --async is True).",
+)
 @click.pass_context
-def load_csv(ctx, filenames: typing.List[str], batch: bool):
+def load_csv(
+    ctx, filenames: typing.List[str], use_async: bool, batch: bool, batch_size: int
+):
     """Load data from a csv.
 
     Args:
         filenames: A list of CSV filenames.
     """
 
-    ctx.obj["importer"].load_csv(filenames=filenames, batch=batch)
+    if use_async:
+        asyncio.run(
+            ctx.obj["importer"].load_csv_async(
+                filenames=filenames, batch_size=batch_size
+            )
+        )
+    else:
+        ctx.obj["importer"].load_csv(filenames=filenames, batch=batch)
 
 
 @feed_ursus.command()

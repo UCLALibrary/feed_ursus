@@ -2,13 +2,13 @@
 
 # pylint: disable=no-self-use
 
-from unittest.mock import Mock
+import asyncio
+from unittest.mock import Mock, call
 
 import click.testing
 import pytest  # type: ignore
-from pysolr import Solr  # type: ignore
+from pysolr import Solr, SolrError  # type: ignore
 
-from feed_ursus import feed_ursus
 import feed_ursus.importer
 from feed_ursus.importer import Importer, get_bare_field_name, collate_child_works
 from . import fixtures  # pylint: disable=wrong-import-order
@@ -35,6 +35,49 @@ class TestLoadCsv:
 
         with pytest.raises(FileNotFoundError):
             importer.load_csv(filenames=["tests/fixtures/nonexistent.csv"], batch=True)
+
+
+class TestLoadCsvAsync:
+    """Tests for function load_csv"""
+
+    @pytest.mark.asyncio
+    async def test_file_exists(self, importer):
+        """gets the contents of a CSV file"""
+
+        await importer.load_csv_async(filenames=["tests/csv/anais_collection.csv"])
+        importer.solr_client.add.assert_called_once()
+
+    @pytest.mark.asyncio
+    async def test_file_does_not_exist(self, importer):
+        """raises an error if file does not exist"""
+
+        with pytest.raises(FileNotFoundError):
+            await importer.load_csv_async(filenames=["tests/fixtures/nonexistent.csv"])
+
+
+class TestAddToSolr:
+    @pytest.mark.asyncio
+    async def test_divides_batch_and_retries(self, importer: Importer, capfd):
+        batch = [{"id": n} for n in range(4)]
+
+        def mock_solr_add(records: list[dict]):
+            if batch[2] in records:
+                raise SolrError
+
+        importer.solr_client.add.side_effect = mock_solr_add
+
+        await importer.add_to_solr(batch)
+
+        importer.solr_client.add.assert_has_calls(
+            [
+                call(batch),
+                call(batch[0:2]),
+                call(batch[2:4]),
+                call([batch[2]]),
+                call([batch[3]]),
+            ]
+        )
+        assert "Error adding record 2:" in capfd.readouterr().out
 
 
 class TestMapFieldValue:

@@ -62,5 +62,9 @@ def test_feed_ursus():
         ],
     )
     assert result.exit_code == 0
-    assert len(solr.search("id:xp6xn100zz-89112", defType="lucene").docs) == 0  # collection record
-    assert len(solr.search("id:82765200zz-89112", defType="lucene").docs) == 0  # work record
+    assert (
+        len(solr.search("id:xp6xn100zz-89112", defType="lucene").docs) == 0
+    )  # collection record
+    assert (
+        len(solr.search("id:82765200zz-89112", defType="lucene").docs) == 0
+    )  # work record

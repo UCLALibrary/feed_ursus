@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 """Convert UCLA Library CSV files for Ursus, our Blacklight installation."""
 
+import asyncio
 import csv
 from collections import defaultdict
 from datetime import datetime, timezone
@@ -11,7 +12,7 @@ import importlib.metadata
 import os
 import re
 from types import ModuleType
-from typing import Any, Collection, Dict, List, Optional, Sequence
+from typing import Any, AsyncIterator, Collection, Dict, List, Optional, Sequence
 import yaml
 
 import click
@@ -80,6 +81,8 @@ class Importer:
     solr_client: Solr
     mapper: ModuleType
     config: dict = {}
+
+    connection_pool = asyncio.Semaphore(3)
 
     def __init__(self, solr_url, mapper_name):
         self.solr_client = Solr(solr_url, always_commit=True)
@@ -157,6 +160,79 @@ class Importer:
 
         except SolrError as e:
             print(f"Error adding record {mapped_record['id']}: {e}")
+
+    async def load_csv_async(self, filenames: List[str], batch_size: int = 1000):
+        """Load data from a csv.
+
+        Args:
+            filenames: A list of CSV filenames.
+        """
+
+        csv_data = {
+            row["Item ARK"]: row
+            for filename in rich.progress.track(
+                filenames, description=f"loading {len(filenames)} files..."
+            )
+            for row in csv.DictReader(open(filename, encoding="utf-8"))
+        }
+
+        self.config = {
+            "ingest_id": f"{datetime.now(timezone.utc).isoformat()}-{getuser()}",
+            "collection_names": {
+                row["Item ARK"]
+                .replace("ark:/", "")
+                .replace("/", "-")[::-1]: row["Title"]
+                for row in csv_data.values()
+                if row.get("Object Type") == "Collection"
+            },
+            "controlled_fields": load_field_config("./mapper/fields"),
+            "child_works": collate_child_works(csv_data),
+        }
+
+        mapped_records = [
+            {
+                "id": self.config["ingest_id"],
+                "is_ingest_bsi": True,
+                "feed_ursus_version_ssi": importlib.metadata.version("feed_ursus"),
+                "ingest_user_ssi": getuser(),
+                # Hack, until a decision made on better logging
+                # "csv_files_ss": json.dumps(
+                #     {
+                #         filename: open(filename, encoding="utf-8").read()
+                #         for filename in rich.progress.track(
+                #             filenames, description=f"loading {len(filenames)} files..."
+                #         )
+                #     }
+                # ),
+            }
+        ]
+        for row in rich.progress.track(
+            csv_data.values(), description=f"Importing {len(csv_data)} records..."
+        ):
+            if row.get("Object Type") not in ("ChildWork", "Page"):
+                mapped_records.append(self.map_record(row))
+
+        print("sending to solr")
+        await asyncio.gather(
+            *[
+                self.add_to_solr(mapped_records[start : start + batch_size])
+                for start in range(0, len(mapped_records), batch_size)
+            ]
+        )
+
+    async def add_to_solr(self, records: Sequence[UrsusRecord]) -> None:
+        try:
+            async with self.connection_pool:
+                self.solr_client.add(list(records))
+
+        except SolrError as e:
+            if len(records) == 1:
+                print(f"Error adding record {records[0]['id']}: {e}")
+            else:
+                mid = int(len(records) / 2)
+                await asyncio.gather(
+                    self.add_to_solr(records[:mid]), self.add_to_solr(records[mid:])
+                )
 
     def delete(self, items: List[str], yes: bool):
         """Delete records from a Solr index.
