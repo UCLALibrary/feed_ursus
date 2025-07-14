@@ -17,6 +17,8 @@ SOLR_URL = os.getenv("SOLR_URL", "http://localhost:8983/solr/californica")
 def test_feed_ursus():
     """Integration test for feed_ursus."""
     solr = Solr(SOLR_URL)
+
+    # these should have been deleted already, but let's be sure
     solr.delete(id="xp6xn100zz-89112", commit=True)
     solr.delete(id="82765200zz-89112", commit=True)
 
@@ -46,3 +48,19 @@ def test_feed_ursus():
         "Nin (Anais) Papers, circa 1910-1977"
     ]
     assert work_record["member_of_collection_ids_ssim"] == ["xp6xn100zz-89112"]
+
+    # Delete and confirm
+    result = runner.invoke(
+        feed_ursus.feed_ursus,
+        [
+            "--solr_url",
+            SOLR_URL,
+            "delete",
+            "--yes",
+            "tests/csv/anais_collection.csv",
+            "tests/csv/anais_work_simple.csv",
+        ],
+    )
+    assert result.exit_code == 0
+    assert len(solr.search("id:xp6xn100zz-89112", defType="lucene").docs) == 0  # collection record
+    assert len(solr.search("id:82765200zz-89112", defType="lucene").docs) == 0  # work record

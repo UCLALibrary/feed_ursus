@@ -58,7 +58,7 @@ def delete(ctx, items: typing.List[str], yes: bool):
         items: List of items to delete. Can be ARKs, Solr IDs, or csv filenames.
                If a csv filename is provided, all ARKs in the file will be deleted.
     """
-    ctx["Importer"].delete(items=items, yes=yes)
+    ctx.obj["importer"].delete(items=items, yes=yes)
 
 
 if __name__ == "__main__":
