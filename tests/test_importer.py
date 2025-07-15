@@ -123,7 +123,7 @@ def test_get_bare_field_name():
 class TestMapRecord:
     """function map_record"""
 
-    CONFIG = {"collection_names": {"noitcelloc-321": "Test Collection KGSL"}}
+    COLLECTION_NAMES = {"noitcelloc-321": "Test Collection KGSL"}
 
     def test_maps_record(self, importer, monkeypatch):
         """maps the record for Ursus"""
@@ -139,6 +139,7 @@ class TestMapRecord:
             {"Item ARK": "ark:/123/abc", "Test DLCS Field": "lasigd|~|asdfg"}
         )
 
+        assert result.pop("ingest_id_ssi")
         assert result == {
             "features_sim": None,
             "genre_sim": None,
@@ -182,7 +183,6 @@ class TestMapRecord:
             "keywords_sim": [],
             "collection_sim": None,
             "record_origin_ssi": "feed_ursus",
-            "ingest_id_ssi": None,
         }
 
     def test_sets_id(self, importer):
@@ -238,7 +238,7 @@ class TestMapRecord:
     def test_sets_collection(self, importer):
         """sets the collection name by using the collection row"""
 
-        importer.config.update(self.CONFIG)
+        importer.collection_names = self.COLLECTION_NAMES
         result = importer.map_record(
             {
                 "Item ARK": "ark:/123/abc",
@@ -278,7 +278,7 @@ class TestThumbnailFromChild:
     def test_uses_title(self, importer):
         """Returns the thumbnail from child row 'f. 001r'"""
 
-        importer.config["child_works"] = collate_child_works(
+        importer.child_works = collate_child_works(
             {
                 "ark:/work/1": {
                     "Object Type": "Work",
@@ -311,7 +311,7 @@ class TestThumbnailFromChild:
     def test_uses_mapper(self, importer):
         """Uses the mapper to generate a thumbnail from access_copy, if necessary"""
 
-        importer.config["child_works"] = collate_child_works(
+        importer.child_works = collate_child_works(
             {
                 "ark:/work/1": {
                     "Item ARK": "ark:/work/1",
@@ -336,7 +336,7 @@ class TestThumbnailFromChild:
 
     def test_defaults_to_first(self, importer):
         """Returns the thumbnail from first child row if it can't find 'f. 001r'"""
-        importer.config["child_works"] = collate_child_works(
+        importer.child_works = collate_child_works(
             {
                 "ark:/work/1": {
                     "Item ARK": "ark:/work/1",
@@ -368,7 +368,7 @@ class TestThumbnailFromChild:
 
     def test_with_no_children_returns_none(self, importer):
         """If there are no child rows, return None"""
-        importer.config["child_works"] = collate_child_works(
+        importer.child_works = collate_child_works(
             {
                 "ark:/work/1": {
                     "Item ARK": "ark:/work/1",

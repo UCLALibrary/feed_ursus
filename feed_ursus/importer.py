@@ -31,7 +31,7 @@ DLCSRecord = Dict[str, Any]
 UrsusRecord = Dict[str, Any]
 
 
-def collate_child_works(csv_data: dict[str, DLCSRecord]) -> dict:
+def collate_child_works(csv_data: dict[str, DLCSRecord]) -> defaultdict[str, list]:
     # link pages to their parent works
     child_works = defaultdict(list)
     for row in csv_data.values():
@@ -80,13 +80,22 @@ def solr_transformed_dates(solr_client: Solr, parsed_dates: List):
 class Importer:
     solr_client: Solr
     mapper: ModuleType
-    config: dict = {}
+
+    ingest_id: str  # for sync load_csv
+    collection_names: dict
+    child_works: defaultdict[str, list]
+    controlled_fields: dict
 
     connection_pool = asyncio.Semaphore(3)
 
     def __init__(self, solr_url, mapper_name):
         self.solr_client = Solr(solr_url, always_commit=True)
         self.mapper = import_module(f"feed_ursus.mapper.{mapper_name}")
+
+        self.ingest_id = f"{datetime.now(timezone.utc).isoformat()}-{getuser()}"
+        self.collection_names = dict()
+        self.child_works = defaultdict(list)
+        self.controlled_fields = load_field_config("./mapper/fields")
 
     def load_csv(self, filenames: List[str], batch: bool):
         """Load data from a csv.
@@ -103,22 +112,18 @@ class Importer:
             for row in csv.DictReader(open(filename, encoding="utf-8"))
         }
 
-        self.config = {
-            "ingest_id": f"{datetime.now(timezone.utc).isoformat()}-{getuser()}",
-            "collection_names": {
-                row["Item ARK"]
-                .replace("ark:/", "")
-                .replace("/", "-")[::-1]: row["Title"]
-                for row in csv_data.values()
-                if row.get("Object Type") == "Collection"
-            },
-            "controlled_fields": load_field_config("./mapper/fields"),
-            "child_works": collate_child_works(csv_data),
+        self.ingest_id = f"{datetime.now(timezone.utc).isoformat()}-{getuser()}"
+        self.collection_names = {
+            row["Item ARK"].replace("ark:/", "").replace("/", "-")[::-1]: row["Title"]
+            for row in csv_data.values()
+            if row.get("Object Type") == "Collection"
         }
+        self.controlled_fields = load_field_config("./mapper/fields")
+        self.child_works = collate_child_works(csv_data)
 
         mapped_records = [
             {
-                "id": self.config["ingest_id"],
+                "id": self.ingest_id,
                 "is_ingest_bsi": True,
                 "feed_ursus_version_ssi": importlib.metadata.version("feed_ursus"),
                 "ingest_user_ssi": getuser(),
@@ -176,22 +181,18 @@ class Importer:
             for row in csv.DictReader(open(filename, encoding="utf-8"))
         }
 
-        self.config = {
-            "ingest_id": f"{datetime.now(timezone.utc).isoformat()}-{getuser()}",
-            "collection_names": {
+        self.collection_names = {
                 row["Item ARK"]
                 .replace("ark:/", "")
                 .replace("/", "-")[::-1]: row["Title"]
                 for row in csv_data.values()
                 if row.get("Object Type") == "Collection"
-            },
-            "controlled_fields": load_field_config("./mapper/fields"),
-            "child_works": collate_child_works(csv_data),
-        }
+            }
+        self.child_works = collate_child_works(csv_data)
 
         mapped_records = [
             {
-                "id": self.config["ingest_id"],
+                "id": self.ingest_id,
                 "is_ingest_bsi": True,
                 "feed_ursus_version_ssi": importlib.metadata.version("feed_ursus"),
                 "ingest_user_ssi": getuser(),
@@ -350,8 +351,8 @@ class Importer:
                     output.append(input_value)
 
         bare_field_name = get_bare_field_name(field_name)
-        if bare_field_name in self.config.get("controlled_fields", {}):
-            terms = self.config["controlled_fields"][bare_field_name]["terms"]
+        if bare_field_name in self.controlled_fields:
+            terms = self.controlled_fields[bare_field_name]["terms"]
             output = [terms.get(value, value) for value in output]
 
         if field_name.endswith("m"):
@@ -380,7 +381,7 @@ class Importer:
         }
 
         record["record_origin_ssi"] = "feed_ursus"
-        record["ingest_id_ssi"] = self.config.get("ingest_id")
+        record["ingest_id_ssi"] = self.ingest_id
 
         # THUMBNAIL
         record["thumbnail_url_ss"] = (
@@ -391,7 +392,7 @@ class Importer:
 
         # COLLECTIONS
         record["member_of_collections_ssim"] = [
-            self.config["collection_names"][id]
+            self.collection_names[id]
             for id in record.get("member_of_collection_ids_ssim", [])
         ]
 
@@ -559,17 +560,17 @@ class Importer:
 
         Args:
             record: A mapping representing the CSV record.
-            config: A config object.
 
         Returns:
             A string containing the thumbnail URL
         """
 
-        if "child_works" not in self.config:
+        ark = record.get("ark_ssi")
+
+        if not ark:
             return None
 
-        ark = record["ark_ssi"]
-        children: list = self.config["child_works"][ark]
+        children: list = self.child_works[ark]
 
         def sort_key(row: dict) -> str:
             if row["Title"].startswith("f. "):
