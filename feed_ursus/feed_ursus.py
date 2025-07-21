@@ -46,7 +46,7 @@ def feed_ursus(ctx, solr_url: str, mapping: str):
 )
 @click.option(
     "--batch_size",
-    default=10,
+    default=1000,
     type=int,
     help="number of records per POST request to solr (only applies if --async is True).",
 )

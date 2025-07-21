@@ -12,7 +12,16 @@ import importlib.metadata
 import os
 import re
 from types import ModuleType
-from typing import Any, AsyncIterator, Collection, Dict, List, Optional, Sequence
+from typing import (
+    Any,
+    AsyncIterator,
+    Awaitable,
+    Collection,
+    Dict,
+    List,
+    Optional,
+    Sequence,
+)
 import yaml
 
 import click
@@ -178,22 +187,7 @@ class Importer:
             filenames: A list of CSV filenames.
         """
 
-        csv_data = {
-            row["Item ARK"]: row
-            for filename in rich.progress.track(
-                filenames, description=f"loading {len(filenames)} files..."
-            )
-            for row in csv.DictReader(open(filename, encoding="utf-8"))
-        }
-
-        self.collection_names = {
-            row["Item ARK"].replace("ark:/", "").replace("/", "-")[::-1]: row["Title"]
-            for row in csv_data.values()
-            if row.get("Object Type") == "Collection"
-        }
-        self.child_works = collate_child_works(csv_data)
-
-        mapped_records = [
+        batch: list[UrsusRecord] = [
             {
                 "id": self.ingest_id,
                 "is_ingest_bsi": True,
@@ -210,19 +204,29 @@ class Importer:
                 # ),
             }
         ]
-        for row in rich.progress.track(
-            csv_data.values(), description=f"Importing {len(csv_data)} records..."
-        ):
-            if row.get("Object Type") not in ("ChildWork", "Page"):
-                mapped_records.append(self.map_record(row))
+        posts: list[Awaitable] = list()
 
-        print("sending to solr")
-        await asyncio.gather(
-            *[
-                self.add_to_solr(mapped_records[start : start + batch_size])
-                for start in range(0, len(mapped_records), batch_size)
-            ]
-        )
+        for filename in rich.progress.track(
+            filenames, description=f"loading {len(filenames)} files..."
+        ):
+            for row in csv.DictReader(open(filename, encoding="utf-8")):
+                if row.get("Object Type") == "Collection":
+                    id = row["Item ARK"].replace("ark:/", "").replace("/", "-")[::-1]
+                    self.collection_names[id] = row["Title"]
+
+                if row.get("Object Type") in ("Page", "ChildWork"):
+                    continue
+
+                batch.append(self.map_record(row))
+
+                if len(batch) >= batch_size:
+                    posts.append(self.add_to_solr(batch))
+                    batch = list()
+
+        if len(batch) > 0:
+            posts.append(self.add_to_solr(batch))
+
+        await asyncio.gather(*posts)
 
     async def add_to_solr(self, records: Sequence[UrsusRecord]) -> None:
         async with self.connection_pool:
