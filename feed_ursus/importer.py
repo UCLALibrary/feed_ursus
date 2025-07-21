@@ -16,6 +16,7 @@ from typing import Any, AsyncIterator, Collection, Dict, List, Optional, Sequenc
 import yaml
 
 import click
+import httpx
 
 from pysolr import Solr, SolrError  # type: ignore
 import requests
@@ -78,7 +79,9 @@ def solr_transformed_dates(solr_client: Solr, parsed_dates: List):
 
 
 class Importer:
+    solr_url: str
     solr_client: Solr
+    async_client: httpx.AsyncClient
     mapper: ModuleType
 
     ingest_id: str  # for sync load_csv
@@ -89,7 +92,9 @@ class Importer:
     connection_pool = asyncio.Semaphore(3)
 
     def __init__(self, solr_url, mapper_name):
+        self.solr_url = solr_url
         self.solr_client = Solr(solr_url, always_commit=True)
+        self.async_client = httpx.AsyncClient()
         self.mapper = import_module(f"feed_ursus.mapper.{mapper_name}")
 
         self.ingest_id = f"{datetime.now(timezone.utc).isoformat()}-{getuser()}"
@@ -182,12 +187,10 @@ class Importer:
         }
 
         self.collection_names = {
-                row["Item ARK"]
-                .replace("ark:/", "")
-                .replace("/", "-")[::-1]: row["Title"]
-                for row in csv_data.values()
-                if row.get("Object Type") == "Collection"
-            }
+            row["Item ARK"].replace("ark:/", "").replace("/", "-")[::-1]: row["Title"]
+            for row in csv_data.values()
+            if row.get("Object Type") == "Collection"
+        }
         self.child_works = collate_child_works(csv_data)
 
         mapped_records = [
@@ -222,13 +225,16 @@ class Importer:
         )
 
     async def add_to_solr(self, records: Sequence[UrsusRecord]) -> None:
-        try:
-            async with self.connection_pool:
-                self.solr_client.add(list(records))
+        async with self.connection_pool:
+            response = await self.async_client.post(
+                f"{self.solr_url}/update?commit=true", json=records
+            )
 
-        except SolrError as e:
+        if response.is_error:
             if len(records) == 1:
-                print(f"Error adding record {records[0]['id']}: {e}")
+                print(
+                    f"Error adding record {records[0]['id']}: {response.json().get('error').get('msg')}"
+                )
             else:
                 mid = int(len(records) / 2)
                 await asyncio.gather(
@@ -259,9 +265,14 @@ class Importer:
                 delete_ids.append(item)
 
         delete_work_ids, delete_collections = [], []
-        for record in requests.get(
-            f"{self.solr_client.url}/get?ids={','.join(delete_ids)}", timeout=10
-        ).json()["response"]["docs"]:
+        for record in (
+            requests.get(
+                f"{self.solr_client.url}/get?ids={','.join(delete_ids)}", timeout=10
+            )
+            .json()
+            .get("response", {})
+            .get("docs", [])
+        ):
             print(record, record["has_model_ssim"], record["has_model_ssim"][0])
             if record["has_model_ssim"][0] == "Collection":
                 delete_collections.append(record)
@@ -288,7 +299,7 @@ class Importer:
                 rows=0,
             ).hits
             if yes or click.confirm(
-                f"Delete {n_children} collection {collection['title_tesim']}? {n_children} children will also be deleted."
+                f"Delete {n_children} collection {collection['title_tesim']}? {n_children} {'child record' if n_children==1 else 'child records'} will also be deleted."
             ):
                 self.solr_client.delete(
                     q=f"id:{collection['id']} OR member_of_collection_ids_ssim:{collection['id']}"

@@ -5,7 +5,7 @@
 import asyncio
 from unittest.mock import Mock, call
 
-import click.testing
+from httpx import AsyncClient, Response
 import pytest  # type: ignore
 from pysolr import Solr, SolrError  # type: ignore
 
@@ -18,6 +18,15 @@ from . import fixtures  # pylint: disable=wrong-import-order
 def importer() -> Importer:
     importer = Importer(solr_url="", mapper_name="dlp")
     importer.solr_client = Mock(Solr)
+    importer.async_client = Mock(AsyncClient)
+
+    def mock_post(url: str, json: list[dict]):
+        response = Mock(Response)
+        response.is_error = False
+        return response
+
+    importer.async_client.post.side_effect = mock_post  # type: ignore
+
     return importer
 
 
@@ -45,7 +54,7 @@ class TestLoadCsvAsync:
         """gets the contents of a CSV file"""
 
         await importer.load_csv_async(filenames=["tests/csv/anais_collection.csv"])
-        importer.solr_client.add.assert_called_once()
+        importer.async_client.post.assert_called_once()
 
     @pytest.mark.asyncio
     async def test_file_does_not_exist(self, importer):
@@ -60,21 +69,27 @@ class TestAddToSolr:
     async def test_divides_batch_and_retries(self, importer: Importer, capfd):
         batch = [{"id": n} for n in range(4)]
 
-        def mock_solr_add(records: list[dict]):
-            if batch[2] in records:
-                raise SolrError
+        def mock_post(url: str, json: list[dict]):
+            response = Mock(Response)
+            if batch[2] in json:
+                response.is_error = True
+                response.json = lambda: {"error": {"msg": "abcxyz"}}
+                return response
+            else:
+                response.is_error = False
+                return response
 
-        importer.solr_client.add.side_effect = mock_solr_add
+        importer.async_client.post.side_effect = mock_post  # type: ignore
 
         await importer.add_to_solr(batch)
 
-        importer.solr_client.add.assert_has_calls(
+        importer.async_client.post.assert_has_calls(  # type: ignore
             [
-                call(batch),
-                call(batch[0:2]),
-                call(batch[2:4]),
-                call([batch[2]]),
-                call([batch[3]]),
+                call("/update?commit=true", json=batch),
+                call("/update?commit=true", json=batch[0:2]),
+                call("/update?commit=true", json=batch[2:4]),
+                call("/update?commit=true", json=[batch[2]]),
+                call("/update?commit=true", json=[batch[3]]),
             ]
         )
         assert "Error adding record 2:" in capfd.readouterr().out
