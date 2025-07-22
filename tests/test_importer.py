@@ -2,13 +2,13 @@
 
 # pylint: disable=no-self-use
 
-from unittest.mock import Mock
+import asyncio
+from unittest.mock import Mock, call
 
-import click.testing
+from httpx import AsyncClient, Response
 import pytest  # type: ignore
-from pysolr import Solr  # type: ignore
+from pysolr import Solr, SolrError  # type: ignore
 
-from feed_ursus import feed_ursus
 import feed_ursus.importer
 from feed_ursus.importer import Importer, get_bare_field_name, collate_child_works
 from . import fixtures  # pylint: disable=wrong-import-order
@@ -18,6 +18,15 @@ from . import fixtures  # pylint: disable=wrong-import-order
 def importer() -> Importer:
     importer = Importer(solr_url="", mapper_name="dlp")
     importer.solr_client = Mock(Solr)
+    importer.async_client = Mock(AsyncClient)
+
+    def mock_post(url: str, json: list[dict]):
+        response = Mock(Response)
+        response.is_error = False
+        return response
+
+    importer.async_client.post.side_effect = mock_post  # type: ignore
+
     return importer
 
 
@@ -35,6 +44,55 @@ class TestLoadCsv:
 
         with pytest.raises(FileNotFoundError):
             importer.load_csv(filenames=["tests/fixtures/nonexistent.csv"], batch=True)
+
+
+class TestLoadCsvAsync:
+    """Tests for function load_csv"""
+
+    @pytest.mark.asyncio
+    async def test_file_exists(self, importer):
+        """gets the contents of a CSV file"""
+
+        await importer.load_csv_async(filenames=["tests/csv/anais_collection.csv"])
+        importer.async_client.post.assert_called_once()
+
+    @pytest.mark.asyncio
+    async def test_file_does_not_exist(self, importer):
+        """raises an error if file does not exist"""
+
+        with pytest.raises(FileNotFoundError):
+            await importer.load_csv_async(filenames=["tests/fixtures/nonexistent.csv"])
+
+
+class TestAddToSolr:
+    @pytest.mark.asyncio
+    async def test_divides_batch_and_retries(self, importer: Importer, capfd):
+        batch = [{"id": n} for n in range(4)]
+
+        def mock_post(url: str, json: list[dict]):
+            response = Mock(Response)
+            if batch[2] in json:
+                response.is_error = True
+                response.json = lambda: {"error": {"msg": "abcxyz"}}
+                return response
+            else:
+                response.is_error = False
+                return response
+
+        importer.async_client.post.side_effect = mock_post  # type: ignore
+
+        await importer.add_to_solr(batch)
+
+        importer.async_client.post.assert_has_calls(  # type: ignore
+            [
+                call("/update?commit=true", json=batch),
+                call("/update?commit=true", json=batch[0:2]),
+                call("/update?commit=true", json=batch[2:4]),
+                call("/update?commit=true", json=[batch[2]]),
+                call("/update?commit=true", json=[batch[3]]),
+            ]
+        )
+        assert "Error adding record 2:" in capfd.readouterr().out
 
 
 class TestMapFieldValue:
@@ -80,7 +138,7 @@ def test_get_bare_field_name():
 class TestMapRecord:
     """function map_record"""
 
-    CONFIG = {"collection_names": {"noitcelloc-321": "Test Collection KGSL"}}
+    COLLECTION_NAMES = {"noitcelloc-321": "Test Collection KGSL"}
 
     def test_maps_record(self, importer, monkeypatch):
         """maps the record for Ursus"""
@@ -96,6 +154,7 @@ class TestMapRecord:
             {"Item ARK": "ark:/123/abc", "Test DLCS Field": "lasigd|~|asdfg"}
         )
 
+        assert result.pop("ingest_id_ssi")
         assert result == {
             "features_sim": None,
             "genre_sim": None,
@@ -139,7 +198,6 @@ class TestMapRecord:
             "keywords_sim": [],
             "collection_sim": None,
             "record_origin_ssi": "feed_ursus",
-            "ingest_id_ssi": None,
         }
 
     def test_sets_id(self, importer):
@@ -195,7 +253,7 @@ class TestMapRecord:
     def test_sets_collection(self, importer):
         """sets the collection name by using the collection row"""
 
-        importer.config.update(self.CONFIG)
+        importer.collection_names = self.COLLECTION_NAMES
         result = importer.map_record(
             {
                 "Item ARK": "ark:/123/abc",
@@ -235,7 +293,7 @@ class TestThumbnailFromChild:
     def test_uses_title(self, importer):
         """Returns the thumbnail from child row 'f. 001r'"""
 
-        importer.config["child_works"] = collate_child_works(
+        importer.child_works = collate_child_works(
             {
                 "ark:/work/1": {
                     "Object Type": "Work",
@@ -268,7 +326,7 @@ class TestThumbnailFromChild:
     def test_uses_mapper(self, importer):
         """Uses the mapper to generate a thumbnail from access_copy, if necessary"""
 
-        importer.config["child_works"] = collate_child_works(
+        importer.child_works = collate_child_works(
             {
                 "ark:/work/1": {
                     "Item ARK": "ark:/work/1",
@@ -293,7 +351,7 @@ class TestThumbnailFromChild:
 
     def test_defaults_to_first(self, importer):
         """Returns the thumbnail from first child row if it can't find 'f. 001r'"""
-        importer.config["child_works"] = collate_child_works(
+        importer.child_works = collate_child_works(
             {
                 "ark:/work/1": {
                     "Item ARK": "ark:/work/1",
@@ -325,7 +383,7 @@ class TestThumbnailFromChild:
 
     def test_with_no_children_returns_none(self, importer):
         """If there are no child rows, return None"""
-        importer.config["child_works"] = collate_child_works(
+        importer.child_works = collate_child_works(
             {
                 "ark:/work/1": {
                     "Item ARK": "ark:/work/1",

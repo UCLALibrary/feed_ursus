@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 """Convert UCLA Library CSV files for Ursus, our Blacklight installation."""
 
+import asyncio
 import csv
 from collections import defaultdict
 from datetime import datetime, timezone
@@ -11,10 +12,20 @@ import importlib.metadata
 import os
 import re
 from types import ModuleType
-from typing import Any, Collection, Dict, List, Optional, Sequence
+from typing import (
+    Any,
+    AsyncIterator,
+    Awaitable,
+    Collection,
+    Dict,
+    List,
+    Optional,
+    Sequence,
+)
 import yaml
 
 import click
+import httpx
 
 from pysolr import Solr, SolrError  # type: ignore
 import requests
@@ -30,7 +41,7 @@ DLCSRecord = Dict[str, Any]
 UrsusRecord = Dict[str, Any]
 
 
-def collate_child_works(csv_data: dict[str, DLCSRecord]) -> dict:
+def collate_child_works(csv_data: dict[str, DLCSRecord]) -> defaultdict[str, list]:
     # link pages to their parent works
     child_works = defaultdict(list)
     for row in csv_data.values():
@@ -77,13 +88,28 @@ def solr_transformed_dates(solr_client: Solr, parsed_dates: List):
 
 
 class Importer:
+    solr_url: str
     solr_client: Solr
+    async_client: httpx.AsyncClient
     mapper: ModuleType
-    config: dict = {}
+
+    ingest_id: str  # for sync load_csv
+    collection_names: dict
+    child_works: defaultdict[str, list]
+    controlled_fields: dict
+
+    connection_pool = asyncio.Semaphore(3)
 
     def __init__(self, solr_url, mapper_name):
+        self.solr_url = solr_url
         self.solr_client = Solr(solr_url, always_commit=True)
+        self.async_client = httpx.AsyncClient()
         self.mapper = import_module(f"feed_ursus.mapper.{mapper_name}")
+
+        self.ingest_id = f"{datetime.now(timezone.utc).isoformat()}-{getuser()}"
+        self.collection_names = dict()
+        self.child_works = defaultdict(list)
+        self.controlled_fields = load_field_config("./mapper/fields")
 
     def load_csv(self, filenames: List[str], batch: bool):
         """Load data from a csv.
@@ -100,22 +126,18 @@ class Importer:
             for row in csv.DictReader(open(filename, encoding="utf-8"))
         }
 
-        self.config = {
-            "ingest_id": f"{datetime.now(timezone.utc).isoformat()}-{getuser()}",
-            "collection_names": {
-                row["Item ARK"]
-                .replace("ark:/", "")
-                .replace("/", "-")[::-1]: row["Title"]
-                for row in csv_data.values()
-                if row.get("Object Type") == "Collection"
-            },
-            "controlled_fields": load_field_config("./mapper/fields"),
-            "child_works": collate_child_works(csv_data),
+        self.ingest_id = f"{datetime.now(timezone.utc).isoformat()}-{getuser()}"
+        self.collection_names = {
+            row["Item ARK"].replace("ark:/", "").replace("/", "-")[::-1]: row["Title"]
+            for row in csv_data.values()
+            if row.get("Object Type") == "Collection"
         }
+        self.controlled_fields = load_field_config("./mapper/fields")
+        self.child_works = collate_child_works(csv_data)
 
         mapped_records = [
             {
-                "id": self.config["ingest_id"],
+                "id": self.ingest_id,
                 "is_ingest_bsi": True,
                 "feed_ursus_version_ssi": importlib.metadata.version("feed_ursus"),
                 "ingest_user_ssi": getuser(),
@@ -158,6 +180,71 @@ class Importer:
         except SolrError as e:
             print(f"Error adding record {mapped_record['id']}: {e}")
 
+    async def load_csv_async(self, filenames: List[str], batch_size: int = 1000):
+        """Load data from a csv.
+
+        Args:
+            filenames: A list of CSV filenames.
+        """
+
+        batch: list[UrsusRecord] = [
+            {
+                "id": self.ingest_id,
+                "is_ingest_bsi": True,
+                "feed_ursus_version_ssi": importlib.metadata.version("feed_ursus"),
+                "ingest_user_ssi": getuser(),
+                # Hack, until a decision made on better logging
+                # "csv_files_ss": json.dumps(
+                #     {
+                #         filename: open(filename, encoding="utf-8").read()
+                #         for filename in rich.progress.track(
+                #             filenames, description=f"loading {len(filenames)} files..."
+                #         )
+                #     }
+                # ),
+            }
+        ]
+        posts: list[Awaitable] = list()
+
+        for filename in rich.progress.track(
+            filenames, description=f"loading {len(filenames)} files..."
+        ):
+            for row in csv.DictReader(open(filename, encoding="utf-8")):
+                if row.get("Object Type") == "Collection":
+                    id = row["Item ARK"].replace("ark:/", "").replace("/", "-")[::-1]
+                    self.collection_names[id] = row["Title"]
+
+                if row.get("Object Type") in ("Page", "ChildWork"):
+                    continue
+
+                batch.append(self.map_record(row))
+
+                if len(batch) >= batch_size:
+                    posts.append(self.add_to_solr(batch))
+                    batch = list()
+
+        if len(batch) > 0:
+            posts.append(self.add_to_solr(batch))
+
+        await asyncio.gather(*posts)
+
+    async def add_to_solr(self, records: Sequence[UrsusRecord]) -> None:
+        async with self.connection_pool:
+            response = await self.async_client.post(
+                f"{self.solr_url}/update?commit=true", json=records
+            )
+
+        if response.is_error:
+            if len(records) == 1:
+                print(
+                    f"Error adding record {records[0]['id']}: {response.json().get('error').get('msg')}"
+                )
+            else:
+                mid = int(len(records) / 2)
+                await asyncio.gather(
+                    self.add_to_solr(records[:mid]), self.add_to_solr(records[mid:])
+                )
+
     def delete(self, items: List[str], yes: bool):
         """Delete records from a Solr index.
 
@@ -182,9 +269,14 @@ class Importer:
                 delete_ids.append(item)
 
         delete_work_ids, delete_collections = [], []
-        for record in requests.get(
-            f"{self.solr_client.url}/get?ids={','.join(delete_ids)}", timeout=10
-        ).json()["response"]["docs"]:
+        for record in (
+            requests.get(
+                f"{self.solr_client.url}/get?ids={','.join(delete_ids)}", timeout=10
+            )
+            .json()
+            .get("response", {})
+            .get("docs", [])
+        ):
             print(record, record["has_model_ssim"], record["has_model_ssim"][0])
             if record["has_model_ssim"][0] == "Collection":
                 delete_collections.append(record)
@@ -211,7 +303,7 @@ class Importer:
                 rows=0,
             ).hits
             if yes or click.confirm(
-                f"Delete {n_children} collection {collection['title_tesim']}? {n_children} children will also be deleted."
+                f"Delete {n_children} collection {collection['title_tesim']}? {n_children} {'child record' if n_children==1 else 'child records'} will also be deleted."
             ):
                 self.solr_client.delete(
                     q=f"id:{collection['id']} OR member_of_collection_ids_ssim:{collection['id']}"
@@ -274,8 +366,8 @@ class Importer:
                     output.append(input_value)
 
         bare_field_name = get_bare_field_name(field_name)
-        if bare_field_name in self.config.get("controlled_fields", {}):
-            terms = self.config["controlled_fields"][bare_field_name]["terms"]
+        if bare_field_name in self.controlled_fields:
+            terms = self.controlled_fields[bare_field_name]["terms"]
             output = [terms.get(value, value) for value in output]
 
         if field_name.endswith("m"):
@@ -304,7 +396,7 @@ class Importer:
         }
 
         record["record_origin_ssi"] = "feed_ursus"
-        record["ingest_id_ssi"] = self.config.get("ingest_id")
+        record["ingest_id_ssi"] = self.ingest_id
 
         # THUMBNAIL
         record["thumbnail_url_ss"] = (
@@ -315,7 +407,7 @@ class Importer:
 
         # COLLECTIONS
         record["member_of_collections_ssim"] = [
-            self.config["collection_names"][id]
+            self.collection_names[id]
             for id in record.get("member_of_collection_ids_ssim", [])
         ]
 
@@ -483,17 +575,17 @@ class Importer:
 
         Args:
             record: A mapping representing the CSV record.
-            config: A config object.
 
         Returns:
             A string containing the thumbnail URL
         """
 
-        if "child_works" not in self.config:
+        ark = record.get("ark_ssi")
+
+        if not ark:
             return None
 
-        ark = record["ark_ssi"]
-        children: list = self.config["child_works"][ark]
+        children: list = self.child_works[ark]
 
         def sort_key(row: dict) -> str:
             if row["Title"].startswith("f. "):
