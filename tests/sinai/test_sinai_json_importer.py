@@ -1,7 +1,6 @@
 # pylint: disable=no-self-use
 
 import json
-from unittest.mock import Mock
 
 import pytest
 

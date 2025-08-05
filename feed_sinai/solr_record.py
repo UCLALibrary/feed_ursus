@@ -4,7 +4,7 @@
 
 import logging
 from itertools import chain
-from typing import Callable, Iterator, List, Literal, TypeVar, Union, cast
+from typing import Callable, Iterator, List, Literal, TypeVar
 
 from pydantic import Field, computed_field
 from typing_extensions import ParamSpec
@@ -18,7 +18,7 @@ T = TypeVar("T")
 
 
 def filter_none(
-    generator_function: Callable[P, Iterator[T | None]]
+    generator_function: Callable[P, Iterator[T | None]],
 ) -> Callable[P, Iterator[T]]:
     def wrapper(*args: P.args, **kwds: P.kwargs) -> Iterator[T]:
         for item in generator_function(*args, **kwds):
@@ -32,7 +32,7 @@ Ta = TypeVar("Ta", bound=str | int)
 
 
 def generator_field(
-    generator_function: Callable[P, Iterator[Ta]]
+    generator_function: Callable[P, Iterator[Ta]],
 ) -> Callable[P, list[Ta]]:
     @computed_field
     def wrapper(*args: P.args, **kwargs: P.kwargs) -> list[Ta]:
@@ -636,8 +636,6 @@ class ManuscriptSolrRecord(st.BaseModel):
     def get_layers(
         self, layer_type: LAYER_FIELDS | None = None
     ) -> Iterator[st.ManuscriptLayerMerged | st.UndertextManuscriptLayerMerged]:
-        layer_types = [layer_type] if layer_type else ["ot_layer", "guest_layer", "uto"]
-
         if layer_type in ("ot_layer", None):
             yield from self.ms_obj.ot_layer
             for part in self.ms_obj.part:

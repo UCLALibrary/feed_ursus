@@ -94,22 +94,11 @@ pytest
 
 ### Running the formatter and linters:
 
-black (formatter) will run in check mode in ci, so make sure you run it before committing:
+ruff (formatter and linter) will run in check mode in ci, so make sure you run it before committing:
 
 ```
-black .
-```
-
-flake8 (linter) isn't currently running in ci, but should be put back in soon:
-
-```
-flake8
-```
-
-pylint (linter) isn't currently running in ci, but should be put back in soon:
-
-```
-pylint
+ruff format .
+ruff check --fix
 ```
 
 mypy (static type checker) isn't currently running in ci, but should be put back in soon:

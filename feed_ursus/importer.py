@@ -4,17 +4,16 @@
 
 import asyncio
 import csv
+import importlib.metadata
+import os
+import re
 from collections import defaultdict
 from datetime import datetime, timezone
 from getpass import getuser
 from importlib import import_module
-import importlib.metadata
-import os
-import re
 from types import ModuleType
 from typing import (
     Any,
-    AsyncIterator,
     Awaitable,
     Collection,
     Dict,
@@ -22,18 +21,15 @@ from typing import (
     Optional,
     Sequence,
 )
-import yaml
 
 import click
 import httpx
-
-from pysolr import Solr, SolrError  # type: ignore
 import requests
 import rich.progress
+import yaml
+from pysolr import Solr, SolrError  # type: ignore
 
-from . import year_parser
-from . import date_parser
-
+from . import date_parser, year_parser
 
 # Custom Types
 
@@ -82,9 +78,7 @@ def get_bare_field_name(field_name: str) -> str:
 
 def solr_transformed_dates(solr_client: Solr, parsed_dates: List):
     """the dates  in sorted list are transformed to solr format"""
-    return [
-        solr_client._from_python(date) for date in parsed_dates
-    ]  # pylint: disable=protected-access
+    return [solr_client._from_python(date) for date in parsed_dates]  # pylint: disable=protected-access
 
 
 class Importer:
@@ -303,7 +297,7 @@ class Importer:
                 rows=0,
             ).hits
             if yes or click.confirm(
-                f"Delete {n_children} collection {collection['title_tesim']}? {n_children} {'child record' if n_children==1 else 'child records'} will also be deleted."
+                f"Delete {n_children} collection {collection['title_tesim']}? {n_children} {'child record' if n_children == 1 else 'child records'} will also be deleted."
             ):
                 self.solr_client.delete(
                     q=f"id:{collection['id']} OR member_of_collection_ids_ssim:{collection['id']}"
@@ -353,7 +347,7 @@ class Importer:
 
         if not isinstance(mapping, Collection):
             raise TypeError(
-                f"FIELD_MAPPING[field_name] must be iterable, unless it is None, Callable, or a string."
+                "FIELD_MAPPING[field_name] must be iterable, unless it is None, Callable, or a string."
             )
 
         output: List[str] = []
@@ -378,9 +372,7 @@ class Importer:
             return output[0] if len(output) >= 1 else None
 
     # pylint: disable=bad-continuation
-    def map_record(
-        self, row: DLCSRecord
-    ) -> UrsusRecord:  # pylint: disable=too-many-statements
+    def map_record(self, row: DLCSRecord) -> UrsusRecord:  # pylint: disable=too-many-statements
         """Maps a metadata record from CSV to Ursus Solr.
 
         Args:
@@ -632,5 +624,6 @@ class Importer:
                 canvases.get("f. 001r") or list(canvases.values())[0]
             ) + "/full/!200,200/0/default.jpg"
 
-        except:  # pylint: disable=bare-except
+        except Exception:
+            # ruff: noqa: E722
             return None

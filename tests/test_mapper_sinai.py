@@ -2,7 +2,6 @@
 
 # pylint: disable=no-self-use
 
-
 import random
 
 import pytest  # type: ignore

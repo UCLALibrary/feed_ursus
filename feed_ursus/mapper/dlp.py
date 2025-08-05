@@ -16,7 +16,9 @@ def archival_collection(row: typing.Mapping[str, str]) -> str:
             else (
                 "" + f", Box {row['Box']}"
                 if "Box" in row
-                else "" + f", Folder {row['Folder']}" if "Folder" in row else ""
+                else "" + f", Folder {row['Folder']}"
+                if "Folder" in row
+                else ""
             )
         )
     )
@@ -425,7 +427,6 @@ FIELD_MAPPING: MappingDict = {
     "subject_tesim": "Subject",
     "subject_temporal_sim": "Subject temporal",
     "subject_temporal_tesim": "Subject temporal",
-    "subject_tesim": "Subject",
     "subject_topic_tesim": [
         "Subject topic",
         "Subject.conceptTopic",

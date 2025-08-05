@@ -5,8 +5,8 @@ Creates a multi-valued 'year_isim' field by parsing input strings.
 import re
 import typing
 from datetime import datetime
-from dateutil import parser
 
+from dateutil import parser
 
 NORMALIZED_RANGE = re.compile(r"(.*)/(.*)")
 
