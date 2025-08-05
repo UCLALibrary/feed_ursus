@@ -28,17 +28,26 @@ jobs:
       SOLR_URL: http://127.0.0.1:8983/solr/californica
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up Docker Compose
         run: sudo apt-get install -y docker-compose
+
       - run: docker-compose up --detach solr
-      - run: pipx install poetry
-      - uses: actions/setup-python@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+
+      - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-          cache: 'poetry'
+
       - name: Install dependencies
-        run: poetry install --only main,test
-      - run: poetry run pytest
+        run: uv sync --no-dev --group test
+
+      - run: uv run pytest
 
   check_labels:
     name: Check labels

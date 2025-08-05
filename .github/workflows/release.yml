@@ -5,7 +5,7 @@ on:
     types: [published]
 
 env:
-  DEFAULT_PYTHON_VERSION: 3.11
+  DEFAULT_PYTHON_VERSION: 3.13
 
 jobs:
   build:
@@ -14,20 +14,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - run: pipx install poetry
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
-          cache: 'poetry'
 
-      - name: Set Up Poetry
-        run: |
-          poetry self add poetry-git-version-plugin
-          poetry install --only main
-          poetry git-version
-
-      - run: poetry build
+      - run: uv build
 
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
