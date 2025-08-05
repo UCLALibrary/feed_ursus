@@ -1,0 +1,44 @@
+{
+    "ark": "ark:/21198/s1ms3b",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Cyril of Alexandria",
+    "alt_name": [
+        "Cyril of Alexandria",
+        "Κύριλλος Αλεξανδρείας"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "ca. 370 CE-444 CE",
+        "iso": {
+            "not_before": "0345",
+            "not_after": "0469"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Cyril of Alexandria, Saint",
+            "uri": "http://viaf.org/viaf/51687951",
+            "source": "VIAF"
+        },
+        {
+            "label": "Cyril, Saint, Patriarch of Alexandria, approximately 370-444",
+            "uri": "http://id.loc.gov/authorities/names/n82148014",
+            "source": "LoC"
+        },
+        {
+            "label": "Cyril, Patriarch of Alexandria, approximately 370-444",
+            "uri": "https://w3id.org/haf/person/967240893174",
+            "source": "HAF"
+        },
+        {
+            "label": "Cyril of Alexandria",
+            "uri": "http://syriaca.org/person/430",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Cyrillus Alexandrinus",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/834/",
+            "source": "Pinakes"
+        }
+    ]
+}

@@ -1,0 +1,238 @@
+{
+  "ark": "ark:/21198/z1h13zxq",
+  "reconstruction": false,
+  "type": { "id": "manuscript", "label": "Manuscript" },
+  "shelfmark": "Sinai Georgian 34",
+  "extent": "210 ff.",
+  "dim": "190 x 155 x 112 mm",
+  "state": { "id": "codex", "label": "Codex" },
+  "coll": "Pastedown, Quire 1: 1x8 (8), Quire 2: 1x6+1+1 (16), Quire 3: 1x8 (24), Quire 4: 1x8 (32), Quire 5: 1+1x4+1 (38), Quire 6: 1x2+1x6+1+1x4+1 (46), Quire 7, 1x10 (62), Quire 8: undetermined (80), Quire 9: 1x14 (96), Quire 10: 1x14 (110), Quire 11: 1x12 (122), Quire 12: 1x14+1+1 (138), Quire 13: 8x1 (146), Quire 14: undetermined (169), Quire 15: undetermined (185), Quire 16: undetermined (195), Quire 17: 1x8 (203), Quire 18: 1x6+1 (210), pastedown",
+  "features": [
+    { "id": "palimpsest", "label": "Palimpsest" },
+    { "id": "msi", "label": "Multispectral Imaging" }
+  ],
+  "part": [
+    {
+      "label": "Part 1",
+      "support": [
+        { "id": "parchment", "label": "Parchment" },
+        { "id": "paper", "label": "Paper" }
+      ],
+      "dim": "180 x 142 mm (representative folio)",
+      "ot_layer": [
+        {
+          "id": "ark:/21198/s18d1p",
+          "label": "Overtext Layer",
+          "type": { "id": "overtext", "label": "Overtext" },
+          "layer_record": {
+            "ark": "ark:/21198/s18d1p",
+            "reconstruction": false,
+            "state": { "id": "overtext", "label": "Overtext" },
+            "label": "Sinai Georgian 34, Overtext (Undetermined (Georgian))",
+            "writing": [
+              {
+                "script": [
+                  {
+                    "id": "georgian-undetermined",
+                    "label": "Undetermined (Georgian)",
+                    "writing_system": "Georgian"
+                  }
+                ]
+              }
+            ],
+            "ink": [
+              { "color": ["black", "red"], "note": ["Red used for rubrics"] }
+            ],
+            "text_unit": [
+              {
+                "id": "ark:/21198/s1308n",
+                "label": "Item 1",
+                "text_unit_record": {
+                  "ark": "ark:/21198/s1308n",
+                  "reconstruction": false,
+                  "label": "Liturgical collection",
+                  "lang": [{ "id": "nucl1302", "label": "Georgian" }],
+                  "work_wit": [
+                    {
+                      "work": {
+                        "desc_title": "Liturgical collection",
+                        "genre": [
+                          {
+                            "id": "liturgical-texts",
+                            "label": "Liturgical texts"
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "parent": ["ark:/21198/s18d1p"]
+                }
+              }
+            ],
+            "assoc_date": [
+              {
+                "value": "932  CE",
+                "iso": { "not_before": "0932" },
+                "type": { "id": "origin", "label": "Date of Origin" }
+              }
+            ],
+            "features": [{ "id": "dated", "label": "Dated" }],
+            "note": [
+              {
+                "type": { "id": "general", "label": "Other Notes" },
+                "value": "Many additions and erasures in overtext"
+              }
+            ],
+            "parent": ["ark:/21198/z1h13zxq"]
+          }
+        }
+      ],
+      "uto": [
+        {
+          "uto_layer_ark": "ark:/21198/s1gh06",
+          "label": "Georgian Undertext: Iadgari, Assumption",
+          "type": { "id": "undertext", "label": "Undertext" },
+          "locus": "ff. 144–145, 204–205, 208–209, rear pastedown, 140–141",
+          "script": ["Nuskhurimt"],
+          "lang": ["Georgian"],
+          "orig_date": [
+            {
+              "value": "ca. 9th-10th c.  CE",
+              "iso": { "not_before": "0801", "not_after": "0950" },
+              "type": { "id": "origin", "label": "Date of Origin" }
+            }
+          ]
+        },
+        {
+          "uto_layer_ark": "ark:/21198/s1bp7b",
+          "label": "Georgian Undertext: Heirmologion",
+          "type": { "id": "undertext", "label": "Undertext" },
+          "locus": "ff. 123v, 138r",
+          "script": ["Nuskhurimt"],
+          "lang": ["Georgian"],
+          "orig_date": [
+            {
+              "value": "ca. 9th-10th c.  CE",
+              "iso": { "not_before": "0801", "not_after": "0950" },
+              "type": { "id": "origin", "label": "Date of Origin" }
+            }
+          ]
+        },
+        {
+          "uto_layer_ark": "ark:/21198/s1705r",
+          "label": "Georgian Undertext: Unidentified text",
+          "type": { "id": "undertext", "label": "Undertext" },
+          "locus": "rear pastedown",
+          "script": ["Asomtavruli"],
+          "lang": ["Georgian"],
+          "orig_date": [
+            {
+              "value": "ca. 6th- mid 10th c.  CE",
+              "iso": { "not_before": "0501", "not_after": "0948" },
+              "type": { "id": "origin", "label": "Date of Origin" }
+            }
+          ]
+        },
+        {
+          "uto_layer_ark": "ark:/21198/s1362f",
+          "label": "Georgian Undertext: Hymns",
+          "type": { "id": "undertext", "label": "Undertext" },
+          "locus": "ff. 130–131, 143, 146",
+          "script": ["Nuskhurimt"],
+          "lang": ["Georgian"],
+          "orig_date": [
+            {
+              "value": "ca. 9th-mid 10th c.  CE",
+              "iso": { "not_before": "0801", "not_after": "0950" },
+              "type": { "id": "origin", "label": "Date of Origin" }
+            }
+          ]
+        },
+        {
+          "uto_layer_ark": "ark:/21198/s1zh1x",
+          "label": "Greek Undertext: Unidentified text",
+          "type": { "id": "undertext", "label": "Undertext" },
+          "locus": "ff, 206–207",
+          "script": ["Undetermined (Greek)"],
+          "lang": ["Greek"]
+        }
+      ]
+    }
+  ],
+  "location": [
+    {
+      "id": "sinai-oc",
+      "collection": "Old Collection",
+      "repository": "St. Catherine's Monastery of the Sinai"
+    }
+  ],
+  "note": [
+    {
+      "type": { "id": "support", "label": "Support Note" },
+      "value": "Ff. 124-129, 132-137, 147-195 are paper, the rest are parchment"
+    },
+    {
+      "type": { "id": "binding", "label": "Binding Note" },
+      "value": "Leather on wood, decorated with tooling; holes on covers and along edges (for metal reinforcements); leather fastening strap on top cover | Front cover only attached at top, spine broken, outer edge of back cover missing"
+    },
+    {
+      "type": { "id": "collation", "label": "Collation Note" },
+      "value": "Quire structure difficult to establish, due to missing folios, frequency of single-folios, and tight binding"
+    },
+    {
+      "type": { "id": "collation", "label": "Collation Note" },
+      "value": "Quire signatures (with gaps) in Georgian, beginning with 3 (fol. 1), ending with 27 (fol. 204); these signatures differ from quire structure given above"
+    }
+  ],
+  "bib": [
+    {
+      "id": "7502e15c-0626-4086-9f3d-14febce6efc9",
+      "type": { "id": "ref", "label": "Reference" },
+      "range": "p. 94"
+    },
+    {
+      "id": "deb668b6-feec-4828-8749-a97441881226",
+      "type": { "id": "ref", "label": "Reference" },
+      "range": "[35], p. 58"
+    },
+    {
+      "id": "7b0241ed-3cf7-44e2-ab9d-a1102bb9258c",
+      "type": { "id": "ref", "label": "Reference" }
+    }
+  ],
+  "iiif": [
+    {
+      "type": { "id": "main", "label": "Main" },
+      "manifest": "https://sinai-images.library.ucla.edu/iiif/ark:%2F21198%2Fz1h13zxq/manifest",
+      "behavior": "paged",
+      "thumbnail": "https://sinai-images.library.ucla.edu/iiif/ark:%2F21198%2Fz17m10fg/0,1022,6132,6132/150,150/0/default.jpg"
+    }
+  ],
+  "desc_provenance": {
+    "program": [
+      {
+        "label": "Sinai Palimpests Project",
+        "description": "Described as part of the Sinai Palimpsests Project (2006-2017). The Sinai Palimpsests Project was sponsored by St. Catherine’s Monastery of the Sinai in partnership with the Early Manuscripts Electronic Library and the UCLA Library, and with funding from Arcadia. The Project provides scholarly identification and description of the undertext objects in a subset of palimpsested manuscripts in the Sinai collection, with minimal metadata for the overtexts of the host manuscripts."
+      }
+    ]
+  },
+  "image_provenance": {
+    "program": [
+      {
+        "label": "Sinai Palimpests Project",
+        "description": "Imaged as part of the Sinai Palimpsests Project (2006-2017). Digitization for the Sinai Palimpsests Project was sponsored by St. Catherine’s Monastery of the Sinai in partnership with the Early Manuscripts Electronic Library and the UCLA Library, and with funding from Arcadia. The Sinai Palimpsests Project aimed to provide multispectral images of the Undertext Objects in a subset of palimpsested manuscripts in the Sinai collection, as such images may only be available for palimpsested folios.",
+        "camera_operator": ["Damianos Kasotakis", "Michael Phelps"],
+        "imaging_date": "2008-06",
+        "delivery": "spp_1",
+        "msi_processing": ["Keith Knox"],
+        "condition_category": "1",
+        "note": [
+          "Automated processing techniques combine two or more raw images into a single processed image by simple arithmetic.",
+          "Imaging scientists will review the raw images and manually apply other image processing methods to recover the erased layer of the more intractable palimpsest folios. Manual methods analyze the ensemble of spectral differences obtained from multiple illumination modalities in order to increase the legibility of the erased text."
+        ],
+        "imaging_system": "Preservation Book Cradle by Stokes Imaging"
+      }
+    ],
+    "rights": "Contact the Monastery of St. Catherine's of the Sinai."
+  }
+}

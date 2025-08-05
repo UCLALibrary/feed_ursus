@@ -1,0 +1,26 @@
+{
+    "ark": "ark:/21198/s1259f",
+    "pref_title": "Gospel of Nicodemus",
+    "alt_title": [
+        "Gospel of Nicodemus"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        },
+        {
+            "id": "apocrypha",
+            "label": "Apocrypha"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Gospel of Nicodemus",
+            "uri": "http://viaf.org/viaf/181444369",
+            "source": "VIAF"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

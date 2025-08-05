@@ -1,0 +1,26 @@
+{
+    "ark": "ark:/21198/s11602",
+    "pref_title": "Homilies on the Six Days of Creation",
+    "alt_title": [
+        "Memre on the Six Days of Creation",
+        "Jacob, of Serug, 451-521, Homilies on the Six Days of Creation"
+    ],
+    "genre": [
+        {
+            "id": "theological-works",
+            "label": "Theological works"
+        }
+    ],
+    "creator": [
+        {
+            "id": "ark:/21198/s11s32",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "rel_con": [],
+    "refno": [],
+    "bib": []
+}

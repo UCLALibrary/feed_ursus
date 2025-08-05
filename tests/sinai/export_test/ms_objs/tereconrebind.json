@@ -1,0 +1,121 @@
+{
+    "ark": "ark:/21198/tereconrebind",
+    "reconstruction": true,
+    "type": {
+        "id": "rebind",
+        "label": "Digital Rebinding"
+    },
+    "shelfmark": "UTOs of Sinai Arabic NF M 28",
+    "summary": "A digital reconstrucion using the Undertext Objects from Sinai Arabic NF M 28, modeling a 6th c. Gospel manuscript",
+    "extent": "26 ff.",
+    "state": {
+        "id": "codex",
+        "label": "Codex"
+        },
+    "fol": "ff. 128-143",
+    "coll": "Quires 1-2: 2x8 (16)",
+    "part": [
+        {
+            "label": "Part 1",
+            "locus": "ff. 128-143",
+            "support": [
+                {
+                    "id": "parchment",
+                    "label": "Parchment"
+                    }
+                ],
+            "extent": "26 ff.",
+            "layer": [
+                {
+                    "id": "ark:/21198/tereconuto",
+                    "label": "Reconstructed Overtext",
+                    "type": {
+                        "id": "overtext",
+                        "label": "Overtext"
+                        },
+                    "locus": "ff. 128-142"
+                }
+            ]
+        }
+    ],
+    "has_bind": false,
+    "location": [
+        {
+            "id": "sinai-nf",
+            "collection": "New Finds",
+            "repository": "St. Catherine's Monastery of the Sinai"
+        }
+    ],
+    "note": [
+        {
+            "type": {
+                "id": "foliation",
+                "label": "Foliation"
+            },
+            "value": "Folios in order of reconstructed undertext: 138v, 138r, 142v, 142r, 140r, 140v, 141v, 141r, 132v, 132r, 131v, 131r, 130v, 130r, 135v, 135r, 128v, 128r, 133r, 133v, 134r, 134v, 129r, 129v, 137v, 137r, 136r, 136v, 143r, 143v, 139v, 139r"
+        }
+        ],
+    "bib": [
+        {
+            "id": "cb8b8b52-569b-4d1f-8d5c-adf911afd205",
+            "type": {
+                "id": "ref",
+                "label": "Reference Work"
+            },
+            "range": "p. 29",
+            "note": [
+                "Kamil"
+            ]
+        },
+        {
+            "id": "ebe32f6b-ad60-472c-aceb-d86913448530",
+            "type": {
+                "id": "cite",
+                "label": "Citation"
+            },
+            "range": "28-57",
+            "note": [
+            "Kashouh article"
+            ]
+        },
+        {
+            "id": "01d4a639-d314-4271-b7f8-3f559c6c744c",
+            "type": {
+                "id": "cite",
+                "label": "Citation"
+            },
+            "range": "28-57",
+            "note": [
+            "Kashouh book"
+            ]
+        }
+    ],
+    "iiif": [
+        {
+            "type": {
+                        "id": "main",
+                        "label": "Main"
+                        },
+            "manifest": "https://iiif.library.ucla.edu/ark%3A%2F21198%2Fz1n02zkr/manifest",
+            "text_direction": "right-to-left",
+            "behavior": "paged",
+            "thumbnail": "https://iiif.sinaimanuscripts.library.ucla.edu/iiif/2/ark%3A%2F21198%2Fz15f0f9b%2Fp161m45m/full/!200,200/0/default.jpg"
+        },
+        {
+            "type": {
+                        "id": "reordered",
+                        "label": "Reordered"
+                        },
+            "manifest": "https://sinai-images.library.ucla.edu/iiif/ark:%2F21198%2Fr1qn64nz/manifest",
+            "text_direction": "right-to-left",
+            "behavior": "paged",
+            "thumbnail": "https://iiif.sinaimanuscripts.library.ucla.edu/iiif/2/ark%3A%2F21198%2Fz15f0f9b%2Fp161m45m/full/!200,200/0/default.jpg"
+        }
+    ],
+    "internal": [
+        "This record is used only for purposes of developing the data portal and should therefore not be published, and should be deleted when development is complete"
+    ],
+    "reconstructed_from": [
+        "ark:/21198/ten02zkr"
+    ]
+}

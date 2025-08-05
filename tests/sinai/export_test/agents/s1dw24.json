@@ -1,0 +1,28 @@
+{
+    "ark": "ark:/21198/s1dw24",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Shubhalmaran of Karka of Beth Selok",
+    "alt_name": [
+        "Shubhalmaran, Bishop of Karka of Beth Selok"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "death": {
+        "value": "ca. 620 CE",
+        "iso": {
+            "not_before": "0595",
+            "not_after": "0645"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Šubḥalmaran, Metropolitan of Kirkuk, -approximately 620",
+            "uri": "http://viaf.org/viaf/22418858",
+            "source": "VIAF"
+        },
+        {
+            "label": "Shubhalmaran",
+            "uri": "https://www.syriaca.org/person/746",
+            "source": "Syriaca"
+        }
+    ]
+}

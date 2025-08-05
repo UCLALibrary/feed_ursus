@@ -1,0 +1,31 @@
+{
+    "ark": "ark:/21198/s1pk5n",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Heraclius",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "ca. 575 CE-641 CE",
+        "iso": {
+            "not_before": "0550",
+            "not_after": "0666"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Heraclius, Emperor of the East, approximately 575-641",
+            "uri": " http://viaf.org/viaf/268960974",
+            "source": "VIAF"
+        },
+        {
+            "label": "Heraclius",
+            "uri": "http://syriaca.org/person/3213",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Heraclius imperator",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/1294/",
+            "source": "Pinakes"
+        }
+    ]
+}

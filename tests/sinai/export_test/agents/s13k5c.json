@@ -1,0 +1,21 @@
+{
+    "ark": "ark:/21198/s13k5c",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Mark the Evangelist",
+    "alt_name": [
+        "Saint Mark"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "rel_con": [
+        {
+            "label": "Mark, Saint",
+            "uri": "https://viaf.org/viaf/264405984",
+            "source": "VIAF"
+        },
+        {
+            "label": "Marcus euanglista",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/2895/",
+            "source": "Pinakes"
+        }
+    ]
+}

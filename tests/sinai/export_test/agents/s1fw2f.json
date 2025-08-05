@@ -1,0 +1,20 @@
+{
+    "ark": "ark:/21198/s1fw2f",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Nilus the Younger",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "death": {
+        "value": "1004 CE",
+        "iso": {
+            "not_before": "1004"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Nilus, the Younger, Saint, -1004",
+            "uri": "http://viaf.org/viaf/7742086",
+            "source": "VIAF"
+        }
+    ]
+}

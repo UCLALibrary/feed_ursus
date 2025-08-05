@@ -1,0 +1,33 @@
+{
+    "ark": "ark:/21198/s1hs3d",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "John of Jerusalem",
+    "alt_name": [
+        "John II, Bishop of Jerusalem"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "ca. 356 CE-417 CE",
+        "iso": {
+            "not_before": "0331",
+            "not_after": "0442"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "John, Bishop of Jerusalem, approximately 356-417",
+            "uri": "http://viaf.org/viaf/261610727",
+            "source": "VIAF"
+        },
+        {
+            "label": "John, Bishop of Jerusalem, approximately 356-417",
+            "uri": "https://id.loc.gov/authorities/names/nr99032798",
+            "source": "LoC"
+        },
+        {
+            "label": "John, Bishop of Jerusalem, approximately 356-417",
+            "uri": "https://w3id.org/haf/person/547688893810",
+            "source": "HAF"
+        }
+    ]
+}

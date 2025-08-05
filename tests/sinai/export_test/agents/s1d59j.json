@@ -1,0 +1,36 @@
+{
+    "ark": "ark:/21198/s1d59j",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "John Cassian",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "ca. 360 CE-ca. 435 CE",
+        "iso": {
+            "not_before": "0335",
+            "not_after": "0460"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Cassian, John, approximately 360-approximately 435",
+            "uri": "http://viaf.org/viaf/7408676",
+            "source": "VIAF"
+        },
+        {
+            "label": "Cassian, John, approximately 360-approximately 435",
+            "uri": "https://id.loc.gov/authorities/names/n82220110",
+            "source": "LoC"
+        },
+        {
+            "label": "Cassian, John, approximately 360-approximately 435",
+            "uri": "https://w3id.org/haf/person/596629536347",
+            "source": "HAF"
+        },
+        {
+            "label": "Iohannes Cassianus",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/623/",
+            "source": "Pinakes"
+        }
+    ]
+}

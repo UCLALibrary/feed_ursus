@@ -1,0 +1,27 @@
+{
+    "ark": "ark:/21198/s19k57",
+    "pref_title": "Passio of Sergius and Bacchus",
+    "alt_title": [
+        "Passio of Sergius and Bacchus"
+    ],
+    "genre": [
+        {
+            "id": "hagiographies",
+            "label": "Hagiographies"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Life of Sergius and Bacchus",
+            "uri": "https://w3id.org/haf/work/186828722804",
+            "source": "HAF"
+        },
+        {
+            "label": "Hagiographica Sergius et Bacchus mm. in Syria (SS.), Passio metaphrastica",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/oeuvre/17792/",
+            "source": "Pinakes"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

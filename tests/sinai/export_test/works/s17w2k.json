@@ -1,0 +1,22 @@
+{
+    "ark": "ark:/21198/s17w2k",
+    "pref_title": "Zechariah",
+    "alt_title": [
+        "Bible. Zechariah"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Zechariah",
+            "uri": "http://viaf.org/viaf/186702507",
+            "source": "VIAF"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

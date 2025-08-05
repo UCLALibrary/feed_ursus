@@ -1,0 +1,49 @@
+{
+    "ark": "ark:/21198/s1rk58",
+    "pref_title": "Sermon 11",
+    "orig_lang": {
+        "id": "gree1276",
+        "label": "Greek"
+    },
+    "alt_title": [
+        "Sermon XI",
+        "Sermon 11"
+    ],
+    "genre": [
+        {
+            "id": "sermons",
+            "label": "Sermons"
+        }
+    ],
+    "creator": [
+        {
+            "id": "ark:/21198/s1101c",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "creation": {
+        "value": "4th c. CE",
+        "iso": {
+            "not_before": "0301",
+            "not_after": "0400"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Basilius Caesariensis Sermo 11 (Sermo ascetico et exhortatio de renuntiatione mundi)",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/oeuvre/12429/",
+            "source": "Pinakes"
+        }
+    ],
+    "refno": [
+        {
+            "label": "Sermo XI (Sermo asceticus et exhortatio de renuntiatione mundi [AscAdm4])",
+            "idno": "2889",
+            "source": "CPG"
+        }
+    ],
+    "bib": []
+}

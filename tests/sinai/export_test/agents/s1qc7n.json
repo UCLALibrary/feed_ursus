@@ -1,0 +1,23 @@
+{
+    "ark": "ark:/21198/s1qc7n",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Nikon of the Black Mountain",
+    "alt_name": [
+        "Nikon of the Black Mountain, ca. 1025-ca. 1100"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "ca. 1025 CE-ca. 1100 CE",
+        "iso": {
+            "not_before": "1010",
+            "not_after": "1115"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Nikon, Chernogoret︠s︡, -1088",
+            "uri": "http://viaf.org/viaf/315521737",
+            "source": "VIAF"
+        }
+    ]
+}

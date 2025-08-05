@@ -1,0 +1,39 @@
+{
+    "ark": "ark:/21198/s1zh1x",
+    "reconstruction": false,
+    "label": "Sinai Georgian 34, Undertext (Undetermined (Greek))",
+    "locus": "ff, 206–207",
+    "state": {
+        "id": "undertext",
+        "label": "Undertext"
+    },
+    "writing": [
+        {
+            "script": [
+                {
+                    "id": "greek-undetermined",
+                    "label": "Undetermined (Greek)",
+                    "writing_system": "Greek"
+                }
+            ]
+        }
+    ],
+    "text_unit": [
+        {
+            "id": "ark:/21198/s1mh4z",
+            "label": "Item 1"
+        }
+    ],
+    "note": [
+        {
+            "type": {
+                "id": "general",
+                "label": "Other Notes"
+            },
+            "value": "Description of undertext by Giulia Rossetto"
+        }
+    ],
+    "parent": [
+        "ark:/21198/z1h13zxq"
+    ]
+}

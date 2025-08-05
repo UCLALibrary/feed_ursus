@@ -1,0 +1,35 @@
+{
+    "ark": "ark:/21198/s1wg6v",
+    "pref_title": "Homilies on First Corinthians",
+    "alt_title": [
+        "John Chrysostom, Saint, -407. Homilies on First Corinthians"
+    ],
+    "genre": [
+        {
+            "id": "theological-works",
+            "label": "Theological works"
+        },
+        {
+            "id": "commentaries",
+            "label": "Commentaries"
+        }
+    ],
+    "creator": [
+        {
+            "id": "ark:/21198/s1x303",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "John Chrysostom, Saint, -407. | Homilies on First Corinthians",
+            "uri": "http://viaf.org/viaf/186435585",
+            "source": "VIAF"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

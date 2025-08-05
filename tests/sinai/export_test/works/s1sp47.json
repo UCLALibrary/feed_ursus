@@ -1,0 +1,22 @@
+{
+    "ark": "ark:/21198/s1sp47",
+    "pref_title": "Heirmologion",
+    "alt_title": [
+        "Heirmologion"
+    ],
+    "genre": [
+        {
+            "id": "liturgical-texts",
+            "label": "Liturgical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Heirmologion",
+            "uri": "http://viaf.org/viaf/213239652",
+            "source": "VIAF"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

@@ -1,0 +1,41 @@
+{
+    "ark": "ark:/21198/s11s32",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Jacob of Serug",
+    "alt_name": [
+        "Jacob of Sarug",
+        "Iacobus Sarugiensis",
+        "Mar Jacob",
+        "ܝܥܩܘܒ ܕܣܪܘܓ"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "451 CE-521 CE",
+        "iso": {
+            "not_before": "0451",
+            "not_after": "0521"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Isaiah, Abba, -489 or 491",
+            "uri": "http://viaf.org/viaf/51661489",
+            "source": "VIAF"
+        },
+        {
+            "label": "Jacob, of Serug, 451-521",
+            "uri": "https://id.loc.gov/authorities/names/n81055296",
+            "source": "LoC"
+        },
+        {
+            "label": "Jacob, of Serugh, 451-521",
+            "uri": "https://w3id.org/haf/person/276946510270",
+            "source": "HAF"
+        },
+        {
+            "label": "Jacob of Serugh",
+            "uri": "http://syriaca.org/person/42",
+            "source": "Syriaca"
+        }
+    ]
+}

@@ -1,0 +1,240 @@
+{
+    "ark": "ark:/21198/ten02zkr",
+    "reconstruction": false,
+    "type": "Manuscript",
+    "shelfmark": "Sinai Arabic NF M 28",
+    "ms_date": {
+        "iso": [
+            { 
+                                "not_before": "0851", 
+                                "not_after": "0900" 
+                            } 
+        ],
+        "value": [
+            "Second half 9th c. CE"
+        ]             
+    },
+    "summary": "Gospels in Arabic, palimpsest with Greek undertext",
+    "extent": "16 ff.",
+    "weight": "40.1 g",
+    "dim": "192 x 140 x 20.0 mm",
+    "state": "Quire(s)",
+    "fol": "ff. 128-143",
+    "coll": "Quires 1-2: 2x8 (16)",
+    "genre": [
+        "Biblical texts",
+        "Gospel books"
+    ],
+    "features": [
+            "Palimpsest"
+    ],
+    "part": [
+        {
+            "label": "Part 1",
+            "summary": "Synaxarion (Gospel Lectionary for the movable feast days according to the Byzantine rite)",
+            "locus": "ff. 128-143",
+            "support": [
+                "Parchment"
+                ],
+            "extent": "16 ff.",
+            "dim": "191 x 137 mm (typical folio)",
+            "ot_layer": [
+                { 
+                    "ark": "ark:/21198/ten0p1ol",
+                    "locus": "ff. 128-143", 
+                    "summary": "Gospels, late 9th c., Arabic (Kufic)", 
+                    "extent": "16 ff.", 
+                    "writing": [
+                        { 
+                            "script": [
+                                { 
+                                    "label": "Kufic",
+                                    "system": "Arabic"
+                                } 
+                            ], 
+                            "locus": "ff. 128-143" 
+                        } 
+                    ], 
+                    "ink": [
+                        { 
+                            "locus": "ff. 128-143", 
+                            "note": [ 
+                                "Titles in red ink" 
+                            ] 
+                        } 
+                    ], 
+                    "text_unit": [
+                        {
+                            "ark": "ark:/21198/ten0p1olt1",
+                            "locus": "ff. 128r-143v",
+                            "lang": [
+                                "Arabic"
+                            ],
+                            "work_wit": [
+                                {
+                                    "pref_title": "Matthew",
+                                    "locus": "ff. 128r-130"
+                                    },
+                                {
+                                    "pref_title": "Mark",
+                                    "locus": "ff. 130v-135r"
+                                },
+                                {
+                                    "pref_title": "Luke",
+                                    "locus": "ff. 135r-140r"
+                                },
+                                {
+                                    "pref_title": "John",
+                                    "locus": "ff. 140v-143v"
+                                }
+                                ],
+                            "note": [
+                                {
+                                    "type": "Contents Note",
+                                    "value": "The Gospels continue in Arabic NF M 8 and NF M 27"
+                                }
+                            ]
+                        }
+                    ],
+                    "assoc_date": [
+                        { 
+                            "type": "Origin Date",
+                            "note": [ 
+                                "Paleographic dating" 
+                            ], 
+                            "value": "Second half 9th c. CE"
+                        } 
+                    ],
+                    "note": [
+                        { 
+                            "type": "Ornamentation",
+                            "value": "Decorative headpieces throughout" 
+                        }, 
+                        { 
+                            "type": "Condition",
+                            "value": "Several damaged folios were repaired and reinforced more recently" 
+                        } 
+                    ]
+                }
+            ],
+            "uto": [
+                {
+                    "uto_ms_ark": "ark:/21198/ten0uto1",
+                    "uto_layer_ark": "ark:/21198/ten0p1ul1",
+                    "label": "Undertext layer, Exodus (6th c., Greek majuscule)",
+                    "locus": "ff. 128-130, 133-137, 139, 143",
+                    "script": [
+                        "Greek majuscule"
+                    ],
+                    "lang": [
+                        "Greek"
+                    ],
+                    "orig_date": "6th c. CE"
+                },
+                {
+                    "uto_ms_ark": "ark:/21198/ten0uto2",
+                    "uto_layer_ark": "ark:/21198/ten0p1ul2",
+                    "label": "Undertext layer, Genesis (6th c., Greek majuscule)",
+                    "locus": "ff. 131-132, 138, 140-142",
+                    "script": [
+                        "Greek majuscule"
+                    ],
+                    "lang": [
+                        "Greek"
+                    ],
+                    "orig_date": "6th c. CE"
+                }
+            ]
+        }
+    ],
+    "location": [
+        {
+            "collection": "New Finds",
+            "repository": "St. Catherine's Monastery of the Sinai"
+        }
+    ],
+    "note": [
+        {
+            "type": "Foliation",
+            "value": "Pencil foliation in Arabic NF 28 begins fol. 128"
+        },
+        {
+            "type": "Condition",
+            "value": "Two unsewn quires"
+        }
+        ],
+    "related_mss": [
+        {
+            "type": "Disjecta Membra",
+            "label": "Arabic NF M 28 + Arabic NF M 8",
+            "mss": [
+                {
+                    "label": "Sinai Arabic NF 8",
+                    "id": "ark:/21198/z1kd1z25"
+                }
+            ],
+            "note": [
+                "Text continues from Arabic NF 8"
+            ]
+        }
+    ],
+    "viscodex": [
+        {
+            "type": "Reconstruction",
+            "label": "Visualization of Arabic NF 28 and Arabic NF 8",
+            "url": "https://vceditor.library.upenn.edu/project/668da6005d6968000145728e/viewOnly"
+        }
+    ],
+    "bib": [
+        {
+            "shortcode": "Kamil",
+            "type": "Reference Work",
+            "range": "p. 29",
+            "note": [
+                "Kamil"
+            ]
+        },
+        {
+            "shortcode": "Kashouh 2008",
+            "type": "Citation",
+            "range": "28-57",
+            "note": [
+            "Kashouh article"
+            ]
+        },
+        {
+            "shortcode": "Kashouh 2012",
+            "type": "Citation",
+            "range": "28-57",
+            "note": [
+            "Kashouh book"
+            ]
+        },
+        {
+            "shortcode": "Aland",
+            "type": "Reference Work",
+            "range": "p. 48-90"
+        }
+    ],
+    "iiif": [
+        {
+            "type": "Main",
+            "manifest": "https://iiif.library.ucla.edu/ark%3A%2F21198%2Fz1n02zkr/manifest",
+            "thumbnail": "https://iiif.sinaimanuscripts.library.ucla.edu/iiif/2/ark%3A%2F21198%2Fz15f0f9b%2Fp161m45m/full/!200,200/0/default.jpg"
+        },
+        {
+            "type": "Reordered",
+            "manifest": "https://sinai-images.library.ucla.edu/iiif/ark:%2F21198%2Fr1qn64nz/manifest",
+            "thumbnail": "https://iiif.sinaimanuscripts.library.ucla.edu/iiif/2/ark%3A%2F21198%2Fz15f0f9b%2Fp161m45m/full/!200,200/0/default.jpg"
+        }
+    ],
+    "desc_provenance": {
+        "program": [
+            {
+                "label": "Sinai Palimpests Project",
+                "description": "Described as part of the Sinai Palimpsests Project (2006-2017). The Sinai Palimpsests Project was sponsored by St. Catherine’s Monastery of the Sinai in partnership with the Early Manuscripts Electronic Library and the UCLA Library, and with funding from Arcadia. The Project provides scholarly identification and description of the undertext objects in a subset of palimpsested manuscripts in the Sinai collection, with minimal metadata for the overtexts of the host manuscripts."
+            }
+        ]
+    },
+    "last_modified": "2025-03-27"
+}

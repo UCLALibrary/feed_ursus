@@ -1,0 +1,201 @@
+{
+    "ark": "ark:/21198/te5fp1olt1",
+    "reconstruction": false,
+    "label": "Synaxarion",
+    "summary": "Gospel Lectionary for the movable feast days according to the Byzantine rite",
+    "locus": "ff. 3r-54v",
+    "lang": [
+        {
+            "id": "class1252",
+            "label": "Syriac"
+        }
+    ],
+    "work_wit": [
+        {
+            "work": {
+                "id": "ark:/21198/s1gc7g"
+            },
+            "alt_title": "Synaxarion for the whole year according to the rite of the Greeks",
+            "as_written": "ܣܘܢܟܣܪܝܢ ܕܫܢܬܐ ܟܠܗ̇ ܐܝܟ ܛܟܣܐ ܕܝܘ̈ܢܝܐ",
+            "locus": "ff. 3r-54v",
+            "excerpt": [
+                {
+                    "type": {
+                        "id": "incipit",
+                        "label": "Incipit"
+                    },
+                    "locus": "f. 3r",
+                    "as_written": "ܩܕܡܝܐܝܬ ܚܕܒܫ‍(‍ܒܐ) ܪܒܐ ܕܦܨܚܐ ܣܒܪܬܐ ܒܟܘܗܢܐ ܡܢ ܝܘܚܢܢ ܒܪܫܝܬ ܐܝܬܘܗܝ ܗܘܐ ܡܠܬܐ",
+                    "translation": [
+                        "First Sunday of Easter. The Gospel of the liturgy, from John, 'In the beginning was the Word'"
+                    ],
+                    "note": [
+                        "The phrase, ܩܕܡܝܐܝܬ ܚܕܒܫ‍(‍ܒܐ) ܪܒܐ ܕܦܨܚܐ ܣܒܪܬܐ ܒܟܘܗܢܐ ܡܢ ܝܘܚܢܢ, is rubricated",
+                        "Corresponds to John 1:1"
+                    ]
+                },
+                {
+                    "type": {
+                        "id": "des-mut",
+                        "label": "Last Preserved Line"
+                    },
+                    "locus": "f. 54v",
+                    "as_written": "ܕܫܡܥܘܢ ܗܘܬ ܟܐܦܐ: ܘܤܠܩ",
+                    "translation": ["...the one of Simon Peter, and disembarked"],
+                    "note": [
+                        "Corresponds to Luke 5:3"
+                    ]
+                }
+            ],
+            "contents": [
+                {
+                    "label": "Easter",
+                    "locus": "f. 3r",
+                    "note": [
+                        "A note about the Easter season liturigical section"
+                    ]
+                },
+                {
+                    "label": "1st Week: Saturday of <the week of> Rest",
+                    "work_id": "ark:/21198/s1xs34",
+                    "locus": "f. 4r"
+                },
+                {
+                    "work_id": "ark:/21198/s12g6d",
+                    "locus": "f. 5r, 6r"
+                },
+                {
+                    "label": "3rd Week: Sunday, Saturday",
+                    "locus": "f. 7v, 8v",
+                    "note": [
+                        "Sub-heading: Joseph of Arimathea"
+                    ]
+                }
+            ],
+            "note": [
+                "Overall the Synaxarion conforms to the Byzantine calendar, with a few regional variations of Palestine"
+            ],
+            "bib": [
+                {
+                    "id": "01d4a639-d314-4271-b7f8-3f559c6c744c",
+                    "shortcode": "Kashouh 2012",
+                    "citation": "Kashouh, Hikmat. The Arabic Versions of the Gospels: The Manuscripts and their Families. Berlin: De Gruyter, 2012",
+                    "type": {
+                        "id": "edition",
+                        "label": "Edition"
+                        },
+                    "range": "28-57",
+                    "note": [
+                        "Kashouh book"
+                    ]
+                }
+                ]
+            }
+        ],
+    "para": [
+        {
+            "type": {
+                "id": "rubric",
+                "label": "Rubric"
+            },
+            "locus": "f. 3r",
+            "lang": [
+                {
+                    "id": "class1252",
+                    "label": "Syriac"
+                }
+            ],
+            "script": [
+                {
+                    "id": "melkite",
+                    "label": "Melkite",
+                    "writing_system": "Syriac"
+                }
+            ],
+            "label": "Rubric for the Synaxarion",
+            "as_written": "ܒܫܡܐ ܕܬܠܝܬܝܘܬܐ ܩܕܝܫܬܐ ܆ ܟܬܒܝܢܢ ܣܘܢܟܣܪܝܢ ܕܫܢܬܐ ܟܠܗ̇ ܐܝܟ ܛܟܣܐ ܕܝܘ̈ܢܝܐ",
+            "translation": [
+                "In the name of the Holy Trinity we write the Synaxarion for the whole year according to the rite of the Greeks"
+            ],
+            "assoc_name": [
+                {
+                    "id": "ark:/21198/s1vc7w",
+                    "as_written": "ܕܫܢܬܐ",
+                    "role": {
+                        "id": "annotator",
+                        "label": "Annotator"
+                    }
+                }
+            ],
+            "assoc_place": [
+                {
+                    "value": "Nisibis",
+                    "as_written": "ܐܝܟ",
+                    "event": {
+                        "id": "reading",
+                        "label": "Place of Reading"
+                    },
+                    "note": [
+                        "Faked ARK for nisibis"
+                    ]
+                }
+            ],
+            "note": [
+                "The phrase, ܒܫܡܐ ܕܬܠܝܬܝܘܬܐ ܩܕܝܫܬܐ ܆ ܟܬܒܝܢܢ, is rubricated"
+            ]
+        }
+    ],
+    "features": [
+        {
+            "id": "music-notation",
+            "label": "Music notation"
+        }
+    ],
+    "note": [
+        {
+            "type": {
+                "id": "contents",
+                "label": "Contents Note"
+            },
+            "value": "Only a portion of the text is preserved"
+        },
+        {
+            "type": {
+                "id": "general",
+                "label": "General Note"
+            },
+            "value": "This is a general note about the text unit"
+        },
+        {
+            "type": {
+                "id": "para",
+                "label": "Paracontent Note"
+            },
+            "value": "Each Gospel is preceded by a prologue, composed by the scribe, summarizing the Gospel and its purposes for edification"
+        }
+    ],
+    "bib": [
+        {
+            "id": "3a20a9e1-0b02-476c-966e-649b62ac5761",
+            "shortcode": "Binggeli",
+            "citation": "Binggeli, André. \"Les trois David copistes arabes de Palestine aux 9e-10e s.” In Manuscripta graeca et orientalia: Mélanges monastiques et patristiques en l’honneur de Paul Géhin. Edited by André Binggeli, Anne Boud'hors, and Matthieu Cassin, 79-118. Leuven: Peeters, 2016.",
+            "type": {
+                "id": "cite",
+                "label": "Citation"
+            },
+            "range": "pp. 43-687"
+        },
+        {
+            "id": "afba79a3-c57f-44cf-9005-ed6e2f3d76b8",
+            "shortcode": "Müller-Kessler 2017",
+            "citation": "C. Müller-Kessler. “The Martyrdom of Arianos and the Four Protectores in an Unpublished Christian Palestinian Aramaic Palimpsest, St Catherine’s Monastery (Sinai, Arabic NF 66).” Collectanea Christiana Orientalia 14 (2017): 115-125. https://doi.org/10.21071/cco.v14i.14448",
+            "type": {
+                "id": "edition",
+                "label": "Edition"
+            }
+        }
+    ],
+    "parent": [
+        "ark:/21198/te5fp1ol"
+    ]
+}

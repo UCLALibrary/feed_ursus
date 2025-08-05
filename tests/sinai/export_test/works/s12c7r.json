@@ -1,0 +1,31 @@
+{
+    "ark": "ark:/21198/s12c7r",
+    "pref_title": "Matthew",
+    "alt_title": [
+        "Bible. Matthew"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        },
+        {
+            "id": "gospel-books",
+            "label": "Gospel books"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Matthew",
+            "uri": "https://viaf.org/viaf/188427863",
+            "source": "VIAF"
+        },
+        {
+            "label": "Bible. Matthew",
+            "uri": "http://id.loc.gov/authorities/names/n79056834",
+            "source": "LoC"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

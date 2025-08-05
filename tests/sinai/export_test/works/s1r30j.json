@@ -1,0 +1,22 @@
+{
+    "ark": "ark:/21198/s1r30j",
+    "pref_title": "Haggai",
+    "alt_title": [
+        "Bible. Haggai"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Haggai",
+            "uri": "http://viaf.org/viaf/175212977/",
+            "source": "VIAF"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

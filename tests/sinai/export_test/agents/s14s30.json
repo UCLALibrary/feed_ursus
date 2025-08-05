@@ -1,0 +1,36 @@
+{
+    "ark": "ark:/21198/s14s30",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Barsanuphius",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "6th c. CE",
+        "iso": {
+            "not_before": "0501",
+            "not_after": "0600"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Barsanuphius, Saint, active 6th century",
+            "uri": "http://viaf.org/viaf/12351460",
+            "source": "VIAF"
+        },
+        {
+            "label": "Barsanuphius, Saint, active 6th century",
+            "uri": "https://id.loc.gov/authorities/names/n86008292",
+            "source": "LoC"
+        },
+        {
+            "label": "Barsanuphius, active 6th century",
+            "uri": "https://w3id.org/haf/person/276837023763",
+            "source": "HAF"
+        },
+        {
+            "label": "Barsanuphius et Iohannes",
+            "uri": "https://pinakes.irht.cnrs.fr//notices/auteur/477/",
+            "source": "Pinakes"
+        }
+    ]
+}

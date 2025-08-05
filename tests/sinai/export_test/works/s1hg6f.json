@@ -1,0 +1,27 @@
+{
+    "ark": "ark:/21198/s1hg6f",
+    "pref_title": "Pauline Epistles",
+    "alt_title": [
+        "Bible. Epistles of Paul"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Epistles of Paul",
+            "uri": "https://viaf.org/viaf/176999286",
+            "source": "VIAF"
+        },
+        {
+            "label": "Bible. Epistles of Paul",
+            "uri": "http://id.loc.gov/authorities/names/n79139623",
+            "source": "LoC"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

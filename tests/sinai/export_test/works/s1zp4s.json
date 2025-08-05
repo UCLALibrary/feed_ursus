@@ -1,0 +1,39 @@
+{
+    "ark": "ark:/21198/s1zp4s",
+    "pref_title": "Hexaemeron",
+    "orig_lang": {
+        "id": "gree1276",
+        "label": "Greek"
+    },
+    "alt_title": [
+        "Basil, Saint, Bishop of Caesarea, approximately 329-379. Hexaemeron"
+    ],
+    "genre": [
+        {
+            "id": "theological-works",
+            "label": "Theological works"
+        },
+        {
+            "id": "commentaries",
+            "label": "Commentaries"
+        }
+    ],
+    "creator": [
+        {
+            "id": "ark:/21198/s1101c",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Basil, Saint, Bishop of Caesarea, ca. 329-379. | Hexaemeron",
+            "uri": "http://viaf.org/viaf/181934772",
+            "source": "VIAF"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

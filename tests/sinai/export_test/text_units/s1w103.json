@@ -1,0 +1,30 @@
+{
+    "ark": "ark:/21198/s1w103",
+    "reconstruction": false,
+    "label": "Unidentified",
+    "lang": [
+        {
+            "id": "nucl1302",
+            "label": "Georgian"
+        }
+    ],
+    "work_wit": [
+        {
+            "work": {
+                "desc_title": "Unidentified text"
+            }
+        }
+    ],
+    "note": [
+        {
+            "type": {
+                "id": "general",
+                "label": "Other Notes"
+            },
+            "value": "Description by Jost Gippert, Bernard Outtier"
+        }
+    ],
+    "parent": [
+        "ark:/21198/s1705r"
+    ]
+}

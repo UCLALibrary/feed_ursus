@@ -1,0 +1,44 @@
+{
+    "ark": "ark:/21198/s19888",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Isaac of Nineveh",
+    "alt_name": [
+        "Isaac the Syrian",
+        "Isaac of Beth Qatraye"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "7th c. CE",
+        "iso": {
+            "not_before": "0601",
+            "not_after": "0700"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Isaac, Bishop of Nineveh, active 7th century",
+            "uri": "http://viaf.org/viaf/401332",
+            "source": "VIAF"
+        },
+        {
+            "label": "Isaac, Bishop of Nineveh, active 7th century",
+            "uri": "https://id.loc.gov/authorities/names/n85275908",
+            "source": "LoC"
+        },
+        {
+            "label": "Isaac, Bishop of Nineveh, active 7th century",
+            "uri": "https://w3id.org/haf/person/433885618574",
+            "source": "HAF"
+        },
+        {
+            "label": "Isaac of Nineveh",
+            "uri": "http://syriaca.org/person/550",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Isaac Niniuita Syrus",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/1555/",
+            "source": "Pinakes"
+        }
+    ]
+}

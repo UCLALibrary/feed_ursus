@@ -1,0 +1,55 @@
+{
+    "ark": "ark:/21198/tebv9g4m",
+    "reconstruction": false,
+    "type": "Manuscript",
+    "shelfmark": "Sinai Arabic NF X 42",
+    "extent": "14 ff.",
+    "state": "Codex",
+    "part": [
+        {
+            "support": [
+                "Paper"
+                ],
+            "ot_layer": [
+                {
+                    "ark": "ark:/21198/tebvp1ol",
+                    "writing": [
+                        {
+                            "script": [
+                                {
+                                    "label": "Naskh",
+                                    "system": "Arabic"
+                                }
+                            ]
+                        }
+                    ],
+                    "text_unit": [
+                        {
+                            "ark": "ark:/21198/tebvp1olt1",
+                            "lang": [
+                                "Arabic"
+                            ],
+                            "work_wit": [
+                                {
+                                    "pref_title": "Horologion"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "location": [
+        {
+            "repository": "St. Catherine's Monastery of the Sinai"
+        }
+    ],
+    "iiif": [
+        {
+            "type": "Main",
+            "manifest": "https://iiif.library.ucla.edu/ark%3A%2F21198%2Fz1bv9g4m/manifest"
+        }
+    ],
+    "last_modified": "2025-03-27"
+}

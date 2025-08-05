@@ -1,0 +1,22 @@
+{
+    "ark": "ark:/21198/s1m882",
+    "pref_title": "Isaiah",
+    "alt_title": [
+        "Bible. Isaiah"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Isaiah",
+            "uri": "http://viaf.org/viaf/296479192",
+            "source": "VIAF"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

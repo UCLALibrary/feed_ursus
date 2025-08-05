@@ -1,0 +1,27 @@
+{
+    "ark": "ark:/21198/s1q307",
+    "pref_title": "Kings",
+    "alt_title": [
+        "Bible. Kings"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Kings",
+            "uri": "http://viaf.org/viaf/177005732",
+            "source": "VIAF"
+        },
+        {
+            "label": "Bible. Kings",
+            "uri": "http://id.loc.gov/authorities/names/n82066851",
+            "source": "LoC"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

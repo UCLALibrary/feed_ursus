@@ -1,0 +1,47 @@
+{
+    "ark": "ark:/21198/s1k593",
+    "pref_title": "On Evil Thoughts",
+    "alt_title": [
+        "De malignis cogitationibus",
+        "Thoughts",
+        "Evagrius, Ponticus, 345?-399. On Evil Thoughts",
+        "Περὶ διαφορῶν πονηρῶν λογισμῶν"
+    ],
+    "genre": [
+        {
+            "id": "theological-works",
+            "label": "Theological works"
+        }
+    ],
+    "creator": [
+        {
+            "id": "ark:/21198/s1b88k",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "creation": {
+        "value": "4th c. CE",
+        "iso": {
+            "not_before": "0301",
+            "not_after": "0400"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Euagrius Ponticus De Cogitationibus",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/oeuvre/2244/",
+            "source": "Pinakes"
+        }
+    ],
+    "refno": [
+        {
+            "label": "De malignis cogitationibus",
+            "idno": "2450",
+            "source": "CPG"
+        }
+    ],
+    "bib": []
+}

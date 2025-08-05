@@ -1,0 +1,36 @@
+{
+    "ark": "ark:/21198/s1501m",
+    "pref_title": "Asceticon",
+    "alt_title": [
+        "Isaiah, Abba, -489 or 491. Asceticon"
+    ],
+    "genre": [
+        {
+            "id": "theological-works",
+            "label": "Theological works"
+        }
+    ],
+    "creator": [
+        {
+            "id": "ark:/21198/s15k50",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Isaiah, Abba, -489 or 491. | Asceticon",
+            "uri": "http://viaf.org/viaf/180983978",
+            "source": "VIAF"
+        },
+        {
+            "label": "Isaiah, Abba, -489 or 491. Asceticon",
+            "uri": "https://w3id.org/haf/work/152400286849",
+            "source": "HAF"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

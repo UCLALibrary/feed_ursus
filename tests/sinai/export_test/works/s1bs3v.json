@@ -1,0 +1,27 @@
+{
+    "ark": "ark:/21198/s1bs3v",
+    "pref_title": "Jeremiah",
+    "alt_title": [
+        "Bible. Jeremiah"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Paralipomena Jeremiae",
+            "uri": "https://viaf.org/viaf/176712634",
+            "source": "VIAF"
+        },
+        {
+            "label": "Bible. Jeremiah",
+            "uri": "http://id.loc.gov/authorities/names/n79115332",
+            "source": "LoC"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

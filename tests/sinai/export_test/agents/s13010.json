@@ -1,0 +1,37 @@
+{
+    "ark": "ark:/21198/s13010",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Arsenius of Scetis",
+    "alt_name": [
+        "Arsenius the Great",
+        "Saint Arsenius the Deacon",
+        "Arsenius of Scetis and Turah",
+        "Arsenius the Roman",
+        "Abba Arsenius"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "ca. 354 CE-ca. 450 CE",
+        "iso": {
+            "not_before": "0329",
+            "not_after": "0475"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Arsenius approximately 354-approximately 450 the Great, Sain",
+            "uri": "http://viaf.org/viaf/268273846",
+            "source": "VIAF"
+        },
+        {
+            "label": "Arsenius, -approximately 450",
+            "uri": "https://w3id.org/haf/person/529004661529",
+            "source": "HAF"
+        },
+        {
+            "label": "Arsenius anachoreta in Sceti Libyae",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/saint/114/",
+            "source": "Pinakes"
+        }
+    ]
+}

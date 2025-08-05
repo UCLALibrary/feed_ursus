@@ -1,0 +1,40 @@
+{
+    "ark": "ark:/21198/s1x303",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "John Chrysostom",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "death": {
+        "value": "407 CE",
+        "iso": {
+            "not_before": "0407"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "John Chrysostom, Saint, -407",
+            "uri": "http://viaf.org/viaf/305214868",
+            "source": "VIAF"
+        },
+        {
+            "label": "John Chrysostom, Saint, -407",
+            "uri": "http://id.loc.gov/authorities/names/n80001460",
+            "source": "LoC"
+        },
+        {
+            "label": "John Chrysostom, Saint, -407",
+            "uri": "https://w3id.org/haf/person/873419758532",
+            "source": "HAF"
+        },
+        {
+            "label": "John Chrysostom",
+            "uri": "http://syriaca.org/person/573",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Iohannes Chrysostomus",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/1449/",
+            "source": "Pinakes"
+        }
+    ]
+}

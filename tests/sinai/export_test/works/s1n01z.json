@@ -1,0 +1,33 @@
+{
+    "ark": "ark:/21198/s1n01z",
+    "pref_title": "Homilies on John",
+    "alt_title": [],
+    "genre": [
+        {
+            "id": "theological-works",
+            "label": "Theological works"
+        },
+        {
+            "id": "commentaries",
+            "label": "Commentaries"
+        }
+    ],
+    "creator": [
+        {
+            "id": "ark:/21198/s1x303",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "John Chrysostom, Saint, -407. Homilies on John",
+            "uri": "http://id.loc.gov/authorities/names/n97054490",
+            "source": "LoC"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

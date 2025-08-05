@@ -1,0 +1,29 @@
+{
+    "ark": "ark:/21198/tebvp1ol",
+    "reconstruction": false,
+    "state": {
+        "id": "overtext",
+        "label": "Overtext"
+    },
+    "label": "Arabic NF X 42, Overtext (Naskh)",
+    "writing": [
+        {
+            "script": [
+                {
+                    "id": "naskh",
+                    "label": "Naskh",
+                    "writing_system": "Arabic"
+                }
+            ]
+        }
+    ],
+    "text_unit": [
+        {
+            "id": "ark:/21198/tebvp1olt1",
+            "label": "Text unit 1"
+        }
+    ],
+    "parent": [
+        "ark:/21198/tebv9g4m"
+    ]
+}

@@ -1,0 +1,23 @@
+{
+    "ark": "ark:/21198/s1bc77",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Antonios of the Monastery of St. Simeon",
+    "alt_name": [
+        "Antonios of the Monastery of St. Simeon on the Black Mountain"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "11th century CE",
+        "iso": {
+            "not_before": "1001",
+            "not_after": "1100"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Antonios, Abbot of Saint Symeon the Younger, active 11th century",
+            "uri": "https://w3id.org/haf/person/863270662934",
+            "source": "HAF"
+        }
+    ]
+}

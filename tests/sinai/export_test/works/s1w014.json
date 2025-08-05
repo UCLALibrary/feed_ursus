@@ -1,0 +1,26 @@
+{
+    "ark": "ark:/21198/s1w014",
+    "pref_title": "Acts of Thomas",
+    "alt_title": [
+        "Acts of Thomas"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        },
+        {
+            "id": "apocrypha",
+            "label": "Apocrypha"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Acts of Thomas",
+            "uri": "http://viaf.org/viaf/175807631",
+            "source": "VIAF"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

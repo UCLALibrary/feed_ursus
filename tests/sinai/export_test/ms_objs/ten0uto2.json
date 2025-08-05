@@ -1,0 +1,122 @@
+{
+    "ark": "ark:/21198/ten0uto2",
+    "reconstruction": true,
+    "type": {
+        "id": "uto",
+        "label": "Undertext Object"
+    },
+    "shelfmark": "Sinai Arabic NF M 28, UTO 2",
+    "summary": "Undertext Object of Genesis, 6th c. Greek majuscule",
+    "extent": "16 ff.",
+    "state": {
+        "id": "uto",
+        "label": "Undertext Object"
+        },
+    "fol": "ff. 131-132, 138, 140-142",
+    "features": [
+        {
+            "id": "msi",
+            "label": "Multispectral Imaging"
+            } 
+    ],
+    "part": [
+        {
+            "label": "Part 1",
+            "summary": "Exodus, 6th c. Greek majuscule",
+            "locus": "ff. 131-132, 138, 140-142",
+            "support": [
+                {
+                    "id": "parchment",
+                    "label": "Parchment"
+                    }
+                ],
+            "extent": "6 ff.",
+            "dim": "191 x 137 mm (typical folio)",
+            "layer": [
+                {
+                    "id": "ark:/21198/ten0p1ul2",
+                    "label": "Overtext layer, Genesis (6th c., Greek majuscule)",
+                    "type": {
+                        "id": "overtext",
+                        "label": "Overtext"
+                        },
+                    "locus": "ff. 131-132, 138, 140-142"
+                }
+            ]
+        }
+    ],
+    "has_bind": false,
+    "location": [
+        {
+            "id": "sinai-nf",
+            "collection": "New Finds",
+            "repository": "St. Catherine's Monastery of the Sinai"
+        }
+    ],
+    "note": [
+        {
+            "type": {
+                "id": "foliation",
+                "label": "Foliation"
+            },
+            "value": "Reconstructed folio order: 138v, 138r, 142v, 142r, 140r, 140v, 141v, 141r, 132v, 132r, 131v, 131r"
+        }
+        ],
+    "related_mss": [
+        {
+            "type": {
+                "id": "disjecta",
+                "label": "Disjecta Membra"
+            },
+            "label": "Arabic NF M 28 UTOs + Arabic NF M 8 UTOs (Genesis and Exodus)",
+            "mss": [
+                {
+                    "label": "Exodus from Arabic NF M 28",
+                    "id": "ark:/21198/ten0uto1"
+                },
+                {
+                    "label": "Genesis from Arabic NF M 8",
+                    "id": "ark:/21198/tekduto1gen"
+                },
+                {
+                    "label": "Exodus from Arabic NF M 8",
+                    "id": "ark:/21198/tekduto2exod"
+                }
+            ],
+            "note": [
+                "The original manuscript also included the UTO Exodus from Arabic NF 28 and the UTOs Genesis and Exodus from Arabic NF 8"
+            ]
+        }
+    ],
+    "bib": [
+        {
+            "id": "ebe32f6b-ad60-472c-aceb-d86913448530",
+            "type": {
+                "id": "cite",
+                "label": "Citation"
+            },
+            "range": "28-57",
+            "note": [
+            "Kashouh article"
+            ]
+        }
+    ],
+    "iiif": [
+        {
+            "type": {
+                        "id": "main",
+                        "label": "Main"
+                        },
+            "manifest": "https://sinai-images.library.ucla.edu/iiif/ark:%2F21198%2Fr1qn64nz/manifest",
+            "text_direction": "right-to-left",
+            "behavior": "paged",
+            "thumbnail": "https://iiif.sinaimanuscripts.library.ucla.edu/iiif/2/ark%3A%2F21198%2Fz15f0f9b%2Fp161m45m/full/!200,200/0/default.jpg"
+        }
+    ],
+    "internal": [
+        "This record is used only for purposes of developing the data portal and should therefore not be published, and should be deleted when development is complete"
+    ],
+    "reconstructed_from": [
+        "ark:/21198/ten02zkr"
+    ]
+}

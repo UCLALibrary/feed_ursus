@@ -1,0 +1,95 @@
+{ 
+    "ark": "ark:/21198/ten0p1ol", 
+    "reconstruction": false, 
+    "state": { 
+        "id": "overtext", 
+        "label": "Overtext" 
+    }, 
+    "label": "Arabic NF M 28, Part 1, Overtext", 
+    "locus": "ff. 128-143", 
+    "summary": "Gospels, late 9th c., Arabic (Kufic)", 
+    "extent": "16 ff.", 
+    "writing": [
+        { 
+            "script": [
+                { 
+                    "id": "kufic", 
+                    "label": "Kufic" ,
+                    "writing_system": "Arabic"
+                } 
+            ], 
+            "locus": "ff. 128-143" 
+        } 
+    ], 
+    "ink": [
+        { 
+            "locus": "ff. 128-143", 
+            "note": [ 
+                "Titles in red ink" 
+            ] 
+        } 
+    ], 
+    "text_unit": [
+        { 
+            "id": "ark:/21198/ten0p1olt1", 
+            "label": "Primary Text Unit 1", 
+            "locus": "ff. 128-143" 
+        } 
+    ], 
+    "assoc_date": [
+        { 
+            "type": { 
+                "id": "origin", 
+                "label": "Origin Date" 
+            }, 
+            "note": [ 
+                "Paleographic dating" 
+            ], 
+            "value": "Second half 9th c. CE", 
+            "iso": { 
+                "not_before": "0851", 
+                "not_after": "0900" 
+            } 
+        } 
+    ],
+    "note": [
+        { 
+            "type": { 
+                "id": "ornamentation", 
+                "label": "Ornamentation" 
+            }, 
+            "value": "Decorative headpieces throughout" 
+        }, 
+        { 
+            "type": { 
+                "id": "condition", 
+                "label": "Condition" 
+            }, 
+            "value": "Several damaged folios were repaired and reinforced more recently" 
+        } 
+    ], 
+    "bib": [
+        {
+            "id": "36ac2d29-349f-496d-b4ea-aff4e605c4ba",
+            "type": {
+                "id": "ref",
+                "label": "Reference Work"
+            },
+            "range": "p. 48-90"
+        }
+    ], 
+    "parent": [ 
+        "ark:/21198/ten02zkr" 
+    ], 
+    "desc_provenance": {
+        "program": [
+            {
+                "label": "Sinai Palimpests Project",
+                "description": "Described as part of the Sinai Palimpsests Project (2006-2017). The Sinai Palimpsests Project was sponsored by St. Catherine’s Monastery of the Sinai in partnership with the Early Manuscripts Electronic Library and the UCLA Library, and with funding from Arcadia. The Project provides scholarly identification and description of the undertext objects in a subset of palimpsested manuscripts in the Sinai collection, with minimal metadata for the overtexts of the host manuscripts."
+            }
+        ]
+    },
+    "internal": [ 
+        "Test record for development purposes; please delete." 
+    ] 
+}
