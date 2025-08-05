@@ -10,9 +10,7 @@ from feed_sinai.solr_record import ManuscriptSolrRecord, filter_none
 BASE_PATH = "tests/sinai/export_test"
 IMPORTER = SinaiJsonImporter(base_path=BASE_PATH)
 SOLR_RECORD = ManuscriptSolrRecord(
-    ms_obj=IMPORTER.get_merged_manuscript(
-        Path("tests/sinai/export_test/ms_objs/te5f0f9b.json")
-    )
+    ms_obj=IMPORTER.get_merged_manuscript(Path("tests/sinai/export_test/ms_objs/te5f0f9b.json"))
 )
 
 
@@ -47,7 +45,7 @@ def test_visibility_ssi(result: ManuscriptSolrRecord) -> None:
 
 
 def test_manuscript_json_ss(result: ManuscriptSolrRecord) -> None:
-    assert result.manuscript_json_ss
+    assert result.manuscript_json_ts
 
 
 def test_ms_type_ssi(result: ManuscriptSolrRecord) -> None:
@@ -88,6 +86,14 @@ def test_date_types_ssim(result: ManuscriptSolrRecord) -> None:
 
 def test_program_ssim(result: ManuscriptSolrRecord) -> None:
     assert result.program_ssim
+
+
+def test_reconstructed_from_ssim(result: ManuscriptSolrRecord) -> None:
+    assert result.reconstructed_from_ssim == []
+
+
+def test_reconstructed_from_shelfmark_ssi(result: ManuscriptSolrRecord) -> None:
+    assert result.reconstructed_from_shelfmark_ssi == []
 
 
 def test_ot_script_ssim(result: ManuscriptSolrRecord) -> None:

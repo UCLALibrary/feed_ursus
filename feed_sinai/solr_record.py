@@ -143,7 +143,7 @@ class ManuscriptSolrRecord(st.BaseModel):
         return [ms.id for ms in self.ms_obj.reconstructed_from]
 
     @computed_field
-    def reconstructed_from_shelfmark(self) -> list[str]:
+    def reconstructed_from_shelfmark_ssi(self) -> list[str]:
         return [ms.shelfmark for ms in self.ms_obj.reconstructed_from]
 
     @computed_field
@@ -522,7 +522,7 @@ class ManuscriptSolrRecord(st.BaseModel):
                 yield program.delivery
 
     @computed_field
-    def manuscript_json_ss(self) -> str:
+    def manuscript_json_ts(self) -> str:
         return self.ms_obj.model_dump_json()
 
     #
