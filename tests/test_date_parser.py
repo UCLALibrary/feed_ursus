@@ -1,3 +1,4 @@
+# mypy: disallow_untyped_defs=False
 """
 tests for year_parser.py
 

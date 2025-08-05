@@ -1,4 +1,5 @@
 # pylint: disable=all
+# mypy: disallow_untyped_defs=False
 
 
 class MockResponse:

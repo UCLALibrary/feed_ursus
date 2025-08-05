@@ -1,3 +1,4 @@
+# mypy: disallow_untyped_defs=False
 """
 Creates a multi-valued 'year_isim' field by parsing input strings.
 """

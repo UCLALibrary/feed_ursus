@@ -1,3 +1,4 @@
+# mypy: disallow_untyped_defs=False
 """Tests for feed_ursus.py"""
 
 # pylint: disable=no-self-use

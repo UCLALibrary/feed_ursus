@@ -33,13 +33,17 @@ class TestBaseModel:
     class TestDeepGet:
         @pytest.fixture
         def obj(self) -> st.Date:
-            return st.Date(value="sometime", iso=st.Iso(not_before="1980", not_after="2025"))
+            return st.Date(
+                value="sometime", iso=st.Iso(not_before="1980", not_after="2025")
+            )
 
         def test_gets_by_type(self, obj: st.Date) -> None:
             assert "sometime" in obj.deep_get(cls=str)
 
         def test_gets_by_type_from_children(self, obj: st.Date) -> None:
-            assert {"1980", "2025"} <= set(obj.deep_get("not_before", "not_after", cls=str))
+            assert {"1980", "2025"} <= set(
+                obj.deep_get("not_before", "not_after", cls=str)
+            )
 
         def test_gets_by_name(self, obj: st.Date) -> None:
             assert set(obj.deep_get("not_after", cls=str)) == {"2025"}
@@ -100,7 +104,9 @@ class TestControlledTerm:
 
     def test_extra_field(self) -> None:
         with pytest.raises(ValidationError):
-            st.ControlledTerm.model_validate_json('{"id": "abc", "label": "123"}, "other": "xyz"')
+            st.ControlledTerm.model_validate_json(
+                '{"id": "abc", "label": "123"}, "other": "xyz"'
+            )
 
     def test_missing_id(self) -> None:
         with pytest.raises(ValidationError):
@@ -148,7 +154,10 @@ class TestIso:
     ISO = st.Iso(not_before="0010", not_after="0100")
 
     def test_good_iso(self) -> None:
-        assert st.Iso.model_validate_json('{"not_before": "0010", "not_after": "0100"}') == self.ISO
+        assert (
+            st.Iso.model_validate_json('{"not_before": "0010", "not_after": "0100"}')
+            == self.ISO
+        )
 
     def test_hashable(self) -> None:
         assert hash(self.ISO)
@@ -163,7 +172,9 @@ class TestIso:
             st.Iso.model_validate_json('{"not_after": "0010"}')
 
     def test_optional_month_and_year(self) -> None:
-        result = st.Iso.model_validate_json('{"not_before": "2017-07", "not_after": "2025-07-23"}')
+        result = st.Iso.model_validate_json(
+            '{"not_before": "2017-07", "not_after": "2025-07-23"}'
+        )
         assert result.not_before == "2017-07"
         assert result.not_after == "2025-07-23"
         assert tuple(result.years()) == (
@@ -179,7 +190,9 @@ class TestIso:
         )
 
     def test_negative_year(self) -> None:
-        assert st.Iso.model_validate_json('{"not_before": "-0003"}').not_before == "-0003"
+        assert (
+            st.Iso.model_validate_json('{"not_before": "-0003"}').not_before == "-0003"
+        )
 
     class TestYears:
         def test_returns_range(self) -> None:
@@ -554,7 +567,9 @@ class TestAssocNameItem:
         hash(self.EPHREM)
 
     def test_good_TestAssocNameItemMerged(self) -> None:
-        result = self.EPHREM.convert(st.AssocNameItemMerged, agent_record=TestAgent.EPHREM)
+        result = self.EPHREM.convert(
+            st.AssocNameItemMerged, agent_record=TestAgent.EPHREM
+        )
         assert result.agent_record == TestAgent.EPHREM
 
 
@@ -806,7 +821,9 @@ class TestManuscriptLayer:
         }
 
     def test_UndertextManuscriptLayerMerged_with_layer_record(self) -> None:
-        with pytest.raises(ValidationError, match=r"layer_record\s+Input should be None"):
+        with pytest.raises(
+            ValidationError, match=r"layer_record\s+Input should be None"
+        ):
             st.UndertextManuscriptLayerMerged(
                 id="ark:/21198/123",
                 label="Test Layer",

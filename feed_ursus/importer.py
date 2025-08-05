@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# mypy: disallow_untyped_defs=False
 """Convert UCLA Library CSV files for Ursus, our Blacklight installation."""
 
 import asyncio

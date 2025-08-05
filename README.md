@@ -101,7 +101,7 @@ ruff format .
 ruff check --fix
 ```
 
-mypy (static type checker) isn't currently running in ci, but should be put back in soon:
+mypy (static type checker):
 
 ```
 mypy
