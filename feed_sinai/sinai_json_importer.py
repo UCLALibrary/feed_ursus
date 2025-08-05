@@ -351,7 +351,7 @@ class SinaiJsonImporter:
 
         except Exception as e:
             if len(batch) == 1:
-                print(f'Error adding record {batch[0]["id"]}: {e}')
+                print(f"Error adding record {batch[0]['id']}: {e}")
             else:
                 mid = int(len(batch) / 2)
                 await asyncio.gather(

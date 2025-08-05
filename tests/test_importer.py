@@ -1,16 +1,17 @@
+# mypy: disallow_untyped_defs=False
 """Tests for feed_ursus.py"""
 
 # pylint: disable=no-self-use
 
-import asyncio
 from unittest.mock import Mock, call
 
-from httpx import AsyncClient, Response
 import pytest  # type: ignore
-from pysolr import Solr, SolrError  # type: ignore
+from httpx import AsyncClient, Response
+from pysolr import Solr  # type: ignore
 
 import feed_ursus.importer
-from feed_ursus.importer import Importer, get_bare_field_name, collate_child_works
+from feed_ursus.importer import Importer, collate_child_works, get_bare_field_name
+
 from . import fixtures  # pylint: disable=wrong-import-order
 
 

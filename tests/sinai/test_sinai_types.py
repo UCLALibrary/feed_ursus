@@ -1,6 +1,5 @@
-from datetime import datetime
 from pathlib import Path
-from typing import Hashable, List, Optional
+from typing import Hashable, Optional
 from unittest.mock import Mock
 
 import pytest
@@ -993,7 +992,10 @@ class TestManuscriptObject:
         result = st.ManuscriptObject.model_validate_json(
             Path("tests/sinai/export_test/ms_objs/te5f0f9b.json").read_text()
         )
-        assert result.image_provenance.program[0].camera_operator[0] == "Damianos Kasotakis"  # type: ignore
+        assert (
+            result.image_provenance.program[0].camera_operator[0]  # type: ignore
+            == "Damianos Kasotakis"
+        )
 
     def test_unmerged_reconstructed_from_is_ark(self) -> None:
         result = st.ManuscriptObjectUnmerged(

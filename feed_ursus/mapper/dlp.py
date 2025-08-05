@@ -16,7 +16,9 @@ def archival_collection(row: typing.Mapping[str, str]) -> str:
             else (
                 "" + f", Box {row['Box']}"
                 if "Box" in row
-                else "" + f", Folder {row['Folder']}" if "Folder" in row else ""
+                else "" + f", Folder {row['Folder']}"
+                if "Folder" in row
+                else ""
             )
         )
     )
@@ -37,7 +39,7 @@ def ark(row: typing.Mapping[str, str]) -> str:
     return ark_prefix + row["Item ARK"]
 
 
-def coordinates(row: typing.Mapping[str, str]) -> typing.List[str]:
+def coordinates(row: typing.Mapping[str, str]) -> tuple[str, str] | None:
     """Geographic coordinates.
 
     Args:
@@ -47,7 +49,7 @@ def coordinates(row: typing.Mapping[str, str]) -> typing.List[str]:
         A tuple of (latitude, longitude).
     """
     if "Latitude" not in row or "Longitude" not in row:
-        return []
+        return None
 
     return (row["Latitude"], row["Longitude"])
 
@@ -425,7 +427,6 @@ FIELD_MAPPING: MappingDict = {
     "subject_tesim": "Subject",
     "subject_temporal_sim": "Subject temporal",
     "subject_temporal_tesim": "Subject temporal",
-    "subject_tesim": "Subject",
     "subject_topic_tesim": [
         "Subject topic",
         "Subject.conceptTopic",

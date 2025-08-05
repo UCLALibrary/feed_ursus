@@ -5,7 +5,6 @@ Creates a multi-valued 'year_isim' field by parsing input strings.
 import re
 import typing
 
-
 RANGE = re.compile(r"(.*)/(.*)")
 YEAR = re.compile(r"\b(\d\d\d\d|\d\d\d)\b")
 

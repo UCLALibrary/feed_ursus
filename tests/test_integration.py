@@ -1,15 +1,14 @@
+# mypy: disallow_untyped_defs=False
 """Tests for feed_ursus.py"""
 
 # pylint: disable=no-self-use
 
-import importlib
 import os
 
 from click.testing import CliRunner
 from pysolr import Solr  # type: ignore
 
 from feed_ursus import feed_ursus
-
 
 SOLR_URL = os.getenv("SOLR_URL", "http://localhost:8983/solr/californica")
 

@@ -1,7 +1,7 @@
+# mypy: disallow_untyped_defs=False
 """Tests for mapper/dlp.py"""
 
 # pylint: disable=no-self-use
-
 
 import random
 

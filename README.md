@@ -1,6 +1,6 @@
 # feed_ursus
 
-Command line tool to load CSV content into a Solr index for the UCLA Digital Library's frontend, Ursus (https://digital.library.ucla.edu/)
+Command line tools to load CSV content into a Solr index for the UCLA Digital Library's frontend, Ursus (https://digital.library.ucla.edu/) and the [Sinai Manuscripts Digital Library](https://sinaimanuscripts.library.ucla.edu)
 
 ## Using feed_ursus
 
@@ -8,20 +8,28 @@ For basic use, you can install feed_ursus as a systemwide command directly from 
 
 ### Installation
 
-We recommend installing with [pipx](https://pipx.pypa.io/). On MacOS, you can install pipx (and python!) with [homebrew](https://brew.sh):
+#### Installing with UV
+
+We recommend installing with [uv](https://docs.astral.sh/uv). On MacOS, you can install uv with [homebrew](https://brew.sh):
 
 ```
-brew install pipx pyenv
-pipx ensurepath
+brew install uv
 ```
 
 Then:
 
 ```
-pipx install feed_ursus
+uv tool install feed_ursus
 ```
 
-Pipx will install feed_ursus in its own virtualenv, but make the command accessible from anywhere so you don't need to active the virtualenv yourself.
+UV will install feed_ursus in its own virtualenv, but make the command accessible from anywhere so you don't need to active the virtualenv yourself.
+
+#### Installing with pipx
+
+If you are already using pipx, you can use it instead of uv:
+
+```
+pipx install feed_ursus
 
 ### Use
 
@@ -54,23 +62,21 @@ Different metadata mappings are included for general Digital Library use (`--map
 
 ### Installing
 
-For development, clone the repository and use poetry to set up the virtualenv:
+For development, clone the repository and use uv to set up the virtualenv:
 
 ```
 git clone git@github.com:UCLALibrary/feed_ursus.git
 cd feed_ursus
-pipx install poetry
-poetry self add poetry-git-version-plugin
-poetry install
+uv install
 ```
 
 Then, to activate the virtualenv:
 
 ```
-poetry shell
+source .venv/bin/activate
 ```
 
-The following will assume the virtualenv is active. You could also run e.g. `poetry run feed_ursus [path/to/your.csv]`
+The following will assume the virtualenv is active. You could also run e.g. `uv run feed_ursus [path/to/your.csv]`
 
 ### Using the development version
 
@@ -88,25 +94,14 @@ pytest
 
 ### Running the formatter and linters:
 
-black (formatter) will run in check mode in ci, so make sure you run it before committing:
+ruff (formatter and linter) will run in check mode in ci, so make sure you run it before committing:
 
 ```
-black .
+ruff format .
+ruff check --fix
 ```
 
-flake8 (linter) isn't currently running in ci, but should be put back in soon:
-
-```
-flake8
-```
-
-pylint (linter) isn't currently running in ci, but should be put back in soon:
-
-```
-pylint
-```
-
-mypy (static type checker) isn't currently running in ci, but should be put back in soon:
+mypy (static type checker):
 
 ```
 mypy
@@ -115,6 +110,8 @@ mypy
 ### VSCode Debugger Configuration
 
 To debug with VSCode, the python environment has to be created within the project directory.
+
+TODO: update this section for uv. UV seems more predictable overall so it's probablly easier? Just a matter of `rm -rf .venv && uv install`?
 
 If it exists, remove the existing setup and install in the project directory:
 
