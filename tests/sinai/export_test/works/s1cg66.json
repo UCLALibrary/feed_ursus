@@ -1,0 +1,35 @@
+{
+    "ark": "ark:/21198/s1cg66",
+    "pref_title": "Homilies on the Gospel of Saint Matthew",
+    "alt_title": [
+        "John Chrysostom, Saint, -407. Homilies on the Gospel of Saint Matthew"
+    ],
+    "genre": [
+        {
+            "id": "theological-works",
+            "label": "Theological works"
+        },
+        {
+            "id": "commentaries",
+            "label": "Commentaries"
+        }
+    ],
+    "creator": [
+        {
+            "id": "ark:/21198/s1x303",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "John Chrysostom, Saint, -407. | Homilies on the Gospel of Saint Matthew",
+            "uri": "http://viaf.org/viaf/175558535",
+            "source": "VIAF"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

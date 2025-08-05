@@ -1,0 +1,29 @@
+{
+    "ark": "ark:/21198/s13w3q",
+    "pref_title": "The Noetic Paradise",
+    "orig_lang": {
+        "id": "gree1276",
+        "label": "Greek"
+    },
+    "alt_title": [
+        "Firdaws al-ʻaqlī",
+        "The Noetic Paradise"
+    ],
+    "genre": [],
+    "creation": {
+        "value": "8th c. CE-11th c. CE",
+        "iso": {
+            "not_before": "0701",
+            "not_after": "1100"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Firdaws al-ʻaqlī",
+            "uri": "https://w3id.org/haf/work/915514898100",
+            "source": "HAF"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

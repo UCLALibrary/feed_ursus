@@ -1,0 +1,67 @@
+{
+    "ark": "ark:/21198/s18d1p",
+    "reconstruction": false,
+    "label": "Sinai Georgian 34, Overtext (Undetermined (Georgian))",
+    "state": {
+        "id": "overtext",
+        "label": "Overtext"
+    },
+    "writing": [
+        {
+            "script": [
+                {
+                    "id": "georgian-undetermined",
+                    "label": "Undetermined (Georgian)",
+                    "writing_system": "Georgian"
+                }
+            ]
+        }
+    ],
+    "ink": [
+        {
+            "color": [
+                "black",
+                "red"
+            ],
+            "note": [
+                "Red used for rubrics"
+            ]
+        }
+    ],
+    "text_unit": [
+        {
+            "id": "ark:/21198/s1308n",
+            "label": "Item 1"
+        }
+    ],
+    "features": [
+        {
+            "id": "dated",
+            "label": "Dated"
+        }
+    ],
+    "assoc_date": [
+        {
+            "type": {
+                "id": "origin",
+                "label": "Date of Origin"
+            },
+            "value": "932  CE",
+            "iso": {
+                "not_before": "0932"
+            }
+        }
+    ],
+    "note": [
+        {
+            "type": {
+                "id": "general",
+                "label": "Other Notes"
+            },
+            "value": "Many additions and erasures in overtext"
+        }
+    ],
+    "parent": [
+        "ark:/21198/z1h13zxq"
+    ]
+}

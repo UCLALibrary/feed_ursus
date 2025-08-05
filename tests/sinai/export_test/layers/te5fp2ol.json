@@ -1,0 +1,179 @@
+{ 
+    "ark": "ark:/21198/te5fp2ol", 
+    "reconstruction": false, 
+    "state": { 
+        "id": "overtext", 
+        "label": "Overtext" 
+    }, 
+    "label": "Syriac 12, Part 2, Overtext", 
+    "locus": "ff. 55v-144v", 
+    "summary": "Early 7th c., Estrangela", 
+    "extent": "89 ff.", 
+    "writing": [
+        { 
+            "script": [
+                { 
+                    "id": "estrangela", 
+                    "label": "Estrangela" ,
+                    "writing_system": "Syriac"
+                } 
+            ], 
+            "locus": "ff. 55v-144v", 
+            "note": [ 
+                "Estrangela without vocalization" 
+            ] 
+        } 
+    ], 
+    "ink": [
+        { 
+            "locus": "ff. 55v-144v", 
+            "color": [ 
+                "dark brown" 
+            ], 
+            "note": [ 
+                "Rubrication of titles in red ink" 
+            ] 
+        } 
+    ], 
+    "layout": [
+        { 
+            "locus": "ff. 55v-144v", 
+            "columns": "1", 
+            "lines": "22", 
+            "dim": "Writing area: 220 x 150 mm", 
+            "note": [ 
+                "Possible pricking still visible in outer margins throughout" 
+            ] 
+        } 
+    ], 
+    "text_unit": [
+        { 
+            "id": "ark:/21198/te5fp2olt1", 
+            "label": "Primary Text Unit 2", 
+            "locus": "ff. 55v-144v" 
+        } 
+    ], 
+    "para": [
+        { 
+            "type": { 
+                "id": "colophon", 
+                "label": "Colophon" 
+            }, 
+            "locus": "f. 54v", 
+            "lang": [
+                { 
+                    "id": "class1252", 
+                    "label": "Syriac" 
+                } 
+            ], 
+            "script": [
+                { 
+                    "id": "melkite", 
+                    "label": "Melkite" ,
+                    "writing_system": "Syriac"
+                } 
+            ], 
+            "label": "Syriac colophon", 
+            "as_written": "ܐܚ̈ܝ ܨ̈ܠܘ ܥܠ ܚܛܝܐ ܕܣܪܛ ܡܛܠ ܡܫܝܚܐ܀ ܫܠܡ ܟܬܒܐ ܗܢܐ ܩܕܝܫܐ ܥܠ܆ ܐܝ̈ܕܝ܆ ܐܢܫ܆ ܡܚ̈ܝܠܐ܆ ܘܚ̈ܛܝܐ ܠܦܘܩ̈ܕܢܐ ܕܡܪܗ݂ ܘܐܠܗܗ ܝܘܚܢܢ ܒܪܝ ܬܐܘܕܘܪܘܣ ܡܢ ܩܪܝܬܐ ܢܛܝܪܬ ܡܢ ܐܠܗܐ ܨܝܕܢܐܠܐ ܡܢ ܥܩܠܐ ܕܪܡܣܘܩ܆ ܡܢ ܛܘܪܐ ܕܣܢܝܪ܇ ܘܡܢ ܩܠܝܡܐ ܕܚܠܒܘܢ: ܠܐܦ̈ܝ ܬܠܬ: ܫ̈ܥܝܢ: ܝܘܡ: ܕ̄ ܟ̄ܚ܇ ܐܝܠܘܠ ܫܢܬ: ܘ̄ ܐܠܦ̄: ܚ̄ܕ ܩ̄: ܕ̄: ܠܐܒܘܢ: ܐܕܡ܇ ܟܬܒܗ݂: ܠܢܦܫܗ݂: ܡܚܝܠܬܐ: ܒܕܝܪܐ ܩܕܝܫܐ ܕܛܘܪ ܣܢܐ ܘܗܘ݂ ܡܦܝܣ ܘܡܬܟܫܦ ܠܟܠ ܡܢ: ܕܡܨܠܐ ܒܗ݂ ܦܘܕܐ: ܐܘ ܒܘܣܪܐܢܐ: ܐܘ ܚ̈ܨܪܢܐ: ܢܫܒܘܩ ܘܢܨܠܐ ܥܠ ܚܛܝܐ ܘܡܣܟܢܐ ܟܬܘܒܐ: ܕܟܠ ܒܪܝܐ ܒܨܝܪܐ ܗܘ݂܀ ܐܚ̈ܝ܆ ܘܐܒܗ̈ܝ: ܨ̈ܠܘ ܥܠ ܟܬܘܒܐ ܚܛܝܐ ܡܛܠ ܡܪܢ ܝܫܘܥ ܡܫܝܚܐ ܠܗ݂ ܬܫ̄ܒܘ ܘܣܓܕܬܐ ܠܝ ܓ ܐܡܝܢ:", 
+            "translation": [ 
+                "The end of this holy book by the hands of a weak, sinful, and straying from the commands of his Lord and his God, John bar Theodore, from the town protected by God, Sayidnaya from lower Damascus, from Mt. Hermon (Jebel Sanir) and from the region of Halbun (حلبون), at about 9:00am (the third hour), Wednesday, on the 28th of Ilul (September); the year 6,104 since our father Adam. His book for his humble self at the holy monastery of Mt. Sinai and he entreats and beseeches to all who would pray it or read it or encounter it and find in it error or defect or loss (sic), let him forgive and pray on account of the sinner and poor writing, that all creation is lacking; my brothers and my fathers pray for the writing of the sinner for to our Lord Jesus Christ be the glory and the worship forever, Amen." 
+            ], 
+            "assoc_name": [
+                { 
+                    "id": "ark:/21198/s1v887", 
+                    "as_written": "ܝܘܚܢܢ ܒܪܝ ܬܐܘܕܘܪܘܣ", 
+                    "role": { 
+                        "id": "scribe", 
+                        "label": "Scribe" 
+                    }, 
+                    "note": [ 
+                        "The ARK is for Ephrem, to demo functionality" 
+                    ] 
+                } 
+            ], 
+            "assoc_place": [
+                { 
+                    "value": "Sinai Monastery", 
+                    "as_written": "ܕܝܪܐ ܩܕܝܫܐ ܕܛܘܪ ܣܢܐ", 
+                    "event": { 
+                        "id": "origin", 
+                        "label": "Origin" 
+                    }, 
+                    "note": [ 
+                        "To determine: should this be repeated in the layer record itself as the production place?" 
+                    ] 
+                } 
+            ], 
+            "assoc_date": [
+                { 
+                    "type": { 
+                        "id": "origin", 
+                        "label": "Origin Date" 
+                    }, 
+                    "as_written": "ܠܐܦ̈ܝ ܬܠܬ: ܫ̈ܥܝܢ: ܝܘܡ: ܕ̄ ܟ̄ܚ܇ ܐܝܠܘܠ ܫܢܬ: ܘ̄ ܐܠܦ̄: ܚ̄ܕ ܩ̄: ܕ̄: ܠܐܒܘܢ: ܐܕܡ", 
+                    "note": [ 
+                        "Date for demo purposes" 
+                    ], 
+                    "value": "AM 6,104 = 1292 CE", 
+                    "iso": { 
+                        "not_before": "1292", 
+                        "not_after": "1292" 
+                    } 
+                } 
+            ], 
+            "note": [ 
+                "This colophon is faked with data from another ms for dev purposes", 
+                "The colophon provides the production date in the anno mundi calendar system 6,104 aM = 1292 CE" 
+            ] 
+        } 
+    ], 
+    "assoc_date": [
+        { 
+            "type": { 
+                "id": "origin", 
+                "label": "Origin Date" 
+            }, 
+            "note": [ 
+                "Based on paleographic evidence" 
+            ], 
+            "value": "7th c. CE", 
+            "iso": { 
+                "not_before": "0601", 
+                "not_after": "0700" 
+            } 
+        } 
+    ], 
+    "features": [
+        { 
+            "id": "headpiece", 
+            "label": "Headpiece(s)" 
+        } 
+    ], 
+    "note": [
+        { 
+            "type": { 
+                "id": "ornamentation", 
+                "label": "Ornamentation" 
+            }, 
+            "value": "Decorative headpieces throughout" 
+        }, 
+        { 
+            "type": { 
+                "id": "foliation", 
+                "label": "Foliation" 
+            }, 
+            "value": "Recent foliation in Syriac numerals covering the 1st part (ff. 55–144). The foliation was added after a replacement folio (f. 68) was attached but before two parts were bound together" 
+        } 
+    ],
+    "parent": [ 
+        "ark:/21198/te5f0f9b" 
+    ], 
+    "cataloguer": [
+        {
+            "message": "ADDED: Ingested descriptions from the Syriac Parchment Descriptions project.",
+            "contributor": "Grigory Kessel; Natalia Smelova",
+            "added_by": "William Potter",
+            "timestamp": "2025-06-03T15:50:45+00:00"
+        }
+    ]
+}

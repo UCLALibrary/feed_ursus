@@ -1,0 +1,35 @@
+{
+    "ark": "ark:/21198/s1v01t",
+    "pref_title": "Homilia in principium Proverbiorum",
+    "orig_lang": {
+        "id": "gree1276",
+        "label": "Greek"
+    },
+    "alt_title": [
+        "Basil, Saint, Bishop of Caesarea, approximately 329-379. Homilia in principium Proverbiorum"
+    ],
+    "genre": [
+        {
+            "id": "theological-works",
+            "label": "Theological works"
+        }
+    ],
+    "creator": [
+        {
+            "id": "ark:/21198/s1101c",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Basilius Caesariensis 330-379 | Homilia in principium Proverbiorum",
+            "uri": "http://viaf.org/viaf/200808122",
+            "source": "VIAF"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

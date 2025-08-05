@@ -1,0 +1,43 @@
+{
+    "ark": "ark:/21198/s1ns3n",
+    "pref_title": "Procatechesis",
+    "orig_lang": {
+        "id": "gree1276",
+        "label": "Greek"
+    },
+    "alt_title": [
+        "Procatechesis"
+    ],
+    "genre": [],
+    "creator": [
+        {
+            "id": "ark:/21198/s1rg6m",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "creation": {
+        "value": "4th c. CE",
+        "iso": {
+            "not_before": "0301",
+            "not_after": "0400"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Cyrillus Hierosolymitanus Procatechesis",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/oeuvre/11697/",
+            "source": "Pinakes"
+        }
+    ],
+    "refno": [
+        {
+            "label": " Catecheses",
+            "idno": "3585.1",
+            "source": "CPG"
+        }
+    ],
+    "bib": []
+}

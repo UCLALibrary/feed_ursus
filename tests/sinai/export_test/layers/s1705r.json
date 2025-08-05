@@ -1,0 +1,79 @@
+{
+    "ark": "ark:/21198/s1705r",
+    "reconstruction": false,
+    "label": "Sinai Georgian 34, Undertext (Asomtavruli)",
+    "locus": "rear pastedown",
+    "state": {
+        "id": "undertext",
+        "label": "Undertext"
+    },
+    "writing": [
+        {
+            "script": [
+                {
+                    "id": "asomtavruli",
+                    "label": "Asomtavruli",
+                    "writing_system": "Georgian"
+                }
+            ],
+            "note": [
+                "Large initial letters in the margins"
+            ]
+        }
+    ],
+    "layout": [
+        {
+            "lines": "At least 8 lines",
+            "note": [
+                "Line count impossible to determine"
+            ]
+        }
+    ],
+    "text_unit": [
+        {
+            "id": "ark:/21198/s1w103",
+            "label": "Item 1"
+        }
+    ],
+    "assoc_date": [
+        {
+            "type": {
+                "id": "origin",
+                "label": "Date of Origin"
+            },
+            "value": "ca. 6th- mid 10th c.  CE",
+            "iso": {
+                "not_before": "0501",
+                "not_after": "0948"
+            }
+        }
+    ],
+    "assoc_place": [
+        {
+            "value": "Possibly Jerusalem",
+            "event": {
+                "id": "origin",
+                "label": "Place of Origin"
+            }
+        }
+    ],
+    "note": [
+        {
+            "type": {
+                "id": "general",
+                "label": "Other Notes"
+            },
+            "value": "Lowest layer of double palimpsest"
+        },
+        {
+            "type": {
+                "id": "general",
+                "label": "Other Notes"
+            },
+            "value": "Description of undertext by Jost Gippert, Bernard Outtier"
+        }
+    ],
+    "parent": [
+        "ark:/21198/z1h13zxq"
+    ]
+}

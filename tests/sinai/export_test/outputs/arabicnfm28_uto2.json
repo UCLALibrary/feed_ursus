@@ -1,0 +1,193 @@
+{
+    "ark": "ark:/21198/ten0uto2",
+    "reconstruction": true,
+    "type": "Undertext Object",
+    "shelfmark": "Sinai Arabic NF M 28, UTO 2",
+    "ms_date": {
+        "iso": [
+            {
+                "not_before": "0501",
+                "not_after": "0600"
+            }
+        ],
+        "value": [
+            "6th c. CE"
+        ]
+    },
+    "summary": "Undertext Object of Genesis, 6th c. Greek majuscule",
+    "extent": "16 ff.",
+    "state": "Undertext Object",
+    "fol": "ff. 131-132, 138, 140-142",
+    "genre": [
+        "Theological works"
+    ],
+    "features": [
+        "Multispectral Imaging"
+    ],
+    "part": [
+        {
+            "label": "Part 1",
+            "summary": "Exodus, 6th c. Greek majuscule",
+            "part_date": {
+                "iso": [
+                    {
+                        "not_before": "0501",
+                        "not_after": "0600"
+                    }
+                ],
+                "value": [
+                    "6th c. CE"
+                ]
+            },
+            "locus": "ff. 131-132, 138, 140-142",
+            "support": [
+                "Parchment"
+            ],
+            "extent": "6 ff.",
+            "dim": "191 x 137 mm (typical folio)",
+            "ot_layer": [
+                {
+                    "ark": "ark:/21198/ten0p1ul2",
+                    "origin_date": {
+                        "iso": [
+                            {
+                                "not_before": "0501",
+                                "not_after": "0600"
+                            }
+                        ],
+                        "value": [
+                            "6th c. CE"
+                        ]
+                    },
+                    "locus": "ff. 131-132, 138, 140-142",
+                    "summary": "Genesis (6th c. Greek majuscule)",
+                    "extent": "16 ff.",
+                    "writing": [
+                        {
+                            "script": [
+                                {
+                                    "label": "Greek majuscule",
+                                    "system": "Greek"
+                                }
+                            ],
+                            "locus": "ff. 131-132, 138, 140-142",
+                            "note": [
+                                "Round biblical majuscule"
+                            ]
+                        }
+                    ],
+                    "text_unit": [
+                        {
+                            "ark": "ark:/21198/ten0p1ul2t1",
+                            "locus": "ff. 131-132, 138, 140-142",
+                            "lang": [
+                                "Greek"
+                            ],
+                            "work_wit": [
+                                {
+                                    "pref_title": "Asceticon",
+                                    "creator": [
+                                        {
+                                            "pref_name": "Abba Isaiah",
+                                            "role": "Author"
+                                        }
+                                    ],
+                                    "locus": "ff. 131-132, 138, 140-142",
+                                    "note": [
+                                        "contributors: Rossetto; Tselikas"
+                                    ]
+                                }
+                                ],
+                            "note": [
+                                {
+                                    "type": "Contents Note",
+                                    "value": "The original manuscript also included the UTO Exodus from Arabic NF 28 and the UTOs Genesis and Exodus from Arabic NF 8 (Rossetto)"
+                                }
+                            ]
+                        }
+                    ],
+                    "assoc_date": [
+                        {
+                            "type": "Origin Date",
+                            "note": [
+                                "Paleographic dating"
+                            ],
+                            "value": "6th c. CE"
+                        }
+                    ],
+                    "note": [
+                        {
+                            "type": "Foliation",
+                            "value": "Folios in order of reconstructed undertext: 138v, 138r, 142v, 142r, 140r, 140v, 141v, 141r, 132v, 132r, 131v, 131r"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "location": [
+        {
+            "collection": "New Finds",
+            "repository": "St. Catherine's Monastery of the Sinai"
+        }
+    ],
+    "note": [
+        {
+            "type": "Foliation",
+            "value": "Reconstructed folio order: 138v, 138r, 142v, 142r, 140r, 140v, 141v, 141r, 132v, 132r, 131v, 131r"
+        }
+    ],
+    "related_mss": [
+        {
+            "type": "Disjecta Membra",
+            "label": "Arabic NF M 28 UTOs + Arabic NF M 8 UTOs (Genesis and Exodus)",
+            "mss": [
+                {
+                    "label": "Exodus from Arabic NF M 28",
+                    "id": "ark:/21198/ten0uto1"
+                },
+                {
+                    "label": "Genesis from Arabic NF M 8",
+                    "id": "ark:/21198/tekduto1gen"
+                },
+                {
+                    "label": "Exodus from Arabic NF M 8",
+                    "id": "ark:/21198/tekduto2exod"
+                }
+            ],
+            "note": [
+                "The original manuscript also included the UTO Exodus from Arabic NF 28 and the UTOs Genesis and Exodus from Arabic NF 8"
+            ]
+        }
+    ],
+    "bib": [
+        {
+            "shortcode": "Kashouh 2008",
+            "type": "Citation",
+            "range": "28-57",
+            "note": [
+                "Kashouh article"
+            ]
+        },
+        {
+            "shortcode": "Rossetto 2021",
+            "type": "Reference Work",
+            "range": "p. 29-30"
+        },
+        {
+            "shortcode": "Géhin 2009",
+            "type": "Citation"
+        }
+    ],
+    "iiif": [
+        {
+            "type": "Main",
+            "manifest": "https://sinai-images.library.ucla.edu/iiif/ark:%2F21198%2Fr1qn64nz/manifest",
+            "thumbnail": "https://iiif.sinaimanuscripts.library.ucla.edu/iiif/2/ark%3A%2F21198%2Fz15f0f9b%2Fp161m45m/full/!200,200/0/default.jpg"
+        }
+    ],
+    "reconstructed_from": [
+        "ark:/21198/ten02zkr"
+    ],
+    "last_modified": "2025-03-27"
+}

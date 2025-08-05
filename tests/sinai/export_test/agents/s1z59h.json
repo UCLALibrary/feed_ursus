@@ -1,0 +1,42 @@
+{
+    "ark": "ark:/21198/s1z59h",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Athanasius of Alexandria",
+    "alt_name": [
+        "St. Athanasius the Great"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "death": {
+        "value": "373 CE",
+        "iso": {
+            "not_before": "0373"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Athanasius, Saint, Patriarch of Alexandria, -373",
+            "uri": " http://viaf.org/viaf/105155222",
+            "source": "VIAF"
+        },
+        {
+            "label": "Athanasius, Saint, Patriarch of Alexandria, -373",
+            "uri": "https://id.loc.gov/authorities/names/n79145591",
+            "source": "LoC"
+        },
+        {
+            "label": "Athanasius, Saint, Patriarch of Alexandria, -373",
+            "uri": "https://w3id.org/haf/person/749260264627",
+            "source": "HAF"
+        },
+        {
+            "label": "Athanasius, bishop of Alexandria",
+            "uri": "http://syriaca.org/person/354",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Athanasius Alexandrinus",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/415/",
+            "source": "Pinakes"
+        }
+    ]
+}

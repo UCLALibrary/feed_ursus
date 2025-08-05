@@ -1,0 +1,36 @@
+{
+    "ark": "ark:/21198/s13w2b",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Abgar V of Edessa",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "4 BCE-50 CE",
+        "iso": {
+            "not_before": "-0004",
+            "not_after": "0050"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Abgar V, King of Edessa, 4 B.C.-50 A.D.",
+            "uri": "http://viaf.org/viaf/45659357",
+            "source": "VIAF"
+        },
+        {
+            "label": "Abgar V, King of Edessa, 4 B.C.-50 A.D.",
+            "uri": "http://id.loc.gov/authorities/names/n82203088",
+            "source": "LoC"
+        },
+        {
+            "label": "Abgar V, King of Edessa, 4 BCE-50 CE",
+            "uri": "https://w3id.org/haf/person/462355577836",
+            "source": "HAF"
+        },
+        {
+            "label": "Abgar V Ukkama the Black",
+            "uri": "https://syriaca.org/person/2823",
+            "source": "Syriaca"
+        }
+    ]
+}

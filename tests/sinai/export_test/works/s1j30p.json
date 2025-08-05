@@ -1,0 +1,24 @@
+{
+    "ark": "ark:/21198/s1j30p",
+    "pref_title": "Prophetologion",
+    "alt_title": [
+        "Prophetologion"
+    ],
+    "genre": [
+        {
+            "id": "liturgical-texts",
+            "label": "Liturgical texts"
+        },
+        {
+            "id": "lectionaries",
+            "label": "Lectionaries"
+        },
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [],
+    "refno": [],
+    "bib": []
+}

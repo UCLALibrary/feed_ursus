@@ -1,0 +1,22 @@
+{
+    "ark": "ark:/21198/s1sw2j",
+    "pref_title": "Nahum",
+    "alt_title": [
+        "Bible. Nahum"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Nahum",
+            "uri": "http://viaf.org/viaf/185866121",
+            "source": "VIAF"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

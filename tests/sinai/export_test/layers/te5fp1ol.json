@@ -1,0 +1,338 @@
+{ 
+    "ark": "ark:/21198/te5fp1ol", 
+    "reconstruction": false, 
+    "state": { 
+        "id": "overtext", 
+        "label": "Overtext" 
+    }, 
+    "label": "Syriac 12, Part 1, Overtext", 
+    "locus": "ff. 3r-54v", 
+    "summary": "13th c., Melkite Syriac Synaxarion", 
+    "extent": "51 ff.", 
+    "writing": [
+        { 
+            "script": [
+                { 
+                    "id": "melkite", 
+                    "label": "Melkite" ,
+                    "writing_system": "Syriac"
+                } 
+            ], 
+            "locus": "ff. 3r-54v", 
+            "note": [ 
+                "Melkite with Estrangela aleph" ,
+                "Section headings written with Estrangela"
+            ] 
+        } ,
+        {
+            "script": [
+                {
+                    "id": "estrangela",
+                    "label": "Estrangela",
+                    "writing_system": "Syriac"
+                }
+            ],
+            "locus": "ff. 45r-54v",
+            "note": [
+                "Melkite gives way to Estrangela-style script in the final folios"
+            ]
+        }
+    ], 
+    "ink": [
+        { 
+            "locus": "ff. 3r-54v", 
+            "color": [ 
+                "brown" 
+            ], 
+            "note": [ 
+                "Rubrication of titles in red ink" 
+            ] 
+        } ,
+        {
+            "locus": "ff. 45v-54v",
+            "color": [
+                "black",
+                "yellow",
+                "red"
+            ],
+            "note": [
+                "Occasional words highlighted in yellow",
+                "Initials and titles in red"
+            ]
+        }
+    ], 
+    "layout": [
+        { 
+            "locus": "ff. 3r-54v", 
+            "columns": "1", 
+            "lines": "15", 
+            "dim": "Writing area: 215 x 140 mm", 
+            "note": [ 
+                "Possible pricking still visible in outer margins throughout",
+                "Text written inside bordered margins"
+            ] 
+        } ,
+        {
+            "locus": "ff. 36v-54v",
+            "columns": "2",
+            "lines": "15-17",
+            "dim": "Writing area: 200 x 130 mm",
+            "note": [
+                "Number of lines fluctuates consistently"
+            ]
+        }
+    ], 
+    "text_unit": [
+        { 
+            "id": "ark:/21198/te5fp1olt1", 
+            "label": "Primary Text Unit 1", 
+            "locus": "ff. 3r-54v" 
+        } 
+    ], 
+    "para": [
+        { 
+            "type": { 
+                "id": "colophon", 
+                "label": "Colophon" 
+            }, 
+            "locus": "f. 54v", 
+            "lang": [
+                { 
+                    "id": "class1252", 
+                    "label": "Syriac" 
+                } 
+            ], 
+            "script": [
+                { 
+                    "id": "melkite", 
+                    "label": "Melkite" ,
+                    "writing_system": "Syriac"
+                } 
+            ], 
+            "label": "Syriac colophon", 
+            "as_written": "ܐܚ̈ܝ ܨ̈ܠܘ ܥܠ ܚܛܝܐ ܕܣܪܛ ܡܛܠ ܡܫܝܚܐ܀ ܫܠܡ ܟܬܒܐ ܗܢܐ ܩܕܝܫܐ ܥܠ܆ ܐܝ̈ܕܝ܆ ܐܢܫ܆ ܡܚ̈ܝܠܐ܆ ܘܚ̈ܛܝܐ ܠܦܘܩ̈ܕܢܐ ܕܡܪܗ݂ ܘܐܠܗܗ ܝܘܚܢܢ ܒܪܝ ܬܐܘܕܘܪܘܣ ܡܢ ܩܪܝܬܐ ܢܛܝܪܬ ܡܢ ܐܠܗܐ ܨܝܕܢܐܠܐ ܡܢ ܥܩܠܐ ܕܪܡܣܘܩ܆ ܡܢ ܛܘܪܐ ܕܣܢܝܪ܇ ܘܡܢ ܩܠܝܡܐ ܕܚܠܒܘܢ: ܠܐܦ̈ܝ ܬܠܬ: ܫ̈ܥܝܢ: ܝܘܡ: ܕ̄ ܟ̄ܚ܇ ܐܝܠܘܠ ܫܢܬ: ܘ̄ ܐܠܦ̄: ܚ̄ܕ ܩ̄: ܕ̄: ܠܐܒܘܢ: ܐܕܡ܇ ܟܬܒܗ݂: ܠܢܦܫܗ݂: ܡܚܝܠܬܐ: ܒܕܝܪܐ ܩܕܝܫܐ ܕܛܘܪ ܣܢܐ ܘܗܘ݂ ܡܦܝܣ ܘܡܬܟܫܦ ܠܟܠ ܡܢ: ܕܡܨܠܐ ܒܗ݂ ܦܘܕܐ: ܐܘ ܒܘܣܪܐܢܐ: ܐܘ ܚ̈ܨܪܢܐ: ܢܫܒܘܩ ܘܢܨܠܐ ܥܠ ܚܛܝܐ ܘܡܣܟܢܐ ܟܬܘܒܐ: ܕܟܠ ܒܪܝܐ ܒܨܝܪܐ ܗܘ݂܀ ܐܚ̈ܝ܆ ܘܐܒܗ̈ܝ: ܨ̈ܠܘ ܥܠ ܟܬܘܒܐ ܚܛܝܐ ܡܛܠ ܡܪܢ ܝܫܘܥ ܡܫܝܚܐ ܠܗ݂ ܬܫ̄ܒܘ ܘܣܓܕܬܐ ܠܝ ܓ ܐܡܝܢ:", 
+            "translation": [ 
+                "The end of this holy book by the hands of a weak, sinful, and straying from the commands of his Lord and his God, John bar Theodore, from the town protected by God, Sayidnaya from lower Damascus, from Mt. Hermon (Jebel Sanir) and from the region of Halbun (حلبون), at about 9:00am (the third hour), Wednesday, on the 28th of Ilul (September); the year 6,104 since our father Adam. His book for his humble self at the holy monastery of Mt. Sinai and he entreats and beseeches to all who would pray it or read it or encounter it and find in it error or defect or loss (sic), let him forgive and pray on account of the sinner and poor writing, that all creation is lacking; my brothers and my fathers pray for the writing of the sinner for to our Lord Jesus Christ be the glory and the worship forever, Amen." 
+            ], 
+            "assoc_name": [
+                { 
+                    "id": "ark:/21198/s1v887", 
+                    "as_written": "ܝܘܚܢܢ ܒܪܝ ܬܐܘܕܘܪܘܣ", 
+                    "role": { 
+                        "id": "scribe", 
+                        "label": "Scribe" 
+                    }, 
+                    "note": [ 
+                        "The ARK is for Ephrem, to demo functionality" 
+                    ] 
+                } 
+            ], 
+            "assoc_place": [
+                { 
+                    "value": "The Holy Monastery on Mt. Sinai", 
+                    "as_written": "ܕܝܪܐ ܩܕܝܫܐ ܕܛܘܪ ܣܢܐ", 
+                    "event": { 
+                        "id": "origin", 
+                        "label": "Origin" 
+                    }, 
+                    "note": [ 
+                        "To determine: should this be repeated in the layer record itself as the production place?" 
+                    ] 
+                } 
+            ], 
+            "assoc_date": [
+                { 
+                    "type": { 
+                        "id": "origin", 
+                        "label": "Origin Date" 
+                    }, 
+                    "as_written": "ܠܐܦ̈ܝ ܬܠܬ: ܫ̈ܥܝܢ: ܝܘܡ: ܕ̄ ܟ̄ܚ܇ ܐܝܠܘܠ ܫܢܬ: ܘ̄ ܐܠܦ̄: ܚ̄ܕ ܩ̄: ܕ̄: ܠܐܒܘܢ: ܐܕܡ", 
+                    "note": [ 
+                        "Date for demo purposes" 
+                    ], 
+                    "value": "AM 6,104 = 1292 CE", 
+                    "iso": { 
+                        "not_before": "1292", 
+                        "not_after": "1292" 
+                    } 
+                } 
+            ], 
+            "note": [ 
+                "This colophon is faked with data from another ms for dev purposes", 
+                "The colophon provides the production date in the anno mundi calendar system 6,104 aM = 1292 CE" 
+            ] 
+        } ,
+        {
+            "type": {
+                "id": "colophon",
+                "label": "Colophon"
+            },
+            "locus": "f. 55r",
+            "lang": [
+                {
+                    "id": "arab1395",
+                    "label": "Arabic"
+                }
+            ],
+            "script": [
+                {
+                    "id": "nashk",
+                    "label": "Naskh",
+                    "writing_system": "Arabic"
+                }
+            ],
+            "label": "Arabic colophon",
+            "as_written": "وكان الفراغ من كتابة هذا الكتاب المعظم الخمسة أسفار التوراة الذي أنزلها على موسى ابن عمران باللسان السرياني الترجوم ونقلها الى لسان العبراني وذلك في يوم الاربعاء تاسع شهر كانون الثاني سنة ألف وستمائة وسبعين الاسكندر اليوناني الموافق لسنة أدم سنة ستة ألف وثمان مائة وثانية وستين الموافق لسنة ألف وثلثمائة وثمانية وخمسين للمسيح وكاتبها أحقرمخلوقات الله الفقر الى رحمة ربه من لا يستحق يسمى  إنسان لا سيما بـاسم  شماس يوسف ابن سباط الأمد السرياني الآمدي السرياني ونقلت هذه النسخة السعيدة من السرياني والعبراني الى لسان العربي باجتهاد العظيم ما نالني من التعب على تحرير صحة كلام هذا التوراة وكتبت هذه التوراة في مدينة الماغوصة المحروسة أيام الملك البار المؤمن الرايوك خلد الله ملكه وأجرك بالنصر والسعد فلكه وامن بإنشاء هذه النسخة السعيدة مما أنعم الله عليه بماله لنفسه وهو المولى الاجل والكهف الاضل اوحد الفضلا قدرة العلماء للشيخ ابي الفضائل شرف الدولة عيسى ابن سعيد المتطبب يومئذ بجزيرة قبرص المحروسة وللأصله منسوبة من اهل بغداد نفعه الله فيها وعانه بحفظ ما يتليها والناسح المسيكين يسأل من كل واقف عليها ونسخها أم قرى فيها أن يدعى له بكل المخير والمغفرة وكذلك للممتم فيها وكل من وجد فيها شيء من الغلط يسامح الناسخ الحقير ويصلحه كما يليق بالصحيح حسب قول بعضهم فان وجدت عيباً فسُد الخلالا جل وعز من لا عيبا فيه وعلا والسبح لله دائما ابدا ",
+            "note": [
+                "Relatively consistent with the Syriac colophon, likely supplied by the same scribe"
+            ]
+        },
+        {
+            "type": {
+                "id": "toc",
+                "label": "Table of Contents"
+            },
+            "locus": "f. 3",
+            "lang": [
+                {
+                    "id": "arab1395",
+                    "label": "Arabic"
+                }
+            ],
+            "script": [
+                {
+                    "id": "nashk",
+                    "label": "Naskh",
+                    "writing_system": "Arabic"
+                }
+            ],
+            "label": "Arabic colophon",
+            "as_written": "كان الفراغ منه نهار الأربعاء الثامن من شهر نيسان المبارك سنة ست ألف سبعمائة وتسعين لكون العالم الموافق العشر الأخير من شهر ذي الحجة سنة ثمانين وستمائة الهجرة الإسلامية في مدينة عكا المحروسة والسبح لله دائما آمين ",
+            "translation": [
+                "In the name of God, Father, Son, and Holy Spirit, the Trinity. Contents of this volume, etc."
+            ],
+            "note": [
+                "Covers the contents of the first part of Syriac 12, likely written prior to the two parts being bound together"
+            ]
+        }
+    ], 
+    "assoc_date": [
+        { 
+            "type": { 
+                "id": "origin", 
+                "label": "Origin Date" 
+            }, 
+            "note": [ 
+                "Top-level associated dates" 
+            ], 
+            "value": "1292 CE", 
+            "iso": { 
+                "not_before": "1292", 
+                "not_after": "1292" 
+            } 
+        } 
+    ], 
+    "assoc_name": [
+        { 
+            "id": "ark:/21198/s1v887", 
+            "role": { 
+                "id": "scribe", 
+                "label": "Scribe" 
+            }, 
+            "note": [ 
+                "Top-level associated name" 
+            ] 
+        } 
+    ], 
+    "assoc_place": [
+        { 
+            "value": "Sinai Monastery", 
+            "event": { 
+                "id": "origin", 
+                "label": "Origin" 
+            }, 
+            "note": [ 
+                "Top-level associated place" 
+            ] 
+        } 
+    ], 
+    "features": [
+        { 
+            "id": "colophon", 
+            "label": "Colophon" 
+        }, 
+        { 
+            "id": "dated", 
+            "label": "Dated" 
+        } 
+    ], 
+    "related_mss": [
+        { 
+            "type": { 
+                "id": "filiation", 
+                "label": "Filiation" 
+            }, 
+            "label": "Copied from Syriac 10", 
+            "mss": [
+                { 
+                    "label": "Sinai Syriac 10", 
+                    "id": "ark:/21198/z1p57n0b" 
+                } 
+            ], 
+            "note": [ 
+                "This is a dummy note for dev purposes" 
+            ] 
+        } 
+    ], 
+    "note": [
+        { 
+            "type": { 
+                "id": "ornamentation", 
+                "label": "Ornamentation" 
+            }, 
+            "value": "Decorative headpieces throughout" 
+        }, 
+        { 
+            "type": { 
+                "id": "condition", 
+                "label": "Condition" 
+            }, 
+            "value": "Several damaged folios were repaired and reinforced more recently" 
+        } 
+    ], 
+    "bib": [
+        { 
+            "id": "757c5dad-a4c0-4c61-a5ab-66c5ebb30a54", 
+            "shortcode": "Perria",
+            "citation": "Perria, Lidia. Repertorio dei manoscritti greci di area orientale, palestino-sinaitica. Messina, 2000",
+            "type": { 
+                "id": "cite", 
+                "label": "Citation" 
+            }, 
+            "range": "nos. 1-3", 
+            "note": [ 
+                "Perria" 
+            ] 
+        } 
+    ], 
+    "parent": [ 
+        "ark:/21198/te5f0f9b" 
+    ],
+    "desc_provenance": {
+        "program": [
+            {
+                "label": "Sinai Library Digitization Project, Phase 1",
+                "description": "Described as part of the Sinai Library Digitization Project, Phase 1 (2018-2022). The Sinai Library Digitization Project was sponsored by St. Catherine’s Monastery of the Sinai in partnership with the Early Manuscripts Electronic Library and the UCLA Library, and with funding from The Ahmanson Foundation, Arcadia, and the Steinmetz Family Foundation. Phase 1 of the Sinai Library Digitization Project aimed to supply minimal metadata to accompany high-resolution images of the Arabic and Syriac manuscripts held in the Monastery’s library."
+            }
+        ],
+        "rights": "UUnless otherwise indicated all metadata associated with this manuscript is copyright the authors and released under Creative Commons Attribution 4.0 International License."
+    },
+    "cataloguer": [
+        {
+            "message": "ADDED: Ingested descriptions from the Syriac Parchment Descriptions project.",
+            "contributor": "Grigory Kessel; Natalia Smelova",
+            "added_by": "William Potter",
+            "timestamp": "2025-06-28T15:50:45+00:00"
+        }
+    ]
+}

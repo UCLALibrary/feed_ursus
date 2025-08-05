@@ -1,0 +1,31 @@
+{
+    "ark": "ark:/21198/s1388d",
+    "pref_title": "John",
+    "alt_title": [
+        "Bible. John"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        },
+        {
+            "id": "gospel-books",
+            "label": "Gospel books"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. John",
+            "uri": "https://viaf.org/viaf/57145910123927021804",
+            "source": "VIAF"
+        },
+        {
+            "label": "Bible. John",
+            "uri": "http://id.loc.gov/authorities/names/n79060414",
+            "source": "LoC"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

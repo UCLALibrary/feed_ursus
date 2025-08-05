@@ -1,0 +1,26 @@
+{
+    "ark": "ark:/21198/s1kw32",
+    "pref_title": "Vita Compilata",
+    "orig_lang": {
+        "id": "gree1276",
+        "label": "Greek"
+    },
+    "alt_title": [
+        "Vita Compilata"
+    ],
+    "genre": [
+        {
+            "id": "hagiographies",
+            "label": "Hagiographies"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Hagiographica Nicolaus ep. Myrensis (S.), Vita compilata",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/oeuvre/17275/",
+            "source": "Pinakes"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

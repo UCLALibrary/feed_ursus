@@ -1,0 +1,43 @@
+{
+    "ark": "ark:/21198/s1xw2s",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Paul the Simple",
+    "alt_name": [
+        "St. Paul the Simple"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "death": {
+        "value": "ca. 339 CE",
+        "iso": {
+            "not_before": "0314",
+            "not_after": "0364"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Paul, the Simple, Saint, -approximately 339",
+            "uri": "https://viaf.org/viaf/76198437",
+            "source": "VIAF"
+        },
+        {
+            "label": "Paul, the Simple, Saint, -approximately 339",
+            "uri": "https://id.loc.gov/authorities/names/nr94022211",
+            "source": "LoC"
+        },
+        {
+            "label": "Paul, the Simple, -approximately 339",
+            "uri": "https://w3id.org/haf/person/697933924929",
+            "source": "HAF"
+        },
+        {
+            "label": "Paul the Simple",
+            "uri": "http://syriaca.org/person/1982",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Paulus simplex, disc. S. Antonii",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/saint/734/",
+            "source": "Pinakes"
+        }
+    ]
+}

@@ -1,0 +1,199 @@
+{
+    "ark": "ark:/21198/te5fp2olt1",
+    "reconstruction": false,
+    "label": "Gospel of Luke",
+    "summary": "Gospel of Luke (Peshitta version)",
+    "locus": "ff. 55v-144v",
+    "lang": [
+        {
+            "id": "class1252",
+            "label": "Syriac"
+        }
+    ],
+    "work_wit": [
+        {
+            "work": {
+                "desc_title": "Arsenius of Scetis' Commentary on the Pandectes of Antiochus of Palestine",
+                "creator": [
+                    "ark:/21198/s13010",
+                    "ark:/21198/s1kw2p"
+                ],
+                "genre": [
+                    {
+                        "id": "commentaries",
+                        "label": "Commentaries"
+                    },
+                    {
+                        "id": "theological-works",
+                        "label": "Theological works"
+                      }
+                ]
+            },
+            "as_written": "ܐܘܢܓܠܝܘܢ [ܩܕ]ܝܫܐ ܟܪܘܙܘܬܐ [ܕ]ܠ[ܘ]ܩܐ",
+            "locus": "ff. 55v-144v",
+            "excerpt": [
+                {
+                    "type": {
+                        "id": "incipit",
+                        "label": "Incipit"
+                    },
+                    "locus": "f. 55v",
+                    "as_written": "ܡܛܠ ܕܤܓܝ̈ܐܐ ܨܒ̣ܘ ܕܢܟܬܒܘܢ ܬܫܥܝ̈ܬܐ ܕܤܘܥܖ̈ܢܐ …"
+                },
+                {
+                    "type": {
+                        "id": "des-mut",
+                        "label": "Last Preserved Line"
+                    },
+                    "locus": "f. 144v",
+                    "as_written": "ܐܬܝ̈ ܠܒܝܬ ܩܒܘܪܐ ܘܐܝܬܝ",
+                    "note": [
+                        "Corresponds to Luke 24:1"
+                    ]
+                }
+            ],
+            "note": [
+                "Several liturgical rubrics (some of them are faded) were added in a later Melkite hand (e.g. Holy apostles (f. 75r), Lk 6:12–35)."
+            ],
+            "bib": [
+                {
+                    "id": "33aadcf6-1e7a-4533-abd9-052809f06b83",
+                    "type": {
+                        "id": "cite",
+                        "label": "Citation"
+                        },
+                    "range": "p. 16-17, 129",
+                    "note": [
+                        "Lewis 1894"
+                    ]
+                },
+                {
+                    "id": "dc777e76-90ae-4fdd-bc69-ae64bb61b74c",
+                    "type": {
+                        "id": "cite",
+                        "label": "Citation"
+                        },
+                    "range": "p. 17",
+                    "note": [
+                        "Clark 1952"
+                    ]
+                }
+                ]
+            },
+        {
+            "work": {
+                "id": "ark:/21198/s1n01z"
+            },
+            "as_written": "ܟܬܒܐ ܕܝܘܚܢܢ",
+            "locus": "ff. 100r-144v",
+            "excerpt": [
+                {
+                    "type": {
+                        "id": "incipit",
+                        "label": "Incipit"
+                    },
+                    "locus": "f. 100v",
+                    "as_written": "ܡܛܠ ܕܤܓܝ̈ܐܐ ܨܒ̣ܘ ܕܢܟܬܒܘܢ ܬܫܥܝ̈ܬܐ ܕܤܘܥܖ̈ܢܐ …"
+                },
+                {
+                    "type": {
+                        "id": "prologue",
+                        "label": "Prologue"
+                    },
+                    "locus": "f. 100r",
+                    "as_written": "ܐܬܝ̈ ܠܒܝܬ ܩܒܘܪܐ ܘܐܝܬܝ",
+                    "note": [
+                        "Begins with a scribal preface"
+                    ]
+                }
+            ],
+            "note": [
+                "Several liturgical rubrics (some of them are faded) were added in a later Melkite hand (e.g. Holy apostles (f. 75r), Lk 6:12–35)."
+            ]
+        }
+        ],
+    "para": [
+        {
+            "type": {
+                "id": "rubric",
+                "label": "Rubric"
+            },
+            "locus": "Ff. 58v, 63v, 72v, 77v, 82v, 87v, 92v, 97v, 102v, 107v, 112v, 117v, 122v, 127v, 132v, 137v, 142v",
+            "lang": [
+                {
+                    "id": "class1252",
+                    "label": "Syriac"
+                }
+            ],
+            "script": [
+                {
+                    "id": "estrangela",
+                    "label": "Estrangela",
+                    "writing_system": "Syriac"
+                }
+            ],
+            "label": "Running Title",
+            "as_written": "܀ܐܘܢܓܠܝܘܢ ܕܠܘܩܐ܀"
+        }
+    ],
+    "features": [
+        {
+            "id": "music-notation",
+            "label": "Music notation"
+        }
+    ],
+    "note": [
+        {
+            "type": {
+                "id": "contents",
+                "label": "Contents Note"
+            },
+            "value": "Only a portion of the text is preserved"
+        },
+        {
+            "type": {
+                "id": "general",
+                "label": "General Note"
+            },
+            "value": "This is a general note about the text unit"
+        }
+    ],
+    "bib": [
+        {
+            "id": "3a20a9e1-0b02-476c-966e-649b62ac5761",
+            "type": {
+                "id": "cite",
+                "label": "Citation"
+            },
+            "range": "pp. 43-687",
+            "note": [
+                "Binggeli"
+            ]
+        },
+        {
+            "id": "9f282c58-70c3-48bc-bf30-21fbd835c1ed",
+            "type": {
+                "id": "edition",
+                "label": "Edition"
+            },
+            "note": [
+                "Rossetto 2023b"
+            ]
+        }
+    ],
+    "parent": [
+        "ark:/21198/te5fp2ol"
+    ],
+    "desc_provenance": {
+        "program": [
+            {
+                "label": "Sinai Palimpests Project",
+                "description": "Described as part of the Sinai Palimpsests Project (2006-2017). The Sinai Palimpsests Project was sponsored by St. Catherine’s Monastery of the Sinai in partnership with the Early Manuscripts Electronic Library and the UCLA Library, and with funding from Arcadia. The Project provides scholarly identification and description of the undertext objects in a subset of palimpsested manuscripts in the Sinai collection, with minimal metadata for the overtexts of the host manuscripts."
+            }
+        ],
+        "rights": "UUnless otherwise indicated all metadata associated with this manuscript is copyright the authors and released under Creative Commons Attribution 4.0 International License."
+    },
+    "internal": [
+        "Test record, delete after development is complete"
+        ]
+}

@@ -1,0 +1,40 @@
+{
+    "ark": "ark:/21198/s12p4q",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Palladius of Aspuna",
+    "alt_name": [
+        "Palladius of Galatia",
+        "Palladius of Helenopolis",
+        "Παλλάδιος Γαλατίας"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "ca. 430 CE",
+        "iso": {
+            "not_before": "0405",
+            "not_after": "0455"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Palladius, Bishop of Aspuna, -approximately 430",
+            "uri": "http://viaf.org/viaf/61550437",
+            "source": "VIAF"
+        },
+        {
+            "label": "Palladius, Bishop of Aspuna, -approximately 430",
+            "uri": "http://id.loc.gov/authorities/names/n82093718",
+            "source": "LoC"
+        },
+        {
+            "label": "Palladius, Bishop of Aspuna, -approximately 430",
+            "uri": "https://w3id.org/haf/person/391065198992",
+            "source": "HAF"
+        },
+        {
+            "label": "Palladius Helenopolitanus ep.",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/2169/",
+            "source": "Pinakes"
+        }
+    ]
+}

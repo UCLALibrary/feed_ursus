@@ -1,0 +1,43 @@
+{
+    "ark": "ark:/21198/s1mk51",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Macarius the Egyptian",
+    "alt_name": [
+        "Macarius the Great"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "4th c. CE",
+        "iso": {
+            "not_before": "0301",
+            "not_after": "0400"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Macarius, the Egyptian, Saint, active 4th century",
+            "uri": "http://viaf.org/viaf/93095832",
+            "source": "VIAF"
+        },
+        {
+            "label": "Macarius, the Egyptian, Saint, active 4th century",
+            "uri": "https://id.loc.gov/authorities/names/n82031613",
+            "source": "LoC"
+        },
+        {
+            "label": "Macarius, the Egyptian, active 4th century",
+            "uri": "https://w3id.org/haf/person/514173120360",
+            "source": "HAF"
+        },
+        {
+            "label": "Macarius",
+            "uri": "http://syriaca.org/person/856",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Macarius Aegyptius discipulus S. Antonii",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/saint/532/",
+            "source": "Pinakes"
+        }
+    ]
+}

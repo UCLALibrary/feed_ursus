@@ -1,0 +1,36 @@
+{
+    "ark": "ark:/21198/s1kw2p",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Antiochus of Palestine",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "7th c. CE",
+        "iso": {
+            "not_before": "0601",
+            "not_after": "0700"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Antiochus active 7th century monk of Palestine",
+            "uri": "http://viaf.org/viaf/89050745",
+            "source": "VIAF"
+        },
+        {
+            "label": "Antiochus, monk of Palestine, active 7th century",
+            "uri": "http://id.loc.gov/authorities/names/no2005084640",
+            "source": "LoC"
+        },
+        {
+            "label": "Antiochus, monk of Palestine, active 7th century",
+            "uri": "https://haf.vhmml.org/person/329286221270",
+            "source": "HAF"
+        },
+        {
+            "label": "Antiochus monachus",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/234/",
+            "source": "Pinakes"
+        }
+    ]
+}

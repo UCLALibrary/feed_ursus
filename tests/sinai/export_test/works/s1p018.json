@@ -1,0 +1,43 @@
+{
+    "ark": "ark:/21198/s1p018",
+    "pref_title": "Homily on Psalm 1",
+    "orig_lang": {
+        "id": "gree1276",
+        "label": "Greek"
+    },
+    "alt_title": [
+        "Homily on Psalm 1"
+    ],
+    "genre": [],
+    "creator": [
+        {
+            "id": "ark:/21198/s1101c",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "creation": {
+        "value": "4th c. CE",
+        "iso": {
+            "not_before": "0301",
+            "not_after": "0400"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Basilius Caesariensis In Ps 1 (Homilia)",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/oeuvre/8404/",
+            "source": "Pinakes"
+        }
+    ],
+    "refno": [
+        {
+            "label": "Homiliae super psalmos",
+            "idno": "2836.001",
+            "source": "CPG"
+        }
+    ],
+    "bib": []
+}

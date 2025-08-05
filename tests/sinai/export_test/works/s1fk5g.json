@@ -1,0 +1,27 @@
+{
+    "ark": "ark:/21198/s1fk5g",
+    "pref_title": "Maccabees",
+    "alt_title": [
+        "Bible. Maccabees"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Maccabees",
+            "uri": "https://viaf.org/viaf/173837806",
+            "source": "VIAF"
+        },
+        {
+            "label": "Bible. Maccabees",
+            "uri": "http://id.loc.gov/authorities/names/n88282498",
+            "source": "LoC"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

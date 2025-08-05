@@ -1,0 +1,38 @@
+{
+    "ark": "ark:/21198/s1x596",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Constantine VII Porphyrogenitus",
+    "alt_name": [
+        "Κωνσταντῖνος Πορφυρογέννητος"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "905 CE-959 CE",
+        "iso": {
+            "not_before": "0905",
+            "not_after": "0959"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Constantine VII Porphyrogenitus, Emperor of the East, 905-959",
+            "uri": "http://viaf.org/viaf/13108540",
+            "source": "VIAF"
+        },
+        {
+            "label": "Constantine VII Porphyrogenitus, Emperor of the East, 905-959",
+            "uri": "https://id.loc.gov/authorities/names/n82154652",
+            "source": "LoC"
+        },
+        {
+            "label": "Constantine VII Porphyrogenitus, Emperor of the East, 905-959",
+            "uri": "https://w3id.org/haf/person/672089539461",
+            "source": "HAF"
+        },
+        {
+            "label": "Constantinus Porphyrogenitus VII",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/771/",
+            "source": "Pinakes"
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+{
+    "ark": "ark:/21198/s1hc7s",
+    "pref_title": "Thessalonians",
+    "alt_title": [
+        "Bible. Thessalonians"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Thessalonians",
+            "uri": "http://viaf.org/viaf/292772106",
+            "source": "VIAF"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

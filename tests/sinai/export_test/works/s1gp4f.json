@@ -1,0 +1,30 @@
+{
+    "ark": "ark:/21198/s1gp4f",
+    "pref_title": "Pandektēs",
+    "orig_lang": {
+        "id": "gree1276",
+        "label": "Greek"
+    },
+    "alt_title": [
+        "Antiochus, monk of Palestine, active 7th century. Pandektēs"
+    ],
+    "genre": [],
+    "creator": [
+        {
+            "id": "ark:/21198/s1kw2p",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Antiochus monachus Pandecte de la Sainte Écriture",
+            "uri": "http://viaf.org/viaf/292613749",
+            "source": "VIAF"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

@@ -1,0 +1,140 @@
+{ 
+    "ark": "ark:/21198/ten0p1ul1", 
+    "reconstruction": false, 
+    "state": { 
+        "id": "undertext", 
+        "label": "Undertext" 
+    }, 
+    "label": "Arabic NF M 28, Part 1, Undertext 1", 
+    "locus": "ff. 128-130, 133-137, 139, 143", 
+    "summary": "Exodus (6th c. Greek majuscule)", 
+    "extent": "10 ff.", 
+    "writing": [
+        { 
+            "script": [
+                { 
+                    "id": "greek-maj", 
+                    "label": "Greek majuscule" ,
+                    "writing_system": "Greek"
+                } 
+            ], 
+            "locus": "ff. 128-130, 133-137, 139, 143" ,
+            "note": [
+                "Round biblical majuscule"
+            ]
+        } 
+    ], 
+    "text_unit": [
+        { 
+            "id": "ark:/21198/ten0p1ul1t1", 
+            "label": "Primary Text Unit 1", 
+            "locus": "ff. 128-130, 133-137, 139, 143" 
+        } 
+    ], 
+    "assoc_date": [
+        { 
+            "type": { 
+                "id": "origin", 
+                "label": "Origin Date" 
+            }, 
+            "note": [ 
+                "Paleographic dating" 
+            ], 
+            "value": "6th c. CE", 
+            "iso": { 
+                "not_before": "0501", 
+                "not_after": "0600" 
+            } 
+        } 
+    ], 
+    "assoc_name": [
+        {
+            "id": "ark:/21198/s1v887",
+            "role": {
+                "id": "scribe",
+                "label": "Scribe"
+            },
+            "note": [
+                "Ephrem test record used for demo purposes"
+            ]
+        }
+    ],
+    "assoc_place": [
+        {
+            "value": "Deir al-Suryan",
+            "event": {
+                "id": "origin",
+                "label": "Origin Place"
+            },
+            "note": [
+                "Written in Deir al-Suryan"
+            ]
+        }
+    ], 
+    "note": [
+        { 
+            "type": { 
+                "id": "foliation", 
+                "label": "Foliation" 
+            }, 
+            "value": "Folios in order of reconstructed undertext: 130v, 130r, 135v, 135r, 128v, 128r, 133r, 133v, 134r, 134v, 129r, 129v, 137v, 137r, 136r, 136v, 143r, 143v, 139v, 139r" 
+        } ,
+        {
+            "type": {
+                "id": "general",
+                "label": "Other Notes"
+            },
+            "value": "Previous catalogs dated this manuscript to the 13th-14th c. CE"
+        },
+        {
+            "type": {
+                "id": "general",
+                "label": "Other Notes"
+            },
+            "value": "Manicule emerging from a decorated initial, f. 175r"
+        },
+        {
+            "type": {
+                "id": "para",
+                "label": "Paracontent Note"
+            },
+            "value": "Possible colophon, f. 139, mostly illegible"
+        }
+    ], 
+    "bib": [
+        {
+            "id": "d943377f-b641-4984-bcb1-0f859e11616f",
+            "type": {
+                "id": "ref",
+                "label": "Reference Work"
+            },
+            "range": "p. 1-57"
+        },
+        {
+            "id": "4693593d-2e88-4784-ab3d-501539acf1a0",
+            "type": {
+                "id": "cite",
+                "label": "Citation"
+            },
+            "range": "v. 1, pp. 55-90",
+            "note": [
+                "Kashouh article"
+            ]
+        }
+    ], 
+    "desc_provenance": {
+        "program": [
+            {
+                "label": "Sinai Palimpests Project",
+                "description": "Described as part of the Sinai Palimpsests Project (2006-2017). The Sinai Palimpsests Project was sponsored by St. Catherine’s Monastery of the Sinai in partnership with the Early Manuscripts Electronic Library and the UCLA Library, and with funding from Arcadia. The Project provides scholarly identification and description of the undertext objects in a subset of palimpsested manuscripts in the Sinai collection, with minimal metadata for the overtexts of the host manuscripts."
+            }
+        ]
+    },
+    "parent": [ 
+        "ark:/21198/ten02zkr" ,
+        "ark:/21198/ten0uto1"
+    ], 
+    "internal": [ 
+        "Test record for development purposes; please delete." 
+    ] 
+}

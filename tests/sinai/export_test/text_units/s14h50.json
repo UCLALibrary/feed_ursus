@@ -1,0 +1,47 @@
+{
+    "ark": "ark:/21198/s14h50",
+    "reconstruction": false,
+    "label": "Hymnary (Iadgari, Assumption)",
+    "lang": [
+        {
+            "id": "nucl1302",
+            "label": "Georgian"
+        }
+    ],
+    "work_wit": [
+        {
+            "work": {
+                "desc_title": "Iadgari, Assumption",
+                "genre": [
+                    {
+                        "id": "liturgical-texts",
+                        "label": "Liturgical texts"
+                    },
+                    {
+                        "id": "hymnals",
+                        "label": "Hymnals"
+                    }
+                ]
+            }
+        }
+    ],
+    "note": [
+        {
+            "type": {
+                "id": "general",
+                "label": "Other Notes"
+            },
+            "value": "Description by Jost Gippert, Bernard Outtier"
+        },
+        {
+            "type": {
+                "id": "general",
+                "label": "Other Notes"
+            },
+            "value": "Bibliography: Metreveli, Č'ank'ievi, and Xevsuriani"
+        }
+    ],
+    "parent": [
+        "ark:/21198/s1gh06"
+    ]
+}

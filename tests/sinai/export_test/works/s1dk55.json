@@ -1,0 +1,27 @@
+{
+    "ark": "ark:/21198/s1dk55",
+    "pref_title": "Old Testament",
+    "alt_title": [
+        "Bible. Old Testament"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Old Testament",
+            "uri": "http://viaf.org/viaf/4388149296279480670005",
+            "source": "VIAF"
+        },
+        {
+            "label": "Bible. Old Testament",
+            "uri": "http://id.loc.gov/authorities/names/n79054379",
+            "source": "LoC"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

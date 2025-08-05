@@ -1,0 +1,31 @@
+{
+    "ark": "ark:/21198/s1fg6t",
+    "pref_title": "Praktikos",
+    "alt_title": [
+        "Evagrius, Ponticus, 345?-399. Praktikos"
+    ],
+    "genre": [
+        {
+            "id": "theological-works",
+            "label": "Theological works"
+        }
+    ],
+    "creator": [
+        {
+            "id": "ark:/21198/s1b88k",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Evagrius, Ponticus, 345?-399. | Praktikos",
+            "uri": "http://viaf.org/viaf/8169153126246324750009",
+            "source": "VIAF"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

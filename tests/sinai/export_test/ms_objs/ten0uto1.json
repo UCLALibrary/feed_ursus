@@ -1,0 +1,133 @@
+{
+    "ark": "ark:/21198/ten0uto1",
+    "reconstruction": true,
+    "type": {
+        "id": "uto",
+        "label": "Undertext Object"
+    },
+    "shelfmark": "Sinai Arabic NF M 28, UTO 1",
+    "summary": "Undertext Object of Exodus, 6th c. Greek majuscule",
+    "extent": "10 ff.",
+    "state": {
+        "id": "uto",
+        "label": "Undertext Object"
+        },
+    "fol": "ff. 128-130, 133-137, 139, 143",
+    "features": [
+        {
+            "id": "msi",
+            "label": "Multispectral Imaging"
+            } 
+    ],
+    "part": [
+        {
+            "label": "Part 1",
+            "summary": "Exodus, 6th c. Greek majuscule",
+            "locus": "ff. 128-130, 133-137, 139, 143",
+            "support": [
+                {
+                    "id": "parchment",
+                    "label": "Parchment"
+                    }
+                ],
+            "extent": "10 ff.",
+            "dim": "191 x 137 mm (typical folio)",
+            "layer": [
+                {
+                    "id": "ark:/21198/ten0p1ul1",
+                    "label": "Overtext layer, Exodus (6th c., Greek majuscule)",
+                    "type": {
+                        "id": "overtext",
+                        "label": "Overtext"
+                        },
+                    "locus": "ff. 128-130, 133-137, 139, 143"
+                }
+            ]
+        }
+    ],
+    "has_bind": false,
+    "location": [
+        {
+            "id": "sinai-nf",
+            "collection": "New Finds",
+            "repository": "St. Catherine's Monastery of the Sinai"
+        }
+    ],
+    "note": [
+        {
+            "type": {
+                "id": "foliation",
+                "label": "Foliation"
+            },
+            "value": "Reconstructed folio order: 130, 135, 128, 133-134, 129, 137, 136, 143, 139"
+        }
+        ],
+    "related_mss": [
+        {
+            "type": {
+                "id": "disjecta",
+                "label": "Disjecta Membra"
+            },
+            "label": "Arabic NF M 28 UTOs + Arabic NF M 8 UTOs (Genesis and Exodus)",
+            "mss": [
+                {
+                    "label": "Genesis from Arabic NF M 28",
+                    "id": "ark:/21198/ten0uto2"
+                },
+                {
+                    "label": "Genesis from Arabic NF M 8",
+                    "id": "ark:/21198/tekduto1gen"
+                },
+                {
+                    "label": "Exodus from Arabic NF M 8",
+                    "id": "ark:/21198/tekduto2exod"
+                }
+            ],
+            "note": [
+                "The original manuscript also included the UTO Genesis from Arabic NF 28 and the UTOs Genesis and Exodus from Arabic NF 8"
+            ]
+        }
+    ],
+    "bib": [
+        {
+            "id": "ebe32f6b-ad60-472c-aceb-d86913448530",
+            "type": {
+                "id": "cite",
+                "label": "Citation"
+            },
+            "range": "28-57",
+            "note": [
+            "Kashouh article"
+            ]
+        },
+        {
+            "id": "01d4a639-d314-4271-b7f8-3f559c6c744c",
+            "type": {
+                "id": "cite",
+                "label": "Citation"
+            },
+            "range": "28-57",
+            "note": [
+            "Kashouh book"
+            ]
+        }
+    ],
+    "iiif": [
+        {
+            "type": {
+                        "id": "main",
+                        "label": "Main"
+                        },
+            "manifest": "https://sinai-images.library.ucla.edu/iiif/ark:%2F21198%2Fr1qn64nz/manifest",
+            "text_direction": "right-to-left",
+            "behavior": "paged",
+            "thumbnail": "https://iiif.sinaimanuscripts.library.ucla.edu/iiif/2/ark%3A%2F21198%2Fz15f0f9b%2Fp161m45m/full/!200,200/0/default.jpg"
+        }
+    ],
+    "internal": [
+        "This record is used only for purposes of developing the data portal and should therefore not be published, and should be deleted when development is complete"
+    ],
+    "reconstructed_from": [
+        "ark:/21198/ten02zkr"
+    ]
+}

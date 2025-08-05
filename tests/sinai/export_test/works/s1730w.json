@@ -1,0 +1,27 @@
+{
+    "ark": "ark:/21198/s1730w",
+    "pref_title": "Job",
+    "alt_title": [
+        "Bible. Job"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Job",
+            "uri": "https://viaf.org/viaf/186698577",
+            "source": "VIAF"
+        },
+        {
+            "label": "Bible. Job",
+            "uri": "http://id.loc.gov/authorities/names/n79045430",
+            "source": "LoC"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

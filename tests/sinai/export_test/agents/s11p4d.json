@@ -1,0 +1,40 @@
+{
+    "ark": "ark:/21198/s11p4d",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Simeon the Stylite",
+    "alt_name": [
+        "Simeon the Elder",
+        "Symeon the Stylite",
+        "ܫܡܥܘܢ ܐܣܛܘܢܝܐ"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "380 CE-459 CE",
+        "iso": {
+            "not_before": "0380",
+            "not_after": "0459"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Simeon Stylites, Saint, -459",
+            "uri": "http://viaf.org/viaf/75503404",
+            "source": "VIAF"
+        },
+        {
+            "label": "Simeon Stylites, Saint, -459",
+            "uri": "https://id.loc.gov/authorities/names/n92017615",
+            "source": "LoC"
+        },
+        {
+            "label": "Simeon Stylites, -459",
+            "uri": "https://w3id.org/haf/person/813690543459",
+            "source": "HAF"
+        },
+        {
+            "label": "Simeon the Stylite ",
+            "uri": "https://www.syriaca.org/person/744",
+            "source": "Syriaca"
+        }
+    ]
+}

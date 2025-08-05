@@ -1,0 +1,20 @@
+{
+    "ark": "ark:/21198/tebvp1olt1",
+    "reconstruction": false,
+    "label": "Horologion",
+    "locus": "ff. 1-14",
+    "lang": [
+        {
+            "id": "arab1395",
+            "label": "Arabic"
+        }
+    ],
+    "work_wit": [
+        {
+            "work": {
+                "id": "ark:/21198/s1dg6h"
+            }
+        }
+    ],
+    "parent": ["ark:/21198/tebvp1ol"]
+}

@@ -1,0 +1,30 @@
+{
+    "ark": "ark:/21198/s1601x",
+    "pref_title": "Infancy Gospel of James",
+    "alt_title": [
+        "Protoevangelium of James",
+        "Infancy Gospel of James",
+        "The Birth of Mary",
+        "Gospel of James (Apocrypha)"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Protevangelium Jacobi",
+            "uri": "https://viaf.org/viaf/184746618/",
+            "source": "VIAF"
+        },
+        {
+            "label": "Protevangelium Jacobi",
+            "uri": "http://id.loc.gov/authorities/names/n88658221",
+            "source": "LoC"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

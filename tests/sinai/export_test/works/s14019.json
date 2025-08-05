@@ -1,0 +1,26 @@
+{
+    "ark": "ark:/21198/s14019",
+    "pref_title": "Lausiac History",
+    "alt_title": [
+        "Historia Lausiaca",
+        "Lausiac History by Palladius"
+    ],
+    "genre": [
+        {
+            "id": "hagiographies",
+            "label": "Hagiographies"
+        }
+    ],
+    "creator": [
+        {
+            "id": "ark:/21198/s12p4q",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "rel_con": [],
+    "refno": [],
+    "bib": []
+}

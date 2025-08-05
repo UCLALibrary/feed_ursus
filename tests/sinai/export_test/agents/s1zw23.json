@@ -1,0 +1,35 @@
+{
+    "ark": "ark:/21198/s1zw23",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Mark the Hermit",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "death": {
+        "value": "430 CE",
+        "iso": {
+            "not_before": "0430"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Marcus Eremita (400-500)",
+            "uri": "http://viaf.org/viaf/146145542418996641045",
+            "source": "VIAF"
+        },
+        {
+            "label": "Mark, the Hermit, -approximately 430",
+            "uri": "https://id.loc.gov/authorities/names/n85344950",
+            "source": "LoC"
+        },
+        {
+            "label": "Mark, the Hermit, -approximately 430",
+            "uri": "https://w3id.org/haf/person/437314428148",
+            "source": "HAF"
+        },
+        {
+            "label": "Marcus Eremita",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/1788/",
+            "source": "Pinakes"
+        }
+    ]
+}

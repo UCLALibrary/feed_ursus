@@ -1,0 +1,44 @@
+{
+    "ark": "ark:/21198/s18599",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Theodoret of Cyrrhus",
+    "alt_name": [
+        "ܬܐܕܘܪܝܛܘܣ ܕܩܘܪܘܣ",
+        "Θεοδώρητος Κύρρου"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "393 CE-466 CE",
+        "iso": {
+            "not_before": "0393",
+            "not_after": "0466"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Theodoretus, Cyrensis, 393-466",
+            "uri": "http://viaf.org/viaf/77111352",
+            "source": "VIAF"
+        },
+        {
+            "label": "Theodoret, Bishop of Cyrrhus",
+            "uri": "http://id.loc.gov/authorities/names/n81119785",
+            "source": "LoC"
+        },
+        {
+            "label": "Theodoret, Bishop of Cyrrhus, 393-496",
+            "uri": "https://w3id.org/haf/person/762038744044",
+            "source": "HAF"
+        },
+        {
+            "label": "Theodoret of Cyrrhus",
+            "uri": "https://syriaca.org/person/781",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Theodoretus Cyrensis",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/2645/",
+            "source": "Pinakes"
+        }
+    ]
+}

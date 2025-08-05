@@ -1,0 +1,44 @@
+{
+    "ark": "ark:/21198/s1t88x",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Gregory Thaumaturgus",
+    "alt_name": [
+        "Gregory the Miracle-Worker",
+        "Gregory of Neocaesarea"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "ca. 213 CE-ca. 270 CE",
+        "iso": {
+            "not_before": "0188",
+            "not_after": "0295"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Gregory, Thaumaturgus, Saint, approximately 213-approximately 270",
+            "uri": "http://viaf.org/viaf/88726043",
+            "source": "VIAF"
+        },
+        {
+            "label": "Gregory, Thaumaturgus, approximately 213-approximately 270",
+            "uri": "https://id.loc.gov/authorities/names/n84058437",
+            "source": "LoC"
+        },
+        {
+            "label": "Gregory, Thaumaturgus, approximately 213-approximately 270",
+            "uri": "https://w3id.org/haf/person/903085557302",
+            "source": "HAF"
+        },
+        {
+            "label": "Gregory the Wonderworker",
+            "uri": "http://syriaca.org/person/513",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Gregorius Thaumaturgus Neocaesariensis",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/1249/",
+            "source": "Pinakes"
+        }
+    ]
+}

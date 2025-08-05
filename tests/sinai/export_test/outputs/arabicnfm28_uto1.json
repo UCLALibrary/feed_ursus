@@ -1,0 +1,236 @@
+{
+    "ark": "ark:/21198/ten0uto1",
+    "reconstruction": true,
+    "type": "Undertext Object",
+    "shelfmark": "Sinai Arabic NF M 28, UTO 1",
+    "ms_date": {
+        "iso": [
+            {
+                "not_before": "0501",
+                "not_after": "0600"
+            }
+        ],
+        "value": [
+            "6th c. CE"
+        ]
+    },
+    "summary": "Undertext Object of Exodus, 6th c. Greek majuscule",
+    "extent": "10 ff.",
+    "state": "Undertext Object",
+    "fol": "ff. 128-130, 133-137, 139, 143",
+    "genre": [
+        "Biblical texts"
+    ],
+    "features": [
+        "Multispectral Imaging"
+    ],
+    "part": [
+        {
+            "label": "Part 1",
+            "summary": "Exodus, 6th c. Greek majuscule",
+            "part_date": {
+                "iso": [
+                    {
+                        "not_before": "0501",
+                        "not_after": "0600"
+                    }
+                ],
+                "value": [
+                    "6th c. CE"
+                ]
+            },
+            "locus": "ff. 128-130, 133-137, 139, 143",
+            "support": [
+                "Parchment"
+            ],
+            "extent": "10 ff.",
+            "dim": "191 x 137 mm (typical folio)",
+            "ot_layer": [
+                {
+                    "ark": "ark:/21198/ten0p1ul1",
+                    "origin_date": {
+                            "iso": [
+                                {
+                                    "not_before": "0501",
+                                    "not_after": "0600"
+                                }
+                            ],
+                            "value": [
+                                "6th c. CE"
+                            ]
+                    },
+                    "locus": "ff. 128-130, 133-137, 139, 143",
+                    "summary": "Exodus (6th c. Greek majuscule)",
+                    "extent": "10 ff.",
+                    "writing": [
+                        {
+                            "script": [
+                                {
+                                    "label": "Greek majuscule",
+                                    "system": "Greek"
+                                }
+                            ],
+                            "locus": "ff. 128-130, 133-137, 139, 143",
+                            "note": [
+                                "Round biblical majuscule"
+                            ]
+                        }
+                    ],
+                    "text_unit": [
+                        {
+                            "ark": "ark:/21198/ten0p1ul1t1",
+                            "locus": "ff. 128-130, 133-137, 139, 143",
+                            "lang": [
+                                "Greek"
+                            ],
+                            "work_wit": [
+                                {
+                                    "descriptive_title": "Exodus",
+                                    "locus": "ff. 128-130, 133-137, 139, 143",
+                                    "note": [
+                                        "contributors: Rossetto; Tselikas"
+                                    ]
+                                }
+                                ],
+                            "note": [
+                                {
+                                    "type": "Contents Note",
+                                    "value": "The original manuscript also included the UTO Genesis from Arabic NF 28 and the UTOs Genesis and Exodus from Arabic NF 8 (Rossetto)"
+                                }
+                            ]
+                        }
+                    ],
+                    "assoc_date": [
+                        {
+                            "type": "Origin Date",
+                            "note": [
+                                "Paleographic dating"
+                            ],
+                            "value": "6th c. CE"
+                        }
+                    ],
+                    "assoc_name": [
+                        {
+                            "pref_name": "Ephrem the Syrian",
+                            "role": "Scribe",
+                            "note": [
+                                "Ephrem test record used for demo purposes"
+                            ]
+                        }
+                    ],
+                    "assoc_place": [
+                        {
+                            "value": "Deir al-Suryan",
+                            "event": "Origin Place",
+                            "note": [
+                                "Written in Deir al-Suryan"
+                            ]
+                        }
+                    ],
+                    "note": [
+                        {
+                            "type": "Foliation",
+                            "value": "Folios in order of reconstructed undertext: 130v, 130r, 135v, 135r, 128v, 128r, 133r, 133v, 134r, 134v, 129r, 129v, 137v, 137r, 136r, 136v, 143r, 143v, 139v, 139r"
+                        },
+                        {
+                            "type": "Other Notes",
+                            "value": "Previous catalogs dated this manuscript to the 13th-14th c. CE"
+                        },
+                        {
+                            "type": "Other Notes",
+                            "value": "Manicule emerging from a decorated initial, f. 175r"
+                        },
+                        {
+                            "type": "Paracontent Note",
+                            "value": "Possible colophon, f. 139, mostly illegible"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "location": [
+        {
+            "collection": "New Finds",
+            "repository": "St. Catherine's Monastery of the Sinai"
+        }
+    ],
+    "note": [
+        {
+            "type": "Foliation",
+            "value": "Reconstructed folio order: 130, 135, 128, 133-134, 129, 137, 136, 143, 139"
+        }
+    ],
+    "related_mss": [
+        {
+            "type": "Disjecta Membra",
+            "label": "Arabic NF M 28 UTOs + Arabic NF M 8 UTOs (Genesis and Exodus)",
+            "mss": [
+                {
+                    "label": "Genesis from Arabic NF M 28",
+                    "id": "ark:/21198/ten0uto2"
+                },
+                {
+                    "label": "Genesis from Arabic NF M 8",
+                    "id": "ark:/21198/tekduto1gen"
+                },
+                {
+                    "label": "Exodus from Arabic NF M 8",
+                    "id": "ark:/21198/tekduto2exod"
+                }
+            ],
+            "note": [
+                "The original manuscript also included the UTO Genesis from Arabic NF 28 and the UTOs Genesis and Exodus from Arabic NF 8"
+            ]
+        }
+    ],
+    "bib": [
+        {
+            "shortcode": "Kashouh 2008",
+            "type": "Citation",
+            "range": "28-57",
+            "note": [
+                "Kashouh article"
+            ]
+        },
+        {
+            "shortcode": "Kashouh 2012",
+            "type": "Citation",
+            "range": "28-57",
+            "note": [
+                "Kashouh book"
+            ]
+        },
+        {
+            "shortcode": "Bhayro, et al. 2012",
+            "type": "Reference Work",
+            "range": "p. 1-57"
+        },
+        {
+            "shortcode": "Balageorgos and Kriticou",
+            "type": "Citation",
+            "range": "v. 1, pp. 55-90",
+            "note": [
+                "Kashouh article"
+            ]
+        },
+        {
+            "shortcode": "Boudalis and Rossetto",
+            "type": "Citation",
+            "note": [
+                "Boudalis and Rossetto"
+            ]
+        }
+    ],
+    "iiif": [
+        {
+            "type": "Main",
+            "manifest": "https://sinai-images.library.ucla.edu/iiif/ark:%2F21198%2Fr1qn64nz/manifest",
+            "thumbnail": "https://iiif.sinaimanuscripts.library.ucla.edu/iiif/2/ark%3A%2F21198%2Fz15f0f9b%2Fp161m45m/full/!200,200/0/default.jpg"
+        }
+    ],
+    "reconstructed_from": [
+        "ark:/21198/ten02zkr"
+    ],
+    "last_modified": "2025-03-27"
+}

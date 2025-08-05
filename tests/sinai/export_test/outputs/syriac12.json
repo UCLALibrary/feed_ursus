@@ -1,0 +1,1252 @@
+{
+    "ark": "ark:/21198/te5f0f9b",
+    "reconstruction": false,
+    "type": "Manuscript",
+    "shelfmark": "Sinai Syriac 12",
+    "ms_date": {
+        "iso": [
+            {
+                "not_before": "0601",
+                "not_after": "0700"
+            },
+            {
+                "not_before": "1292",
+                "not_after": "1292"
+            }
+        ],
+        "value": [
+            "7th c. CE",
+            "1292 CE"
+        ]
+    },
+    "summary": "(1st part) Synaxarion (Gospel Lectionary for the movable feast days according to the Byzantine rite); (2nd part) Gospel of Luke (Peshitta version)",
+    "extent": "146 ff.",
+    "weight": "1287.7 g",
+    "dim": "240 x 159 x 81.0 mm",
+    "state": "Codex",
+    "fol": "ff. 1-2a, 2b-45, 45bis-144",
+    "coll": "Fly-leaves: Front board inside (pastedown), ff. 1-2b | Part 1: <I>: ff. 3–10; <II>: ff. 11–16; <III>: ff. 17–23; IV: ff. 24–31; V: ff. 32–39; VI: ff. 40–46; VII: ff. 47–54 | Part 2: <I>: ff. 55–63; <II>: ff. 64–72; <III>: ff. 73–82; <IV>: ff. 83–92; <V>: ff. 93–102; <VI>: ff. 103–112; <VII>: ff. 113–122; <VIII>: ff. 123–132; IX: ff. 133–142; <X>: ff. 143–144",
+    "genre": [
+        "Liturgical texts",
+        "Hagiographies",
+        "Biblical texts",
+        "Gospel books",
+        "Theological works",
+        "Commentaries"
+    ],
+    "features": [
+        "Headpiece(s)",
+        "Decoration, Geometric",
+        "Decoration, Vegetative",
+        "Border(s)",
+        "Music notation",
+        "Unidentified Text",
+        "Colophon",
+        "Dated",
+        "Music notation",
+        "Unidentified Text"
+    ],
+    "part": [
+        {
+            "label": "Part 1",
+            "summary": "Synaxarion (Gospel Lectionary for the movable feast days according to the Byzantine rite)",
+            "part_date": {
+                "iso": [
+                    {
+                        "not_before": "1292",
+                        "not_after": "1292"
+                    }
+                ],
+                "value": [
+                    "1292 CE"
+                ]
+            },
+            "locus": "ff. 3-54",
+            "support": [
+                "Paper"
+            ],
+            "extent": "51 ff.",
+            "dim": "235 x 154 mm (average folio)",
+            "ot_layer": [
+                {
+                    "ark": "ark:/21198/te5fp1ol",
+                    "origin_date": {
+                        "iso": [
+                            {
+                                "not_before": "1292",
+                                "not_after": "1292"
+                            }
+                        ],
+                        "value": [
+                            "1292 CE"
+                        ]
+                    },
+                    "locus": "ff. 3r-54v",
+                    "summary": "13th c., Melkite Syriac Synaxarion",
+                    "extent": "51 ff.",
+                    "writing": [
+                        {
+                            "script": [
+                                {
+                                    "label": "Melkite",
+                                    "system": "Syriac"
+                                }
+                            ],
+                            "locus": "ff. 3r-54v",
+                            "note": [
+                                "Melkite with Estrangela aleph",
+                                "Section headings written with Estrangela"
+                            ]
+                        },
+                        {
+                            "script": [
+                                {
+                                    "label": "Estrangela",
+                                    "system": "Syriac"
+                                }
+                            ],
+                            "locus": "ff. 45r-54v",
+                            "note": [
+                                "Melkite gives way to Estrangela-style script in the final folios"
+                            ]
+                        }
+                    ],
+                    "ink": [
+                        {
+                            "locus": "ff. 3r-54v",
+                            "color": [
+                                "brown"
+                            ],
+                            "note": [
+                                "Rubrication of titles in red ink"
+                            ]
+                        },
+                        {
+                            "locus": "ff. 45v-54v",
+                            "color": [
+                                "black",
+                                "yellow",
+                                "red"
+                            ],
+                            "note": [
+                                "Occasional words highlighted in yellow",
+                                "Initials and titles in red"
+                            ]
+                        }
+                    ],
+                    "layout": [
+                        {
+                            "locus": "ff. 3r-54v",
+                            "columns": "1",
+                            "lines": "15",
+                            "dim": "Writing area: 215 x 140 mm",
+                            "note": [
+                                "Possible pricking still visible in outer margins throughout",
+                                "Text written inside bordered margins"
+                            ]
+                        },
+                        {
+                            "locus": "ff. 36v-54v",
+                            "columns": "2",
+                            "lines": "15-17",
+                            "dim": "Writing area: 200 x 130 mm",
+                            "note": [
+                                "Number of lines fluctuates consistently"
+                            ]
+                        }
+                    ],
+                    "text_unit": [
+                        {
+                            "ark": "ark:/21198/te5fp1olt1",
+                            "locus": "ff. 3r-54v",
+                            "summary": "Gospel Lectionary for the movable feast days according to the Byzantine rite",
+                            "lang": [
+                                "Syriac"
+                            ],
+                            "work_wit": [
+                                {
+                                    "locus": "ff. 3r-54v",
+                                    "pref_title": "Synaxarion",
+                                    "alt_title": "Synaxarion for the whole year according to the rite of the Greeks",
+                                    "as_written": "ܣܘܢܟܣܪܝܢ ܕܫܢܬܐ ܟܠܗ̇ ܐܝܟ ܛܟܣܐ ܕܝܘ̈ܢܝܐ",
+                                    "excerpt": [
+                                        {
+                                            "type": "Incipit",
+                                            "locus": "f. 3r",
+                                            "as_written": "ܩܕܡܝܐܝܬ ܚܕܒܫ‍(‍ܒܐ) ܪܒܐ ܕܦܨܚܐ ܣܒܪܬܐ ܒܟܘܗܢܐ ܡܢ ܝܘܚܢܢ ܒܪܫܝܬ ܐܝܬܘܗܝ ܗܘܐ ܡܠܬܐ",
+                                            "translation": [
+                                                "First Sunday of Easter. The Gospel of the liturgy, from John, 'In the beginning was the Word'"
+                                            ],
+                                            "note": [
+                                                "The phrase, ܩܕܡܝܐܝܬ ܚܕܒܫ‍(‍ܒܐ) ܪܒܐ ܕܦܨܚܐ ܣܒܪܬܐ ܒܟܘܗܢܐ ܡܢ ܝܘܚܢܢ, is rubricated",
+                                                "Corresponds to John 1:1"
+                                            ]
+                                        },
+                                        {
+                                            "type": "Last Preserved Line",
+                                            "locus": "f. 54v",
+                                            "as_written": "ܕܫܡܥܘܢ ܗܘܬ ܟܐܦܐ: ܘܤܠܩ",
+                                            "translation": [
+                                                "...the one of Simon Peter, and disembarked"
+                                            ],
+                                            "note": [
+                                                "Corresponds to Luke 5:3"
+                                            ]
+                                        }
+                                    ],
+                                    "contents": [
+                                        {
+                                            "descriptive_title": "Easter",
+                                            "locus": "f. 3r",
+                                            "note": [
+                                                "A note about the Easter season liturigical section"
+                                            ]
+                                        },
+                                        {
+                                            "descriptive_title": "1st Week: Saturday of <the week of> Rest",
+                                            "pref_title": "Acts",
+                                            "locus": "f. 4r"
+                                        },
+                                        {
+                                            "pref_title": "3 John",
+                                            "locus": "f. 5r, 6r"
+                                        },
+                                        {
+                                            "descriptive_title": "3rd Week: Sunday, Saturday",
+                                            "locus": "f. 7v, 8v",
+                                            "note": [
+                                                "Sub-heading: Joseph of Arimathea"
+                                            ]
+                                        }
+                                    ],
+                                    "edition": [
+                                        {
+                                            "shortcode": "Kashouh 2012",
+                                            "range": "28-57",
+                                            "note": [
+                                                "Kashouh book"
+                                            ]
+                                        }
+                                    ],
+                                    "note": [
+                                        "Overall the Synaxarion conforms to the Byzantine calendar, with a few regional variations of Palestine"
+                                    ]
+                                }
+                            ],
+                            "para": [
+                                {
+                                    "type": "Rubric",
+                                    "label": "Rubric for the Synaxarion",
+                                    "locus": "f. 3r",
+                                    "lang": [
+                                        "Syriac"
+                                    ],
+                                    "script": [
+                                        {
+                                            "label": "Melkite",
+                                            "system": "Syriac"
+                                        }
+                                    ],
+                                    "as_written": "ܒܫܡܐ ܕܬܠܝܬܝܘܬܐ ܩܕܝܫܬܐ ܆ ܟܬܒܝܢܢ ܣܘܢܟܣܪܝܢ ܕܫܢܬܐ ܟܠܗ̇ ܐܝܟ ܛܟܣܐ ܕܝܘ̈ܢܝܐ",
+                                    "translation": [
+                                        "In the name of the Holy Trinity we write the Synaxarion for the whole year according to the rite of the Greeks"
+                                    ],
+                                    "assoc_name": [
+                                        {
+                                            "pref_name": "Andrew of Crete",
+                                            "as_written": "ܕܫܢܬܐ",
+                                            "role": "Annotator"
+                                        }
+                                    ],
+                                    "assoc_place": [
+                                        {
+                                            "value": "Nisibis",
+                                            "as_written": "ܐܝܟ",
+                                            "event": "Place of Reading",
+                                            "note": [
+                                                "Faked ARK for nisibis"
+                                            ]
+                                        }
+                                    ],
+                                    "note": [
+                                        "The phrase, ܒܫܡܐ ܕܬܠܝܬܝܘܬܐ ܩܕܝܫܬܐ ܆ ܟܬܒܝܢܢ, is rubricated"
+                                    ]
+                                }
+                            ],
+                            "note": [
+                                {
+                                    "type": "Contents Note",
+                                    "value": "Only a portion of the text is preserved"
+                                },
+                                {
+                                    "type": "General Note",
+                                    "value": "This is a general note about the text unit"
+                                },
+                                {
+                                    "type": "Paracontent Note",
+                                    "value": "Each Gospel is preceded by a prologue, composed by the scribe, summarizing the Gospel and its purposes for edification"
+                                }
+                            ],
+                            "edition": [
+                                {
+                                    "shortcode": "Müller-Kessler 2017",
+                                    "note": [
+                                        "Müller-Kessler 2017"
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "para": [
+                        {
+                            "type": "Colophon",
+                            "label": "Syriac colophon",
+                            "locus": "f. 54v",
+                            "lang": [
+                                "Syriac"
+                            ],
+                            "script": [
+                                {
+                                    "label": "Melkite",
+                                    "system": "Syriac"
+                                }
+                            ],
+                            "as_written": "ܐܚ̈ܝ ܨ̈ܠܘ ܥܠ ܚܛܝܐ ܕܣܪܛ ܡܛܠ ܡܫܝܚܐ܀ ܫܠܡ ܟܬܒܐ ܗܢܐ ܩܕܝܫܐ ܥܠ܆ ܐܝ̈ܕܝ܆ ܐܢܫ܆ ܡܚ̈ܝܠܐ܆ ܘܚ̈ܛܝܐ ܠܦܘܩ̈ܕܢܐ ܕܡܪܗ݂ ܘܐܠܗܗ ܝܘܚܢܢ ܒܪܝ ܬܐܘܕܘܪܘܣ ܡܢ ܩܪܝܬܐ ܢܛܝܪܬ ܡܢ ܐܠܗܐ ܨܝܕܢܐܠܐ ܡܢ ܥܩܠܐ ܕܪܡܣܘܩ܆ ܡܢ ܛܘܪܐ ܕܣܢܝܪ܇ ܘܡܢ ܩܠܝܡܐ ܕܚܠܒܘܢ: ܠܐܦ̈ܝ ܬܠܬ: ܫ̈ܥܝܢ: ܝܘܡ: ܕ̄ ܟ̄ܚ܇ ܐܝܠܘܠ ܫܢܬ: ܘ̄ ܐܠܦ̄: ܚ̄ܕ ܩ̄: ܕ̄: ܠܐܒܘܢ: ܐܕܡ܇ ܟܬܒܗ݂: ܠܢܦܫܗ݂: ܡܚܝܠܬܐ: ܒܕܝܪܐ ܩܕܝܫܐ ܕܛܘܪ ܣܢܐ ܘܗܘ݂ ܡܦܝܣ ܘܡܬܟܫܦ ܠܟܠ ܡܢ: ܕܡܨܠܐ ܒܗ݂ ܦܘܕܐ: ܐܘ ܒܘܣܪܐܢܐ: ܐܘ ܚ̈ܨܪܢܐ: ܢܫܒܘܩ ܘܢܨܠܐ ܥܠ ܚܛܝܐ ܘܡܣܟܢܐ ܟܬܘܒܐ: ܕܟܠ ܒܪܝܐ ܒܨܝܪܐ ܗܘ݂܀ ܐܚ̈ܝ܆ ܘܐܒܗ̈ܝ: ܨ̈ܠܘ ܥܠ ܟܬܘܒܐ ܚܛܝܐ ܡܛܠ ܡܪܢ ܝܫܘܥ ܡܫܝܚܐ ܠܗ݂ ܬܫ̄ܒܘ ܘܣܓܕܬܐ ܠܝ ܓ ܐܡܝܢ:",
+                            "translation": [
+                                "The end of this holy book by the hands of a weak, sinful, and straying from the commands of his Lord and his God, John bar Theodore, from the town protected by God, Sayidnaya from lower Damascus, from Mt. Hermon (Jebel Sanir) and from the region of Halbun (حلبون), at about 9:00am (the third hour), Wednesday, on the 28th of Ilul (September); the year 6,104 since our father Adam. His book for his humble self at the holy monastery of Mt. Sinai and he entreats and beseeches to all who would pray it or read it or encounter it and find in it error or defect or loss (sic), let him forgive and pray on account of the sinner and poor writing, that all creation is lacking; my brothers and my fathers pray for the writing of the sinner for to our Lord Jesus Christ be the glory and the worship forever, Amen."
+                            ],
+                            "assoc_name": [
+                                {
+                                    "pref_name": "Ephrem",
+                                    "value": "Ephraim",
+                                    "as_written": "ܝܘܚܢܢ ܒܪܝ ܬܐܘܕܘܪܘܣ",
+                                    "role": "Scribe",
+                                    "note": [
+                                        "The ARK is for Ephrem, to demo functionality"
+                                    ]
+                                }
+                            ],
+                            "assoc_place": [
+                                {
+                                    "value": "The Holy Monastery on Mt. Sinai",
+                                    "as_written": "ܕܝܪܐ ܩܕܝܫܐ ܕܛܘܪ ܣܢܐ",
+                                    "event": "Origin",
+                                    "note": [
+                                        "To determine: should this be repeated in the layer record itself as the production place?"
+                                    ]
+                                }
+                            ],
+                            "assoc_date": [
+                                {
+                                    "type": "Origin Date",
+                                    "as_written": "ܠܐܦ̈ܝ ܬܠܬ: ܫ̈ܥܝܢ: ܝܘܡ: ܕ̄ ܟ̄ܚ܇ ܐܝܠܘܠ ܫܢܬ: ܘ̄ ܐܠܦ̄: ܚ̄ܕ ܩ̄: ܕ̄: ܠܐܒܘܢ: ܐܕܡ",
+                                    "note": [
+                                        "Date for demo purposes"
+                                    ],
+                                    "value": "AM 6,104 = 1292 CE"
+                                }
+                            ],
+                            "note": [
+                                "This colophon is faked with data from another ms for dev purposes",
+                                "The colophon provides the production date in the anno mundi calendar system 6,104 aM = 1292 CE"
+                            ]
+                        },
+                        {
+                            "type": "Colophon",
+                            "label": "Arabic colophon",
+                            "locus": "f. 55r",
+                            "lang": [
+                                "Arabic"
+                            ],
+                            "script": [
+                                {
+                                    "label": "Naskh",
+                                    "system": "Arabic"
+                                }
+                            ],
+                            "as_written": "وكان الفراغ من كتابة هذا الكتاب المعظم الخمسة أسفار التوراة الذي أنزلها على موسى ابن عمران باللسان السرياني الترجوم ونقلها الى لسان العبراني وذلك في يوم الاربعاء تاسع شهر كانون الثاني سنة ألف وستمائة وسبعين الاسكندر اليوناني الموافق لسنة أدم سنة ستة ألف وثمان مائة وثانية وستين الموافق لسنة ألف وثلثمائة وثمانية وخمسين للمسيح وكاتبها أحقرمخلوقات الله الفقر الى رحمة ربه من لا يستحق يسمى  إنسان لا سيما بـاسم  شماس يوسف ابن سباط الأمد السرياني الآمدي السرياني ونقلت هذه النسخة السعيدة من السرياني والعبراني الى لسان العربي باجتهاد العظيم ما نالني من التعب على تحرير صحة كلام هذا التوراة وكتبت هذه التوراة في مدينة الماغوصة المحروسة أيام الملك البار المؤمن الرايوك خلد الله ملكه وأجرك بالنصر والسعد فلكه وامن بإنشاء هذه النسخة السعيدة مما أنعم الله عليه بماله لنفسه وهو المولى الاجل والكهف الاضل اوحد الفضلا قدرة العلماء للشيخ ابي الفضائل شرف الدولة عيسى ابن سعيد المتطبب يومئذ بجزيرة قبرص المحروسة وللأصله منسوبة من اهل بغداد نفعه الله فيها وعانه بحفظ ما يتليها والناسح المسيكين يسأل من كل واقف عليها ونسخها أم قرى فيها أن يدعى له بكل المخير والمغفرة وكذلك للممتم فيها وكل من وجد فيها شيء من الغلط يسامح الناسخ الحقير ويصلحه كما يليق بالصحيح حسب قول بعضهم فان وجدت عيباً فسُد الخلالا جل وعز من لا عيبا فيه وعلا والسبح لله دائما ابدا ",
+                            "note": [
+                                "Relatively consistent with the Syriac colophon, likely supplied by the same scribe"
+                            ]
+                        },
+                        {
+                            "type": "Table of Contents",
+                            "label": "Arabic Fihrist",
+                            "locus": "f. 3",
+                            "lang": [
+                                "Arabic"
+                            ],
+                            "script": [
+                                {
+                                    "label": "Naskh",
+                                    "system": "Arabic"
+                                }
+                            ],
+                            "as_written": "كان الفراغ منه نهار الأربعاء الثامن من شهر نيسان المبارك سنة ست ألف سبعمائة وتسعين لكون العالم الموافق العشر الأخير من شهر ذي الحجة سنة ثمانين وستمائة الهجرة الإسلامية في مدينة عكا المحروسة والسبح لله دائما آمين ",
+                            "translation": [
+                                "In the name of God, Father, Son, and Holy Spirit, the Trinity. Contents of this volume, etc."
+                            ],
+                            "note": [
+                                "Covers the contents of the first part of Syriac 12, likely written prior to the two parts being bound together"
+                            ]
+                        }
+                    ],
+                    "assoc_date": [
+                        {
+                            "type": "Origin Date",
+                            "note": [
+                                "Top-level associated dates"
+                            ],
+                            "value": "1292 CE"
+                        }
+                    ],
+                    "assoc_name": [
+                        {
+                            "pref_name": "Ephrem",
+                            "role": "Scribe",
+                            "note": [
+                                "Top-level associated name"
+                            ]
+                        }
+                    ],
+                    "assoc_place": [
+                        {
+                            "value": "Sinai Monastery",
+                            "event": "Origin",
+                            "note": [
+                                "Top-level associated place"
+                            ]
+                        }
+                    ],
+                    "note": [
+                        {
+                            "type": "Ornamentation",
+                            "value": "Decorative headpieces throughout"
+                        },
+                        {
+                            "type": "Condition",
+                            "value": "Several damaged folios were repaired and reinforced more recently"
+                        }
+                    ]
+                }
+            ],
+            "note": [
+                {
+                    "type": "Support",
+                    "value": "Oriental paper"
+                },
+                {
+                    "type": "Collation",
+                    "value": "Quire signatures in the first part are marked in the bottom margin on the recto side of the first folio of a quire; quires of 8 ff. with the exception of quire II (6 ff.)"
+                },
+                {
+                    "type": "Collation",
+                    "value": "F. 11 may be a replacement"
+                },
+                {
+                    "type": "Collation",
+                    "value": "One f. missing after f. 17"
+                }
+            ]
+        },
+        {
+            "label": "Part 2",
+            "summary": "Gospel of Luke (Peshitta version)",
+            "part_date": {
+                "iso": [
+                    {
+                        "not_before": "0601",
+                        "not_after": "0700"
+                    }
+                ],
+                "value": [
+                    "7th c. CE"
+                ]
+            },
+            "locus": "ff. 55-144",
+            "support": [
+                "Parchment"
+            ],
+            "extent": "89 ff.",
+            "dim": "230 x 155 mm (average folio)",
+            "ot_layer": [
+                {
+                    "ark": "ark:/21198/te5fp2ol",
+                    "origin_date": {
+                        "iso": [
+                            {
+                                "not_before": "0601",
+                                "not_after": "0700"
+                            }
+                        ],
+                        "value": [
+                            "7th c. CE"
+                        ]
+                    },
+                    "locus": "ff. 55v-144v",
+                    "summary": "Early 7th c., Estrangela",
+                    "extent": "89 ff.",
+                    "writing": [
+                        {
+                            "script": [
+                                {
+                                    "label": "Estrangela",
+                                    "system": "Syriac"
+                                }
+                            ],
+                            "locus": "ff. 55v-144v",
+                            "note": [
+                                "Estrangela without vocalization"
+                            ]
+                        }
+                    ],
+                    "ink": [
+                        {
+                            "locus": "ff. 55v-144v",
+                            "color": [
+                                "dark brown"
+                            ],
+                            "note": [
+                                "Rubrication of titles in red ink"
+                            ]
+                        }
+                    ],
+                    "layout": [
+                        {
+                            "locus": "ff. 55v-144v",
+                            "columns": "1",
+                            "lines": "22",
+                            "dim": "Writing area: 220 x 150 mm",
+                            "note": [
+                                "Possible pricking still visible in outer margins throughout"
+                            ]
+                        }
+                    ],
+                    "text_unit": [
+                        {
+                            "ark": "ark:/21198/te5fp2olt1",
+                            "locus": "ff. 55v-144v",
+                            "summary": "Gospel of Luke (Peshitta version)",
+                            "lang": [
+                                "Syriac"
+                            ],
+                            "work_wit": [
+                                {
+                                    "pref_title": "Luke",
+                                    "as_written": "ܐܘܢܓܠܝܘܢ [ܩܕ]ܝܫܐ ܟܪܘܙܘܬܐ [ܕ]ܠ[ܘ]ܩܐ",
+                                    "locus": "ff. 55v-144v",
+                                    "excerpt": [
+                                        {
+                                            "type": "Incipit",
+                                            "locus": "f. 55v",
+                                            "as_written": "ܡܛܠ ܕܤܓܝ̈ܐܐ ܨܒ̣ܘ ܕܢܟܬܒܘܢ ܬܫܥܝ̈ܬܐ ܕܤܘܥܖ̈ܢܐ …"
+                                        },
+                                        {
+                                            "type": "Last Preserved Line",
+                                            "locus": "f. 144v",
+                                            "as_written": "ܐܬܝ̈ ܠܒܝܬ ܩܒܘܪܐ ܘܐܝܬܝ",
+                                            "note": [
+                                                "Corresponds to Luke 24:1"
+                                            ]
+                                        }
+                                    ],
+                                    "note": [
+                                        "Several liturgical rubrics (some of them are faded) were added in a later Melkite hand (e.g. Holy apostles (f. 75r), Lk 6:12–35)."
+                                    ]
+                                },
+                                {
+                                    "pref_title": "Homilies on John",
+                                    "as_written": "ܟܬܒܐ ܕܝܘܚܢܢ",
+                                    "locus": "ff. 100r-144v",
+                                    "creator": [
+                                        {
+                                            "pref_name": "John Chrysostom",
+                                            "role": "Author"
+                                        }
+                                    ],
+                                    "excerpt": [
+                                        {
+                                            "type": "Incipit",
+                                            "locus": "f. 100v",
+                                            "as_written": "ܡܛܠ ܕܤܓܝ̈ܐܐ ܨܒ̣ܘ ܕܢܟܬܒܘܢ ܬܫܥܝ̈ܬܐ ܕܤܘܥܖ̈ܢܐ …"
+                                        },
+                                        {
+                                            "type": "Prologue",
+                                            "locus": "f. 100r",
+                                            "as_written": "ܐܬܝ̈ ܠܒܝܬ ܩܒܘܪܐ ܘܐܝܬܝ",
+                                            "note": [
+                                                "Begins with a scribal preface"
+                                            ]
+                                        }
+                                    ],
+                                    "note": [
+                                        "Several liturgical rubrics (some of them are faded) were added in a later Melkite hand (e.g. Holy apostles (f. 75r), Lk 6:12–35)."
+                                    ]
+                                }
+                            ],
+                            "para": [
+                                {
+                                    "type": "Rubric",
+                                    "label": "Running Title",
+                                    "locus": "Ff. 58v, 63v, 72v, 77v, 82v, 87v, 92v, 97v, 102v, 107v, 112v, 117v, 122v, 127v, 132v, 137v, 142v",
+                                    "lang": [
+                                        "Syriac"
+                                    ],
+                                    "script": [
+                                        {
+                                            "label": "Estrangela",
+                                            "system": "Syriac"
+                                        }
+                                    ],
+                                    "as_written": "܀ܐܘܢܓܠܝܘܢ ܕܠܘܩܐ܀"
+                                }
+                            ],
+                            "note": [
+                                {
+                                    "type": "Contents Note",
+                                    "value": "Only a portion of the text is preserved"
+                                },
+                                {
+                                    "type": "General Note",
+                                    "value": "This is a general note about the text unit"
+                                }
+                            ],
+                            "edition": [
+                                {
+                                    "shortcode": "Rossetto 2023b",
+                                    "note": [
+                                        "Rossetto 2023b"
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "para": [
+                        {
+                            "type": "Colophon",
+                            "label": "Syriac colophon",
+                            "locus": "f. 54v",
+                            "lang": [
+                                "Syriac"
+                            ],
+                            "script": [
+                                {
+                                    "label": "Melkite",
+                                    "system": "Syriac"
+                                }
+                            ],
+                            "as_written": "ܐܚ̈ܝ ܨ̈ܠܘ ܥܠ ܚܛܝܐ ܕܣܪܛ ܡܛܠ ܡܫܝܚܐ܀ ܫܠܡ ܟܬܒܐ ܗܢܐ ܩܕܝܫܐ ܥܠ܆ ܐܝ̈ܕܝ܆ ܐܢܫ܆ ܡܚ̈ܝܠܐ܆ ܘܚ̈ܛܝܐ ܠܦܘܩ̈ܕܢܐ ܕܡܪܗ݂ ܘܐܠܗܗ ܝܘܚܢܢ ܒܪܝ ܬܐܘܕܘܪܘܣ ܡܢ ܩܪܝܬܐ ܢܛܝܪܬ ܡܢ ܐܠܗܐ ܨܝܕܢܐܠܐ ܡܢ ܥܩܠܐ ܕܪܡܣܘܩ܆ ܡܢ ܛܘܪܐ ܕܣܢܝܪ܇ ܘܡܢ ܩܠܝܡܐ ܕܚܠܒܘܢ: ܠܐܦ̈ܝ ܬܠܬ: ܫ̈ܥܝܢ: ܝܘܡ: ܕ̄ ܟ̄ܚ܇ ܐܝܠܘܠ ܫܢܬ: ܘ̄ ܐܠܦ̄: ܚ̄ܕ ܩ̄: ܕ̄: ܠܐܒܘܢ: ܐܕܡ܇ ܟܬܒܗ݂: ܠܢܦܫܗ݂: ܡܚܝܠܬܐ: ܒܕܝܪܐ ܩܕܝܫܐ ܕܛܘܪ ܣܢܐ ܘܗܘ݂ ܡܦܝܣ ܘܡܬܟܫܦ ܠܟܠ ܡܢ: ܕܡܨܠܐ ܒܗ݂ ܦܘܕܐ: ܐܘ ܒܘܣܪܐܢܐ: ܐܘ ܚ̈ܨܪܢܐ: ܢܫܒܘܩ ܘܢܨܠܐ ܥܠ ܚܛܝܐ ܘܡܣܟܢܐ ܟܬܘܒܐ: ܕܟܠ ܒܪܝܐ ܒܨܝܪܐ ܗܘ݂܀ ܐܚ̈ܝ܆ ܘܐܒܗ̈ܝ: ܨ̈ܠܘ ܥܠ ܟܬܘܒܐ ܚܛܝܐ ܡܛܠ ܡܪܢ ܝܫܘܥ ܡܫܝܚܐ ܠܗ݂ ܬܫ̄ܒܘ ܘܣܓܕܬܐ ܠܝ ܓ ܐܡܝܢ:",
+                            "translation": [
+                                "The end of this holy book by the hands of a weak, sinful, and straying from the commands of his Lord and his God, John bar Theodore, from the town protected by God, Sayidnaya from lower Damascus, from Mt. Hermon (Jebel Sanir) and from the region of Halbun (حلبون), at about 9:00am (the third hour), Wednesday, on the 28th of Ilul (September); the year 6,104 since our father Adam. His book for his humble self at the holy monastery of Mt. Sinai and he entreats and beseeches to all who would pray it or read it or encounter it and find in it error or defect or loss (sic), let him forgive and pray on account of the sinner and poor writing, that all creation is lacking; my brothers and my fathers pray for the writing of the sinner for to our Lord Jesus Christ be the glory and the worship forever, Amen."
+                            ],
+                            "assoc_name": [
+                                {
+                                    "pref_name": "Eprhem the Syrian",
+                                    "as_written": "ܝܘܚܢܢ ܒܪܝ ܬܐܘܕܘܪܘܣ",
+                                    "role": "Scribe",
+                                    "note": [
+                                        "The ARK is for Ephrem, to demo functionality"
+                                    ]
+                                }
+                            ],
+                            "assoc_place": [
+                                {
+                                    "value": "Sinai Monastery",
+                                    "as_written": "ܕܝܪܐ ܩܕܝܫܐ ܕܛܘܪ ܣܢܐ",
+                                    "event": "Origin",
+                                    "note": [
+                                        "To determine: should this be repeated in the layer record itself as the production place?"
+                                    ]
+                                }
+                            ],
+                            "assoc_date": [
+                                {
+                                    "type": "Origin Date",
+                                    "as_written": "ܠܐܦ̈ܝ ܬܠܬ: ܫ̈ܥܝܢ: ܝܘܡ: ܕ̄ ܟ̄ܚ܇ ܐܝܠܘܠ ܫܢܬ: ܘ̄ ܐܠܦ̄: ܚ̄ܕ ܩ̄: ܕ̄: ܠܐܒܘܢ: ܐܕܡ",
+                                    "note": [
+                                        "Date for demo purposes"
+                                    ],
+                                    "value": "AM 6,104 = 1292 CE"
+                                }
+                            ],
+                            "note": [
+                                "This colophon is faked with data from another ms for dev purposes",
+                                "The colophon provides the production date in the anno mundi calendar system 6,104 aM = 1292 CE"
+                            ]
+                        }
+                    ],
+                    "assoc_date": [
+                        {
+                            "type": "Origin Date",
+                            "note": [
+                                "Based on paleographic evidence"
+                            ],
+                            "value": "7th c. CE"
+                        }
+                    ],
+                    "note": [
+                        {
+                            "type": "Ornamentation",
+                            "value": "Decorative headpieces throughout"
+                        },
+                        {
+                            "type": "Foliation",
+                            "value": "Recent foliation in Syriac numerals covering the 1st part (ff. 55–144). The foliation was added after a replacement folio (f. 68) was attached but before two parts were bound together"
+                        }
+                    ]
+                }
+            ],
+            "para": [
+                {
+                    "type": "Transfer of Ownership",
+                    "label": "Greek inscription",
+                    "locus": "f. 55r",
+                    "lang": [
+                        "Greek"
+                    ],
+                    "script": [
+                        {
+                            "label": "Greek minuscule",
+                            "system": "Greek"
+                        }
+                    ],
+                    "as_written": "Κατ ἐκεῖνον τὸν καιρὸν ἦμεν πάντες οἱ ἀπόστολοι ἐν Ἰεροσολύμοις, Σίμων ὁ λεγόμενος Πέτρος καὶ Ἀνδρέας ὁ ἀδελφὸς αὐτοῦ, Ἰάκωβος ὁ τοῦ Ζεβεδαίου καὶ Ἰωάννης ὁ ἀδελφὸς αὐτοῦ, Φίλιππος καὶ Βαρθολομαῖος, Θωμᾶς καὶ Ματθαῖος ὁ τελώνης, Ἰάκωβος Ἁλφαίου καὶ Σίμων ὁ Καναναῖος",
+                    "translation": [
+                        "At that season all we the apostles were at Jerusalem, Simon which is called Peter and Andrew his brother, James the son of Zebedee and John his brother, Philip and Bartholomew, Thomas and Matthew the publican, James the son of Alphaeus and Simon the Canaanite",
+                        "Another translation of the text for demo purposes"
+                    ],
+                    "assoc_name": [
+                        {
+                            "pref_name": "Paul the Deacon",
+                            "as_written": "Πέτρος",
+                            "role": "Former Owner",
+                            "note": [
+                                "Demo data. Maximus the Confessor sold this manuscript to Paul the Deacon."
+                            ]
+                        },
+                        {
+                            "pref_name": "Maximus the Confessor",
+                            "as_written": "Ἀνδρέας",
+                            "role": "Former Owner",
+                            "note": [
+                                "Demo data. Paul the Deacon bought this manuscript from Maximus the Confessor."
+                            ]
+                        }
+                    ],
+                    "assoc_place": [
+                        {
+                            "value": "Jerusalem",
+                            "as_written": "Ἰεροσολύμοις",
+                            "event": "Place of Ownwership Transfer",
+                            "note": [
+                                "ARK constructed for demo purposes"
+                            ]
+                        }
+                    ],
+                    "assoc_date": [
+                        {
+                            "type": "Transfer of Ownership",
+                            "as_written": "Κατ ἐκεῖνον τὸν καιρὸν",
+                            "note": [
+                                "There is no real date here, just for demo purposes"
+                            ],
+                            "value": "455 CE"
+                        }
+                    ],
+                    "note": [
+                        "Originally left blank, f. 55r was later was covered with text in Greek minuscule oriented upside down relative to the main contents"
+                    ]
+                }
+            ],
+            "note": [
+                {
+                    "type": "Foliation",
+                    "value": "Recent foliation in Syriac numerals covering the earlier part (ff. 55–144). The foliation was added after a replacement folio (f. 68) was attached but before two parts were bound together."
+                },
+                {
+                    "type": "Collation",
+                    "value": "Only the quire IX has preserved a quire signature in the bottom margin of the first folio; quires of 10 ff."
+                },
+                {
+                    "type": "Collation",
+                    "value": "The first folio of part 2's first quire, left blank, is lost; a central bifolium in the second was replaced with a single folio ca. 8th–9th c."
+                }
+            ]
+        }
+    ],
+    "guest_layer": [
+        {
+            "ark": "ark:/21198/te5fmsg1",
+            "locus": "ff. 58–64, 142–144",
+            "summary": "Reinforcement strips from a Melkite paper codex",
+            "writing": [
+                {
+                    "script": [
+                        {
+                            "label": "Melkite",
+                            "system": "Syriac"
+                        }
+                    ]
+                }
+            ],
+            "text_unit": [
+                {
+                    "ark": "ark:/21198/te5fmsg1t1",
+                    "locus": "ff. 58–64, 142–144",
+                    "summary": "Unidentified Syriac text on reinforcement strips",
+                    "lang": [
+                        "Syriac"
+                    ],
+                    "work_wit": [
+                        {
+                            "descriptive_title": "Unidentified text"
+                        }
+                    ]
+                }
+            ],
+            "note": [
+                {
+                    "type": "General",
+                    "value": "The reinforcement strips on which this layer is written are from a paper manuscript"
+                }
+            ]
+        },
+        {
+            "ark": "ark:/21198/te5fmsg2",
+            "locus": "ff. 64–66, 70–72, 105–106, 110–111, 113–114",
+            "summary": "Reinforcement strips from a Syriac parchment codex",
+            "writing": [
+                {
+                    "script": [
+                        {
+                            "label": "Undetermined Syriac script",
+                            "system": "Syriac"
+                        }
+                    ]
+                }
+            ],
+            "text_unit": [
+                {
+                    "ark": "ark:/21198/te5fmsg2t1",
+                    "summary": "Unidentified Syriac text on reinforcement strips",
+                    "locus": "ff. 64–66, 70–72, 105–106, 110–111, 113–114",
+                    "lang": [
+                        "Syriac",
+                        "Greek"
+                    ],
+                    "work_wit": [
+                        {
+                            "descriptive_title": "Unidentified text of Ephrem",
+                            "creator": [
+                                {
+                                    "pref_name": "Ephrem"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "note": [
+                {
+                    "type": "General",
+                    "value": "The reinforcement strips on which this layer is written are from a parchment manuscript"
+                }
+            ]
+        },
+        {
+            "ark": "ark:/21198/te5fmsg3",
+            "locus": "ff. 55–56, 57–58, 58–59",
+            "summary": "Reinforcement strips from an Arabic (?) parchment codex",
+            "writing": [
+                {
+                    "script": [
+                        {
+                            "label": "Undetermined Arabic script",
+                            "system": "Arabic"
+                        }
+                    ]
+                }
+            ],
+            "text_unit": [
+                {
+                    "ark": "ark:/21198/te5fmsg3t1",
+                    "summary": "Unidentified Arabic text on reinforcement strips",
+                    "locus": "ff. 55–56, 57–58, 58–59",
+                    "lang": [
+                        "Arabic"
+                    ],
+                    "work_wit": [
+                        {
+                            "descriptive_title": "Unidentified liturgical text"
+                        }
+                    ]
+                }
+            ],
+            "note": [
+                {
+                    "type": "General",
+                    "value": "The reinforcement strips on which this layer is written are from a parchment manuscript"
+                }
+            ]
+        }
+    ],
+    "para": [
+        {
+            "type": "Prayer Request",
+            "label": "Anonymous theological text",
+            "locus": "Front board inside, f. 1",
+            "lang": [
+                "Arabic"
+            ],
+            "script": [
+                {
+                    "label": "Naskh",
+                    "system": "Arabic"
+                }
+            ],
+            "as_written": "وصلي على كاتبه الحقير",
+            "translation": [
+                "Pray for the despised scribe [of this text]"
+            ],
+            "note": [
+                "Seems to be a part of a longer letter"
+            ]
+        },
+        {
+            "type": "Reader's Note",
+            "locus": "f. 2a",
+            "label": "Unidentified Melkite text",
+            "lang": [
+                "Syriac"
+            ],
+            "script": [
+                {
+                    "label": "Melkite",
+                    "system": "Syriac"
+                }
+            ],
+            "as_written": "ܗܘ ܕܝܢ ܩܕܝܫܐ ܡܪܝ ܐܦܪܝܡ ܐܝܬܘܗܝ ܗܘ̣ܐ ܒܓܢܣܗ ܣܘܪܝܝܐ. ܐܒܘܗܝ ܕܝܢ ܐܝܬܘܗܝ ܗܘ̣ܐ ܡܢ ܢܨܝܒܝܢ ܕܒܝܬ ܬܚܘ̈ܡܐ: ܥܕܟܝܠ ܓܝܪ ܠܐ ܫܩܝܠܐ ܗܘ̣ܬ ܠܦܪ̈ܣܝܐ: ܐܡܗ ܕܝܢ ܐܝܬܝܗܿ ܗܘ̣ܬ ܡܢ ܐܡܕ ܡܕܝܢܬܐ",
+            "translation": [
+                "Saint Mar Ephrem was Syrian, by way of his family. His father was from Nisibis, on the border, when it had not yet been taken by the Persians; his mother was from the city of Amid",
+                "Saint Mar Éphrem était par sa famille Syrien. Son père provenait de Nisibe aux confins du pays, non encore prise par les Perses; sa mère provenait de la ville d’Amid"
+            ],
+            "assoc_name": [
+                {
+                    "pref_name": "Ephrem",
+                    "as_written": "ܡܪܝ ܐܦܪܝܡ",
+                    "role": "Reader",
+                    "note": [
+                        "Ephrem is included here likely as the subject of the hagiography"
+                    ]
+                }
+            ],
+            "assoc_place": [
+                {
+                    "value": "Nisibis",
+                    "as_written": "ܢܨܝܒܝܢ",
+                    "event": "Unknown",
+                    "note": [
+                        "In practice, we likely would not include this place since it's not about the ms itself, this is just for development"
+                    ]
+                },
+                {
+                    "value": "Amid",
+                    "as_written": "ܐܡܕ",
+                    "event": "Place of Birth",
+                    "note": [
+                        "In practice, we likely would not include this place since it's not about the ms itself, this is just for development"
+                    ]
+                }
+            ],
+            "assoc_date": [
+                {
+                    "type": "Reading Date",
+                    "as_written": "ܠܦܪ̈ܣܝܐ",
+                    "note": [
+                        "There is no real date here, just for demo purposes"
+                    ],
+                    "value": "AG 1092 (= 781/2 CE)"
+                }
+            ],
+            "note": [
+                "Text yet to be identified, appears to be a hagiographic excerpt"
+            ]
+        }
+    ],
+    "location": [
+        {
+            "repository": "St. Catherine's Monastery of the Sinai",
+            "collection": "Old Collection"
+        }
+    ],
+    "assoc_date": [
+        {
+            "type": "Binding Date",
+            "note": [
+                "Binding dates estimated from origin dates of the two parts"
+            ],
+            "value": "After the 13th c. CE"
+        }
+    ],
+    "assoc_name": [
+        {
+            "value": "Moses of Nisibis",
+            "role": "Former Owner",
+            "note": [
+                "From external accounts of the library of Moses of Nisibis, it appears he was once an owner of this manuscript in its current form"
+            ]
+        }
+    ],
+    "assoc_place": [
+        {
+            "value": "Deir al-Suryan",
+            "event": "Previous Repository",
+            "note": [
+                "Formed part of the collection of Moses of Nisibis while he was abbat at Deir al-Suryan, before it was eventually transferred to Sinai"
+            ]
+        }
+    ],
+    "note": [
+        {
+            "type": "Binding",
+            "value": "Two binding boards"
+        },
+        {
+            "type": "Foliation",
+            "value": "Ff. 1-2b are paper fly-leaves"
+        },
+        {
+            "type": "Binding",
+            "value": "Reinforcement strips derive from a Melkite paper manuscript (ff. 58–64, 142–144), a Syriac parchment codex (ff. 64–66, 70–72, 105–106, 110–111, 113–114), and a parchment Arabic (?) codex (ff. 55–56, 57–58, 58–59)"
+        },
+        {
+            "type": "Ornamentation",
+            "value": "Illustration, St. Matthew in a scriptorium, front board inside"
+        },
+        {
+            "type": "Ornamentation",
+            "value": "Decoration on Back Board Inside, triangle with radiating lines"
+        },
+        {
+            "type": "Paracontent Note",
+            "value": "Donation inscription at the bottom of f. 171v | Supplication inscription on f. 172v"
+        },
+        {
+            "type": "Other Notes",
+            "value": "Three cords as bookmarks (labelled f. 58r-2, photographed laid on f. 58r)"
+        },
+        {
+            "type": "Other Notes",
+            "value": "F. 28b is a smaller insert"
+        }
+    ],
+    "related_mss": [
+        {
+            "type": "Filiation",
+            "label": "Copied from Syriac 10",
+            "mss": [
+                {
+                    "label": "Sinai Syriac 10",
+                    "id": "ark:/21198/z1p57n0b"
+                }
+            ],
+            "note": [
+                "This is a dummy note for dev purposes",
+                "Otherwise largely lost"
+            ]
+        },
+        {
+            "type": "Disjecta Membra",
+            "label": "Part 2. Disjecta Membra from the final quire",
+            "note": [
+                "The last 4 folios are today Biblioteca Ambrosiana, A 296 inf., ff. 70–73 = Chabot 20 (4 ff.) + Mingana Syr. 632 (1 f.)",
+                "Identification of disjecta membra by Rossetto"
+            ],
+            "mss": [
+                {
+                    "label": "Biblioteca Ambrosiana, A 296 inf., ff. 70–73 = Chabot 20 (4 ff.)",
+                    "url": "https://archive.org/details/ChabotInventaireDesFragmentsDeMssSyriaquesConservesALaBibliothequeAmbrosienneAMilan/page/n3/mode/2up"
+                },
+                {
+                    "label": "Mingana Syr. 632 (1 f.)",
+                    "url": "http://epapers.bham.ac.uk/160"
+                }
+            ]
+        }
+    ],
+    "viscodex": [
+        {
+            "type": "Manuscript",
+            "label": "Viscodex for Syriac 12",
+            "url": "https://vceditor.library.upenn.edu/project/668da6f75d69680001457684/viewOnly"
+        },
+        {
+            "type": "Reconstruction",
+            "label": "Visualization of part 2 + disjecta membra",
+            "url": "https://vceditor.library.upenn.edu/project/668da6005d6968000145728e/viewOnly"
+        }
+    ],
+    "bib": [
+        {
+            "shortcode": "Kamil",
+            "type": "Reference Work",
+            "range": "[50], pg. 152",
+            "alt_shelf": "Syr. 435",
+            "note": [
+                "Kamil misidentifies this manuscript with Syriac 435"
+            ]
+        },
+        {
+            "shortcode": "Gwilliam, Burkitt, and Stenning",
+            "type": "Reference Work",
+            "range": "pg. 134-344",
+            "note": [
+                "Gwilliam, et al. were the first to note that there are two parts in this manuscript."
+            ]
+        },
+        {
+            "shortcode": "LOC",
+            "type": "Other Digital Version",
+            "url": "https://www.loc.gov/item/00279386334-ms/",
+            "note": [
+                "LoC microfilms"
+            ]
+        },
+        {
+            "shortcode": "Géhin 2006",
+            "type": "Citation",
+            "range": "no. 437, pg. 45-50"
+        },
+        {
+            "shortcode": "Gippert",
+            "type": "Citation"
+        },
+        {
+            "shortcode": "CPG",
+            "type": "Other Digital Version",
+            "url": "https://www.nli.org.il/en/manuscripts/NNL_ALEPH990038917380205171/NLI",
+            "note": [
+                "Using CPG ID for dev purposes since we are missing a bibl for NLI..."
+            ]
+        },
+        { 
+            "shortcode": "Perria", 
+            "type": "Citation",
+            "range": "nos. 1-3", 
+            "note": [ 
+                "Perria" 
+            ] 
+        },
+        {
+            "shortcode": "Kashouh 2012",
+            "type": "Edition",
+            "range": "28-57",
+            "note": [
+                "Kashouh book"
+            ]
+        },
+        {
+            "shortcode": "Binggeli",
+            "type": "Citation",
+            "range": "pp. 43-687",
+            "note": [
+                "Binggeli"
+            ]
+        },
+        {
+            "shortcode": "Müller-Kessler 2017",
+            "type": "Edition",
+            "note": [
+                "Müller-Kessler 2017"
+            ]
+        },
+        {
+            "shortcode": "Lewis",
+            "type": "Citation",
+            "range": "p. 16-17, 129",
+            "note": [
+                "Lewis 1894"
+            ]
+        },
+        {
+            "shortcode": "Clark",
+            "type": "Citation",
+            "range": "p. 17",
+            "note": [
+                "Clark 1952"
+            ]
+        },
+        {
+            "shortcode": "Binggeli",
+            "type": "Citation",
+            "range": "pp. 43-687",
+            "note": [
+                "Binggeli"
+            ]
+        },
+        {
+            "shortcode": "Rossetto 2023b",
+            "type": "Edition",
+            "note": [
+                "Rossetto 2023b"
+            ]
+        }
+    ],
+    "iiif": [
+        {
+            "type": "Main",
+            "manifest": "https://ingest.iiif.library.ucla.edu/ark%3A%2F21198%2Fz15f0f9b/manifest",
+            "thumbnail": "https://iiif.sinaimanuscripts.library.ucla.edu/iiif/2/ark%3A%2F21198%2Fz15f0f9b%2Fp161m45m/full/!200,200/0/default.jpg"
+        }
+    ],
+    "desc_provenance": {
+        "program": [
+            {
+                "label": "Sinai Library Digitization Project, Phase 1",
+                "description": "Described as part of the Sinai Library Digitization Project, Phase 1 (2018-2022). The Sinai Library Digitization Project was sponsored by St. Catherine’s Monastery of the Sinai in partnership with the Early Manuscripts Electronic Library and the UCLA Library, and with funding from The Ahmanson Foundation, Arcadia, and the Steinmetz Family Foundation. Phase 1 of the Sinai Library Digitization Project aimed to supply minimal metadata to accompany high-resolution images of the Arabic and Syriac manuscripts held in the Monastery’s library."
+            },
+            {
+                "label": "Syriac Parchment Descriptions Project",
+                "description": "Described as part of the Syriac Parchment Descriptions Project (2022-2025). The Syriac Parchment Descriptions Project was funded by a National Endowment for the Humanities grant. It aimed to provide full and detailed cataloguing of the Syriac manuscripts on parchment in the Sinai collection. Lead Cataloguer: Grigory Kessel; Research Associates: Natalia Smelova and Vevian Zaki."
+            },
+            {
+                "label": "Sinai Palimpests Project",
+                "description": "Described as part of the Sinai Palimpsests Project (2006-2017). The Sinai Palimpsests Project was sponsored by St. Catherine’s Monastery of the Sinai in partnership with the Early Manuscripts Electronic Library and the UCLA Library, and with funding from Arcadia. The Project provides scholarly identification and description of the undertext objects in a subset of palimpsested manuscripts in the Sinai collection, with minimal metadata for the overtexts of the host manuscripts."
+            }
+        ],
+        "rights": "UUnless otherwise indicated all metadata associated with this manuscript is copyright the authors and released under Creative Commons Attribution 4.0 International License."
+    },
+    "image_provenance": {
+        "program": [
+            {
+                "label": "Sinai Palimpests Project",
+                "description": "Imaged as part of the Sinai Palimpsests Project (2006-2017). Digitization for the Sinai Palimpsests Project was sponsored by St. Catherine’s Monastery of the Sinai in partnership with the Early Manuscripts Electronic Library and the UCLA Library, and with funding from Arcadia. The Sinai Palimpsests Project aimed to provide multispectral images of the Undertext Objects in a subset of palimpsested manuscripts in the Sinai collection, as such images may only be available for palimpsested folios.",
+                "camera_operator": [
+                    "Damianos Kasotakis"
+                ],
+                "imaging_date": "2009-01",
+                "delivery": "spp_2",
+                "msi_processing": [
+                    "Keith Knox"
+                ],
+                "condition_category": "2",
+                "imaging_system": "Preservation Book Cradle by Stokes Imaging",
+                "note": [
+                    "Automated processing techniques combine two or more raw images into a single processed image by simple arithmetic."                ]
+            },
+            {
+                "label": "Sinai Library Digitization Project, Phase 1",
+                "description": "Imaged as part of the Sinai Library Digitization Project, Phase 1 (2018-2022). Digitization for the Sinai Library Digitization Project was sponsored by St. Catherine’s Monastery of the Sinai in partnership with the Early Manuscripts Electronic Library and the UCLA Library, and with funding from The Ahmanson Foundation, Arcadia, and the Steinmetz Family Foundation. Phase 1 of the Sinai Library Digitization Project aimed to provide high-resolution images of the Arabic and Syriac manuscripts held in the Monastery’s library.",
+                "camera_operator": [
+                    "Lampros Galanis"
+                ],
+                "imaging_date": "2020-01-22/2020-01-23",
+                "delivery": "6.3",
+                "condition_category": "1",
+                "imaging_system": "BC100 - 1 cam."
+            }
+        ],
+        "rights": "Contact the Monastery of St. Catherine's of the Sinai."
+    },
+    "last_modified": "2025-03-27"
+}

@@ -1,0 +1,48 @@
+{
+    "ark": "ark:/21198/te5fmsg2",
+    "reconstruction": false,
+    "state": {
+        "id": "guest",
+        "label": "Guest Content"
+    },
+    "label": "Syriac 12, Syriac on Reinforcement Strips",
+    "locus": "ff. 64–66, 70–72, 105–106, 110–111, 113–114",
+    "summary": "Reinforcement strips from a Syriac parchment codex",
+    "writing": [
+        {
+            "script": [
+                {
+                    "id": "syr-und",
+                    "label": "Undetermined Syriac script",
+                    "writing_system": "Syriac"
+                }
+            ]
+        }
+    ],
+    "text_unit": [
+        {
+            "id": "ark:/21198/te5fmsg2t1",
+            "label": "Text unit 1"
+        }
+    ],
+    "note": [
+        {
+            "type": {
+                "id": "general",
+                "label": "General"
+            },
+            "value": "The reinforcement strips on which this layer is written are from a parchment manuscript"
+        }
+    ],
+    "parent": [
+        "ark:/21198/te5f0f9b"
+    ],
+    "desc_provenance": {
+        "program": [
+            {
+                "label": "Syriac Parchment Descriptions Project",
+                "description": "Described as part of the Syriac Parchment Descriptions Project (2022-2025). The Syriac Parchment Descriptions Project was funded by a National Endowment for the Humanities grant. It aimed to provide full and detailed cataloguing of the Syriac manuscripts on parchment in the Sinai collection. Lead Cataloguer: Grigory Kessel; Research Associates: Natalia Smelova and Vevian Zaki."
+            }
+        ]
+    }
+}

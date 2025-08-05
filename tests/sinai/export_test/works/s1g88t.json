@@ -1,0 +1,26 @@
+{
+    "ark": "ark:/21198/s1g88t",
+    "pref_title": "Liturgy of Saint John Chrysostom",
+    "alt_title": [
+        "Liturgy of Saint John Chrysostom"
+    ],
+    "genre": [
+        {
+            "id": "liturgical-texts",
+            "label": "Liturgical texts"
+        },
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Orthodox Eastern Church. Liturgy of St. John Chrysostom",
+            "uri": "http://id.loc.gov/authorities/names/n82002421",
+            "source": "LoC"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

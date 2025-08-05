@@ -1,0 +1,40 @@
+{
+    "ark": "ark:/21198/s1059t",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Thāwdhūrus Abū Qurrah",
+    "alt_name": [
+        "Theodore Abū Qurrah",
+        "Theodore Bishop of Harran",
+        "ثاوذورس أبي قرة"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "ca. 750 CE-825 CE",
+        "iso": {
+            "not_before": "0725",
+            "not_after": "0850"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Abū Qurrah, Thāwdhūrus, approximately 750-825",
+            "uri": "http://viaf.org/viaf/116159414",
+            "source": "VIAF"
+        },
+        {
+            "label": "Abū Qurrah, Thāwdhūrus, approximately 750-825",
+            "uri": "http://id.loc.gov/authorities/names/n85000719",
+            "source": "LoC"
+        },
+        {
+            "label": "Abū Qurrah, Thāwdhūrus, approximately 750-825",
+            "uri": "https://w3id.org/haf/person/515032103483",
+            "source": "HAF"
+        },
+        {
+            "label": "Theodore Abu Qurra",
+            "uri": "http://syriaca.org/person/782",
+            "source": "Syriaca"
+        }
+    ]
+}

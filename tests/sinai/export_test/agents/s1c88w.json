@@ -1,0 +1,36 @@
+{
+    "ark": "ark:/21198/s1c88w",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Dionysius the Areopagite",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "1st century CE",
+        "iso": {
+            "not_before": "0001",
+            "not_after": "0100"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Dionysius, the Areopagite, Saint, active 1st century",
+            "uri": "http://viaf.org/viaf/349145857118922922538",
+            "source": "VIAF"
+        },
+        {
+            "label": "Dionysius, the Areopagite, Saint, active 1st century",
+            "uri": "https://id.loc.gov/authorities/names/n85113327",
+            "source": "LoC"
+        },
+        {
+            "label": "Dionysius, the Areopagite, active 1st century",
+            "uri": "https://w3id.org/haf/person/247302045539",
+            "source": "HAF"
+        },
+        {
+            "label": "Dionysius Areopagita (pseudo)",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/926/",
+            "source": "Pinakes"
+        }
+    ]
+}

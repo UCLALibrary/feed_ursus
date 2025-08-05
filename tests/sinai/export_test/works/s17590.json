@@ -1,0 +1,25 @@
+{
+    "ark": "ark:/21198/s17590",
+    "pref_title": "Book of the Pupils of the Eyes",
+    "alt_title": [
+        "Bar Hebraeus' Book of the Pupils of the Eyes"
+    ],
+    "genre": [
+        {
+            "id": "theological-works",
+            "label": "Theological works"
+        }
+    ],
+    "creator": [
+        {
+            "id": "ark:/21198/s16k59",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "rel_con": [],
+    "refno": [],
+    "bib": []
+}

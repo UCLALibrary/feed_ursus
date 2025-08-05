@@ -1,0 +1,33 @@
+{
+    "ark": "ark:/21198/s1bp46",
+    "pref_title": "Lives of the monks of Palestine",
+    "orig_lang": {
+        "id": "gree1276",
+        "label": "Greek"
+    },
+    "alt_title": [],
+    "genre": [
+        {
+            "id": "hagiographies",
+            "label": "Hagiographies"
+        }
+    ],
+    "creator": [
+        {
+            "id": "ark:/21198/s1w88j",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Cyril,‏ ‎of Scythopolis,‏ ‎approximately 524-approximately 558.‏ ‎Lives of the monks of Palestine",
+            "uri": "http://viaf.org/viaf/309551685",
+            "source": "VIAF"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

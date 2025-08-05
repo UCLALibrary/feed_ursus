@@ -1,0 +1,58 @@
+{
+    "ark": "ark:/21198/s1zc7t",
+    "pref_title": "Epistula 2",
+    "orig_lang": {
+        "id": "gree1276",
+        "label": "Greek"
+    },
+    "alt_title": [
+        "Epistula 2"
+    ],
+    "genre": [],
+    "creator": [
+        {
+            "id": "ark:/21198/s1101c",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "creation": {
+        "value": "4th c. CE",
+        "iso": {
+            "not_before": "0301",
+            "not_after": "0400"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Basil, Saint, Bishop of Caesarea, approximately 329-379. | Correspondence",
+            "uri": "https://viaf.org/viaf/179353879",
+            "source": "VIAF"
+        },
+        {
+            "label": "Basil, Saint, Bishop of Caesarea, approximately 329-379. Correspondence",
+            "uri": "https://id.loc.gov/authorities/names/nr97035148",
+            "source": "LoC"
+        },
+        {
+            "label": "Basil, Saint, Bishop of Caesarea, approximately 329-379. Correspondence",
+            "uri": "https://w3id.org/haf/work/388714713990",
+            "source": "HAF"
+        },
+        {
+            "label": "Basilius Caesariensis Ad Gregorium Nazianzenum (Ep. 2)",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/oeuvre/142/",
+            "source": "Pinakes"
+        }
+    ],
+    "refno": [
+        {
+            "label": "Epistula 2",
+            "idno": "2900.002",
+            "source": "CPG"
+        }
+    ],
+    "bib": []
+}

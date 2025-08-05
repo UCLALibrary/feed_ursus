@@ -7,23 +7,22 @@ on:
     branches: [ main ]
 
 env:
-  DEFAULT_PYTHON_VERSION: 3.11
+  DEFAULT_PYTHON_VERSION: 3.13
 
 jobs:
   black:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v2
+      - uses: psf/black@stable
         with:
-          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
-      - run: pip install black
-      - run: black --check .
+          options: "--check --verbose"
+          version: "24.10.0"
 
   pytest:
     strategy:
       matrix:
-        python-version: ['3.10', '3.11', '3.12', '3.13']
+        python-version: ['3.11', '3.12', '3.13']
     runs-on: ubuntu-latest
     env:
       SOLR_URL: http://127.0.0.1:8983/solr/californica

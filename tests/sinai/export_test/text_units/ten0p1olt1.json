@@ -1,0 +1,63 @@
+{
+    "ark": "ark:/21198/ten0p1olt1",
+    "reconstruction": false,
+    "label": "Arabic Gospels",
+    "locus": "ff. 128r-143v",
+    "lang": [
+        {
+            "id": "arab1395",
+            "label": "Arabic"
+        }
+    ],
+    "work_wit": [
+        {
+            "work": {
+                "id": "ark:/21198/s12c7r"
+            },
+            "locus": "ff. 128r-130"
+            },
+        {
+            "work": {
+                "id": "ark:/21198/s1630k"
+            },
+            "locus": "ff. 130v-135r"
+        },
+        {
+            "work": {
+                "id": "ark:/21198/s1k88r"
+            },
+            "locus": "ff. 135r-140r"
+        },
+        {
+            "work": {
+                "id": "ark:/21198/s1388d"
+            },
+            "locus": "ff. 140v-143v"
+        }
+        ],
+    "features": [
+    ],
+    "note": [
+        {
+            "type": {
+                "id": "contents",
+                "label": "Contents Note"
+            },
+            "value": "The Gospels continue in Arabic NF M 8 and NF M 27"
+        }
+    ],
+    "desc_provenance": {
+        "program": [
+            {
+                "label": "Sinai Palimpests Project",
+                "description": "Described as part of the Sinai Palimpsests Project (2006-2017). The Sinai Palimpsests Project was sponsored by St. Catherine’s Monastery of the Sinai in partnership with the Early Manuscripts Electronic Library and the UCLA Library, and with funding from Arcadia. The Project provides scholarly identification and description of the undertext objects in a subset of palimpsested manuscripts in the Sinai collection, with minimal metadata for the overtexts of the host manuscripts."
+            }
+        ]
+    },
+    "parent": [
+        "ark:/21198/ten0p1ol"
+    ],
+    "internal": [
+        "Test record, delete after development is complete"
+        ]
+}

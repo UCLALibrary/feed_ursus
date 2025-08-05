@@ -1,0 +1,41 @@
+{
+    "ark": "ark:/21198/s1z30d",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Gregory of Nyssa",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "ca. 335 CE-ca. 394 CE",
+        "iso": {
+            "not_before": "0310",
+            "not_after": "0419"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Gregory, of Nyssa, Saint, approximately 335-approximately 394",
+            "uri": "http://viaf.org/viaf/103646160",
+            "source": "VIAF"
+        },
+        {
+            "label": "Gregory, of Nyssa, Saint, approximately 335-approximately 394",
+            "uri": "https://id.loc.gov/authorities/names/n79021401",
+            "source": "LoC"
+        },
+        {
+            "label": "Gregory, of Nyssa, approximately 335-approximately 394",
+            "uri": "https://w3id.org/haf/person/805578325781",
+            "source": "HAF"
+        },
+        {
+            "label": "Gregory of Nyssa",
+            "uri": "http://syriaca.org/person/512",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Gregorius Nyssenus",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/1240/",
+            "source": "Pinakes"
+        }
+    ]
+}

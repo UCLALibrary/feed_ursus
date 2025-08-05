@@ -1,0 +1,35 @@
+{
+    "ark": "ark:/21198/s1pc7b",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Sahdona",
+    "alt_name": [
+        "Sahdona of Halmon",
+        "Sahdona of Mahoze",
+        "Sahdona the Syrian",
+        "Martyrius",
+        "ܣܗܕܘܢܐ"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "rel_con": [
+        {
+            "label": "Sāhdōnā, Bp. of Māhōzē dh' Arēwān in Beth Gamdi",
+            "uri": "http://viaf.org/viaf/39442444",
+            "source": "VIAF"
+        },
+        {
+            "label": "Sāhdōnā, Bp. of Māhōzē dh' Arēwān in Beth Gamdi",
+            "uri": "https://id.loc.gov/authorities/names/n2006022934",
+            "source": "LoC"
+        },
+        {
+            "label": "Sāhdōnā, Bishop of Māhōzē dh' Arēwān in Beth Gamdi",
+            "uri": "https://w3id.org/haf/person/550936174110",
+            "source": "HAF"
+        },
+        {
+            "label": "Sahdona ",
+            "uri": "http://syriaca.org/person/711",
+            "source": "Syriaca"
+        }
+    ]
+}

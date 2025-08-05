@@ -1,0 +1,41 @@
+{
+    "ark": "ark:/21198/s1vc7w",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Andrew of Crete",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "ca. 660 CE-740 CE",
+        "iso": {
+            "not_before": "0635",
+            "not_after": "0765"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Andrew, of Crete, Saint, approximately 660-740",
+            "uri": "http://viaf.org/viaf/10044124",
+            "source": "VIAF"
+        },
+        {
+            "label": "Andrew, of Crete, Saint, approximately 660-740",
+            "uri": "https://id.loc.gov/authorities/names/n79076042",
+            "source": "LoC"
+        },
+        {
+            "label": "Andrew, of Crete, Saint, approximately 660-740",
+            "uri": "https://w3id.org/haf/person/227859237404",
+            "source": "HAF"
+        },
+        {
+            "label": "Andrew of Jerusalem",
+            "uri": "https://syriaca.org/person/95",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Andreas Cretensis",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/187/",
+            "source": "Pinakes"
+        }
+    ]
+}

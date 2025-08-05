@@ -1,0 +1,27 @@
+{
+    "ark": "ark:/21198/s15881",
+    "pref_title": "Daniel",
+    "alt_title": [
+        "Bible. Daniel"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Daniel",
+            "uri": "https://viaf.org/viaf/174158777",
+            "source": "VIAF"
+        },
+        {
+            "label": "Bible. Daniel",
+            "uri": "http://id.loc.gov/authorities/names/n79007066",
+            "source": "LoC"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

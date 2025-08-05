@@ -1,0 +1,84 @@
+{ 
+    "ark": "ark:/21198/ten0p1ul2", 
+    "reconstruction": false, 
+    "state": { 
+        "id": "undertext", 
+        "label": "Undertext" 
+    }, 
+    "label": "Arabic NF M 28, Part 1, Undertext 2", 
+    "locus": "ff. 131-132, 138, 140-142", 
+    "summary": "Genesis (6th c. Greek majuscule)", 
+    "extent": "16 ff.", 
+    "writing": [
+        { 
+            "script": [
+                { 
+                    "id": "greek-maj", 
+                    "label": "Greek majuscule" ,
+                    "writing_system": "Greek"
+                } 
+            ], 
+            "locus": "ff. 131-132, 138, 140-142" ,
+            "note": [
+                "Round biblical majuscule"
+            ]
+        } 
+    ], 
+    "text_unit": [
+        { 
+            "id": "ark:/21198/ten0p1ul2t1", 
+            "label": "Primary Text Unit 1", 
+            "locus": "ff. 131-132, 138, 140-142" 
+        } 
+    ], 
+    "assoc_date": [
+        { 
+            "type": { 
+                "id": "origin", 
+                "label": "Origin Date" 
+            }, 
+            "note": [ 
+                "Paleographic dating" 
+            ], 
+            "value": "6th c. CE", 
+            "iso": { 
+                "not_before": "0501", 
+                "not_after": "0600" 
+            } 
+        } 
+    ],
+    "note": [
+        { 
+            "type": { 
+                "id": "foliation", 
+                "label": "Foliation" 
+            }, 
+            "value": "Folios in order of reconstructed undertext: 138v, 138r, 142v, 142r, 140r, 140v, 141v, 141r, 132v, 132r, 131v, 131r" 
+        } 
+    ], 
+    "bib": [
+        {
+            "id": "409fdd9a-3d80-4944-ad02-ac64be40c0da",
+            "type": {
+                "id": "ref",
+                "label": "Reference Work"
+            },
+            "range": "p. 29-30"
+        }
+    ], 
+    "desc_provenance": {
+        "program": [
+            {
+                "label": "Sinai Palimpests Project",
+                "description": "Described as part of the Sinai Palimpsests Project (2006-2017). The Sinai Palimpsests Project was sponsored by St. Catherine’s Monastery of the Sinai in partnership with the Early Manuscripts Electronic Library and the UCLA Library, and with funding from Arcadia. The Project provides scholarly identification and description of the undertext objects in a subset of palimpsested manuscripts in the Sinai collection, with minimal metadata for the overtexts of the host manuscripts."
+            }
+        ]
+    },
+    "parent": [ 
+        "ark:/21198/ten02zkr" ,
+        "ark:/21198/ten0uto2"
+    ], 
+    "internal": [ 
+        "Test record for development purposes; please delete." 
+    ] 
+}

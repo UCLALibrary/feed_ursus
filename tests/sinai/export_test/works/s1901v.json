@@ -1,0 +1,22 @@
+{
+    "ark": "ark:/21198/s1901v",
+    "pref_title": "Corinthians",
+    "alt_title": [
+        "Bible. Corinthians"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Corinthians",
+            "uri": "http://viaf.org/viaf/3784154387177630970007",
+            "source": "VIAF"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}
