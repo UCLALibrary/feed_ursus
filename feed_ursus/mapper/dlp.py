@@ -3,6 +3,7 @@
 
 import os
 import typing
+
 import yaml
 
 # import urllib.parse
@@ -200,7 +201,9 @@ def access_group(row: typing.Mapping[str, str]) -> typing.List[str]:
 
 def language(row: typing.Mapping[str, str]) -> typing.List[str]:
     # Clunky way to handle language lookup, should be replaced by universal authority lookup
-    return [LANGUAGE_MAPPING.get(lang_id, f"Unknown") for lang_id in row["Language"].split("|~|")]
+    if row.get("Language"):
+        return [LANGUAGE_MAPPING.get(lang_id, f"{lang_id}") for lang_id in row["Language"].split("|~|")]
+    return None
 
 def create_language_mapping() -> typing.Dict[str, str]:
     """Create a mapping of language IDs to terms from a YAML file."""
