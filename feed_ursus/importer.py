@@ -322,7 +322,7 @@ class Importer:
         as above, and the resulting lists will be concatenated.
 
         Finally, FIELD_MAPPING[field_name] can be a function, most likely defined
-        in mappery.py. If this is the case, that function will be called with the
+        in mapper.py. If this is the case, that function will be called with the
         input row (as a dict) as its only argument. That function should return a
         type that matches the type of the solr field. This is the only way to
         map to types other than lists of strings.
