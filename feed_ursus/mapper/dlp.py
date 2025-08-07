@@ -199,11 +199,16 @@ def access_group(row: typing.Mapping[str, str]) -> typing.List[str]:
         else []
     )
 
-def language(row: typing.Mapping[str, str]) -> typing.List[str]:
+
+def language(row: typing.Mapping[str, str]) -> typing.List[str] | None:
     # Clunky way to handle language lookup, should be replaced by universal authority lookup
     if row.get("Language"):
-        return [LANGUAGE_MAPPING.get(lang_id, f"{lang_id}") for lang_id in row["Language"].split("|~|")]
+        return [
+            LANGUAGE_MAPPING.get(lang_id, f"{lang_id}")
+            for lang_id in row["Language"].split("|~|")
+        ]
     return None
+
 
 def create_language_mapping() -> typing.Dict[str, str]:
     """Create a mapping of language IDs to terms from a YAML file."""
@@ -211,8 +216,9 @@ def create_language_mapping() -> typing.Dict[str, str]:
     language_path = os.path.join(this_dir, "fields", "language.yml")
     with open(language_path, "r") as f:
         data = yaml.safe_load(f)
-    
-    return {entry['id']: entry['term'] for entry in data['terms']}
+
+    return {entry["id"]: entry["term"] for entry in data["terms"]}
+
 
 LANGUAGE_MAPPING = create_language_mapping()
 
