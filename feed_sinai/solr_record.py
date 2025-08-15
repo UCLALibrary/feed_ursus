@@ -179,7 +179,7 @@ class ManuscriptSolrRecord(st.BaseModel):
         )
 
     @computed_field
-    def ot_years_isim(self) -> list[int]:
+    def ot_year_isim(self) -> list[int]:
         return sorted(
             {
                 year
@@ -244,7 +244,7 @@ class ManuscriptSolrRecord(st.BaseModel):
         )
 
     @computed_field
-    def para_years_isim(self) -> list[int]:
+    def para_year_isim(self) -> list[int]:
         return sorted(
             {
                 year
@@ -327,7 +327,7 @@ class ManuscriptSolrRecord(st.BaseModel):
         )
 
     @computed_field
-    def uto_years_isim(self) -> list[int]:
+    def uto_year_isim(self) -> list[int]:
         return sorted(
             {
                 year
