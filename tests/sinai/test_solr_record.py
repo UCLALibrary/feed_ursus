@@ -46,8 +46,8 @@ def test_visibility_ssi(result: ManuscriptSolrRecord) -> None:
     assert result.visibility_ssi == "open"
 
 
-def test_manuscript_json_ss(result: ManuscriptSolrRecord) -> None:
-    assert result.manuscript_json_ss
+def test_manuscript_json_ts(result: ManuscriptSolrRecord) -> None:
+    assert result.manuscript_json_ts
 
 
 def test_ms_type_ssi(result: ManuscriptSolrRecord) -> None:
