@@ -30,6 +30,7 @@ If you are already using pipx, you can use it instead of uv:
 
 ```
 pipx install feed_ursus
+```
 
 ### Use
 
