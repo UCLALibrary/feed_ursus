@@ -537,7 +537,7 @@ class ManuscriptSolrRecord(st.BaseModel):
         return max(timestamps) if timestamps else None
 
     @computed_field
-    def manuscript_json_ss(self) -> str:
+    def manuscript_json_ts(self) -> str:
         return self.ms_obj.model_dump_json()
 
     #
