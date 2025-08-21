@@ -3,6 +3,7 @@
 """Pydantic classes for the data model."""
 
 import logging
+from datetime import datetime
 from itertools import chain
 from typing import Callable, Iterator, List, Literal, TypeVar
 
@@ -143,7 +144,7 @@ class ManuscriptSolrRecord(st.BaseModel):
         return [ms.id for ms in self.ms_obj.reconstructed_from]
 
     @computed_field
-    def reconstructed_from_shelfmark(self) -> list[str]:
+    def reconstructed_from_shelfmark_ssi(self) -> list[str]:
         return [ms.shelfmark for ms in self.ms_obj.reconstructed_from]
 
     @computed_field
@@ -520,6 +521,20 @@ class ManuscriptSolrRecord(st.BaseModel):
         if self.ms_obj.image_provenance:
             for program in self.ms_obj.image_provenance.program:
                 yield program.delivery
+
+    @generator_field
+    @filter_none
+    def cataloguer_tesim(self) -> Iterator[str | None]:
+        for cataloguer in self.ms_obj.deep_get(cls=st.CataloguerItem):
+            yield cataloguer.contributor
+
+    @computed_field
+    def last_modified_dtsi(self) -> datetime | None:
+        timestamps = tuple(
+            cataloguer.timestamp
+            for cataloguer in self.ms_obj.deep_get(cls=st.CataloguerItem)
+        )
+        return max(timestamps) if timestamps else None
 
     @computed_field
     def manuscript_json_ss(self) -> str:
