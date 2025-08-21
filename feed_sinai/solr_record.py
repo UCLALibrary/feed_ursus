@@ -144,7 +144,7 @@ class ManuscriptSolrRecord(st.BaseModel):
         return [ms.id for ms in self.ms_obj.reconstructed_from]
 
     @computed_field
-    def reconstructed_from_shelfmark_ssi(self) -> list[str]:
+    def reconstructed_from_shelfmark_ssim(self) -> list[str]:
         return [ms.shelfmark for ms in self.ms_obj.reconstructed_from]
 
     @computed_field
