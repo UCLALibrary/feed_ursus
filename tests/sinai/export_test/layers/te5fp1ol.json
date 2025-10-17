@@ -91,10 +91,14 @@
     ], 
     "para": [
         { 
-            "type": { 
+            "type": {
+                "id": "history",
+                "label": "History"
+            },
+            "subtype": [{ 
                 "id": "colophon", 
                 "label": "Colophon" 
-            }, 
+            }], 
             "locus": "f. 54v", 
             "lang": [
                 { 
@@ -152,8 +156,8 @@
                     ], 
                     "value": "AM 6,104 = 1292 CE", 
                     "iso": { 
-                        "not_before": "1292", 
-                        "not_after": "1292" 
+                        "not_before": "1290", 
+                        "not_after": "1290" 
                     } 
                 } 
             ], 
@@ -164,9 +168,13 @@
         } ,
         {
             "type": {
+                "id": "history",
+                "label": "History"
+            },
+            "subtype": [{
                 "id": "colophon",
                 "label": "Colophon"
-            },
+            }],
             "locus": "f. 55r",
             "lang": [
                 {
@@ -189,9 +197,13 @@
         },
         {
             "type": {
+                "id": "framing",
+                "label": "Framing"
+            },
+            "subtype": [{
                 "id": "toc",
                 "label": "Table of Contents"
-            },
+            }],
             "locus": "f. 3",
             "lang": [
                 {
@@ -215,23 +227,7 @@
                 "Covers the contents of the first part of Syriac 12, likely written prior to the two parts being bound together"
             ]
         }
-    ], 
-    "assoc_date": [
-        { 
-            "type": { 
-                "id": "origin", 
-                "label": "Origin Date" 
-            }, 
-            "note": [ 
-                "Top-level associated dates" 
-            ], 
-            "value": "1292 CE", 
-            "iso": { 
-                "not_before": "1292", 
-                "not_after": "1292" 
-            } 
-        } 
-    ], 
+    ],
     "assoc_name": [
         { 
             "id": "ark:/21198/s1v887", 
@@ -330,7 +326,7 @@
     "cataloguer": [
         {
             "message": "ADDED: Ingested descriptions from the Syriac Parchment Descriptions project.",
-            "contributor": "Grigory Kessel; Natalia Smelova",
+            "contributor": ["Grigory Kessel", "Natalia Smelova"],
             "added_by": "William Potter",
             "timestamp": "2025-06-28T15:50:45+00:00"
         }

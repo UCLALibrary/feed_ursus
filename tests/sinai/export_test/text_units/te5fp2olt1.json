@@ -115,9 +115,13 @@
     "para": [
         {
             "type": {
+                "id": "framing",
+                "label": "Framing"
+            },
+            "subtype": [{
                 "id": "rubric",
                 "label": "Rubric"
-            },
+            }],
             "locus": "Ff. 58v, 63v, 72v, 77v, 82v, 87v, 92v, 97v, 102v, 107v, 112v, 117v, 122v, 127v, 132v, 137v, 142v",
             "lang": [
                 {

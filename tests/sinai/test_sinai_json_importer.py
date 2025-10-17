@@ -86,7 +86,7 @@ class TestGetPlace:
             importer.get_place("ark:/21198/" + path.stem)
             n_files += 1
 
-        assert n_files == 2
+        assert n_files == 3
 
 
 def test_get_assoc_name_item(importer: SinaiJsonImporter) -> None:
@@ -270,7 +270,7 @@ class TestGetTextUnit:
             )
             importer.get_layer_text_unit(stub)
             n_files += 1
-        assert n_files == 15
+        assert n_files == 17
 
 
 class TestGetLayer:
@@ -496,7 +496,7 @@ class TestGetLayer:
                         "type": {"id": "origin", "label": "Origin Date"},
                         "note": ("Paleographic dating",),
                         "value": "Second half 9th c. CE",
-                        "iso": {"not_before": "0851", "not_after": "0900"},
+                        "iso": {"not_before": "-0851", "not_after": "-0800"},
                     },
                 ),
                 "note": (
@@ -549,12 +549,12 @@ class TestGetLayer:
             )
             importer.get_layer(stub)
             n_files += 1
-        assert n_files == 15
+        assert n_files == 17
 
 
 class TestGetMergedManuscript:
     def test_good_manuscript(self, importer: SinaiJsonImporter) -> None:
-        with open(f"{BASE_PATH}/outputs/z1h13zxq.json", encoding="utf-8") as f:
+        with open(f"{BASE_PATH}/merged/z1h13zxq.json", encoding="utf-8") as f:
             expected = json.load(f)
 
         result = importer.get_merged_manuscript(

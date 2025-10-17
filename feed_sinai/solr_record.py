@@ -526,7 +526,7 @@ class ManuscriptSolrRecord(st.BaseModel):
     @filter_none
     def cataloguer_tesim(self) -> Iterator[str | None]:
         for cataloguer in self.ms_obj.deep_get(cls=st.CataloguerItem):
-            yield cataloguer.contributor
+            yield from cataloguer.contributor
 
     @computed_field
     def last_modified_dtsi(self) -> datetime | None:

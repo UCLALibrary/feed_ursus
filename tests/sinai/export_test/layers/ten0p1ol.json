@@ -47,8 +47,8 @@
             ], 
             "value": "Second half 9th c. CE", 
             "iso": { 
-                "not_before": "0851", 
-                "not_after": "0900" 
+                "not_before": "-0851", 
+                "not_after": "-0800" 
             } 
         } 
     ],

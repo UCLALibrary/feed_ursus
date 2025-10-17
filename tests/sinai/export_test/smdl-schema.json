@@ -241,6 +241,9 @@
                             "condition_category": {
                                 "type": "string"
                             },
+                            "imaging_system": {
+                                "type": "string"
+                            },
                             "note": {
                                 "type": "array",
                                 "items": {
@@ -366,10 +369,12 @@
                     "type": "object",
                     "properties": {
                         "not_before": {
-                            "type": "string"
+                            "type": "string",
+                            "minLength": 4
                         },
                         "not_after": {
-                            "type": "string"
+                            "type": "string",
+                            "minLength": 4
                         }
                     },
                     "required": [
@@ -828,6 +833,13 @@
                 "type": {
                     "$ref": "#/$defs/controlled_term"
                 },
+                "subtype": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/controlled_term"
+                    },
+                    "unevaluatedItems": false
+                },
                 "label": {
                     "type": "string"
                 },
@@ -1187,6 +1199,9 @@
                 "uto_layer_ark": {
                     "$ref": "#/$defs/ark"
                 },
+                "type": {
+                    "$ref": "#/$defs/controlled_term"
+                },
                 "label": {
                     "type": "string"
                 },
@@ -1210,24 +1225,27 @@
                     "unevaluatedItems": false
                 },
                 "orig_date": {
-                    "type": "object",
-                    "properties": {
-                        "value": {
-                            "type": "string"
-                        },
-                        "iso": {
-                            "type": "object",
-                            "properties": {
-                                "not_before": {
-                                    "type": "string"
-                                },
-                                "not_after": {
-                                    "type": "string"
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "value": {
+                                "type": "string"
+                            },
+                            "iso": {
+                                "type": "object",
+                                "properties": {
+                                    "not_before": {
+                                        "type": "integer"
+                                    },
+                                    "not_after": {
+                                        "type": "integer"
+                                    }
                                 }
                             }
                         }
                     },
-                    "unevaluatedProperties": false
+                    "unevaluatedItems": false
                 }
             },
             "required": [

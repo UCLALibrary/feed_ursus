@@ -30,22 +30,37 @@
             "label": "Primary Text Unit 1", 
             "locus": "ff. 131-132, 138, 140-142" 
         } 
-    ], 
-    "assoc_date": [
-        { 
-            "type": { 
-                "id": "origin", 
-                "label": "Origin Date" 
-            }, 
-            "note": [ 
-                "Paleographic dating" 
-            ], 
-            "value": "6th c. CE", 
-            "iso": { 
-                "not_before": "0501", 
-                "not_after": "0600" 
-            } 
-        } 
+    ],
+    "para": [
+        {
+            "type": {
+                "id": "colophon",
+                "label": "Colophon"
+            },
+            "locus": "f. 1v",
+            "lang": [
+                {
+                    "id": "greek124",
+                    "label": "Greek"
+                }
+            ],
+            "assoc_date": [
+                { 
+                    "type": { 
+                        "id": "origin", 
+                        "label": "Origin Date" 
+                    }, 
+                    "note": [ 
+                        "Paleographic dating" 
+                    ], 
+                    "value": "6th c. CE", 
+                    "iso": { 
+                        "not_before": "0501", 
+                        "not_after": "0600" 
+                    } 
+                } 
+            ]
+        }
     ],
     "note": [
         { 

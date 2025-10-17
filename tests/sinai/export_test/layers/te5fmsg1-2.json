@@ -1,0 +1,72 @@
+{
+  "ark": "ark:/21198/te5fmsg1-2",
+  "reconstruction": false,
+  "state": {
+    "id": "guest",
+    "label": "Guest Content"
+  },
+  "label": "Guest layer 1 record label",
+  "locus": "ff. 58–64, 142–144",
+  "summary": "Guest layer 1 summary",
+  "assoc_date": [
+    {
+      "value": "1292 CE",
+      "iso": {
+        "not_before": "1292-01",
+        "not_after": "1292-12"
+      },
+      "type": {
+        "id": "origin",
+        "label": "Origin Date"
+      },
+      "note": ["Guest origin date"]
+    }
+  ],
+  "assoc_name": [
+    {
+      "value": "Guest layer associated name value",
+      "role": {
+        "id": "unkwnown",
+        "label": "Unknown"
+      },
+      "as_written": "As written person name, Guest Layer"
+    }
+  ],
+  "assoc_place": [
+    {
+      "id": "ark:/21198/pl9012",
+      "value": "Edessa (value), Guest Layer",
+      "as_written": "As written place name, Guest Layer",
+      "event": {
+        "id": "unknown",
+        "label": "Unknown"
+      }
+    }
+  ],
+  "writing": [
+    {
+      "script": [
+        {
+          "id": "melkite",
+          "label": "Melkite",
+          "writing_system": "Syriac"
+        }
+      ]
+    }
+  ],
+  "text_unit": [
+    {
+      "id": "ark:/21198/te5fmsg1t1-2",
+      "label": "Guest text unit 1"
+    }
+  ],
+  "parent": ["ark:/21198/te5f0f9b-2"],
+  "desc_provenance": {
+    "program": [
+      {
+        "label": "Syriac Parchment Descriptions Project",
+        "description": "Described as part of the Syriac Parchment Descriptions Project (2022-2025). The Syriac Parchment Descriptions Project was funded by a National Endowment for the Humanities grant. It aimed to provide full and detailed cataloguing of the Syriac manuscripts on parchment in the Sinai collection. Lead Cataloguer: Grigory Kessel; Research Associates: Natalia Smelova and Vevian Zaki."
+      }
+    ]
+  }
+}

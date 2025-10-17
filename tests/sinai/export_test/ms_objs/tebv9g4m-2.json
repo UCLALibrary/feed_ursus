@@ -1,0 +1,50 @@
+{
+    "ark": "ark:/21198/tebv9g4m-2",
+    "reconstruction": false,
+    "type": {
+      "id": "manuscript",
+      "label": "Manuscript"
+    },
+    "shelfmark": "Arabic NF X 42",
+    "extent": "14 ff.",
+    "state": {
+      "id": "quires",
+      "label": "Quire(s)"
+    },
+    "part": [
+      {
+        "support": [
+          {
+            "id": "paper",
+            "label": "Paper"
+          }
+        ],
+        "layer": [
+          {
+            "id": "ark:/21198/tebvp1ol-2",
+            "label": "Overtext",
+            "type": {
+              "id": "overtext",
+              "label": "Overtext"
+            }
+          },
+          {
+            "id": "ark:/21198/te5fmsg1-2",
+            "label": "Guest layer 1 label",
+            "type": {
+              "id": "guest",
+              "label": "Guest Content"
+            },
+            "locus": "ff. 58–64, 142–144"
+          }
+        ]
+      }
+    ],
+    "location": [
+      {
+        "id": "sinai-nf",
+        "collection": "New Finds",
+        "repository": "St. Catherine's Monastery of the Sinai"
+      }
+    ]
+  }

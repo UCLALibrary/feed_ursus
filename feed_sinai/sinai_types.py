@@ -237,8 +237,8 @@ class RelPlaceItem(BaseModel):
 
 class CataloguerItem(BaseModel):
     message: NonEmptyStr
-    contributor: Optional[NonEmptyStr] = Field(
-        None,
+    contributor: tuple[NonEmptyStr, ...] = Field(
+        tuple(),
         description="The person responsible for the intellectual contributions made to the record via this change",
     )
     added_by: NonEmptyStr = Field(

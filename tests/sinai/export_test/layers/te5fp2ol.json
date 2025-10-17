@@ -55,10 +55,14 @@
     ], 
     "para": [
         { 
-            "type": { 
+            "type": {
+                "id": "history",
+                "label": "History"
+            },
+            "subtype": [{ 
                 "id": "colophon", 
                 "label": "Colophon" 
-            }, 
+            }], 
             "locus": "f. 54v", 
             "lang": [
                 { 
@@ -117,7 +121,7 @@
                     "value": "AM 6,104 = 1292 CE", 
                     "iso": { 
                         "not_before": "1292", 
-                        "not_after": "1292" 
+                        "not_after": "1500" 
                     } 
                 } 
             ], 
@@ -138,8 +142,8 @@
             ], 
             "value": "7th c. CE", 
             "iso": { 
-                "not_before": "0601", 
-                "not_after": "0700" 
+                "not_before": "0601-01-01", 
+                "not_after": "0700-12-31" 
             } 
         } 
     ], 
@@ -171,7 +175,7 @@
     "cataloguer": [
         {
             "message": "ADDED: Ingested descriptions from the Syriac Parchment Descriptions project.",
-            "contributor": "Grigory Kessel; Natalia Smelova",
+            "contributor": ["Natalia Smelova"],
             "added_by": "William Potter",
             "timestamp": "2025-06-03T15:50:45+00:00"
         }

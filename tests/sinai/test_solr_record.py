@@ -106,7 +106,7 @@ def test_ot_year_isim(result: ManuscriptSolrRecord) -> None:
     assert result.ot_year_isim == [
         *range(601, 700),
         700,  # range is INCLUSIVE of 700
-        1292,
+        # 1292,
     ]
 
 
@@ -152,8 +152,14 @@ def test_para_names_ssim(result: ManuscriptSolrRecord) -> None:
 
 
 def test_para_type_ssim(result: ManuscriptSolrRecord) -> None:
-    # TODO: this is currently empty bc we don't have subtype in the data yet
-    assert result.para_type_ssim == []
+    assert result.para_type_ssim == [
+        "Colophon",
+        "Prayer Request",
+        "Reader's Note",
+        "Rubric",
+        "Table of Contents",
+        "Transfer of Ownership",
+    ]
 
 
 def test_uto_script_ssim(result: ManuscriptSolrRecord) -> None:

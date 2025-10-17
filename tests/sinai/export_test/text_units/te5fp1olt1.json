@@ -95,9 +95,13 @@
     "para": [
         {
             "type": {
+                "id": "framing",
+                "label": "Framing"
+            },
+            "subtype": [{
                 "id": "rubric",
                 "label": "Rubric"
-            },
+            }],
             "locus": "f. 3r",
             "lang": [
                 {
