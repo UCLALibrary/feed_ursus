@@ -106,7 +106,7 @@ def test_ot_year_isim(result: ManuscriptSolrRecord) -> None:
     assert result.ot_year_isim == [
         *range(601, 700),
         700,  # range is INCLUSIVE of 700
-        # 1292,
+        1290,
     ]
 
 

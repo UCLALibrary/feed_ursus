@@ -128,20 +128,12 @@
             "ink": [
               {
                 "locus": "ff. 3r-54v",
-                "color": [
-                  "brown"
-                ],
-                "note": [
-                  "Rubrication of titles in red ink"
-                ]
+                "color": ["brown"],
+                "note": ["Rubrication of titles in red ink"]
               },
               {
                 "locus": "ff. 45v-54v",
-                "color": [
-                  "black",
-                  "yellow",
-                  "red"
-                ],
+                "color": ["black", "yellow", "red"],
                 "note": [
                   "Occasional words highlighted in yellow",
                   "Initials and titles in red"
@@ -164,9 +156,7 @@
                 "columns": "2",
                 "lines": "15-17",
                 "dim": "Writing area: 200 x 130 mm",
-                "note": [
-                  "Number of lines fluctuates consistently"
-                ]
+                "note": ["Number of lines fluctuates consistently"]
               }
             ],
             "text_unit": [
@@ -191,9 +181,7 @@
                       "work": {
                         "ark": "ark:/21198/s1gc7g",
                         "pref_title": "Commentary on Genesis",
-                        "alt_title": [
-                          "Commentary on Genesis by St. Ephrem"
-                        ],
+                        "alt_title": ["Commentary on Genesis by St. Ephrem"],
                         "genre": [
                           {
                             "id": "commentaries",
@@ -210,10 +198,7 @@
                                 "label": "Person"
                               },
                               "pref_name": "Ephrem",
-                              "alt_name": [
-                                "Ephrem the Syrian",
-                                "ܐܦܪܝܡ"
-                              ],
+                              "alt_name": ["Ephrem the Syrian", "ܐܦܪܝܡ"],
                               "gender": {
                                 "id": "man",
                                 "label": "Man"
@@ -289,9 +274,7 @@
                           "translation": [
                             "...the one of Simon Peter, and disembarked"
                           ],
-                          "note": [
-                            "Corresponds to Luke 5:3"
-                          ]
+                          "note": ["Corresponds to Luke 5:3"]
                         }
                       ],
                       "contents": [
@@ -316,9 +299,7 @@
                         {
                           "label": "3rd Week: Sunday, Saturday",
                           "locus": "f. 7v, 8v",
-                          "note": [
-                            "Sub-heading: Joseph of Arimathea"
-                          ]
+                          "note": ["Sub-heading: Joseph of Arimathea"]
                         }
                       ],
                       "note": [
@@ -334,9 +315,7 @@
                           "shortcode": "Kashouh 2012",
                           "citation": "Kashouh, Hikmat. The Arabic Versions of the Gospels: The Manuscripts and their Families. Berlin: De Gruyter, 2012",
                           "range": "28-57",
-                          "note": [
-                            "Kashouh book"
-                          ]
+                          "note": ["Kashouh book"]
                         }
                       ]
                     }
@@ -436,9 +415,7 @@
                             "id": "reading",
                             "label": "Place of Reading"
                           },
-                          "note": [
-                            "Faked ARK for nisibis"
-                          ]
+                          "note": ["Faked ARK for nisibis"]
                         }
                       ],
                       "note": [
@@ -496,9 +473,7 @@
                       "citation": "C. Müller-Kessler. “The Martyrdom of Arianos and the Four Protectores in an Unpublished Christian Palestinian Aramaic Palimpsest, St Catherine’s Monastery (Sinai, Arabic NF 66).” Collectanea Christiana Orientalia 14 (2017): 115-125. https://doi.org/10.21071/cco.v14i.14448"
                     }
                   ],
-                  "parent": [
-                    "ark:/21198/te5fp1ol"
-                  ]
+                  "parent": ["ark:/21198/te5fp1ol"]
                 }
               }
             ],
@@ -543,10 +518,7 @@
                         "label": "Person"
                       },
                       "pref_name": "Ephrem",
-                      "alt_name": [
-                        "Ephrem the Syrian",
-                        "ܐܦܪܝܡ"
-                      ],
+                      "alt_name": ["Ephrem the Syrian", "ܐܦܪܝܡ"],
                       "gender": {
                         "id": "man",
                         "label": "Man"
@@ -591,9 +563,7 @@
                       "id": "scribe",
                       "label": "Scribe"
                     },
-                    "note": [
-                      "The ARK is for Ephrem, to demo functionality"
-                    ]
+                    "note": ["The ARK is for Ephrem, to demo functionality"]
                   }
                 ],
                 "assoc_place": [
@@ -621,9 +591,7 @@
                       "label": "Origin Date"
                     },
                     "as_written": "ܠܐܦ̈ܝ ܬܠܬ: ܫ̈ܥܝܢ: ܝܘܡ: ܕ̄ ܟ̄ܚ܇ ܐܝܠܘܠ ܫܢܬ: ܘ̄ ܐܠܦ̄: ܚ̄ܕ ܩ̄: ܕ̄: ܠܐܒܘܢ: ܐܕܡ",
-                    "note": [
-                      "Date for demo purposes"
-                    ]
+                    "note": ["Date for demo purposes"]
                   }
                 ],
                 "note": [
@@ -707,10 +675,7 @@
                     "label": "Person"
                   },
                   "pref_name": "Ephrem",
-                  "alt_name": [
-                    "Ephrem the Syrian",
-                    "ܐܦܪܝܡ"
-                  ],
+                  "alt_name": ["Ephrem the Syrian", "ܐܦܪܝܡ"],
                   "gender": {
                     "id": "man",
                     "label": "Man"
@@ -754,9 +719,7 @@
                   "id": "scribe",
                   "label": "Scribe"
                 },
-                "note": [
-                  "Top-level associated name"
-                ]
+                "note": ["Top-level associated name"]
               }
             ],
             "assoc_place": [
@@ -766,9 +729,7 @@
                   "id": "origin",
                   "label": "Origin"
                 },
-                "note": [
-                  "Top-level associated place"
-                ]
+                "note": ["Top-level associated place"]
               }
             ],
             "features": [
@@ -788,9 +749,7 @@
                   "label": "Filiation"
                 },
                 "label": "Copied from Syriac 10",
-                "note": [
-                  "This is a dummy note for dev purposes"
-                ],
+                "note": ["This is a dummy note for dev purposes"],
                 "mss": [
                   {
                     "label": "Sinai Syriac 10",
@@ -825,25 +784,18 @@
                 "shortcode": "Perria",
                 "citation": "Perria, Lidia. Repertorio dei manoscritti greci di area orientale, palestino-sinaitica. Messina, 2000",
                 "range": "nos. 1-3",
-                "note": [
-                  "Perria"
-                ]
+                "note": ["Perria"]
               }
             ],
             "cataloguer": [
               {
                 "message": "ADDED: Ingested descriptions from the Syriac Parchment Descriptions project.",
-                "contributor": [
-                  "Grigory Kessel",
-                  "Natalia Smelova"
-                ],
+                "contributor": ["Grigory Kessel", "Natalia Smelova"],
                 "added_by": "William Potter",
                 "timestamp": "2025-06-28T15:50:45Z"
               }
             ],
-            "parent": [
-              "ark:/21198/te5f0f9b"
-            ],
+            "parent": ["ark:/21198/te5f0f9b"],
             "desc_provenance": {
               "program": [
                 {
@@ -969,9 +921,7 @@
                   "label": "Person"
                 },
                 "pref_name": "Paul the Deacon",
-                "alt_name": [
-                  "Paul, diacre"
-                ],
+                "alt_name": ["Paul, diacre"],
                 "gender": {
                   "id": "man",
                   "label": "Man"
@@ -1019,9 +969,7 @@
                 "id": "transfer-of-owernship",
                 "label": "Place of Ownwership Transfer"
               },
-              "note": [
-                "ARK constructed for demo purposes"
-              ]
+              "note": ["ARK constructed for demo purposes"]
             }
           ],
           "assoc_date": [
@@ -1035,9 +983,7 @@
                 "label": "Transfer of Ownership"
               },
               "as_written": "Κατ ἐκεῖνον τὸν καιρὸν",
-              "note": [
-                "There is no real date here, just for demo purposes"
-              ]
+              "note": ["There is no real date here, just for demo purposes"]
             }
           ],
           "note": [
@@ -1120,20 +1066,14 @@
                   }
                 ],
                 "locus": "ff. 55v-144v",
-                "note": [
-                  "Estrangela without vocalization"
-                ]
+                "note": ["Estrangela without vocalization"]
               }
             ],
             "ink": [
               {
                 "locus": "ff. 55v-144v",
-                "color": [
-                  "dark brown"
-                ],
-                "note": [
-                  "Rubrication of titles in red ink"
-                ]
+                "color": ["dark brown"],
+                "note": ["Rubrication of titles in red ink"]
               }
             ],
             "layout": [
@@ -1289,9 +1229,7 @@
                           },
                           "locus": "f. 144v",
                           "as_written": "ܐܬܝ̈ ܠܒܝܬ ܩܒܘܪܐ ܘܐܝܬܝ",
-                          "note": [
-                            "Corresponds to Luke 24:1"
-                          ]
+                          "note": ["Corresponds to Luke 24:1"]
                         }
                       ],
                       "note": [
@@ -1305,9 +1243,7 @@
                             "label": "Citation"
                           },
                           "range": "p. 16-17, 129",
-                          "note": [
-                            "Lewis 1894"
-                          ]
+                          "note": ["Lewis 1894"]
                         },
                         {
                           "id": "dc777e76-90ae-4fdd-bc69-ae64bb61b74c",
@@ -1316,9 +1252,7 @@
                             "label": "Citation"
                           },
                           "range": "p. 17",
-                          "note": [
-                            "Clark 1952"
-                          ]
+                          "note": ["Clark 1952"]
                         }
                       ]
                     },
@@ -1416,9 +1350,7 @@
                           },
                           "locus": "f. 100r",
                           "as_written": "ܐܬܝ̈ ܠܒܝܬ ܩܒܘܪܐ ܘܐܝܬܝ",
-                          "note": [
-                            "Begins with a scribal preface"
-                          ]
+                          "note": ["Begins with a scribal preface"]
                         }
                       ],
                       "note": [
@@ -1486,9 +1418,7 @@
                         "label": "Citation"
                       },
                       "range": "pp. 43-687",
-                      "note": [
-                        "Binggeli"
-                      ]
+                      "note": ["Binggeli"]
                     },
                     {
                       "id": "9f282c58-70c3-48bc-bf30-21fbd835c1ed",
@@ -1496,14 +1426,10 @@
                         "id": "edition",
                         "label": "Edition"
                       },
-                      "note": [
-                        "Rossetto 2023b"
-                      ]
+                      "note": ["Rossetto 2023b"]
                     }
                   ],
-                  "parent": [
-                    "ark:/21198/te5fp2ol"
-                  ],
+                  "parent": ["ark:/21198/te5fp2ol"],
                   "internal": [
                     "Test record, delete after development is complete"
                   ],
@@ -1560,10 +1486,7 @@
                         "label": "Person"
                       },
                       "pref_name": "Ephrem",
-                      "alt_name": [
-                        "Ephrem the Syrian",
-                        "ܐܦܪܝܡ"
-                      ],
+                      "alt_name": ["Ephrem the Syrian", "ܐܦܪܝܡ"],
                       "gender": {
                         "id": "man",
                         "label": "Man"
@@ -1608,9 +1531,7 @@
                       "id": "scribe",
                       "label": "Scribe"
                     },
-                    "note": [
-                      "The ARK is for Ephrem, to demo functionality"
-                    ]
+                    "note": ["The ARK is for Ephrem, to demo functionality"]
                   }
                 ],
                 "assoc_place": [
@@ -1638,9 +1559,7 @@
                       "label": "Origin Date"
                     },
                     "as_written": "ܠܐܦ̈ܝ ܬܠܬ: ܫ̈ܥܝܢ: ܝܘܡ: ܕ̄ ܟ̄ܚ܇ ܐܝܠܘܠ ܫܢܬ: ܘ̄ ܐܠܦ̄: ܚ̄ܕ ܩ̄: ܕ̄: ܠܐܒܘܢ: ܐܕܡ",
-                    "note": [
-                      "Date for demo purposes"
-                    ]
+                    "note": ["Date for demo purposes"]
                   }
                 ],
                 "note": [
@@ -1660,9 +1579,7 @@
                   "id": "origin",
                   "label": "Origin Date"
                 },
-                "note": [
-                  "Based on paleographic evidence"
-                ]
+                "note": ["Based on paleographic evidence"]
               }
             ],
             "features": [
@@ -1690,16 +1607,12 @@
             "cataloguer": [
               {
                 "message": "ADDED: Ingested descriptions from the Syriac Parchment Descriptions project.",
-                "contributor": [
-                  "Natalia Smelova"
-                ],
+                "contributor": ["Natalia Smelova"],
                 "added_by": "William Potter",
                 "timestamp": "2025-06-03T15:50:45Z"
               }
             ],
-            "parent": [
-              "ark:/21198/te5f0f9b"
-            ]
+            "parent": ["ark:/21198/te5f0f9b"]
           },
           "locus": "ff. 55v-144v"
         }
@@ -1734,12 +1647,8 @@
       ],
       "label": "Anonymous theological text",
       "as_written": "وصلي على كاتبه الحقير",
-      "translation": [
-        "Pray for the despised scribe [of this text]"
-      ],
-      "note": [
-        "Seems to be a part of a longer letter"
-      ]
+      "translation": ["Pray for the despised scribe [of this text]"],
+      "note": ["Seems to be a part of a longer letter"]
     },
     {
       "type": {
@@ -1782,10 +1691,7 @@
               "label": "Person"
             },
             "pref_name": "Ephrem",
-            "alt_name": [
-              "Ephrem the Syrian",
-              "ܐܦܪܝܡ"
-            ],
+            "alt_name": ["Ephrem the Syrian", "ܐܦܪܝܡ"],
             "gender": {
               "id": "man",
               "label": "Man"
@@ -1849,11 +1755,7 @@
           "place_record": {
             "ark": "ark:/21198/pl1234",
             "pref_name": "Nisibis",
-            "alt_name": [
-              "ܢܨܝܒܝܢ",
-              "Nusaybin",
-              "Ṣōbā"
-            ]
+            "alt_name": ["ܢܨܝܒܝܢ", "Nusaybin", "Ṣōbā"]
           }
         },
         {
@@ -1884,9 +1786,7 @@
             "label": "Reading Date"
           },
           "as_written": "ܠܦܪ̈ܣܝܐ",
-          "note": [
-            "There is no real date here, just for demo purposes"
-          ]
+          "note": ["There is no real date here, just for demo purposes"]
         }
       ],
       "note": [
@@ -1912,9 +1812,7 @@
         "id": "binding",
         "label": "Binding Date"
       },
-      "note": [
-        "Binding dates estimated from origin dates of the two parts"
-      ]
+      "note": ["Binding dates estimated from origin dates of the two parts"]
     }
   ],
   "assoc_name": [
@@ -2047,9 +1945,7 @@
       "citation": "Kāmil, Murād. Catalogue of All Manuscripts in the Monastery of St. Catherine on Mount Sinai. Harrassowitz, 1970.",
       "range": "[50], pg. 152",
       "alt_shelf": "Syr. 435",
-      "note": [
-        "Kamil misidentifies this manuscript with Syriac 435"
-      ]
+      "note": ["Kamil misidentifies this manuscript with Syriac 435"]
     },
     {
       "id": "ce9cdae8-81ce-4c29-8431-ab599cd5491c",
@@ -2073,9 +1969,7 @@
       "shortcode": "LOC",
       "citation": "Manuscripts in St. Catherine's Monastery, Mount Sinai. Library of Congress.",
       "url": "https://www.loc.gov/item/00279386334-ms/",
-      "note": [
-        "LoC microfilms"
-      ]
+      "note": ["LoC microfilms"]
     },
     {
       "id": "467167dd-e012-4f87-a1c8-cd8a79c3e8d5",
@@ -2122,10 +2016,7 @@
   "cataloguer": [
     {
       "message": "ADDED: Ingested descriptions from the Syriac Parchment Descriptions project.",
-      "contributor": [
-        "Grigory Kessel",
-        "Vevian Zaki"
-      ],
+      "contributor": ["Grigory Kessel", "Vevian Zaki"],
       "added_by": "William Potter",
       "timestamp": "2025-06-30T15:50:45Z"
     }
@@ -2148,14 +2039,10 @@
       {
         "label": "Sinai Palimpests Project",
         "description": "Imaged as part of the Sinai Palimpsests Project (2006-2017). Digitization for the Sinai Palimpsests Project was sponsored by St. Catherine’s Monastery of the Sinai in partnership with the Early Manuscripts Electronic Library and the UCLA Library, and with funding from Arcadia. The Sinai Palimpsests Project aimed to provide multispectral images of the Undertext Objects in a subset of palimpsested manuscripts in the Sinai collection, as such images may only be available for palimpsested folios.",
-        "camera_operator": [
-          "Damianos Kasotakis"
-        ],
+        "camera_operator": ["Damianos Kasotakis"],
         "imaging_date": "2009-01",
         "delivery": "spp_2",
-        "msi_processing": [
-          "Keith Knox"
-        ],
+        "msi_processing": ["Keith Knox"],
         "condition_category": "2",
         "note": [
           "Automated processing techniques combine two or more raw images into a single processed image by simple arithmetic."
@@ -2165,9 +2052,7 @@
       {
         "label": "Sinai Library Digitization Project, Phase 1",
         "description": "Imaged as part of the Sinai Library Digitization Project, Phase 1 (2018-2022). Digitization for the Sinai Library Digitization Project was sponsored by St. Catherine’s Monastery of the Sinai in partnership with the Early Manuscripts Electronic Library and the UCLA Library, and with funding from The Ahmanson Foundation, Arcadia, and the Steinmetz Family Foundation. Phase 1 of the Sinai Library Digitization Project aimed to provide high-resolution images of the Arabic and Syriac manuscripts held in the Monastery’s library.",
-        "camera_operator": [
-          "Lampros Galanis"
-        ],
+        "camera_operator": ["Lampros Galanis"],
         "imaging_date": "2020-01-22/2020-01-23",
         "delivery": "6.3",
         "condition_category": "1",
@@ -2234,9 +2119,7 @@
                   "label": "Unidentified Text"
                 }
               ],
-              "parent": [
-                "ark:/21198/te5fmsg1"
-              ],
+              "parent": ["ark:/21198/te5fmsg1"],
               "desc_provenance": {
                 "program": [
                   {
@@ -2257,9 +2140,7 @@
             "value": "The reinforcement strips on which this layer is written are from a paper manuscript"
           }
         ],
-        "parent": [
-          "ark:/21198/te5f0f9b"
-        ],
+        "parent": ["ark:/21198/te5f0f9b"],
         "desc_provenance": {
           "program": [
             {
@@ -2333,10 +2214,7 @@
                             "label": "Person"
                           },
                           "pref_name": "Ephrem",
-                          "alt_name": [
-                            "Ephrem the Syrian",
-                            "ܐܦܪܝܡ"
-                          ],
+                          "alt_name": ["Ephrem the Syrian", "ܐܦܪܝܡ"],
                           "gender": {
                             "id": "man",
                             "label": "Man"
@@ -2393,9 +2271,7 @@
                   "label": "Unidentified Text"
                 }
               ],
-              "parent": [
-                "ark:/21198/te5fmsg2"
-              ],
+              "parent": ["ark:/21198/te5fmsg2"],
               "desc_provenance": {
                 "program": [
                   {
@@ -2416,9 +2292,7 @@
             "value": "The reinforcement strips on which this layer is written are from a parchment manuscript"
           }
         ],
-        "parent": [
-          "ark:/21198/te5f0f9b"
-        ],
+        "parent": ["ark:/21198/te5f0f9b"],
         "desc_provenance": {
           "program": [
             {
@@ -2493,9 +2367,7 @@
                   "label": "Unidentified Text"
                 }
               ],
-              "parent": [
-                "ark:/21198/te5fmsg3"
-              ],
+              "parent": ["ark:/21198/te5fmsg3"],
               "desc_provenance": {
                 "program": [
                   {
@@ -2516,9 +2388,7 @@
             "value": "The reinforcement strips on which this layer is written are from a parchment manuscript"
           }
         ],
-        "parent": [
-          "ark:/21198/te5f0f9b"
-        ],
+        "parent": ["ark:/21198/te5f0f9b"],
         "desc_provenance": {
           "program": [
             {

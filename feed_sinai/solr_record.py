@@ -3,7 +3,7 @@
 """Pydantic classes for the data model."""
 
 import logging
-from datetime import datetime
+from datetime import date, datetime
 from itertools import chain
 from typing import Callable, Iterator, List, Literal, TypeVar
 
@@ -181,12 +181,16 @@ class ManuscriptSolrRecord(st.BaseModel):
 
     @computed_field
     def ot_year_isim(self) -> list[int]:
+        """Returns a sorted, deduplicated list of potential origin years for ot layers.
+        For each layer, prefers the dates directly in the layer record, but uses ot_layer.para.assoc_date dates of type ‘origin’ if none are found."""
+
+        dates = [date]
+
         return sorted(
             {
                 year
-                for layer in self.ot_layers()
-                for date in layer.layer_record.assoc_date
-                if date.type.id == "origin" and date.iso
+                for date in self.get_origin_dates()
+                if date.iso
                 for year in date.iso.years()
             }
         )
@@ -755,3 +759,18 @@ class ManuscriptSolrRecord(st.BaseModel):
 
                 for text_unit in layer.layer_record.text_unit:
                     yield from text_unit.text_unit_record.para
+
+    def get_origin_dates(self) -> Iterator[st.AssocDateItem]:
+        for layer in self.ot_layers():
+            origin_dates = [
+                date
+                for date in layer.layer_record.assoc_date
+                if date.type.id == "origin" and date.iso
+            ] or [
+                date
+                for para in layer.layer_record.para
+                for date in para.assoc_date
+                if date.type.id == "origin" and date.iso
+            ]
+
+            yield from origin_dates

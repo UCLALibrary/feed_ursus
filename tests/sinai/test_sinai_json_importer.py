@@ -1,6 +1,7 @@
 # pylint: disable=no-self-use
 
 import json
+from pathlib import Path
 
 import pytest
 
@@ -550,6 +551,45 @@ class TestGetLayer:
             importer.get_layer(stub)
             n_files += 1
         assert n_files == 17
+
+
+class TestGetUto:
+    def test_gets_origin_date(self, importer: SinaiJsonImporter) -> None:
+        unmerged = st.ManuscriptLayerUnmerged(
+            id="ark:/21198/s1gh06",
+            label="Georgian Undertext: Iadgari, Assumption",
+            type={"id": "undertext", "label": "Undertext"},
+            locus="ff. 144–145, 204–205, 208–209, rear pastedown, 140–141",
+        )
+
+        result = importer.get_uto(unmerged)
+
+        assert result.model_dump(mode="json")["orig_date"] == [
+            {
+                "type": {"id": "origin", "label": "Date of Origin"},
+                "value": "ca. 9th-10th c.  CE",
+                "iso": {"not_before": "0801", "not_after": "0950"},
+            }
+        ]
+
+    def test_uses_para_date(self, importer: SinaiJsonImporter) -> None:
+        unmerged = st.ManuscriptLayerUnmerged(
+            id="ark:/21198/ten0p1ul2",
+            label="Undertext layer, Genesis (6th c., Greek majuscule)",
+            type={"id": "undertext", "label": "Undertext"},
+            locus="ff. 131-132, 138, 140-142",
+        )
+
+        result = importer.get_uto(unmerged)
+
+        assert result.model_dump(mode="json")["orig_date"] == [
+            {
+                "type": {"id": "origin", "label": "Origin Date"},
+                "note": ["Paleographic dating"],
+                "value": "6th c. CE",
+                "iso": {"not_before": "0501", "not_after": "0600"},
+            }
+        ]
 
 
 class TestGetMergedManuscript:

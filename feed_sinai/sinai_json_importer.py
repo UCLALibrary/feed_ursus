@@ -9,6 +9,7 @@ Output is pushed to a solr index suitable for use by https://github.com/UCLALibr
 import asyncio
 import json
 import logging
+from datetime import date
 from math import inf
 from pathlib import Path
 from typing import Any, Awaitable, Iterator, Optional
@@ -192,7 +193,7 @@ class SinaiJsonImporter:
 
     def get_uto(
         self, ms_layer: st.ManuscriptLayerUnmerged
-    ) -> st.ManuscriptLayerMerged | st.UndertextManuscriptLayerMerged:
+    ) -> st.UndertextManuscriptLayerMerged:
         assert ms_layer.type.id == "undertext"
 
         layer_record_path = self.base_path / "layers" / self.get_filename(ms_layer.id)
@@ -224,9 +225,16 @@ class SinaiJsonImporter:
                 for text_unit in layer_record.text_unit
                 for lang in text_unit.text_unit_record.lang
             ],
+            # Prefer origin dates directly in the layer_record, if none are found used para.assoc_date
             orig_date=[
                 date
                 for date in (layer_record.assoc_date or [])
+                if date.type.id == "origin"
+            ]
+            or [
+                date
+                for para in layer_record.para
+                for date in para.assoc_date
                 if date.type.id == "origin"
             ],
         )
