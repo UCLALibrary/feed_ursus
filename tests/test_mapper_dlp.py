@@ -10,6 +10,91 @@ import pytest  # type: ignore
 import feed_ursus.mapper.dlp as mapper
 
 
+class TestArchivalCollection:
+    def test_all_fields(self):
+        row = {
+            "Box": "4",
+            "Folder": "5",
+            "Archival Collection Number": "123",
+            "Archival Collection Title": "Boring Collection",
+        }
+        expected = "Boring Collection (123), Box 4, Folder 5"
+
+        assert mapper.archival_collection(row) == expected
+
+    def test_says_box_or_folder(self):
+        row = {
+            "Box": "box 4",
+            "Folder": " Folder 5",
+            "Archival Collection Number": "123",
+            "Archival Collection Title": "Boring Collection",
+        }
+        expected = "Boring Collection (123), Box 4, Folder 5"
+
+        assert mapper.archival_collection(row) == expected
+
+    def test_no_collection_number(self):
+        row = {
+            "Box": "4",
+            "Folder": "5",
+            "Archival Collection Title": "Boring Collection",
+        }
+        expected = "Boring Collection, Box 4, Folder 5"
+
+        assert mapper.archival_collection(row) == expected
+
+    def test_no_collection_title(self):
+        row = {
+            "Box": "4",
+            "Folder": "5",
+            "Archival Collection Number": "123",
+            "Archival Collection Title": "",
+        }
+        expected = "Archival Collection 123, Box 4, Folder 5"
+
+        assert mapper.archival_collection(row) == expected
+
+    def test_no_collection_title_or_number(self):
+        row = {
+            "Box": "4",
+            "Folder": "5",
+            "Archival Collection Number": "",
+            "Archival Collection Title": "",
+        }
+        expected = "Boring Collection (123), Box 4, Folder 5"
+
+        assert mapper.archival_collection(row) == None
+
+    def test_no_box(self):
+        row = {
+            "Folder": "5",
+            "Archival Collection Number": "123",
+            "Archival Collection Title": "Boring Collection",
+        }
+        expected = "Boring Collection (123), Folder 5"
+
+        assert mapper.archival_collection(row) == expected
+
+    def test_no_folder(self):
+        row = {
+            "Box": "4",
+            "Archival Collection Number": "123",
+            "Archival Collection Title": "Boring Collection",
+        }
+        expected = "Boring Collection (123), Box 4"
+
+        assert mapper.archival_collection(row) == expected
+
+    def test_no_box_or_folder(self):
+        row = {
+            "Archival Collection Number": "123",
+            "Archival Collection Title": "Boring Collection",
+        }
+        expected = "Boring Collection (123)"
+
+        assert mapper.archival_collection(row) == expected
+
+
 class TestVisibility:
     """Tests for mapper.visibility and mapper.access_group"""
 
