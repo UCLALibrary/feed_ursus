@@ -2,6 +2,7 @@
 """Mapping logic for UCLA CSV->Blacklight conversion."""
 
 import os
+import re
 import typing
 
 import yaml
@@ -9,22 +10,30 @@ import yaml
 # import urllib.parse
 
 
-def archival_collection(row: typing.Mapping[str, str]) -> str:
-    return (
-        row["Archival Collection Title"]
-        if "Archival Collection Title" in row
-        else (
-            "" + f" ({row['Archival Collection Number']})"
-            if "Archival Collection Number" in row
-            else (
-                "" + f", Box {row['Box']}"
-                if "Box" in row
-                else "" + f", Folder {row['Folder']}"
-                if "Folder" in row
-                else ""
-            )
-        )
-    )
+def archival_collection(row: typing.Mapping[str, str | None]) -> str | None:
+    title = row.get("Archival Collection Title")
+    number = row.get("Archival Collection Number")
+    box = re.sub(r"^\s*box\s*", "", row.get("Box") or "", flags=re.IGNORECASE)
+    folder = re.sub(r"^\s*folder\s*", "", row.get("Folder") or "", flags=re.IGNORECASE)
+
+    result: str = ""
+    if title and number:
+        result = f"{title} ({number})"
+    elif title and not number:
+        result = title
+    elif number and not title:
+        result = f"Archival Collection {number}"
+    else:
+        # No collection title or number; don't bother with box and folder
+        return None
+
+    if box:
+        result += f", Box {box}"
+
+    if folder:
+        result += f", Folder {folder}"
+
+    return result
 
 
 def ark(row: typing.Mapping[str, str]) -> str:

@@ -52,6 +52,7 @@ select = ["I"]
 plugins = ['pydantic.mypy']
 disallow_untyped_defs = true
 check_untyped_defs = true
+follow_untyped_imports = true
 
 [build-system]
 requires = ["hatchling", "hatch-vcs"]
