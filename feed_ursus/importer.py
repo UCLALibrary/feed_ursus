@@ -392,6 +392,7 @@ class Importer:
         record["ingest_id_ssi"] = self.ingest_id
 
         # THUMBNAIL
+        # feed_ursus.mapper.dlp.thumbnail_url tries to set the field based on the csv record. If that didn't result in anything, try some more complicated strategies
         record["thumbnail_url_ss"] = (
             record.get("thumbnail_url_ss")
             or self.thumbnail_from_child(record)
@@ -447,7 +448,6 @@ class Importer:
         record["subject_sim"] = record.get("subject_tesim")
         record["location_sim"] = record.get("location_tesim")
         record["named_subject_sim"] = record.get("named_subject_tesim")
-        record["human_readable_resource_type_sim"] = record.get("resource_type_tesim")
 
         record["combined_subject_ssim"] = [
             *record.get("named_subject_tesim", []),

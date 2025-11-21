@@ -111,6 +111,43 @@ def preservation_copy(row: typing.Mapping[str, str]) -> typing.Optional[str]:
     return file_path
 
 
+def resource_type_id(row: typing.Mapping[str, str]) -> list[str]:
+    """ID value for resoruce type.
+
+    CSVs store resource type as a human-readable value, but californica uses a controlled vocabulary and stores the id (see https://github.com/UCLALibrary/californica/blob/main/config/authorities/resource_types.yml)
+
+    In general feed_ursus ignores controlled terms' IDs and uses full text terms, but in this case Ursus looks for the ID values to determine when to show audio / video icons as default thumbnails, so we have to map back to the ID value. The full form is still imported as human_readable_resource_type_tesim.
+    """
+
+    resource_type_id_map = {
+        "cartographic": "http://id.loc.gov/vocabulary/resourceTypes/car",
+        "collection": "http://id.loc.gov/vocabulary/resourceTypes/col",
+        "mixed material": "http://id.loc.gov/vocabulary/resourceTypes/mix",
+        "moving image": "http://id.loc.gov/vocabulary/resourceTypes/mov",
+        "notated music": "http://id.loc.gov/vocabulary/resourceTypes/not",
+        "sound recording": "http://id.loc.gov/vocabulary/resourceTypes/aud",
+        "sound recording-musical": "http://id.loc.gov/vocabulary/resourceTypes/aum",
+        "sound recording-nonmusical": "http://id.loc.gov/vocabulary/resourceTypes/aun",
+        "still image": "http://id.loc.gov/vocabulary/resourceTypes/img",
+        "text": "http://id.loc.gov/vocabulary/resourceTypes/txt",
+        "three dimensional object": "http://id.loc.gov/vocabulary/resourceTypes/art",
+    }
+
+    result: list[str] = []
+    if (  # return an empty list unless:
+        "Type.typeOfResource" in row
+        and row["Type.typeOfResource"]  # not an empty string
+        and isinstance(row["Type.typeOfResource"], str)
+    ):
+        for resource_type in row["Type.typeOfResource"].split("|~|"):
+            try:
+                result.append(resource_type_id_map[resource_type])
+            except KeyError as e:
+                raise ValueError("Invalid resource type")
+
+    return result
+
+
 def thumbnail_url(row: typing.Mapping[str, str]) -> typing.Optional[str]:
     """A thumbnail URL.
 
@@ -119,9 +156,15 @@ def thumbnail_url(row: typing.Mapping[str, str]) -> typing.Optional[str]:
 
     Returns:
         The thumbnail URL.
+
+    NOTE:
+        This method tries to populate the field based on columns in the CSV. If none of those are populated, it returns None and feed_ursus.importer.map_record will try more complicated strategies that pull a thumbnail from a child record or IIIF manifest.
     """
     if row.get("Thumbnail URL"):
         return row["Thumbnail URL"]
+
+    if row.get("Thumbnail"):
+        return row["Thumbnail"]
 
     if row.get("IIIF Access URL"):
         return row["IIIF Access URL"] + "/full/!200,200/0/default.jpg"
@@ -322,6 +365,7 @@ FIELD_MAPPING: MappingDict = {
     "human_readable_language_tesim": language,
     "human_readable_related_record_title_ssm": ["Related Records"],
     "human_readable_resource_type_tesim": "Type.typeOfResource",
+    "human_readable_resource_type_sim": "Type.typeOfResource",
     "human_readable_rights_statement_tesim": "Rights.copyrightStatus",
     "identifier_tesim": [
         "Identifier"
@@ -434,8 +478,8 @@ FIELD_MAPPING: MappingDict = {
     "representative_image_ssi": ["Representative image"],
     "researcher_sim": ["Researcher", "Name.researcher"],
     "researcher_tesim": ["Researcher", "Name.researcher"],
-    "resource_type_tesim": "Type.typeOfResource",
-    "resource_type_sim": "Type.typeOfResource",
+    "resource_type_tesim": resource_type_id,
+    "resource_type_sim": resource_type_id,
     "resp_statement_tesim": "Statement of Responsibility",
     "rights_country_tesim": "Rights.countryCreation",
     "rights_holder_tesim": [
@@ -474,7 +518,7 @@ FIELD_MAPPING: MappingDict = {
     "summary_tesim": ["Summary", "Description.abstract"],
     "support_tesim": "Support",
     "tagline_ssi": ["Tagline"],
-    "thumbnail_url_ss": thumbnail_url,
+    "thumbnail_url_ss": thumbnail_url,  # see note above, there's more logic in importer.py
     "title_tesim": "Title",
     "title_sim": "Title",
     "toc_tesim": ["Table of Contents", "Description.tableOfContents"],

@@ -4,6 +4,7 @@
 # pylint: disable=no-self-use
 
 import random
+from math import e
 
 import pytest  # type: ignore
 
@@ -93,6 +94,46 @@ class TestArchivalCollection:
         expected = "Boring Collection (123)"
 
         assert mapper.archival_collection(row) == expected
+
+
+class TestResourceTypeID:
+    def test_single_value(self):
+        row = {"Type.typeOfResource": "cartographic"}
+        expected = ["http://id.loc.gov/vocabulary/resourceTypes/car"]
+
+        assert mapper.resource_type_id(row) == expected
+
+    def test_multi_value(self):
+        row = {
+            "Type.typeOfResource": "moving image|~|sound recording|~|sound recording-musical|~|sound recording-nonmusical"
+        }
+        expected = [
+            "http://id.loc.gov/vocabulary/resourceTypes/mov",
+            "http://id.loc.gov/vocabulary/resourceTypes/aud",
+            "http://id.loc.gov/vocabulary/resourceTypes/aum",
+            "http://id.loc.gov/vocabulary/resourceTypes/aun",
+        ]
+
+        assert mapper.resource_type_id(row) == expected
+
+    def test_empty(self):
+        row = {"Type.typeOfResource": ""}
+        expected: list[str] = []
+
+        assert mapper.resource_type_id(row) == expected
+        assert mapper.resource_type_id(row) == expected
+
+    def test_none(self):
+        row = {"Type.typeOfResource": ""}
+        expected: list[str] = []
+
+        assert mapper.resource_type_id(row) == expected
+
+    def test_not_in_csv(self):
+        row: dict[str, str] = {}
+        expected: list[str] = []
+
+        assert mapper.resource_type_id(row) == expected
 
 
 class TestVisibility:

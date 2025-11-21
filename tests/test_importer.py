@@ -160,7 +160,6 @@ class TestMapRecord:
             "features_sim": None,
             "genre_sim": None,
             "human_readable_language_sim": None,
-            "human_readable_resource_type_sim": None,
             "id": "ark:/123/abc",
             "location_sim": None,
             "member_of_collections_ssim": [],
@@ -277,7 +276,7 @@ class TestMapRecord:
     )
     def test_sets_facet_fields(self, column_name, facet_field_name, importer):
         """Copies *_tesim to *_sim fields for facets"""
-        value = "value aksjg"
+        value = "still image"  # needs to be valid for resource_type
         result = importer.map_record(
             {
                 "Item ARK": "ark:/123/abc",
