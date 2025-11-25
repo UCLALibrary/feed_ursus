@@ -82,6 +82,16 @@ def solr_transformed_dates(solr_client: Solr, parsed_dates: List):
     return [solr_client._from_python(date) for date in parsed_dates]  # pylint: disable=protected-access
 
 
+INITIAL_SEPARATOR = re.compile(r"^\s*\$\w[$\s]+")
+FINAL_SEPARATOR = re.compile(r"\s+\$\w\s*$")
+MID_ENTRY_SEPARATOR = re.compile(r"\s+\$\w\s+")
+
+
+def remove_catalog_separators(value: str) -> str:
+    intermediate = FINAL_SEPARATOR.sub("", INITIAL_SEPARATOR.sub("", value))
+    return MID_ENTRY_SEPARATOR.sub("--", intermediate)
+
+
 class Importer:
     solr_url: str
     solr_client: Solr
@@ -356,7 +366,12 @@ class Importer:
             input_value = row.get(csv_field)
             if input_value:
                 if isinstance(input_value, str):
-                    output.extend(input_value.split("|~|"))
+                    output.extend(
+                        [
+                            remove_catalog_separators(value)
+                            for value in input_value.split("|~|")
+                        ]
+                    )
                 else:
                     output.append(input_value)
 

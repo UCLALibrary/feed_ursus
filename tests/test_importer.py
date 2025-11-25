@@ -286,6 +286,35 @@ class TestMapRecord:
         )
         assert result[facet_field_name] == [value]
 
+    def test_strips_catalog_symbols(self, importer):
+        """sets the collection name by using the collection row"""
+
+        importer.collection_names = self.COLLECTION_NAMES
+        result = importer.map_record(
+            {
+                "Item ARK": "ark:/123/abc",
+                "Parent ARK": "ark:/123/collection",
+                "Description.note": "|~|".join(
+                    [
+                        "intermediate $w abc",
+                        "$k initial",
+                        "  $u initial with space",
+                        "final $k",
+                        "final with space $k ",
+                        " $a mixed  $p   xyz",
+                    ]
+                ),
+            }
+        )
+        assert result["description_tesim"] == [
+            "intermediate--abc",
+            "initial",
+            "initial with space",
+            "final",
+            "final with space",
+            "mixed--xyz",
+        ]
+
 
 class TestThumbnailFromChild:
     """Tests for feed_ursus.thumbnail_from_child."""
