@@ -88,6 +88,20 @@ def delete(ctx, items: typing.List[str], yes: bool):
     ctx.obj["importer"].delete(items=items, yes=yes)
 
 
+@feed_ursus.command()
+@click.pass_context
+def log(ctx):
+    """Delete records from a Solr index.
+
+    Args:
+        solr_url: URL of a solr instance.
+        items: List of items to delete. Can be ARKs, Solr IDs, or csv filenames.
+               If a csv filename is provided, all ARKs in the file will be deleted.
+    """
+
+    ctx.obj["importer"].print_log()
+
+
 if __name__ == "__main__":
     print("feed_ursus() executing, running from main()")
     feed_ursus()  # pylint: disable=no-value-for-parameter
