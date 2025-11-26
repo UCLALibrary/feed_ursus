@@ -79,7 +79,9 @@ def get_bare_field_name(field_name: str) -> str:
 
 def solr_transformed_dates(solr_client: Solr, parsed_dates: List):
     """the dates  in sorted list are transformed to solr format"""
-    return [solr_client._from_python(date) for date in parsed_dates]  # pylint: disable=protected-access
+    return [
+        solr_client._from_python(date) for date in parsed_dates
+    ]  # pylint: disable=protected-access
 
 
 class Importer:
@@ -106,6 +108,8 @@ class Importer:
         self.child_works = defaultdict(list)
         self.controlled_fields = load_field_config("./mapper/fields")
 
+        self.collection_names = self.get_collection_names(self.solr_client)
+
     def load_csv(self, filenames: List[str], batch: bool):
         """Load data from a csv.
 
@@ -122,11 +126,16 @@ class Importer:
         }
 
         self.ingest_id = f"{datetime.now(timezone.utc).isoformat()}-{getuser()}"
-        self.collection_names = {
-            row["Item ARK"].replace("ark:/", "").replace("/", "-")[::-1]: row["Title"]
-            for row in csv_data.values()
-            if row.get("Object Type") == "Collection"
-        }
+        self.collection_names.update(
+            {
+                row["Item ARK"]
+                .replace("ark:/", "")
+                .replace("/", "-")[::-1]: row["Title"]
+                for row in csv_data.values()
+                if row.get("Object Type") == "Collection"
+            }
+        )
+
         self.controlled_fields = load_field_config("./mapper/fields")
         self.child_works = collate_child_works(csv_data)
 
@@ -373,7 +382,9 @@ class Importer:
             return output[0] if len(output) >= 1 else None
 
     # pylint: disable=bad-continuation
-    def map_record(self, row: DLCSRecord) -> UrsusRecord:  # pylint: disable=too-many-statements
+    def map_record(
+        self, row: DLCSRecord
+    ) -> UrsusRecord:  # pylint: disable=too-many-statements
         """Maps a metadata record from CSV to Ursus Solr.
 
         Args:
@@ -628,3 +639,28 @@ class Importer:
         except Exception:
             # ruff: noqa: E722
             return None
+
+    def get_collection_names(self, solr_client: Solr) -> dict:
+        """Get a mapping of collection IDs to collection names.
+
+        Returns:
+            A dict mapping collection IDs to collection names.
+        """
+        id_to_title: dict = {}
+
+        try:
+            results = self.solr_client.search(
+                "has_model_ssim:Collection",
+                defType="lucene",
+                fl="id,title_tesim",
+                rows=1000,
+            )
+            id_to_title = {
+                doc["id"]: (doc["title_tesim"][0] if "title_tesim" in doc else None)
+                for doc in results
+            }
+
+        except SolrError as e:
+            print(f"Error querying records: {e}")
+
+        return id_to_title
