@@ -12,8 +12,6 @@ from collections import defaultdict
 from datetime import datetime, timezone
 from getpass import getuser
 from importlib import import_module
-from itertools import batched
-from time import strftime
 from types import ModuleType
 from typing import (
     Any,
@@ -643,23 +641,21 @@ class Importer:
             for x in self.solr_client.search("is_ingest_bsi:true").docs
         ]
 
-        ingest_id_facets = self.solr_client.search(
-            "*:*",
-            **{
-                "facet": "on",
-                "facet.field": "ingest_id_ssi",  # weird **{...} syntax allows "facet.field"
-                "rows": 0,
-            },
-        )
-        ingest_counts = {
-            key: value
-            for key, value in batched(
-                ingest_id_facets.facets.get("facet_fields", {}).get(
-                    "ingest_id_ssi", []
-                ),
-                2,
+        ingest_id_facets = (
+            self.solr_client.search(
+                "*:*",
+                **{
+                    "facet": "on",
+                    "facet.field": "ingest_id_ssi",  # weird **{...} syntax allows "facet.field"
+                    "rows": 0,
+                },
             )
-        }
+            .facets.get("facet_fields", {})
+            .get("ingest_id_ssi", [])
+        )
+        ingest_counts = {}
+        for i in range(0, len(ingest_id_facets), 2):
+            ingest_counts[ingest_id_facets[i]] = ingest_id_facets[i + 1]
 
         return [
             IngestLogRecord(
@@ -686,7 +682,6 @@ class Importer:
         for row in self.get_log():
             table.add_row(
                 row.id,
-                row.timestamp.strftime("%a %Y-%m-%d"),
                 row.ingest_user_ssi,
                 ", ".join(row.ingest_filenames_ssim),
                 row.feed_ursus_version_ssi,
