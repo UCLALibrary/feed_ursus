@@ -110,6 +110,8 @@ class Importer:
         self.child_works = defaultdict(list)
         self.controlled_fields = load_field_config("./mapper/fields")
 
+        self.collection_names = self.collection_names_from_solr()
+
     def load_csv(self, filenames: List[str], batch: bool):
         """Load data from a csv.
 
@@ -126,11 +128,16 @@ class Importer:
         }
 
         self.ingest_id = f"{datetime.now(timezone.utc).isoformat()}-{getuser()}"
-        self.collection_names = {
-            row["Item ARK"].replace("ark:/", "").replace("/", "-")[::-1]: row["Title"]
-            for row in csv_data.values()
-            if row.get("Object Type") == "Collection"
-        }
+        self.collection_names.update(
+            {
+                row["Item ARK"].replace("ark:/", "").replace("/", "-")[::-1]: row[
+                    "Title"
+                ]
+                for row in csv_data.values()
+                if row.get("Object Type") == "Collection"
+            }
+        )
+
         self.controlled_fields = load_field_config("./mapper/fields")
         self.child_works = collate_child_works(csv_data)
 
@@ -634,6 +641,31 @@ class Importer:
         except Exception:
             # ruff: noqa: E722
             return None
+
+    def collection_names_from_solr(self) -> dict:
+        """Get a mapping of collection IDs to collection names.
+
+        Returns:
+            A dict mapping collection IDs to collection names.
+        """
+        id_to_title: dict = {}
+
+        try:
+            results = self.solr_client.search(
+                "has_model_ssim:Collection",
+                defType="lucene",
+                fl="id,title_tesim",
+                rows=1000,
+            )
+            id_to_title = {
+                doc["id"]: (doc["title_tesim"][0] if "title_tesim" in doc else None)
+                for doc in results
+            }
+
+        except SolrError as e:
+            print(f"Error querying records: {e}")
+
+        return id_to_title
 
     def get_log(self):  # -> list[IngestLogRecord]:
         ingest_records = [

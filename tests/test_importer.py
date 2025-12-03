@@ -16,7 +16,9 @@ from . import fixtures  # pylint: disable=wrong-import-order
 
 
 @pytest.fixture
-def importer() -> Importer:
+def importer(monkeypatch) -> Importer:
+    monkeypatch.setattr(Importer, "collection_names_from_solr", lambda _self: {})
+
     importer = Importer(solr_url="", mapper_name="dlp")
     importer.solr_client = Mock(Solr)
     importer.async_client = Mock(AsyncClient)
@@ -473,3 +475,8 @@ class TestThumbnailFromManifest:
 
         result = importer.thumbnail_from_manifest({})
         assert result is None
+
+
+@pytest.mark.xfail
+def test_collection_names_from_solr():
+    raise NotImplementedError
