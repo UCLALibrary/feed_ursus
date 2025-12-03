@@ -83,9 +83,7 @@ def get_bare_field_name(field_name: str) -> str:
 
 def solr_transformed_dates(solr_client: Solr, parsed_dates: List):
     """the dates  in sorted list are transformed to solr format"""
-    return [
-        solr_client._from_python(date) for date in parsed_dates
-    ]  # pylint: disable=protected-access
+    return [solr_client._from_python(date) for date in parsed_dates]  # pylint: disable=protected-access
 
 
 class Importer:
@@ -112,7 +110,7 @@ class Importer:
         self.child_works = defaultdict(list)
         self.controlled_fields = load_field_config("./mapper/fields")
 
-        self.collection_names = self.get_collection_names(self.solr_client)
+        self.collection_names = self.collection_names_from_solr()
 
     def load_csv(self, filenames: List[str], batch: bool):
         """Load data from a csv.
@@ -132,9 +130,9 @@ class Importer:
         self.ingest_id = f"{datetime.now(timezone.utc).isoformat()}-{getuser()}"
         self.collection_names.update(
             {
-                row["Item ARK"]
-                .replace("ark:/", "")
-                .replace("/", "-")[::-1]: row["Title"]
+                row["Item ARK"].replace("ark:/", "").replace("/", "-")[::-1]: row[
+                    "Title"
+                ]
                 for row in csv_data.values()
                 if row.get("Object Type") == "Collection"
             }
@@ -388,9 +386,7 @@ class Importer:
             return output[0] if len(output) >= 1 else None
 
     # pylint: disable=bad-continuation
-    def map_record(
-        self, row: DLCSRecord
-    ) -> UrsusRecord:  # pylint: disable=too-many-statements
+    def map_record(self, row: DLCSRecord) -> UrsusRecord:  # pylint: disable=too-many-statements
         """Maps a metadata record from CSV to Ursus Solr.
 
         Args:
@@ -646,7 +642,7 @@ class Importer:
             # ruff: noqa: E722
             return None
 
-    def get_collection_names(self, solr_client: Solr) -> dict:
+    def collection_names_from_solr(self) -> dict:
         """Get a mapping of collection IDs to collection names.
 
         Returns:
