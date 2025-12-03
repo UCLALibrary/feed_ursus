@@ -141,7 +141,10 @@ def test_get_bare_field_name():
 class TestMapRecord:
     """function map_record"""
 
-    COLLECTION_NAMES = {"noitcelloc-321": "Test Collection KGSL"}
+    COLLECTION_NAMES = {
+        "noitcelloc-321": "Test Collection KGSL",
+        "noitcelloc-654": "Test Collection Number Two",
+    }
 
     def test_maps_record(self, importer, monkeypatch):
         """maps the record for Ursus"""
@@ -264,6 +267,26 @@ class TestMapRecord:
             }
         )
         assert result["member_of_collections_ssim"] == ["Test Collection KGSL"]
+
+    def test_sets_two_parent_collections(self, importer):
+        """sets the collection name by using the collection row"""
+
+        importer.collection_names = self.COLLECTION_NAMES
+        result = importer.map_record(
+            {
+                "Item ARK": "ark:/123/abc",
+                "Parent ARK": "ark:/123/collection|~|ark:/456/collection",
+                # "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest",
+            }
+        )
+        assert result["member_of_collection_ids_ssim"] == [
+            "noitcelloc-321",
+            "noitcelloc-654",
+        ]
+        assert result["member_of_collections_ssim"] == [
+            "Test Collection KGSL",
+            "Test Collection Number Two",
+        ]
 
     @pytest.mark.parametrize(
         ["column_name", "facet_field_name"],
