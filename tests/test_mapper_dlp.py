@@ -156,6 +156,8 @@ class TestVisibility:
             (" open", "open", ["public"]),
             ("open       ", "open", ["public"]),
             ("OPEN", "open", ["public"]),
+            # Column is present but empty for row
+            ("", "open", ["public"]),
         ],
     )
     def test_visibility_included(
@@ -180,7 +182,7 @@ class TestVisibility:
             ("Else", "restricted", []),
         ],
     )
-    def test_visibility_inferred(
+    def test_visibility_inferred_from_item_status(
         self, item_status, expected_visibility, expected_access_group
     ):
         """Infer from from 'Item Status' if 'Visibility' not in csv."""
@@ -188,3 +190,7 @@ class TestVisibility:
         row = {"Item Status": item_status}
         assert mapper.visibility(row) == expected_visibility
         assert mapper.access_group(row) == expected_access_group
+
+    def test_no_visibility_or_satus(self):
+        assert mapper.visibility({}) == "open"
+        assert mapper.access_group({"Item Status": ""}) == ["public"]
