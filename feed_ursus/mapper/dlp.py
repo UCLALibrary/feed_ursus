@@ -172,7 +172,7 @@ def thumbnail_url(row: typing.Mapping[str, str]) -> typing.Optional[str]:
     return None
 
 
-def visibility(row: typing.Mapping[str, str]) -> typing.Optional[str]:
+def visibility(row: typing.Mapping[str, str]) -> str:
     """Object visibility.
 
     A single-value field that must contain one of the allowed values.
@@ -222,13 +222,20 @@ def visibility(row: typing.Mapping[str, str]) -> typing.Optional[str]:
     }
 
     if "Visibility" in row:
-        value_from_csv = row["Visibility"].strip().lower()
-        return visibility_mapping.get(value_from_csv)
+        value_from_csv = row.get("Visibility", "").strip().lower()
+        # Defaulting to 'public' if the value isn't in visibility_mapping is probably
+        # not a good idea, but it's what californica does so we're replicating that
+        # https://github.com/UCLALibrary/californica/blob/234b6dbba7b8ad524430a3b7b7579181911cf6ad/app/importers/californica_mapper.rb#L181
+        return visibility_mapping.get(value_from_csv, "open")
 
-    if row.get("Item Status") in ["Completed", "Completed with minimal metadata"]:
+    if row.get("Item Status", "") in [
+        "Completed",
+        "Completed with minimal metadata",
+        "",
+    ]:
         return "open"
-
-    return "restricted"
+    else:
+        return "restricted"
 
 
 def access_group(row: typing.Mapping[str, str]) -> typing.List[str]:
