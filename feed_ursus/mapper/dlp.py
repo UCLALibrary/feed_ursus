@@ -166,7 +166,7 @@ def thumbnail_url(row: typing.Mapping[str, str]) -> typing.Optional[str]:
     )
 
     if thumb and re.match(r"^/iiif/2/[^/]+$", urlparse(thumb).path):
-        return row["IIIF Access URL"] + "/full/!200,200/0/default.jpg"
+        return thumb + "/full/!200,200/0/default.jpg"
 
     return thumb
 
