@@ -24,12 +24,18 @@ uv tool install feed_ursus
 
 UV will install feed_ursus in its own virtualenv, but make the command accessible from anywhere so you don't need to active the virtualenv yourself.
 
+To upgrade a uv-installed feed ursus to the latest version:
+```
+uv tool upgrade feed_ursus
+```
+
 #### Installing with pipx
 
 If you are already using pipx, you can use it instead of uv:
 
 ```
 pipx install feed_ursus
+pipx upgrade feed_ursus
 ```
 
 ### Use
