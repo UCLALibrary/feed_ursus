@@ -298,10 +298,11 @@ class Importer:
         except SolrError:
             n_total_works = "[unknown]"
 
-        if yes or click.confirm(
-            f"Delete {len(delete_work_ids)} of {n_total_works} Works?"
-        ):
-            self.solr_client.delete(id=delete_work_ids)
+        if len(delete_work_ids):
+            if yes or click.confirm(
+                f"Delete {len(delete_work_ids)} of {n_total_works} Works?"
+            ):
+                self.solr_client.delete(id=delete_work_ids)
 
         for collection in delete_collections:
             n_children = self.solr_client.search(
@@ -311,7 +312,7 @@ class Importer:
                 rows=0,
             ).hits
             if yes or click.confirm(
-                f"Delete {n_children} collection {collection['title_tesim']}? {n_children} {'child record' if n_children == 1 else 'child records'} will also be deleted."
+                f"Delete collection {collection['title_tesim']}? {n_children} {'child record' if n_children == 1 else 'child records'} will also be deleted."
             ):
                 self.solr_client.delete(
                     q=f"id:{collection['id']} OR member_of_collection_ids_ssim:{collection['id']}"
