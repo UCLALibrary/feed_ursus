@@ -220,13 +220,13 @@ class TestMapRecord:
         result = importer.map_record(
             {
                 "Item ARK": "ark:/123/abc",
-                "IIIF Access URL": "https://test.iiif.server/url",
+                "IIIF Access URL": "https://test.iiif.server/iiif/2/url",
                 "IIIF Manifest URL": "https://iiif.library.ucla.edu/ark%3A%2F123%2Fabc/manifest",
             },
         )
         assert (
             result["thumbnail_url_ss"]
-            == "https://test.iiif.server/url/full/!200,200/0/default.jpg"
+            == "https://test.iiif.server/iiif/2/url/full/!200,200/0/default.jpg"
         )
 
     def test_sets_access(self, importer):
@@ -363,7 +363,7 @@ class TestThumbnailFromChild:
                 "ark:/child/1": {
                     "Item ARK": "ark:/child/1",
                     "Parent ARK": "ark:/work/1",
-                    "IIIF Access URL": "http://iiif.url/123",
+                    "IIIF Access URL": "http://iiif.url/iiif/2/123",
                     "Title": "f. 001r",
                     "Object Type": "ChildWork",
                 },
@@ -372,7 +372,7 @@ class TestThumbnailFromChild:
         record = {"ark_ssi": "ark:/work/1"}
 
         result = importer.thumbnail_from_child(record)
-        assert result == "http://iiif.url/123/full/!200,200/0/default.jpg"
+        assert result == "http://iiif.url/iiif/2/123/full/!200,200/0/default.jpg"
 
     def test_defaults_to_first(self, importer):
         """Returns the thumbnail from first child row if it can't find 'f. 001r'"""

@@ -4,6 +4,7 @@
 import os
 import re
 import typing
+from urllib.parse import urlparse
 
 import yaml
 
@@ -160,16 +161,14 @@ def thumbnail_url(row: typing.Mapping[str, str]) -> typing.Optional[str]:
     NOTE:
         This method tries to populate the field based on columns in the CSV. If none of those are populated, it returns None and feed_ursus.importer.map_record will try more complicated strategies that pull a thumbnail from a child record or IIIF manifest.
     """
-    if row.get("Thumbnail URL"):
-        return row["Thumbnail URL"]
+    thumb = (
+        row.get("Thumbnail URL") or row.get("Thumbnail") or row.get("IIIF Access URL")
+    )
 
-    if row.get("Thumbnail"):
-        return row["Thumbnail"]
-
-    if row.get("IIIF Access URL"):
+    if thumb and re.match(r"^/iiif/2/[^/]+$", urlparse(thumb).path):
         return row["IIIF Access URL"] + "/full/!200,200/0/default.jpg"
 
-    return None
+    return thumb
 
 
 def visibility(row: typing.Mapping[str, str]) -> str:
