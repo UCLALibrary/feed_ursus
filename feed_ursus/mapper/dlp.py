@@ -258,28 +258,6 @@ def access_group(row: typing.Mapping[str, str]) -> typing.List[str]:
     )
 
 
-def language(row: typing.Mapping[str, str]) -> typing.List[str] | None:
-    # Clunky way to handle language lookup, should be replaced by universal authority lookup
-    if row.get("Language"):
-        return [
-            LANGUAGE_MAPPING.get(lang_id, f"{lang_id}")
-            for lang_id in row["Language"].split("|~|")
-        ]
-    return None
-
-
-def create_language_mapping() -> typing.Dict[str, str]:
-    """Create a mapping of language IDs to terms from a YAML file."""
-    this_dir = os.path.dirname(os.path.abspath(__file__))
-    language_path = os.path.join(this_dir, "fields", "language.yml")
-    with open(language_path, "r") as f:
-        data = yaml.safe_load(f)
-
-    return {entry["id"]: entry["term"] for entry in data["terms"]}
-
-
-LANGUAGE_MAPPING = create_language_mapping()
-
 MappigDictValue = typing.Union[None, typing.Callable, str, typing.List[str]]
 MappingDict = typing.Dict[str, MappigDictValue]
 
@@ -368,7 +346,7 @@ FIELD_MAPPING: MappingDict = {
     "host_tesim": ["Host", "Name.host"],
     "human_readable_iiif_text_direction_ssi": "Text direction",
     "human_readable_iiif_viewing_hint_ssi": "viewingHint",
-    "human_readable_language_tesim": language,
+    "human_readable_language_tesim": "Language",
     "human_readable_related_record_title_ssm": ["Related Records"],
     "human_readable_resource_type_tesim": "Type.typeOfResource",
     "human_readable_resource_type_sim": "Type.typeOfResource",

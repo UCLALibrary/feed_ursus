@@ -108,7 +108,7 @@ class Importer:
         self.ingest_id = f"{datetime.now(timezone.utc).isoformat()}-{getuser()}"
         self.collection_names = dict()
         self.child_works = defaultdict(list)
-        self.controlled_fields = load_field_config("./mapper/fields")
+        self.controlled_fields = load_field_config("./feed_ursus/mapper/fields")
 
         self.collection_names = self.collection_names_from_solr()
 
