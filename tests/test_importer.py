@@ -33,6 +33,18 @@ def importer(monkeypatch) -> Importer:
     return importer
 
 
+class TestInit:
+    def test_loads_controlled_fields(self, importer: Importer):
+        assert set(importer.controlled_fields.keys()) == {
+            "iiif_text_direction",
+            "iiif_viewing_hint",
+            "language",
+            "license",
+            "resource_type",
+            "rights_statement",
+        }
+
+
 class TestLoadCsv:
     """Tests for function load_csv"""
 
@@ -128,6 +140,12 @@ class TestMapFieldValue:
         )
         result = importer.map_field_value({}, "test_ursus_field_tesim")
         assert result == "lkghsdh"
+
+    def test_rights_statement_pd(self, importer):
+        row = {"Rights.copyrightStatus": "pd"}
+        result = importer.map_field_value(row, "human_readable_rights_statement_tesim")
+
+        assert result == ["public domain"]
 
 
 def test_get_bare_field_name():
