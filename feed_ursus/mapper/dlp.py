@@ -134,19 +134,17 @@ def resource_type_id(row: typing.Mapping[str, str]) -> list[str]:
         "three dimensional object": "http://id.loc.gov/vocabulary/resourceTypes/art",
     }
 
-    result: list[str] = []
     if (  # return an empty list unless:
         "Type.typeOfResource" in row
         and row["Type.typeOfResource"]  # not an empty string
         and isinstance(row["Type.typeOfResource"], str)
     ):
-        for resource_type in row["Type.typeOfResource"].split("|~|"):
-            try:
-                result.append(resource_type_id_map[resource_type])
-            except KeyError as e:
-                raise ValueError("Invalid resource type")
-
-    return result
+        return [
+            resource_type_id_map.get(resource_type, resource_type)
+            for resource_type in row["Type.typeOfResource"].split("|~|")
+        ]
+    else:
+        return []
 
 
 def thumbnail_url(row: typing.Mapping[str, str]) -> typing.Optional[str]:
