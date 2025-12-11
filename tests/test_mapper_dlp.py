@@ -116,11 +116,16 @@ class TestResourceTypeID:
 
         assert mapper.resource_type_id(row) == expected
 
+    def test_unknown_value(self):
+        row = {"Type.typeOfResource": "physical object"}
+        expected: list[str] = ["physical object"]
+
+        assert mapper.resource_type_id(row) == expected
+
     def test_empty(self):
         row = {"Type.typeOfResource": ""}
         expected: list[str] = []
 
-        assert mapper.resource_type_id(row) == expected
         assert mapper.resource_type_id(row) == expected
 
     def test_none(self):
