@@ -204,3 +204,21 @@ def test_paracontent_tesim(result: ManuscriptSolrRecord) -> None:
 
 def test_full_text_tesim(result: ManuscriptSolrRecord) -> None:
     assert result.full_text_tesim
+
+
+def test_extent_tesi(result: ManuscriptSolrRecord) -> None:
+    assert result.extent_tesi == "146 ff."
+
+
+def test_text_unit_labels_tesim(result: ManuscriptSolrRecord) -> None:
+    assert result.text_unit_labels_tesim == [
+        "Synaxarion",
+        "Gospel of Luke",
+    ]
+
+
+def test_origin_date_values_tesim(result: ManuscriptSolrRecord) -> None:
+    assert result.origin_date_values_tesim == {
+        "AM 6,104 = 1292 CE",
+        "7th c. CE",
+    }
