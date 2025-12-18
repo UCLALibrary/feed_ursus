@@ -634,6 +634,31 @@ class ManuscriptSolrRecord(st.BaseModel):
         )
 
     #
+    #   Index Page Display
+    #
+
+    @computed_field
+    def extent_tesi(self) -> str | None:
+        return self.ms_obj.extent
+
+    @computed_field
+    def text_unit_labels_tesim(self) -> list[str]:
+        return [
+            text_unit.text_unit_record.label
+            for layer in self.ot_layers()
+            for text_unit in layer.layer_record.text_unit
+        ]
+
+    @computed_field
+    def origin_date_values_tesim(self) -> set[str]:
+        return {
+            date.value
+            for layer in self.ot_layers()
+            for date in layer.deep_get(cls=st.AssocDateItem)
+            if date.type.id == "origin"
+        }
+
+    #
     #   Helper methods
     #
 
