@@ -102,6 +102,19 @@ def log(ctx):
     ctx.obj["importer"].print_log()
 
 
+@feed_ursus.command()
+@click.pass_context
+def dump(ctx):
+    """Write entire index to stdout.
+
+    Output will be written in jsonl format: json-formatted records separated by newlines. To write to disk, use the `>` redirect operator. The resulting file can then be loaded into a different solr index via the solr post tool (https://solr.apache.org/guide/8_11/post-tool.html), the solr GUI console, or the solr rest API. Solr generally requires the `.jsonl` suffix; if you use `.json` solr will expect a single json object and fail to parse the newline-separated records.
+
+    Example:
+        >>> feed_ursus dump > dump.jsonl  # writes output to `dump.jsonl`
+    """
+    ctx.obj["importer"].dump()
+
+
 if __name__ == "__main__":
     print("feed_ursus() executing, running from main()")
     feed_ursus()  # pylint: disable=no-value-for-parameter

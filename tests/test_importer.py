@@ -3,6 +3,8 @@
 
 # pylint: disable=no-self-use
 
+import io
+import json
 from unittest.mock import Mock, call
 
 import pytest  # type: ignore
@@ -521,3 +523,63 @@ class TestThumbnailFromManifest:
 @pytest.mark.xfail
 def test_collection_names_from_solr():
     raise NotImplementedError
+
+
+class TestDump:
+    def test_dump_calls_search_and_save_record(self, importer):
+        output = io.StringIO()
+        # Mock the solr search to return some hits and docs
+        mock_docs = [
+            {"id": "54321-89112"},
+            {"id": "09876-89112"},
+        ]
+        mock_result = Mock()
+        mock_result.docs = mock_docs
+        mock_result.hits = 2
+        mock_result.__iter__ = Mock(return_value=iter(mock_docs))
+        importer.solr_client.search.side_effect = [
+            Mock(hits=2),  # First call for hits
+            mock_result,  # Second call for docs
+        ]
+
+        importer.dump(output)
+
+        # Check that search was called correctly
+        assert importer.solr_client.search.call_count == 2
+        importer.solr_client.search.assert_any_call("ark_ssi:*", rows=0)
+        importer.solr_client.search.assert_any_call("ark_ssi:*", start=0, rows=250)
+
+        # Check output
+        output_str = output.getvalue().strip()
+        output_lines = output_str.split("\n")
+        assert len(output_lines) == 2  # Two records
+
+        # Parse JSON and check
+        for line in output_lines:
+            record = json.loads(line)
+            assert "id" in record
+
+    def test_save_record_valid(self, importer):
+        output = io.StringIO()
+        valid_record = {
+            "id": "54321-89112",
+        }
+
+        importer.save_record(valid_record, output)
+
+        output_str = output.getvalue().strip()
+        assert output_str  # Should have output now
+
+        parsed = json.loads(output_str)
+        assert parsed["id"] == "54321-89112"
+
+    def test_save_record_invalid(self, importer):
+        output = io.StringIO()
+        invalid_record = {
+            "id": None,  # Invalid id
+        }
+
+        importer.save_record(invalid_record, output)
+
+        output_str = output.getvalue().strip()
+        assert output_str == ""  # Since validation fails, no output
