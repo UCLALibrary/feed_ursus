@@ -2,9 +2,9 @@ name: Run CI Suite
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 env:
   DEFAULT_PYTHON_VERSION: 3.13
@@ -57,7 +57,7 @@ jobs:
   pytest:
     strategy:
       matrix:
-        python-version: ['3.11', '3.12', '3.13']
+        python-version: ["3.11", "3.12", "3.13", "3.14"]
     runs-on: ubuntu-latest
     env:
       SOLR_URL: http://127.0.0.1:8983/solr/californica

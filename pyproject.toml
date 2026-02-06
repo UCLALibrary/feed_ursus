@@ -3,7 +3,7 @@ name = "feed-ursus"
 dynamic = ["version"]
 description = "Command line tool to load CSV content into a Solr index for the UCLA Digital Library's frontend, Ursus (https://digital.library.ucla.edu/)"
 authors = [{ name = "Andy Wallace", email = "andrewwallace@library.ucla.edu" }]
-requires-python = "~=3.10"
+requires-python = "~=3.11"
 readme = "README.md"
 dependencies = [
     "pysolr>=3.8",
@@ -15,7 +15,7 @@ dependencies = [
     "setuptools>=74",
     "httpx>=0.28.1",
     "edtf>=5.0.0",
-    "pydantic>=2.11.7,<3",
+    "pydantic>=2.12,<3",
 ]
 
 [project.scripts]
@@ -26,8 +26,6 @@ sinai = "feed_sinai.feed_sinai:sinai"
 dev = [
     "mypy",
     "ipdb>=0.13.13,<0.14",
-    "flake8>=7.1.1,<8 ; python_version ~= '3.9'",
-    "pylint>=3.3.1,<4 ; python_version ~= '3.9'",
     "types-python-dateutil>=2.9.0.20250708,<3",
     "ruff>=0.12.7",
     "types-pyyaml>=6.0.12.20250516",
