@@ -15,8 +15,8 @@ from feed_ursus.importer import Importer
 @click.group()
 @click.option(
     "--solr_url",
-    default="http://localhost:8983/solr/californica",
-    help="URL of a solr instance, e.g. http://localhost:8983/solr/californica",
+    default="http://localhost:8983/solr/ursus",
+    help="URL of a solr instance, e.g. http://localhost:8983/solr/ursus",
 )
 @click.option(
     "--mapping",
