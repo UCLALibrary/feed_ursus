@@ -6,8 +6,10 @@
 import asyncio
 import csv
 import importlib.metadata
+import logging
 import os
 import re
+import sys
 from collections import defaultdict
 from datetime import datetime, timezone
 from getpass import getuser
@@ -22,19 +24,21 @@ from typing import (
     Literal,
     Optional,
     Sequence,
+    TextIO,
 )
 
 import click
 import httpx
+import pydantic
 import requests
 import rich.progress
 import yaml
-from pydantic import BaseModel
 from pysolr import Solr, SolrError  # type: ignore
 from rich.console import Console
 from rich.table import Table
 
-from . import date_parser, year_parser
+from feed_ursus import date_parser, year_parser
+from feed_ursus.solr_record import UrsusSolrRecord
 
 # Custom Types
 
@@ -317,6 +321,35 @@ class Importer:
                 self.solr_client.delete(
                     q=f"id:{collection['id']} OR member_of_collection_ids_ssim:{collection['id']}"
                 )
+
+    def dump(self, output: TextIO = sys.stdout) -> None:
+        hits = self.solr_client.search("ark_ssi:*", rows=0).hits
+        rows = 250
+
+        for start in range(0, hits, rows):
+            results = self.solr_client.search(
+                "ark_ssi:*",
+                start=start,
+                rows=rows,
+            )
+            hits = results.hits
+            for raw_doc in results:
+                self.save_record(raw_doc, output)
+
+    def save_record(self, record: dict, output: TextIO = sys.stdout):
+        try:
+            doc = UrsusSolrRecord.model_validate(record)
+
+            output.write(
+                doc.model_dump_json(
+                    exclude_none=True,
+                    exclude_defaults=True,
+                )
+                + "\n"
+            )
+
+        except pydantic.ValidationError as e:
+            logging.warning(f"Could not export {record.get('id', record)}: {e}")
 
     # pylint: disable=bad-continuation
     def map_field_value(self, row: DLCSRecord, field_name: str) -> Any:
@@ -725,7 +758,7 @@ class Importer:
         console.print(table)
 
 
-class IngestLogRecordWrite(BaseModel):
+class IngestLogRecordWrite(pydantic.BaseModel):
     """Record of a given ingest, as submitted to solr."""
 
     id: str

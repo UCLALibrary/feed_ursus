@@ -25,6 +25,7 @@ uv tool install feed_ursus
 UV will install feed_ursus in its own virtualenv, but make the command accessible from anywhere so you don't need to active the virtualenv yourself.
 
 To upgrade a uv-installed feed ursus to the latest version:
+
 ```
 uv tool upgrade feed_ursus
 ```
@@ -58,7 +59,7 @@ It might take a minute or so for solr to get up and running, at which point you 
 To load data from a csv:
 
 ```
-feed_ursus --solr_url=http://localhost:8983/solr/californica --mapping=dlp load [path/to/your.csv]
+feed_ursus --solr_url=http://localhost:8983/solr/ursus --mapping=dlp load [path/to/your.csv]
 ```
 
 ### Mappers
@@ -88,7 +89,7 @@ The following will assume the virtualenv is active. You could also run e.g. `uv 
 ### Using the development version
 
 ```
-feed_ursus --solr_url http://localhost:8983/solr/californica load [path/to/your.csv]
+feed_ursus --solr_url http://localhost:8983/solr/ursus load [path/to/your.csv]
 ```
 
 ### Running the tests
@@ -153,4 +154,4 @@ Add an appropriate `.vscode/launch.json`, this assumes you have the python debug
 
 ## IIIF Manifests
 
-When importing a work, the script will always assume that a IIIF manifest exists at https://iiif.library.ucla.edu/[ark]/manifest, where [ark] is the URL-encoded Archival Resource Key of the work. This link should work, as long as a manifest has been pushed to that location by importing the work into [Fester](https://github.com/UCLALibrary/fester) or [Californica](https://github.com/UCLALibrary/californica). If you haven't done one of those, obviously, the link will fail and the image won't be visible, but metadata will import and be visible. A manifest can then be created and pushed to the expected location without re-running feed_ursus.py.
+When importing a work, the script will always assume that a IIIF manifest exists at https://iiif.library.ucla.edu/[ark]/manifest, where [ark] is the URL-encoded Archival Resource Key of the work. This link should work, as long as a manifest has been pushed to that location by importing the work into [Fester](https://github.com/UCLALibrary/fester). If you haven't done one of those, obviously, the link will fail and the image won't be visible, but metadata will import and be visible. A manifest can then be created and pushed to the expected location without re-running feed_ursus.py.
