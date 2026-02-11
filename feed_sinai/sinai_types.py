@@ -51,6 +51,7 @@ class BaseModel(PydanticBaseModel):
         exclude_unset: bool = True,  # Overriding this
         exclude_defaults: bool = True,  # Overriding this
         exclude_none: bool = True,  # Overriding this
+        exclude_computed_fields: bool = False,
         round_trip: bool = False,
         warnings: bool | Literal["none", "warn", "error"] = True,
         fallback: Callable[[Any], Any] | None = None,
@@ -65,6 +66,7 @@ class BaseModel(PydanticBaseModel):
             exclude_unset=exclude_unset,
             exclude_defaults=exclude_defaults,
             exclude_none=exclude_none,
+            exclude_computed_fields=exclude_computed_fields,
             round_trip=round_trip,
             warnings=warnings,
             fallback=fallback,
@@ -75,6 +77,7 @@ class BaseModel(PydanticBaseModel):
         self,
         *,
         indent: int | None = None,
+        ensure_ascii: bool = False,
         include: IncEx | None = None,
         exclude: IncEx | None = None,
         context: Any | None = None,
@@ -82,6 +85,7 @@ class BaseModel(PydanticBaseModel):
         exclude_unset: bool = True,  # Overriding this
         exclude_defaults: bool = True,  # Overriding this
         exclude_none: bool = True,  # Overriding this
+        exclude_computed_fields: bool = False,
         round_trip: bool = False,
         warnings: bool | Literal["none", "warn", "error"] = True,
         fallback: Callable[[Any], Any] | None = None,
@@ -89,6 +93,7 @@ class BaseModel(PydanticBaseModel):
     ) -> str:
         return super().model_dump_json(
             indent=indent,
+            ensure_ascii=ensure_ascii,
             include=include,
             exclude=exclude,
             context=context,
@@ -96,6 +101,7 @@ class BaseModel(PydanticBaseModel):
             exclude_unset=exclude_unset,
             exclude_defaults=exclude_defaults,
             exclude_none=exclude_none,
+            exclude_computed_fields=exclude_computed_fields,
             round_trip=round_trip,
             warnings=warnings,
             fallback=fallback,
