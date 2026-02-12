@@ -508,7 +508,7 @@ FIELD_MAPPING: MappingDict = {
     "undertext_objects_ssim": "Undertext Objects",
     "uniform_title_tesim": "AltTitle.uniform",
     "viscodex_ssi": "Viscodex",
-    "visibility_ssi": "Visibility",
+    "visibility_ssi": visibility,
     "writing_system_tesim": "Writing system",
     # Set permissive values for blacklight_access_control
     "discover_access_group_ssim": access_group,
