@@ -198,7 +198,7 @@ class TestVisibility:
         assert mapper.visibility(row) == expected_visibility
         assert mapper.access_group(row) == expected_access_group
 
-    def test_no_visibility_or_satus(self):
+    def test_no_visibility_or_status(self):
         assert mapper.visibility({}) == "open"
         assert mapper.access_group({"Item Status": ""}) == ["public"]
 
