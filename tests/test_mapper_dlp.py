@@ -9,6 +9,8 @@ from math import e
 import pytest  # type: ignore
 
 import feed_ursus.mapper.dlp as mapper
+from feed_ursus.importer import Importer
+from tests.test_importer import importer
 
 
 class TestArchivalCollection:
@@ -196,6 +198,12 @@ class TestVisibility:
         assert mapper.visibility(row) == expected_visibility
         assert mapper.access_group(row) == expected_access_group
 
-    def test_no_visibility_or_satus(self):
+    def test_no_visibility_or_status(self):
         assert mapper.visibility({}) == "open"
         assert mapper.access_group({"Item Status": ""}) == ["public"]
+
+    def test_visibility_used(self, importer: Importer):
+        """Make sure the mapping tested above is actually used for the visibility_ssi field"""
+        input = {"Visibility": "private"}
+        result = importer.map_field_value(input, "visibility_ssi")
+        assert result == "restricted"
