@@ -42,8 +42,11 @@ from feed_ursus.solr_record import UrsusSolrRecord
 
 # Custom Types
 
-DLCSRecord = Dict[str, Any]
+DLCSRecord = Dict[str, str]
 UrsusRecord = Dict[str, Any]
+
+
+MARC_SYMBOL = re.compile(r" \$\w ")
 
 
 def collate_child_works(csv_data: dict[str, DLCSRecord]) -> defaultdict[str, list]:
@@ -398,14 +401,15 @@ class Importer:
                 "FIELD_MAPPING[field_name] must be iterable, unless it is None, Callable, or a string."
             )
 
+        marc_symbol_replacement = "--" if "subject" in field_name else " "
         output: List[str] = []
         for csv_field in mapping:
-            input_value = row.get(csv_field)
+            input_value = MARC_SYMBOL.sub(
+                marc_symbol_replacement,
+                row.get(csv_field, ""),
+            )
             if input_value:
-                if isinstance(input_value, str):
-                    output.extend(input_value.split("|~|"))
-                else:
-                    output.append(input_value)
+                output.extend(input_value.split("|~|"))
 
         bare_field_name = get_bare_field_name(field_name)
         if bare_field_name in self.controlled_fields:
