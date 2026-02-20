@@ -132,6 +132,38 @@ class TestMapFieldValue:
             "three",
         ]
 
+    def test_parses_marc_symbol(self, monkeypatch, importer):
+        """replaces marc symbols with spaces"""
+
+        monkeypatch.setitem(
+            importer.mapper.FIELD_MAPPING, "test_ursus_field_tesim", "Test DLCS Field"
+        )
+        input_record = {"Test DLCS Field": "one $s two $v three"}
+        result = importer.map_field_value(
+            input_record,
+            "test_ursus_field_tesim",
+        )
+        assert result == [
+            "one two three",
+        ]
+
+    def test_parses_marc_symbol_in_subject_field(self, monkeypatch, importer):
+        """replaces marc symbols with `--` if the field name includesthe  substring `subject`"""
+
+        monkeypatch.setitem(
+            importer.mapper.FIELD_MAPPING,
+            "test_ursus_subject_field_tesim",
+            "Test DLCS Field",
+        )
+        input_record = {"Test DLCS Field": "one $s two $v three"}
+        result = importer.map_field_value(
+            input_record,
+            "test_ursus_subject_field_tesim",
+        )
+        assert result == [
+            "one--two--three",
+        ]
+
     def test_calls_function(self, importer, monkeypatch):
         """If mapper defines a function map_[SOLR_NAME], calls that function."""
         # pylint: disable=no-member
@@ -344,8 +376,8 @@ class TestThumbnailFromChild:
                     "Object Type": "Work",
                     "Item ARK": "ark:/work/1",
                     "Parent ARK": "ark:/collection/1",
-                    "Thumbnail URL": None,
-                    "Title": None,
+                    "Thumbnail URL": "",
+                    "Title": "",
                 },
                 "ark:/child/2": {
                     "Object Type": "ChildWork",
@@ -376,8 +408,8 @@ class TestThumbnailFromChild:
                 "ark:/work/1": {
                     "Item ARK": "ark:/work/1",
                     "Parent ARK": "ark:/collection/1",
-                    "IIIF Access URL": None,
-                    "Title": None,
+                    "IIIF Access URL": "",
+                    "Title": "",
                     "Object Type": "Work",
                 },
                 "ark:/child/1": {
@@ -401,8 +433,8 @@ class TestThumbnailFromChild:
                 "ark:/work/1": {
                     "Item ARK": "ark:/work/1",
                     "Parent ARK": "ark:/collection/1",
-                    "Thumbnail URL": None,
-                    "Title": None,
+                    "Thumbnail URL": "",
+                    "Title": "",
                     "Object Type": "Work",
                 },
                 "ark:/child/2": {
@@ -433,8 +465,8 @@ class TestThumbnailFromChild:
                 "ark:/work/1": {
                     "Item ARK": "ark:/work/1",
                     "Parent ARK": "ark:/collection/1",
-                    "Thumbnail URL": None,
-                    "Title": None,
+                    "Thumbnail URL": "",
+                    "Title": "",
                     "Object Type": "Work",
                 },
             }
