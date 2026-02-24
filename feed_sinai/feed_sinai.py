@@ -39,8 +39,8 @@ def export(base_path: str) -> None:
 @click.argument(
     "solr_url",
     nargs=1,
-    default="http://localhost:8983/solr/californica",
-    # help="URL of a solr instance, e.g. http://localhost:8983/solr/californica",
+    default="http://localhost:8983/solr/ursus",
+    # help="URL of a solr instance, e.g. http://localhost:8983/solr/ursus",
 )
 def load(base_path: str, solr_url: str) -> None:
     importer = SinaiJsonImporter(base_path=base_path, solr_url=solr_url)
@@ -51,8 +51,8 @@ def load(base_path: str, solr_url: str) -> None:
 @click.argument(
     "solr_url",
     nargs=1,
-    default="http://localhost:8983/solr/californica",
-    # help="URL of a solr instance, e.g. http://localhost:8983/solr/californica",
+    default="http://localhost:8983/solr/ursus",
+    # help="URL of a solr instance, e.g. http://localhost:8983/solr/ursus",
 )
 def wipe(solr_url: str) -> None:
     importer = SinaiJsonImporter(solr_url=solr_url)
