@@ -47,6 +47,17 @@ UrsusRecord = Dict[str, Any]
 
 
 MARC_SYMBOL = re.compile(r" \$\w ")
+MARC_SYMBOL_INITIAL_OR_FINAL = re.compile(r"(^\$\w )|( \$\w$)")
+
+
+def parse_marc(
+    raw_string: str,
+    marc_symbol_replacement: str = " ",
+) -> str | list[str]:
+    parsed = MARC_SYMBOL.sub(marc_symbol_replacement, raw_string)
+    parsed = MARC_SYMBOL_INITIAL_OR_FINAL.sub("", parsed)
+
+    return parsed.split("|~|")
 
 
 def collate_child_works(csv_data: dict[str, DLCSRecord]) -> defaultdict[str, list]:
@@ -404,12 +415,15 @@ class Importer:
         marc_symbol_replacement = "--" if "subject" in field_name else " "
         output: List[str] = []
         for csv_field in mapping:
-            input_value = MARC_SYMBOL.sub(
-                marc_symbol_replacement,
-                row.get(csv_field, ""),
-            )
-            if input_value:
-                output.extend(input_value.split("|~|"))
+            if csv_field in row:
+                raw_value = row.get(csv_field)
+                if raw_value:
+                    output.extend(
+                        parse_marc(
+                            row[csv_field],
+                            marc_symbol_replacement=marc_symbol_replacement,
+                        )
+                    )
 
         bare_field_name = get_bare_field_name(field_name)
         if bare_field_name in self.controlled_fields:

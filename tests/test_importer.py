@@ -138,7 +138,7 @@ class TestMapFieldValue:
         monkeypatch.setitem(
             importer.mapper.FIELD_MAPPING, "test_ursus_field_tesim", "Test DLCS Field"
         )
-        input_record = {"Test DLCS Field": "one $s two $v three"}
+        input_record = {"Test DLCS Field": "$t one $s two $v three $k"}
         result = importer.map_field_value(
             input_record,
             "test_ursus_field_tesim",
@@ -155,7 +155,7 @@ class TestMapFieldValue:
             "test_ursus_subject_field_tesim",
             "Test DLCS Field",
         )
-        input_record = {"Test DLCS Field": "one $s two $v three"}
+        input_record = {"Test DLCS Field": "$t one $s two $v three $k"}
         result = importer.map_field_value(
             input_record,
             "test_ursus_subject_field_tesim",
