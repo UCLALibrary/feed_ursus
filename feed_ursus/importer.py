@@ -156,7 +156,6 @@ class Importer:
             }
         )
 
-        self.controlled_fields = load_field_config("./mapper/fields")
         self.child_works = collate_child_works(csv_data)
 
         mapped_records = [

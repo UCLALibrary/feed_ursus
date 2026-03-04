@@ -46,6 +46,21 @@ class TestInit:
             "rights_statement",
         }
 
+    def test_maintains_controlled_fields(self, importer: Importer):
+        """
+        Covers a bug where old code in the importer overwrote controlled fields
+        cf https://uclalibrary.atlassian.net/browse/DLSR-8, https://github.com/UCLALibrary/feed_ursus/blob/9221b9bdc7ae880a1e584d5fb8e8624ea61a4522/feed_ursus/importer.py#L159
+        """
+        importer.load_csv(["tests/csv/anais_collection.csv"], batch=True)
+        assert set(importer.controlled_fields.keys()) == {
+            "iiif_text_direction",
+            "iiif_viewing_hint",
+            "language",
+            "license",
+            "resource_type",
+            "rights_statement",
+        }
+
 
 class TestLoadCsv:
     """Tests for function load_csv"""
