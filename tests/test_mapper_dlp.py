@@ -207,3 +207,20 @@ class TestVisibility:
         input = {"Visibility": "private"}
         result = importer.map_field_value(input, "visibility_ssi")
         assert result == "restricted"
+
+
+@pytest.mark.parametrize(
+    ["iso_code", "language"],
+    [
+        ("eng", "English"),
+        ("ano", "Andoqu"),
+    ],
+)
+def test_maps_language(importer: Importer, iso_code: str, language: str):
+    """Maps from ISO language code to language name."""
+
+    row = {"Language": iso_code}
+
+    assert importer.map_field_value(row, "human_readable_language_tesim") == [language]
+    assert importer.map_field_value(row, "language_sim") == [language]
+    assert importer.map_field_value(row, "language_tesim") == [language]
