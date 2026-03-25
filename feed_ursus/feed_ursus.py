@@ -3,7 +3,6 @@
 # mypy: disallow_untyped_defs=False
 """Convert UCLA Library CSV files for Ursus, our Blacklight installation."""
 
-import asyncio
 import importlib.metadata
 import typing
 
@@ -18,57 +17,31 @@ from feed_ursus.importer import Importer
     default="http://localhost:8983/solr/ursus",
     help="URL of a solr instance, e.g. http://localhost:8983/solr/ursus",
 )
-@click.option(
-    "--mapping",
-    default="dlp",
-    help="'sinai' or 'dlp'. Deterines the metadata field mapping",
-)
 @click.version_option(version=importlib.metadata.version("feed_ursus"))
 @click.pass_context
-def feed_ursus(ctx, solr_url: str, mapping: str):
+def feed_ursus(ctx: click.Context, solr_url: str):
     """CLI for managing a Solr index for Ursus."""
 
     ctx.ensure_object(dict)
-    ctx.obj["importer"] = Importer(solr_url=solr_url, mapper_name=mapping)
+    ctx.obj["importer"] = Importer(solr_url=solr_url)
 
 
 @feed_ursus.command("load")
 @click.argument("filenames", nargs=-1, type=click.Path(exists=True, dir_okay=False))
 @click.option(
-    "--async/--not-async",
-    "use_async",
-    default=False,
-    help="Enable or disable batch mode.",
-)
-@click.option(
     "--batch/--not-batch",
     default=True,
-    help="Enable or disable batch mode (only applies if --async is False).",
-)
-@click.option(
-    "--batch_size",
-    default=1000,
-    type=int,
-    help="number of records per POST request to solr (only applies if --async is True).",
+    help="Enable or disable batch mode.",
 )
 @click.pass_context
-def load_csv(
-    ctx, filenames: typing.List[str], use_async: bool, batch: bool, batch_size: int
-):
+def load_csv(ctx: click.Context, filenames: typing.List[str], batch: bool):
     """Load data from a csv.
 
     Args:
         filenames: A list of CSV filenames.
     """
 
-    if use_async:
-        asyncio.run(
-            ctx.obj["importer"].load_csv_async(
-                filenames=filenames, batch_size=batch_size
-            )
-        )
-    else:
-        ctx.obj["importer"].load_csv(filenames=filenames, batch=batch)
+    ctx.obj["importer"].load_csv(filenames=filenames, batch=batch)
 
 
 @feed_ursus.command()
@@ -77,7 +50,7 @@ def load_csv(
     "--yes/--no", is_flag=True, default=False, help="Skip confirmation prompts."
 )
 @click.pass_context
-def delete(ctx, items: typing.List[str], yes: bool):
+def delete(ctx: click.Context, items: typing.List[str], yes: bool):
     """Delete records from a Solr index.
 
     Args:
@@ -90,21 +63,15 @@ def delete(ctx, items: typing.List[str], yes: bool):
 
 @feed_ursus.command()
 @click.pass_context
-def log(ctx):
-    """Delete records from a Solr index.
-
-    Args:
-        solr_url: URL of a solr instance.
-        items: List of items to delete. Can be ARKs, Solr IDs, or csv filenames.
-               If a csv filename is provided, all ARKs in the file will be deleted.
-    """
+def log(ctx: click.Context):
+    """Show a log of csv ingests."""
 
     ctx.obj["importer"].print_log()
 
 
 @feed_ursus.command()
 @click.pass_context
-def dump(ctx):
+def dump(ctx: click.Context):
     """Write entire index to stdout.
 
     Output will be written in jsonl format: json-formatted records separated by newlines. To write to disk, use the `>` redirect operator. The resulting file can then be loaded into a different solr index via the solr post tool (https://solr.apache.org/guide/8_11/post-tool.html), the solr GUI console, or the solr rest API. Solr generally requires the `.jsonl` suffix; if you use `.json` solr will expect a single json object and fail to parse the newline-separated records.
