@@ -149,6 +149,9 @@ class TestArk:
             ("ark:/123/abc<<<",),
             ("21198-abc",),
             ("",),
+            # This one actually IS valid (even preferred) according to the ark standard, however our arks use the 'old form' with 'ark:/'
+            # see https://datatracker.ietf.org/doc/draft-kunze-ark/
+            ("ark:123/456",),
         ],
     )
     def test_errors(self, value: str) -> None:
