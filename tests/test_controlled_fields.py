@@ -7,12 +7,18 @@ import feed_ursus.controlled_fields as cf
 @pytest.mark.parametrize(
     ("name", "value"),
     [
-        ("cc_by_nd_3", "Attribution-NoDerivs 3.0 United States"),
         (
-            "cc_by_nd_4",
+            "http://creativecommons.org/licenses/by-nd/3.0/us/",
+            "Attribution-NoDerivs 3.0 United States",
+        ),
+        (
+            "https://creativecommons.org/licenses/by-nd/4.0/",
             "Creative Commons BY-ND Attribution-NoDerivatives 4.0 International",
         ),
-        ("cc_publicdomain_mark_1", "Creative Commons Public Domain Mark 1.0"),
+        (
+            "http://creativecommons.org/publicdomain/mark/1.0/",
+            "Creative Commons Public Domain Mark 1.0",
+        ),
     ],
 )
 def test_license(name: str, value: str):
