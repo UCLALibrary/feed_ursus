@@ -96,8 +96,16 @@ class Importer:
         for row in rich.progress.track(
             csv_data.values(), description=f"Importing {len(csv_data)} records..."
         ):
-            if row.get("Object Type") not in ("ChildWork", "Page"):
-                mapped_records.append(self.map_record(row))
+            try:
+                if row.get("Object Type") not in ("ChildWork", "Page"):
+                    mapped_records.append(self.map_record(row))
+            except pydantic.ValidationError as e:
+                row_handle = row.get("Item ARK") or row.get("Item Title") or row
+
+                # Note: using "\r" overwrites what would otherwise be a duplicated progress bar
+                rich.print(f"\rCould not import row {row_handle}:")
+                rich.print(e)
+                rich.print("\n")
 
         if batch:
             print("Submitting records in batch mode...")
@@ -275,14 +283,14 @@ class Importer:
             for doc in self.solr_client.search(
                 "has_model_ssim:Collection",
                 defType="lucene",
-                fl="id,title_tesim",
+                fl="ark_ssi,title_tesim",
                 rows=1000,
             ):
                 match doc:
                     case {"ark_ssi": str(ark), "title_tesim": [title, *_]}:
                         self.collection_names[ark] = title
                     case _:
-                        print(f"Can't get ark–title mapping for {doc}")
+                        rich.print(f"Can't load title for collection", doc)
 
         except SolrError as e:
             print(f"Error querying records: {e}")

@@ -20,7 +20,7 @@ from pydantic import (
 )
 from pysolr import Solr  # type: ignore
 
-from feed_ursus import year_parser
+from feed_ursus import date_parser, year_parser
 from feed_ursus.controlled_fields import (
     Language,
     ObjectType,
@@ -41,6 +41,8 @@ from feed_ursus.util import (
     make_ursus_id,
     parse_list,
 )
+
+solr_date_from_python = Solr("http://nowhere")._from_python
 
 
 class IngestSolrRecord(BaseModel):
@@ -500,7 +502,9 @@ class UrsusSolrRecord(BaseModel):
     def date_dtsim(self) -> list[SolrDatetime] | None:
         match self.normalized_date_tesim:
             case list(dates):
-                return [Solr("http://nowhere")._from_python(date) for date in dates]  # pyright: ignore[reportPrivateUsage, reportUnknownMemberType]
+                return [
+                    solr_date_from_python(date) for date in date_parser.get_dates(dates)
+                ]  # pyright: ignore[reportPrivateUsage, reportUnknownMemberType]
             case None:
                 return None
 
@@ -1201,7 +1205,7 @@ class UrsusSolrRecord(BaseModel):
     def subject_cultural_object_sim(self) -> list[str] | None:
         return self.subject_cultural_object_tesim or None
 
-    subject_cultural_object_tesim: MARCList[MARCSubject] | None = Field(
+    subject_cultural_object_tesim: MARCList[MARCSubject] | Empty = Field(
         default=None,
         validation_alias=AliasChoices("Subject.culturalObject"),
     )
@@ -1251,7 +1255,7 @@ class UrsusSolrRecord(BaseModel):
     def subject_topic_sim(self) -> list[str] | None:
         return self.subject_topic_tesim or None
 
-    subject_topic_tesim: MARCList[MARCSubject] | None = Field(
+    subject_topic_tesim: MARCList[MARCSubject] | Empty = Field(
         default=None,
         validation_alias=AliasChoices(
             "Subject topic",
@@ -1280,7 +1284,7 @@ class UrsusSolrRecord(BaseModel):
         validation_alias=AliasChoices("Tagline"),
     )
 
-    thumbnail_url_ss: str | None = Field(
+    thumbnail_url_ss: str | Empty = Field(
         default=None,
         validation_alias=AliasChoices("Thumbnail URL", "Thumbnail"),
     )
