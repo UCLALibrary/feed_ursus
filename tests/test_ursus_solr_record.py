@@ -1,5 +1,6 @@
 """Tests for solr_record.py"""
 
+from copy import deepcopy
 from typing import Any
 
 import pytest
@@ -521,6 +522,13 @@ class TestUrsusSolrRecord:
 
         def test_empty(self) -> None:
             assert UrsusSolrRecord.model_validate(MINIMAL_RECORD).sort_year_isi is None
+
+    def test_title_required(self) -> None:
+        record_without_title = deepcopy(MINIMAL_RECORD)
+        record_without_title.pop("Title")
+
+        with pytest.raises(ValidationError, match=r"Title\s*Field required"):
+            UrsusSolrRecord.model_validate(record_without_title)
 
     class TestYear:
         def test_single(self) -> None:
