@@ -1041,7 +1041,7 @@ class UrsusSolrRecord(BaseModel):
         validation_alias=AliasChoices("Provenance", "Description.history"),
     )
 
-    publisher_tesim: MARCList[MARCString] | None = Field(
+    publisher_tesim: MARCList[MARCString] | Empty = Field(
         default=None,
         validation_alias=AliasChoices("Publisher.publisherName"),
     )
@@ -1101,17 +1101,17 @@ class UrsusSolrRecord(BaseModel):
     def researcher_sim(self) -> list[str] | None:
         return self.researcher_tesim or None
 
-    resp_statement_tesim: MARCList[MARCString] | None = Field(
+    resp_statement_tesim: MARCList[MARCString] | Empty = Field(
         default=None,
         validation_alias=AliasChoices("Statement of Responsibility"),
     )
 
-    rights_country_tesim: MARCList[MARCString] | None = Field(
+    rights_country_tesim: MARCList[MARCString] | Empty = Field(
         default=None,
         validation_alias=AliasChoices("Rights.countryCreation"),
     )
 
-    rights_holder_tesim: MARCList[MARCString] | None = Field(
+    rights_holder_tesim: MARCList[MARCString] | Empty = Field(
         default=None,
         validation_alias=AliasChoices(
             "Personal or Corporate Name.copyrightHolder",
@@ -1164,7 +1164,7 @@ class UrsusSolrRecord(BaseModel):
         validation_alias=AliasChoices("Series"),
     )
 
-    services_contact_ssm: MARCList[MARCString] | None = Field(
+    services_contact_ssm: MARCList[MARCString] | Empty = Field(
         default=None,
         validation_alias=AliasChoices(
             "Rights.servicesContact",
