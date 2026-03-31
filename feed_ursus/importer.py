@@ -5,7 +5,6 @@
 # pyright: reportUnknownVariableType=false
 """Convert UCLA Library CSV files for Ursus, our Blacklight installation."""
 
-import asyncio
 import csv
 import importlib.metadata
 import logging
@@ -19,7 +18,6 @@ from typing import (
 )
 
 import click
-import httpx
 import pydantic
 import requests
 import rich.progress
@@ -27,24 +25,24 @@ from pysolr import Solr, SolrError  # type: ignore
 from rich.console import Console
 from rich.table import Table
 
-from feed_ursus.solr_record import IngestSolrRecord, UrsusSolrRecord
+from feed_ursus.controlled_fields import ResourceType
+from feed_ursus.ursus_solr_record import IngestSolrRecord, UrsusSolrRecord
 from feed_ursus.util import Ark, UrsusId, parse_list
 
 
 class Importer:
     solr_url: str
+    show_progress: bool
     solr_client: Solr
-    async_client: httpx.AsyncClient
 
     ingest_id: str  # for sync load_csv
     collection_names: dict[Ark, str]
 
-    connection_pool = asyncio.Semaphore(3)
-
-    def __init__(self, solr_url: str):
+    def __init__(self, solr_url: str, show_progress=True):
         self.solr_url = solr_url
+        self.show_progress = show_progress
+
         self.solr_client = Solr(solr_url, always_commit=True)
-        self.async_client = httpx.AsyncClient()
 
         self.ingest_id = f"{datetime.now(timezone.utc).isoformat()}-{getuser()}"
         self.collection_names = {}
@@ -52,6 +50,14 @@ class Importer:
         self.collection_names_from_solr()
 
     def get_ingest_record(self, filenames: list[str]) -> IngestSolrRecord:
+        files_iterator = (
+            rich.progress.track(
+                filenames, description=f"loading {len(filenames)} files..."
+            )
+            if self.show_progress
+            else filenames
+        )
+
         return IngestSolrRecord(
             id=self.ingest_id,
             is_ingest_bsi=True,
@@ -59,10 +65,7 @@ class Importer:
             feed_ursus_version_ssi=importlib.metadata.version("feed_ursus"),
             ingest_user_ssi=getuser(),
             csv_files_tsm=[
-                open(filename, encoding="utf-8").read()
-                for filename in rich.progress.track(
-                    filenames, description=f"loading {len(filenames)} files..."
-                )
+                open(filename, encoding="utf-8").read() for filename in files_iterator
             ],
         )
 
@@ -73,11 +76,18 @@ class Importer:
             filenames: A list of CSV filenames.
         """
 
+        filenames_iterator = (
+            rich.progress.track(
+                filenames,
+                description=f"loading {len(filenames)} files...",
+            )
+            if self.show_progress
+            else filenames
+        )
+
         csv_data = {
             row["Item ARK"]: row
-            for filename in rich.progress.track(
-                filenames, description=f"loading {len(filenames)} files..."
-            )
+            for filename in filenames_iterator
             for row in csv.DictReader(open(filename, encoding="utf-8"))
         }
 
@@ -93,13 +103,20 @@ class Importer:
         mapped_records: list[IngestSolrRecord | UrsusSolrRecord] = [
             self.get_ingest_record(filenames)
         ]
-        for row in rich.progress.track(
-            csv_data.values(), description=f"Importing {len(csv_data)} records..."
-        ):
+
+        row_iterator = (
+            rich.progress.track(
+                csv_data.values(),
+                description=f"Importing {len(csv_data)} records...",
+            )
+            if self.show_progress
+            else csv_data.values()
+        )
+        for row in row_iterator:
             try:
                 if row.get("Object Type") not in ("ChildWork", "Page"):
                     mapped_records.append(self.map_record(row))
-            except pydantic.ValidationError as e:
+            except Exception as e:
                 row_handle = row.get("Item ARK") or row.get("Item Title") or row
 
                 # Note: using "\r" overwrites what would otherwise be a duplicated progress bar
@@ -223,10 +240,13 @@ class Importer:
             logging.warning(f"Could not export {record.get('id', record)}: {e}")
 
     def map_record(self, record: dict[str, str]) -> UrsusSolrRecord:
-        collections = [
-            self.collection_names[ark]
-            for ark in parse_list(record.get("Parent ARK")) or []
-        ]
+        try:
+            collections = [
+                self.collection_names[ark]
+                for ark in parse_list(record.get("Parent ARK")) or []
+            ]
+        except KeyError as e:
+            raise ValueError(f"Unidentified collection '{e.args[0]}'")
 
         mapped_record = UrsusSolrRecord.model_validate(
             {
@@ -235,12 +255,26 @@ class Importer:
             }
         )
 
-        if not mapped_record.thumbnail_url_ss:
-            mapped_record.thumbnail_url_ss = str(
-                mapped_record.access_copy_ssi
+        if not mapped_record.thumbnail_url_ss and not {
+            ResourceType("moving image"),
+            ResourceType("sound recording"),
+            ResourceType("sound recording-musical"),
+            ResourceType("sound recording-nonmusical"),
+        }.intersection(mapped_record.human_readable_resource_type_tesim or []):
+            mapped_record.thumbnail_url_ss = self.thumbnail_from_access_copy(
+                mapped_record
             ) or self.thumbnail_from_manifest(mapped_record)
 
         return mapped_record
+
+    def thumbnail_from_access_copy(self, record: UrsusSolrRecord) -> str | None:
+        # Cast None to "", so we ensure string methods
+        access_copy = str(record.access_copy_ssi)
+
+        if (not record.thumbnail_url_ss) and "/iiif/" in access_copy:
+            return UrsusSolrRecord.ensure_thumbnail_iiif_suffix(access_copy)
+        else:
+            return None
 
     def thumbnail_from_manifest(self, record: UrsusSolrRecord) -> str | None:
         """Picks a thumbnail downloading the IIIF manifest.

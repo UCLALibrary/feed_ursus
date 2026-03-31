@@ -15,7 +15,8 @@ from pysolr import Solr  # type: ignore
 
 import feed_ursus.importer
 from feed_ursus.importer import Importer
-from feed_ursus.solr_record import UrsusSolrRecord
+from feed_ursus.ursus_solr_record import UrsusSolrRecord
+from tests.test_ursus_solr_record import MINIMAL_RECORD
 
 from . import fixtures  # pylint: disable=wrong-import-order
 
@@ -26,14 +27,11 @@ def importer(monkeypatch: pytest.MonkeyPatch) -> Importer:
 
     importer = Importer(solr_url="")
     importer.solr_client = Mock(Solr)
-    importer.async_client = Mock(AsyncClient)
 
     def mock_post(url: str, json: list[dict[Any, Any]]) -> Response:
         response = Mock(Response)
         response.is_error = False
         return response
-
-    importer.async_client.post.side_effect = mock_post  # type: ignore
 
     return importer
 
@@ -52,6 +50,65 @@ class TestLoadCsv:
 
         with pytest.raises(FileNotFoundError):
             importer.load_csv(filenames=["tests/fixtures/nonexistent.csv"], batch=True)
+
+
+class TestMapRecord:
+    class TestThumbnailUrl:
+        def test_from_access_copy(self, importer: Importer) -> None:
+            result = importer.map_record(
+                {
+                    **MINIMAL_RECORD,
+                    "IIIF Access URL": "https://iiif.library.ucla.edu/iiif/2/ark%3A%2F21198%2F123abc",
+                }
+            )
+            assert (
+                result.thumbnail_url_ss
+                == "https://iiif.library.ucla.edu/iiif/2/ark%3A%2F21198%2F123abc/full/!200,200/0/default.jpg"
+            )
+
+        def test_with_bad_access_copy(self, importer: Importer) -> None:
+            result = importer.map_record(
+                {
+                    **MINIMAL_RECORD,
+                    "IIIF Access URL": "https://wowza.library.ucla.edu/iiif_av_public/definst/mp4:MEAP/pairtree_root/21/19/8=/z1/j7/7t/4n/21198=z1j77t4n/ark%2B=21198=z1j77t4n.mp4%7B%7D",
+                }
+            )
+
+            assert result.thumbnail_url_ss is None
+
+        def test_calls_thumbnail_from_manifest(
+            self, importer: Importer, monkeypatch: pytest.MonkeyPatch
+        ) -> None:
+            row = {
+                **MINIMAL_RECORD,
+                "Type.typeOfResource": "still image",
+                "IIIF Manifest URL": "https://nowhere.really/iiif/2/abcxyz",
+            }
+            expected = "https://test.url/thumbnail.jpg"
+            monkeypatch.setattr(
+                importer,
+                "thumbnail_from_manifest",
+                Mock(return_value=expected),
+            )
+            result = importer.map_record(row)
+            assert result.thumbnail_url_ss == expected
+            cast(Mock, importer.thumbnail_from_manifest).assert_called_once()
+
+        def test_streaming_no_thumbnail_from_manifest(
+            self, importer: Importer, monkeypatch: pytest.MonkeyPatch
+        ) -> None:
+            row = {
+                **MINIMAL_RECORD,
+                "Type.typeOfResource": "moving image",
+                "IIIF Manifest URL": "https://nowhere.really/iiif/2/abcxyz",
+            }
+            monkeypatch.setattr(
+                importer, "thumbnail_from_manifest", Mock(return_value="called")
+            )
+
+            result = importer.map_record(row)
+            assert result.thumbnail_url_ss is None
+            cast(Mock, importer.thumbnail_from_manifest).assert_not_called
 
 
 @pytest.fixture
