@@ -4,6 +4,7 @@
 
 import asyncio
 import importlib.metadata
+import os
 
 import click
 
@@ -39,7 +40,7 @@ def export(base_path: str) -> None:
 @click.argument(
     "solr_url",
     nargs=1,
-    default="http://localhost:8983/solr/ursus",
+    default=os.getenv("SOLR_URL", "http://localhost:8983/solr/ursus"),
     # help="URL of a solr instance, e.g. http://localhost:8983/solr/ursus",
 )
 def load(base_path: str, solr_url: str) -> None:

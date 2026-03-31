@@ -11,7 +11,7 @@
 # from feed_sinai import feed_sinai
 
 
-# SOLR_URL = os.getenv("SOLR_URL", "http://localhost:8983/solr/californica")
+# SOLR_URL = os.getenv("SOLR_URL", "http://localhost:8983/solr/ursus")
 
 # @pytest.mark.xfail
 # def test_feed_sinai():
