@@ -7,15 +7,13 @@
 
 import csv
 import importlib.metadata
+import itertools
 import logging
 import sys
+import typing
 from datetime import datetime, timezone
 from getpass import getuser
-from typing import (
-    Any,
-    Literal,
-    TextIO,
-)
+from pathlib import Path
 
 import click
 import pydantic
@@ -27,7 +25,7 @@ from rich.table import Table
 
 from feed_ursus.controlled_fields import ResourceType
 from feed_ursus.ursus_solr_record import IngestSolrRecord, UrsusSolrRecord
-from feed_ursus.util import Ark, UrsusId, parse_list
+from feed_ursus.util import Ark, UnknownCollectionError, UrsusId, parse_list
 
 
 class Importer:
@@ -49,15 +47,19 @@ class Importer:
 
         self.collection_names_from_solr()
 
-    def get_ingest_record(self, filenames: list[str]) -> IngestSolrRecord:
-        files_iterator = (
-            rich.progress.track(
-                filenames, description=f"loading {len(filenames)} files..."
-            )
-            if self.show_progress
-            else filenames
-        )
+    T = typing.TypeVar("T")
 
+    def maybe_progress(
+        self,
+        iter: typing.Iterable[T],
+        description: str,
+    ) -> typing.Iterable[T]:
+        if self.show_progress:
+            return rich.progress.track(iter, description=description)
+        else:
+            return iter
+
+    def get_ingest_record(self, filenames: list[str]) -> IngestSolrRecord:
         return IngestSolrRecord(
             id=self.ingest_id,
             is_ingest_bsi=True,
@@ -65,7 +67,10 @@ class Importer:
             feed_ursus_version_ssi=importlib.metadata.version("feed_ursus"),
             ingest_user_ssi=getuser(),
             csv_files_tsm=[
-                open(filename, encoding="utf-8").read() for filename in files_iterator
+                Path(filename).read_text(encoding="utf-8")
+                for filename in self.maybe_progress(
+                    filenames, description=f"saving {len(filenames)} files"
+                )
             ],
         )
 
@@ -76,18 +81,12 @@ class Importer:
             filenames: A list of CSV filenames.
         """
 
-        filenames_iterator = (
-            rich.progress.track(
+        csv_data = {
+            row["Item ARK"]: row
+            for filename in self.maybe_progress(
                 filenames,
                 description=f"loading {len(filenames)} files...",
             )
-            if self.show_progress
-            else filenames
-        )
-
-        csv_data = {
-            row["Item ARK"]: row
-            for filename in filenames_iterator
             for row in csv.DictReader(open(filename, encoding="utf-8"))
         }
 
@@ -101,22 +100,19 @@ class Importer:
         )
 
         mapped_records: list[IngestSolrRecord | UrsusSolrRecord] = [
-            self.get_ingest_record(filenames)
+            self.get_ingest_record(
+                filenames,
+            )
         ]
 
-        row_iterator = (
-            rich.progress.track(
-                csv_data.values(),
-                description=f"Importing {len(csv_data)} records...",
-            )
-            if self.show_progress
-            else csv_data.values()
-        )
-        for row in row_iterator:
+        for row in self.maybe_progress(
+            csv_data.values(),
+            description=f"Importing {len(csv_data)} records...",
+        ):
             try:
                 if row.get("Object Type") not in ("ChildWork", "Page"):
                     mapped_records.append(self.map_record(row))
-            except Exception as e:
+            except (pydantic.ValidationError, UnknownCollectionError) as e:
                 row_handle = row.get("Item ARK") or row.get("Item Title") or row
 
                 # Note: using "\r" overwrites what would otherwise be a duplicated progress bar
@@ -207,7 +203,7 @@ class Importer:
                     q=f"id:{collection_id} OR member_of_collection_ids_ssim:{collection_id}"
                 )
 
-    def dump(self, output: TextIO = sys.stdout) -> None:
+    def dump(self, output: typing.TextIO = sys.stdout) -> None:
         hits = int(self.solr_client.search("*:*", rows=0).hits)
         rows = 250
 
@@ -221,7 +217,11 @@ class Importer:
             for raw_doc in results:
                 self.save_record(raw_doc, output)
 
-    def save_record(self, record: dict[str, Any], output: TextIO = sys.stdout):
+    def save_record(
+        self,
+        record: dict[str, typing.Any],
+        output: typing.TextIO = sys.stdout,
+    ):
         adapter: pydantic.TypeAdapter[UrsusSolrRecord | IngestSolrRecord] = (
             pydantic.TypeAdapter(UrsusSolrRecord | IngestSolrRecord)
         )
@@ -246,7 +246,7 @@ class Importer:
                 for ark in parse_list(record.get("Parent ARK")) or []
             ]
         except KeyError as e:
-            raise ValueError(f"Unidentified collection '{e.args[0]}'")
+            raise UnknownCollectionError(f"Unidentified collection '{e.args[0]}'")
 
         mapped_record = UrsusSolrRecord.model_validate(
             {
@@ -390,7 +390,7 @@ class IngestLogRecordWrite(pydantic.BaseModel):
     """Record of a given ingest, as submitted to solr."""
 
     id: str
-    is_ingest_bsi: Literal[True] = True
+    is_ingest_bsi: typing.Literal[True] = True
     ingest_filenames_ssim: list[str] = []
     feed_ursus_version_ssi: str
     ingest_user_ssi: str
