@@ -219,6 +219,11 @@ class UrsusSolrRecord(BaseModel):
             case _ as rt:
                 assert_never(rt)
 
+    @computed_field
+    @property
+    def resource_type_ssim(self) -> list[str] | None:
+        return self.resource_type_sim
+
     # rights statement
 
     human_readable_rights_statement_tesim: (
@@ -1289,7 +1294,7 @@ class UrsusSolrRecord(BaseModel):
         validation_alias=AliasChoices("Thumbnail URL", "Thumbnail"),
     )
 
-    # @field_validator("thumbnail_url_ss", mode="after")
+    @field_validator("thumbnail_url_ss", mode="after")
     @classmethod
     def ensure_thumbnail_iiif_suffix(cls, thumb: Any) -> str:
         if isinstance(thumb, str) and re.match(

@@ -12,6 +12,10 @@ from pydantic import (
 )
 
 
+class UnknownCollectionError(ValueError):
+    pass
+
+
 def parse_empty(value: Any) -> Any | None:
     if isinstance(value, str):
         value = value.strip()

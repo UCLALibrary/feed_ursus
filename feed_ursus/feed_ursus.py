@@ -17,13 +17,18 @@ from feed_ursus.importer import Importer
     default="http://localhost:8983/solr/ursus",
     help="URL of a solr instance, e.g. http://localhost:8983/solr/ursus",
 )
+@click.option(
+    "--show-progress/--no-show-progress",
+    default=True,
+    help="Show progress bars.",
+)
 @click.version_option(version=importlib.metadata.version("feed_ursus"))
 @click.pass_context
-def feed_ursus(ctx: click.Context, solr_url: str):
+def feed_ursus(ctx: click.Context, solr_url: str, show_progress: bool):
     """CLI for managing a Solr index for Ursus."""
 
     ctx.ensure_object(dict)
-    ctx.obj["importer"] = Importer(solr_url=solr_url)
+    ctx.obj["importer"] = Importer(solr_url=solr_url, show_progress=show_progress)
 
 
 @feed_ursus.command("load")

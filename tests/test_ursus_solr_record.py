@@ -7,7 +7,7 @@ import pytest
 from pydantic import ValidationError
 
 from feed_ursus.controlled_fields import ObjectType, ResourceType, Visibility
-from feed_ursus.solr_record import UrsusSolrRecord
+from feed_ursus.ursus_solr_record import UrsusSolrRecord
 
 MINIMAL_RECORD: dict[str, Any] = {
     "Item ARK": "ark:/123/test",
