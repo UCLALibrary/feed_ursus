@@ -23,7 +23,7 @@ from . import fixtures  # pylint: disable=wrong-import-order
 
 @pytest.fixture
 def importer(monkeypatch: pytest.MonkeyPatch) -> Importer:
-    monkeypatch.setattr(Importer, "collection_names_from_solr", lambda _self: {})
+    monkeypatch.setattr(Importer, "titles_from_solr", lambda _self: {})
 
     importer = Importer(solr_url="")
     importer.solr_client = Mock(Solr)
@@ -213,7 +213,7 @@ class TestThumbnailFromManifest:
 
 
 @pytest.mark.xfail
-def test_collection_names_from_solr() -> None:
+def test_titles_from_solr() -> None:
     raise NotImplementedError
 
 
