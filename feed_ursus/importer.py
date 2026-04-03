@@ -389,21 +389,24 @@ class Importer:
     def print_log(self):
         table = Table(title="Ingests")
 
-        table.add_column("id")
-        table.add_column("date")
-        table.add_column("user")
-        table.add_column("filename(s)")
-        table.add_column("feed_ursus version")
-        table.add_column("count")
+        table_spec: list[
+            tuple[
+                str,
+                typing.Callable[[IngestLogRecord], str],
+            ]
+        ] = [
+            ("id", lambda row: row.id),
+            ("user", lambda row: row.ingest_user_ssi),
+            ("filename(s)", lambda row: ", ".join(row.ingest_filenames_ssim)),
+            ("feed_ursus version", lambda row: row.feed_ursus_version_ssi),
+            ("count", lambda row: str(row.count)),
+        ]
+
+        for title, _getter in table_spec:
+            table.add_column(title)
 
         for row in self.get_log():
-            table.add_row(
-                row.id,
-                row.ingest_user_ssi,
-                ", ".join(row.ingest_filenames_ssim),
-                row.feed_ursus_version_ssi,
-                str(row.count),
-            )
+            table.add_row(*[getter(row) for _title, getter in table_spec])
 
         console = Console()
         console.print(table)
