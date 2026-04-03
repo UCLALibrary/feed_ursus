@@ -9,7 +9,6 @@ Output is pushed to a solr index suitable for use by https://github.com/UCLALibr
 import asyncio
 import json
 import logging
-from datetime import date
 from math import inf
 from pathlib import Path
 from typing import Any, Awaitable, Iterator, Optional

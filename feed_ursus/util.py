@@ -1,7 +1,6 @@
 import re
 from datetime import datetime
-from enum import Enum, EnumType
-from pathlib import Path
+from enum import Enum
 from typing import Annotated, Any, TypeVar, assert_never, overload
 
 from pydantic import (
@@ -12,7 +11,7 @@ from pydantic import (
 )
 
 
-class UnknownCollectionError(ValueError):
+class UnknownItemError(ValueError):
     pass
 
 
@@ -183,7 +182,7 @@ Ark = Annotated[
 
 # See examples of valid/invalid IDs in tests/test_util.py:TestUrsusId
 BaseUrsusId = Annotated[str, StringConstraints(pattern=r"^(([a-z]|[0-9])+-)\d+$")]
-id_validator: TypeAdapter[BaseUrsusId] = TypeAdapter(BaseUrsusId)
+base_id_validator: TypeAdapter[BaseUrsusId] = TypeAdapter(BaseUrsusId)
 ark_validator: TypeAdapter[Ark] = TypeAdapter(Ark)
 
 
@@ -195,7 +194,7 @@ def make_ursus_id(value: str) -> "UrsusId":
     Ursus IDs are formed from arks by removing the 'ark:/' prefix, replacing '/' with '-', and reversing the resulting string. The reversal was so that the initial characters would be unique rather than the UCLA Name Assigning Authority Number – an important consideration for Fedora ids back when we used californica."""
 
     try:
-        return id_validator.validate_python(value)
+        return base_id_validator.validate_python(value)
     except ValidationError:
         return (
             ark_validator.validate_python(value)

@@ -6,16 +6,16 @@
 
 import io
 import json
-from typing import Any, cast
+from typing import cast
 from unittest.mock import Mock
 
 import pytest
-from httpx import AsyncClient, Response
 from pysolr import Solr  # type: ignore
 
 import feed_ursus.importer
 from feed_ursus.importer import Importer
 from feed_ursus.ursus_solr_record import UrsusSolrRecord
+from feed_ursus.util import UnknownItemError
 from tests.test_ursus_solr_record import MINIMAL_RECORD
 
 from . import fixtures  # pylint: disable=wrong-import-order
@@ -23,15 +23,11 @@ from . import fixtures  # pylint: disable=wrong-import-order
 
 @pytest.fixture
 def importer(monkeypatch: pytest.MonkeyPatch) -> Importer:
-    monkeypatch.setattr(Importer, "collection_names_from_solr", lambda _self: {})
+    monkeypatch.setattr(Importer, "titles_from_solr", lambda _self: {})
 
     importer = Importer(solr_url="")
     importer.solr_client = Mock(Solr)
-
-    def mock_post(url: str, json: list[dict[Any, Any]]) -> Response:
-        response = Mock(Response)
-        response.is_error = False
-        return response
+    importer.solr_client.url = "http://mock.url/solr/core"
 
     return importer
 
@@ -217,7 +213,7 @@ class TestThumbnailFromManifest:
 
 
 @pytest.mark.xfail
-def test_collection_names_from_solr() -> None:
+def test_titles_from_solr() -> None:
     raise NotImplementedError
 
 
@@ -302,3 +298,69 @@ class TestDump:
 
         output_str = output.getvalue().strip()
         assert output_str == ""  # Since validation fails, no output
+
+
+class TestGetTitles:
+    """Tests for Importer.get_titles"""
+
+    def test_empty_and_missing_values_return_none(self, importer: Importer) -> None:
+        assert importer.get_titles({"Parent ARK": ""}, "Parent ARK") is None
+        assert importer.get_titles({"Parent ARK": None}, "Parent ARK") is None  # type: ignore
+        assert importer.get_titles({}, "Parent ARK") is None
+
+    def test_known_arks_are_resolved_from_cache(self, importer: Importer) -> None:
+        importer.titles = {
+            "ark:/21198/one": "One",
+            "ark:/21198/two": "Two",
+        }
+        result = importer.get_titles(
+            {"Parent ARK": "ark:/21198/one|~|ark:/21198/two"}, "Parent ARK"
+        )
+
+        assert result == ["One", "Two"]
+
+    def test_fetches_missing_ark_titles_from_solr(
+        self, importer: Importer, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        importer.titles = {"ark:/21198/one": "One"}
+
+        class FakeResponse:
+            def json(self):
+                return {
+                    "response": {
+                        "docs": [
+                            {
+                                "ark_ssi": "ark:/21198/two",
+                                "title_tesim": ["Two"],
+                            }
+                        ]
+                    }
+                }
+
+        monkeypatch.setattr(
+            feed_ursus.importer.requests, "get", lambda *args, **kwargs: FakeResponse()
+        )
+
+        result = importer.get_titles(
+            {"Parent ARK": "ark:/21198/one|~|ark:/21198/two"}, "Parent ARK"
+        )
+
+        assert result == ["One", "Two"]
+
+    def test_missing_titles_raise_unknown_item_error(
+        self, importer: Importer, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        importer.titles = {"ark:/21198/one": "One"}
+
+        class FakeResponse:
+            def json(self):
+                return {"response": {"docs": []}}
+
+        monkeypatch.setattr(
+            feed_ursus.importer.requests, "get", lambda *args, **kwargs: FakeResponse()
+        )
+
+        with pytest.raises(UnknownItemError):
+            importer.get_titles(
+                {"Parent ARK": "ark:/21198/one|~|ark:/21198/two"}, "Parent ARK"
+            )

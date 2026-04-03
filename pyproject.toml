@@ -44,7 +44,10 @@ default-groups = [
 ]
 
 [tool.ruff.lint]
-select = ["I"]
+select = [
+    "I",  # import sorting
+    "F401", # unused imports
+]
 
 [tool.mypy]
 plugins = ["pydantic.mypy"]

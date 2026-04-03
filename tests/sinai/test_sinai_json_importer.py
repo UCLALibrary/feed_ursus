@@ -1,7 +1,6 @@
 # pylint: disable=no-self-use
 
 import json
-from pathlib import Path
 
 import pytest
 
