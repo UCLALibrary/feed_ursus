@@ -16,6 +16,7 @@ dependencies = [
     "httpx>=0.28.1",
     "edtf>=5.0.0",
     "pydantic>=2.12,<3",
+    "packaging>=24.2",
 ]
 
 [project.scripts]

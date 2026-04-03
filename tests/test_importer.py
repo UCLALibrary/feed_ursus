@@ -38,7 +38,7 @@ class TestLoadCsv:
     def test_file_exists(self, importer: Importer) -> None:
         """gets the contents of a CSV file"""
 
-        importer.load_csv(filenames=["tests/csv/anais_collection.csv"], batch=True)
+        importer.load_csv(filenames=["tests/fixtures/anais_collection.csv"], batch=True)
         cast(Mock, importer.solr_client.add).assert_called_once()
 
     def test_file_does_not_exist(self, importer: Importer) -> None:

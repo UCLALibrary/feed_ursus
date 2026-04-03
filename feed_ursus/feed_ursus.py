@@ -7,6 +7,9 @@ import importlib.metadata
 import typing
 
 import click
+import requests
+from packaging.version import Version
+from pydantic import BaseModel, ConfigDict
 
 from feed_ursus.importer import Importer
 
@@ -22,10 +25,25 @@ from feed_ursus.importer import Importer
     default=True,
     help="Show progress bars.",
 )
+@click.option(
+    "--check-outdated/--ignore-outdated",
+    default=True,
+    help="Check pypi for a newer version, and exit if one exists.",
+)
 @click.version_option(version=importlib.metadata.version("feed_ursus"))
 @click.pass_context
-def feed_ursus(ctx: click.Context, solr_url: str, show_progress: bool):
+def feed_ursus(
+    ctx: click.Context,
+    solr_url: str,
+    show_progress: bool,
+    check_outdated: bool,
+):
     """CLI for managing a Solr index for Ursus."""
+
+    if check_outdated and (new_version := is_outdated()):
+        raise click.ClickException(
+            f"feed_ursus is outdated: please upgrade to version {new_version} (e.g. `uv tool upgrade feed_ursus`)"
+        )
 
     ctx.ensure_object(dict)
     ctx.obj["importer"] = Importer(solr_url=solr_url, show_progress=show_progress)
@@ -85,6 +103,33 @@ def dump(ctx: click.Context):
         >>> feed_ursus dump > dump.jsonl  # writes output to `dump.jsonl`
     """
     ctx.obj["importer"].dump()
+
+
+class PyPIInfo(BaseModel):
+    """Very limited model of a PyPI json response – intended only for retrieving version numbers, everything else is ignored."""
+
+    model_config = ConfigDict(extra="ignore")
+    version: str
+
+
+class PyPIResponse(BaseModel):
+    """Very limited model of a PyPI json response – intended only for retrieving version numbers, everything else is ignored."""
+
+    model_config = ConfigDict(extra="ignore")
+    info: PyPIInfo
+
+
+def is_outdated() -> typing.Literal[False] | Version:
+    local_version = Version(importlib.metadata.version("feed_ursus"))
+    response = PyPIResponse.model_validate(
+        requests.get("https://pypi.python.org/pypi/feed_ursus/json").json()
+    )
+    latest_version = Version(response.info.version)
+
+    if local_version < latest_version and not local_version.is_devrelease:
+        return latest_version
+    else:
+        return False
 
 
 if __name__ == "__main__":
