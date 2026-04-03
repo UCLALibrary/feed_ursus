@@ -30,8 +30,8 @@ def test_feed_ursus():
             "--solr_url",
             SOLR_URL,
             "load",
-            "tests/csv/anais_collection.csv",
-            "tests/csv/anais_work_simple.csv",
+            "tests/fixtures/anais_collection.csv",
+            "tests/fixtures/anais_work_simple.csv",
         ],
     )
     assert result.exit_code == 0
@@ -68,8 +68,8 @@ def test_feed_ursus():
             SOLR_URL,
             "delete",
             "--yes",
-            "tests/csv/anais_collection.csv",
-            "tests/csv/anais_work_simple.csv",
+            "tests/fixtures/anais_collection.csv",
+            "tests/fixtures/anais_work_simple.csv",
         ],
     )
     assert result.exit_code == 0
