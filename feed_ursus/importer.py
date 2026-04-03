@@ -11,6 +11,7 @@ import itertools
 import logging
 import sys
 import typing
+from dataclasses import dataclass
 from datetime import datetime, timezone
 from getpass import getuser
 from pathlib import Path
@@ -25,7 +26,7 @@ from rich.table import Table
 
 from feed_ursus.controlled_fields import ResourceType
 from feed_ursus.ursus_solr_record import IngestSolrRecord, UrsusSolrRecord
-from feed_ursus.util import Ark, UnknownCollectionError, UrsusId, parse_list
+from feed_ursus.util import Ark, Empty, MARCList, UnknownItemError, UrsusId, parse_list
 
 
 class Importer:
@@ -34,7 +35,7 @@ class Importer:
     solr_client: Solr
 
     ingest_id: str  # for sync load_csv
-    collection_names: dict[Ark, str]
+    titles: dict[Ark, str]
 
     def __init__(self, solr_url: str, show_progress=True):
         self.solr_url = solr_url
@@ -43,7 +44,7 @@ class Importer:
         self.solr_client = Solr(solr_url, always_commit=True)
 
         self.ingest_id = f"{datetime.now(timezone.utc).isoformat()}-{getuser()}"
-        self.collection_names = {}
+        self.titles = {}
 
         self.collection_names_from_solr()
 
@@ -91,13 +92,7 @@ class Importer:
         }
 
         self.ingest_id = f"{datetime.now(timezone.utc).isoformat()}-{getuser()}"
-        self.collection_names.update(
-            {
-                row["Item ARK"]: row["Title"]
-                for row in csv_data.values()
-                if row.get("Object Type") == "Collection"
-            }
-        )
+        self.titles.update({row["Item ARK"]: row["Title"] for row in csv_data.values()})
 
         mapped_records: list[IngestSolrRecord | UrsusSolrRecord] = [
             self.get_ingest_record(
@@ -112,7 +107,7 @@ class Importer:
             try:
                 if row.get("Object Type") not in ("ChildWork", "Page"):
                     mapped_records.append(self.map_record(row))
-            except (pydantic.ValidationError, UnknownCollectionError) as e:
+            except (pydantic.ValidationError, UnknownItemError) as e:
                 row_handle = row.get("Item ARK") or row.get("Item Title") or row
 
                 # Note: using "\r" overwrites what would otherwise be a duplicated progress bar
@@ -197,7 +192,7 @@ class Importer:
                 rows=0,
             ).hits
             if yes or click.confirm(
-                f"Delete collection {self.collection_names['collection_id']}? {n_children} {'child record' if n_children == 1 else 'child records'} will also be deleted."
+                f"Delete collection {self.titles['collection_id']}? {n_children} {'child record' if n_children == 1 else 'child records'} will also be deleted."
             ):
                 self.solr_client.delete(
                     q=f"id:{collection_id} OR member_of_collection_ids_ssim:{collection_id}"
@@ -240,18 +235,19 @@ class Importer:
             logging.warning(f"Could not export {record.get('id', record)}: {e}")
 
     def map_record(self, record: dict[str, str]) -> UrsusSolrRecord:
-        try:
-            collections = [
-                self.collection_names[ark]
-                for ark in parse_list(record.get("Parent ARK")) or []
-            ]
-        except KeyError as e:
-            raise UnknownCollectionError(f"Unidentified collection '{e.args[0]}'")
+        related_record_links = [
+            f"<a href='/catalog/{ark}'>{title}</a>"
+            for ark, title in zip(
+                ark_list_validator.validate_python(record.get("Related Records")) or [],
+                self.get_titles(record, "Related Records") or [],
+            )
+        ] or None
 
         mapped_record = UrsusSolrRecord.model_validate(
             {
                 **record,
-                "member_of_collections_ssim": collections or None,
+                "member_of_collections_ssim": self.get_titles(record, "Parent ARK"),
+                "human_readable_related_record_title_ssm": related_record_links,
             }
         )
 
@@ -266,6 +262,35 @@ class Importer:
             ) or self.thumbnail_from_manifest(mapped_record)
 
         return mapped_record
+
+    def get_titles(self, row: dict[str, str], ark_field_name: str) -> list[str] | None:
+        arks = ark_list_validator.validate_python(row.get(ark_field_name))
+
+        if not arks:
+            return None
+
+        unknown_ids = [
+            id_validator.validate_python(ark) for ark in arks if ark not in self.titles
+        ]
+
+        if unknown_ids:
+            docs = (
+                requests.get(
+                    f"{self.solr_client.url}/get?ids={','.join(unknown_ids)}&fl=ark_ssi,title_tesim",
+                    timeout=10,
+                )
+                .json()
+                .get("response", {})
+                .get("docs", [])
+            )
+            self.titles.update({doc["ark_ssi"]: doc["title_tesim"][0] for doc in docs})
+
+        if still_unknown := [ark for ark in arks if ark not in self.titles]:
+            raise UnknownItemError(
+                f"Title unknown for item{'s' if len(still_unknown) > 1 else ''} {', '.join(still_unknown)}"
+            )
+
+        return [self.titles[ark] for ark in arks]
 
     def thumbnail_from_access_copy(self, record: UrsusSolrRecord) -> str | None:
         # Cast None to "", so we ensure string methods
@@ -322,7 +347,7 @@ class Importer:
             ):
                 match doc:
                     case {"ark_ssi": str(ark), "title_tesim": [title, *_]}:
-                        self.collection_names[ark] = title
+                        self.titles[ark] = title
                     case _:
                         rich.print(f"Can't load title for collection", doc)
 
@@ -416,3 +441,9 @@ class IngestLogRecord(IngestLogRecordWrite):
 
     timestamp: datetime
     count: int
+
+
+id_validator: pydantic.TypeAdapter[UrsusId] = pydantic.TypeAdapter(UrsusId)
+ark_list_validator: pydantic.TypeAdapter[MARCList[Ark] | Empty] = pydantic.TypeAdapter(
+    MARCList[Ark] | Empty
+)

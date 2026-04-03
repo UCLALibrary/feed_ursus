@@ -222,6 +222,72 @@ class TestUrsusSolrRecord:
                     {**MINIMAL_RECORD, "Language": "eng|~|invalid"}
                 )
 
+    class TestRelatedRecord:
+        def test_both_blank(self) -> None:
+            result = UrsusSolrRecord.model_validate(
+                {
+                    **MINIMAL_RECORD,
+                    "Related Records": None,
+                    "human_readable_related_record_title_ssm": None,
+                }
+            )
+            assert result.related_record_ssm == None
+            assert result.human_readable_related_record_title_ssm == None
+
+        def test_equal_length(self) -> None:
+            result = UrsusSolrRecord.model_validate(
+                {
+                    **MINIMAL_RECORD,
+                    "Related Records": ["ark:/21198/abc123", "ark:/21198/abc456"],
+                    "human_readable_related_record_title_ssm": ["Title 1", "Title 2"],
+                }
+            )
+            assert result.related_record_ssm == [
+                "ark:/21198/abc123",
+                "ark:/21198/abc456",
+            ]
+            assert result.human_readable_related_record_title_ssm == [
+                "Title 1",
+                "Title 2",
+            ]
+
+        def test_different_length(self) -> None:
+            with pytest.raises(
+                ValidationError,
+                match="related_record_ssm and human_readable_related_record_title_ssm must be of equal length",
+            ):
+                UrsusSolrRecord.model_validate(
+                    {
+                        **MINIMAL_RECORD,
+                        "Related Records": "ark:/21198/abc123|~|ark:/21198/abc456",
+                        "human_readable_related_record_title_ssm": ["Title 1"],
+                    }
+                )
+
+        def test_only_ids(self) -> None:
+            with pytest.raises(
+                ValidationError,
+                match="provided related_record_ssm but not human_readable_related_record_title_ssm",
+            ):
+                UrsusSolrRecord.model_validate(
+                    {
+                        **MINIMAL_RECORD,
+                        "Related Records": "ark:/21198/abc123",
+                    }
+                )
+
+        def test_only_titles(self) -> None:
+            with pytest.raises(
+                ValidationError,
+                match="provided human_readable_related_record_title_ssm but not related_record_ssm",
+            ):
+                UrsusSolrRecord.model_validate(
+                    {
+                        **MINIMAL_RECORD,
+                        "human_readable_related_record_title_ssm": ["Title 1"],
+                    }
+                )
+
     def test_computed_uniform_title_sim(self) -> None:
         record = UrsusSolrRecord.model_validate(
             {

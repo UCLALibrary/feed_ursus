@@ -732,10 +732,6 @@ class UrsusSolrRecord(BaseModel):
         validation_alias=AliasChoices("Host", "Name.host"),
     )
 
-    # this one is NOT a controlled field based on an Enum, it has to be populated by the importer looking up titles form arks
-    # will fix THAT with DLSR-25
-    human_readable_related_record_title_ssm: list[str] | Empty = None
-
     identifier_tesim: MARCList[MARCString] | Empty = Field(
         default=None,
         validation_alias=AliasChoices("Identifier"),
@@ -1074,6 +1070,33 @@ class UrsusSolrRecord(BaseModel):
         default=None,
         validation_alias=AliasChoices("Related Records"),
     )
+
+    # this one is NOT a controlled field based on an Enum, it has to be populated by the importer looking up titles form arks
+    human_readable_related_record_title_ssm: list[str] | Empty = None
+
+    @model_validator(mode="after")
+    def validate_related_record_titles(self) -> Self:
+        match self.related_record_ssm, self.human_readable_related_record_title_ssm:
+            case None, None:
+                pass
+            case list(ids), list(titles) if len(ids) == len(titles):
+                pass
+            case list(ids), list(titles):
+                raise ValueError(
+                    f"related_record_ssm and human_readable_related_record_title_ssm must be of equal length but {len(ids)} != {len(titles)}"
+                )
+            case list(), None:
+                raise ValueError(
+                    "provided related_record_ssm but not human_readable_related_record_title_ssm"
+                )
+            case None, list():
+                raise ValueError(
+                    "provided human_readable_related_record_title_ssm but not related_record_ssm"
+                )
+            case _ as ids, _ as titles:
+                assert_never(ids or titles)
+
+        return self
 
     related_to_ssm: MARCList[MARCString] | Empty = Field(
         default=None,
