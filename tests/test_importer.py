@@ -6,11 +6,10 @@
 
 import io
 import json
-from typing import Any, cast
+from typing import cast
 from unittest.mock import Mock
 
 import pytest
-from httpx import AsyncClient, Response
 from pysolr import Solr  # type: ignore
 
 import feed_ursus.importer
@@ -29,11 +28,6 @@ def importer(monkeypatch: pytest.MonkeyPatch) -> Importer:
     importer = Importer(solr_url="")
     importer.solr_client = Mock(Solr)
     importer.solr_client.url = "http://mock.url/solr/core"
-
-    def mock_post(url: str, json: list[dict[Any, Any]]) -> Response:
-        response = Mock(Response)
-        response.is_error = False
-        return response
 
     return importer
 

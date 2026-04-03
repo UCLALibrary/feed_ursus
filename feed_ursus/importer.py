@@ -7,11 +7,9 @@
 
 import csv
 import importlib.metadata
-import itertools
 import logging
 import sys
 import typing
-from dataclasses import dataclass
 from datetime import datetime, timezone
 from getpass import getuser
 from pathlib import Path
@@ -26,7 +24,7 @@ from rich.table import Table
 
 from feed_ursus.controlled_fields import ResourceType
 from feed_ursus.ursus_solr_record import IngestSolrRecord, UrsusSolrRecord
-from feed_ursus.util import Ark, Empty, MARCList, UnknownItemError, UrsusId, parse_list
+from feed_ursus.util import Ark, Empty, MARCList, UnknownItemError, UrsusId
 
 
 class Importer:
@@ -46,7 +44,7 @@ class Importer:
         self.ingest_id = f"{datetime.now(timezone.utc).isoformat()}-{getuser()}"
         self.titles = {}
 
-        self.collection_names_from_solr()
+        self.titles_from_solr()
 
     T = typing.TypeVar("T")
 
@@ -332,7 +330,7 @@ class Importer:
             # ruff: noqa: E722
             return None
 
-    def collection_names_from_solr(self) -> None:
+    def titles_from_solr(self) -> None:
         """Get a mapping of collection IDs to collection names.
 
         Returns:
