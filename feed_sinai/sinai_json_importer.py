@@ -209,6 +209,7 @@ class SinaiJsonImporter:
             assoc_name=[
                 self.get_assoc_name_item(name_item) for name_item in raw.assoc_name
             ],
+            assoc_place=[self.get_assoc_place_item(place) for place in raw.assoc_place],
         )
 
         return ms_layer.convert(
