@@ -1,0 +1,80 @@
+{
+    "ark": "ark:/21198/tebv9g4m",
+    "reconstruction": false,
+    "type": "Manuscript",
+    "shelfmark": "Sinai Arabic NF X 42",
+    "ms_date": {
+        "iso": [
+            {
+                "not_before": "0400",
+                "not_after": "2000"
+            }
+        ]
+    },
+    "extent": "14 ff.",
+    "weight": "24.5 g",
+    "dim": "143 x 110 x 6.0 mm",
+    "state": "Codex",
+    "genre": [
+        "Liturgical texts"
+    ],
+    "part": [
+        {
+            "label": "Part 1",
+            "support": [
+                "Paper"
+                ],
+            "extent": "14 ff.",
+            "ot_layer": [
+                {
+                    "ark": "ark:/21198/tebvp1ol",
+                    "writing": [
+                        {
+                            "script": [
+                                {
+                                    "label": "Naskh",
+                                    "system": "Arabic"
+                                }
+                            ]
+                        }
+                    ],
+                    "text_unit": [
+                        {
+                            "ark": "ark:/21198/tebvp1olt1",
+                            "locus": "ff. 1-14",
+                            "lang": [
+                                "Arabic"
+                            ],
+                            "work_wit": [
+                                {
+                                    "pref_title": "Horologion"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "location": [
+        {
+            "collection": "New Finds",
+            "repository": "St. Catherine's Monastery of the Sinai"
+        }
+    ],
+    "bib": [
+        {
+            "shortcode": "Meimaris",
+            "type": "Reference Work",
+            "range": "pp. 48; ٥٢"
+        }
+    ],
+    "iiif": [
+        {
+            "type": "Main",
+            "manifest": "https://iiif.library.ucla.edu/ark%3A%2F21198%2Fz1bv9g4m/manifest",
+            "thumbnail": "https://iiif.sinaimanuscripts.library.ucla.edu/iiif/2/ark%3A%2F21198%2Fz1bv9g4m%2F3t51rk3w/full/!200,200/0/default.jpg"
+        }
+    ],
+    "last_modified": "2025-03-27"
+}

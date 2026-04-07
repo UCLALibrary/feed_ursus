@@ -1,0 +1,38 @@
+{
+    "ark": "ark:/21198/s10012",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Elias of Nisibis",
+    "alt_name": [
+        "Elijah Bar Shinajah"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "975 CE-1046 CE",
+        "iso": {
+            "not_before": "0975",
+            "not_after": "1046"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Elias, of Nisibis, 975-1046",
+            "uri": "http://viaf.org/viaf/23861580",
+            "source": "VIAF"
+        },
+        {
+            "label": "Elias, of Nisibis, 975-1046",
+            "uri": "https://id.loc.gov/authorities/names/n96037261",
+            "source": "LoC"
+        },
+        {
+            "label": "Eliyā, of Nisibis, 975-1046",
+            "uri": "https://w3id.org/haf/person/928038685891",
+            "source": "HAF"
+        },
+        {
+            "label": "Elijah of Nisibis",
+            "uri": "http://syriaca.org/person/472",
+            "source": "Syriaca"
+        }
+    ]
+}

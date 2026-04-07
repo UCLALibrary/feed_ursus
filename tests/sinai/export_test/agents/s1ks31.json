@@ -1,0 +1,28 @@
+{
+    "ark": "ark:/21198/s1ks31",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Eulogius of Alexandria",
+    "alt_name": [
+        "Eulogius of Alexandria",
+        "Εὐλόγιος"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "death": {
+        "value": "607 CE",
+        "iso": {
+            "not_before": "0607"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Eulogius Alexandrinus -607",
+            "uri": "http://viaf.org/viaf/24941326",
+            "source": "VIAF"
+        },
+        {
+            "label": "Eulogius Alexandrinus",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/1045/",
+            "source": "Pinakes"
+        }
+    ]
+}

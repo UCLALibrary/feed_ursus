@@ -1,0 +1,31 @@
+{
+    "ark": "ark:/21198/s1g01d",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Euthymius the Great",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "377 CE-473 CE",
+        "iso": {
+            "not_before": "0377",
+            "not_after": "0473"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Euthymius, the Great, Saint, 377-473",
+            "uri": "http://viaf.org/viaf/62380476",
+            "source": "VIAF"
+        },
+        {
+            "label": "Euthymius",
+            "uri": "http://syriaca.org/person/1728",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Euthymius ab. in eremo sanctae Civitatis",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/saint/327/",
+            "source": "Pinakes"
+        }
+    ]
+}

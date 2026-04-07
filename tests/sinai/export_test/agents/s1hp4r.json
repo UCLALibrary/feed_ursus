@@ -1,0 +1,31 @@
+{
+    "ark": "ark:/21198/s1hp4r",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Yaḥyá ibn Ḥabash Suhrawardī",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": " 1152 or 1153 CE-1191 CE",
+        "iso": {
+            "not_before": "1152",
+            "not_after": "1191"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Suhrawardī, Yaḥyá ibn Ḥabash, 1152 or 1153-1191",
+            "uri": "http://viaf.org/viaf/86440217",
+            "source": "VIAF"
+        },
+        {
+            "label": "Suhrawardī, Yaḥyá ibn Ḥabash, 1152 or 1153-1191",
+            "uri": "https://id.loc.gov/authorities/names/n79121685",
+            "source": "LoC"
+        },
+        {
+            "label": "Suhrawardī, Yaḥyá ibn Ḥabash, 1152 or 1153-1191",
+            "uri": "https://w3id.org/haf/person/517523429472",
+            "source": "HAF"
+        }
+    ]
+}

@@ -1,0 +1,41 @@
+{
+    "ark": "ark:/21198/s1101c",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Basil of Caesarea",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "ca. 329 CE-379 CE",
+        "iso": {
+            "not_before": "0304",
+            "not_after": "0404"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Basil, Saint, Bishop of Caesarea, approximately 329-379",
+            "uri": "https://viaf.org/viaf/88967224",
+            "source": "VIAF"
+        },
+        {
+            "label": "Basil, Saint, Bishop of Caesarea, approximately 329-379",
+            "uri": "http://id.loc.gov/authorities/names/n80004066",
+            "source": "LoC"
+        },
+        {
+            "label": "Basil, Bishop of Caesarea, approximately 329-379",
+            "uri": "https://w3id.org/haf/person/641569108508",
+            "source": "HAF"
+        },
+        {
+            "label": "Basil of Caesarea",
+            "uri": "http://syriaca.org/person/376",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Basilius Caesariensis",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/489/",
+            "source": "Pinakes"
+        }
+    ]
+}

@@ -1,0 +1,41 @@
+{
+    "ark": "ark:/21198/s1kk5q",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Nilus of Ancyra",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "ca. 430 CE",
+        "iso": {
+            "not_before": "0405",
+            "not_after": "0455"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Nilus, of Ancyra, Saint, -approximately 430",
+            "uri": "http://viaf.org/viaf/71405213",
+            "source": "VIAF"
+        },
+        {
+            "label": "Nilus, of Ancyra, Saint, -approximately 430",
+            "uri": "https://id.loc.gov/authorities/names/n84114935",
+            "source": "LoC"
+        },
+        {
+            "label": "Nilus, of Ancyra, -approximately 430",
+            "uri": "https://w3id.org/haf/person/349789977947",
+            "source": "HAF"
+        },
+        {
+            "label": "Nilus of Ancyra",
+            "uri": "http://syriaca.org/person/657",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Nilus Ancyranus",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/2089/",
+            "source": "Pinakes"
+        }
+    ]
+}

@@ -1,0 +1,48 @@
+{
+    "ark": "ark:/21198/s1359r",
+    "pref_title": "Encomium on St Nicholas of Myra",
+    "orig_lang": {
+        "id": "gree1276",
+        "label": "Greek"
+    },
+    "alt_title": [
+        "Encomium on St Nicholas of Myra"
+    ],
+    "genre": [],
+    "creator": [
+        {
+            "id": "ark:/21198/s1vc7w",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "creation": {
+        "value": "7th c. CE",
+        "iso": {
+            "not_before": "0601",
+            "not_after": "0700"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Andrew, of Crete, Saint, approximately 660-740. Panegyric for Nicholas of Myra",
+            "uri": "https://w3id.org/haf/work/871907053876",
+            "source": "HAF"
+        },
+        {
+            "label": "Andreas Cretensis In S. Nicolaum",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/oeuvre/8565/",
+            "source": "Pinakes"
+        }
+    ],
+    "refno": [
+        {
+            "label": " Homilia in sanctum Nicolaum",
+            "idno": "8187",
+            "source": "CPG"
+        }
+    ],
+    "bib": []
+}

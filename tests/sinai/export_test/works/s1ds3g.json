@@ -1,0 +1,27 @@
+{
+    "ark": "ark:/21198/s1ds3g",
+    "pref_title": "Chronicles",
+    "alt_title": [
+        "Bible. Chronicles"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Chronicles",
+            "uri": "http://viaf.org/viaf/508154387099730970006",
+            "source": "VIAF"
+        },
+        {
+            "label": "Bible. Chronicles",
+            "uri": "http://id.loc.gov/authorities/names/n80008483",
+            "source": "LoC"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

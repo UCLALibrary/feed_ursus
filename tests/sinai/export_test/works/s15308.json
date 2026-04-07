@@ -1,0 +1,27 @@
+{
+    "ark": "ark:/21198/s15308",
+    "pref_title": "Proverbs",
+    "alt_title": [
+        "Bible. Proverbs"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Proverbs",
+            "uri": "https://viaf.org/viaf/177805643",
+            "source": "VIAF"
+        },
+        {
+            "label": "Bible. Proverbs",
+            "uri": "http://id.loc.gov/authorities/names/n79135225",
+            "source": "LoC"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

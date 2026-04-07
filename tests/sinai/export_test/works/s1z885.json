@@ -1,0 +1,31 @@
+{
+    "ark": "ark:/21198/s1z885",
+    "pref_title": "Pandektēs",
+    "alt_title": [
+        "Nikon of the Black Mountain, ca. 1025-ca. 1100. Pandektēs"
+    ],
+    "genre": [
+        {
+            "id": "theological-works",
+            "label": "Theological works"
+        }
+    ],
+    "creator": [
+        {
+            "id": "ark:/21198/s1qc7n",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Nikon, Chernogoret︠s︡, -1088. | Pandects",
+            "uri": "http://viaf.org/viaf/186277094",
+            "source": "VIAF"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

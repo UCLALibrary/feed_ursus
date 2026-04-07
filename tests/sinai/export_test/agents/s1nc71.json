@@ -1,0 +1,41 @@
+{
+    "ark": "ark:/21198/s1nc71",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Sophronius of Jerusalem",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": " ca. 560 CE-ca. 638 CE",
+        "iso": {
+            "not_before": "0535",
+            "not_after": "0663"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Sophronius, Saint, Patriarch of Jerusalem, approximately 560-approximately 638",
+            "uri": "https://viaf.org/viaf/20473427/",
+            "source": "VIAF"
+        },
+        {
+            "label": "Sophronius, Saint, Patriarch of Jerusalem, approximately 560-approximately 638",
+            "uri": "https://id.loc.gov/authorities/names/n83180836",
+            "source": "LoC"
+        },
+        {
+            "label": "Sophronius, Patriarch of Jerusalem, approximately 560-approximately 638",
+            "uri": "https://w3id.org/haf/person/836003904700",
+            "source": "HAF"
+        },
+        {
+            "label": "Sophronius of Jerusalem",
+            "uri": "http://syriaca.org/person/757",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Sophronius Hierosolymitanus",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/2543/",
+            "source": "Pinakes"
+        }
+    ]
+}

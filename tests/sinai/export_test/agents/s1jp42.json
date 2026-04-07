@@ -1,0 +1,18 @@
+{
+    "ark": "ark:/21198/s1jp42",
+    "type": {"id": "organization", "label": "Organization"},
+    "pref_name": "Saint Catherine's Monastery of the Sinai",
+    "alt_name": [],
+    "rel_con": [
+        {
+            "label": "Saint Catherine (Monastery : Mount Sinai)",
+            "uri": "http://viaf.org/viaf/136013277",
+            "source": "VIAF"
+        },
+        {
+            "label": "Monastery of Saint Catherine",
+            "uri": "https://w3id.org/haf/organization/947673334091",
+            "source": "HAF"
+        }
+    ]
+}

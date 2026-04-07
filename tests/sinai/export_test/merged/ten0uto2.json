@@ -1,0 +1,356 @@
+{
+  "ark": "ark:/21198/ten0uto2",
+  "reconstruction": true,
+  "type": {
+    "id": "uto",
+    "label": "Undertext Object"
+  },
+  "shelfmark": "Sinai Arabic NF M 28, UTO 2",
+  "summary": "Undertext Object of Genesis, 6th c. Greek majuscule",
+  "extent": "16 ff.",
+  "state": {
+    "id": "uto",
+    "label": "Undertext Object"
+  },
+  "fol": "ff. 131-132, 138, 140-142",
+  "features": [
+    {
+      "id": "msi",
+      "label": "Multispectral Imaging"
+    }
+  ],
+  "part": [
+    {
+      "label": "Part 1",
+      "summary": "Exodus, 6th c. Greek majuscule",
+      "locus": "ff. 131-132, 138, 140-142",
+      "support": [
+        {
+          "id": "parchment",
+          "label": "Parchment"
+        }
+      ],
+      "extent": "6 ff.",
+      "dim": "191 x 137 mm (typical folio)",
+      "ot_layer": [
+        {
+          "id": "ark:/21198/ten0p1ul2",
+          "label": "Overtext layer, Genesis (6th c., Greek majuscule)",
+          "type": {
+            "id": "overtext",
+            "label": "Overtext"
+          },
+          "layer_record": {
+            "ark": "ark:/21198/ten0p1ul2",
+            "reconstruction": false,
+            "state": {
+              "id": "undertext",
+              "label": "Undertext"
+            },
+            "label": "Arabic NF M 28, Part 1, Undertext 2",
+            "locus": "ff. 131-132, 138, 140-142",
+            "summary": "Genesis (6th c. Greek majuscule)",
+            "extent": "16 ff.",
+            "writing": [
+              {
+                "script": [
+                  {
+                    "id": "greek-maj",
+                    "label": "Greek majuscule",
+                    "writing_system": "Greek"
+                  }
+                ],
+                "locus": "ff. 131-132, 138, 140-142",
+                "note": [
+                  "Round biblical majuscule"
+                ]
+              }
+            ],
+            "text_unit": [
+              {
+                "id": "ark:/21198/ten0p1ul2t1",
+                "label": "Primary Text Unit 1",
+                "locus": "ff. 131-132, 138, 140-142",
+                "text_unit_record": {
+                  "ark": "ark:/21198/ten0p1ul2t1",
+                  "reconstruction": false,
+                  "label": "Asceticon",
+                  "locus": "ff. 131-132, 138, 140-142",
+                  "lang": [
+                    {
+                      "id": "gree1276",
+                      "label": "Greek"
+                    }
+                  ],
+                  "work_wit": [
+                    {
+                      "work": {
+                        "ark": "ark:/21198/s1501m",
+                        "pref_title": "Asceticon",
+                        "alt_title": [
+                          "Isaiah, Abba, -489 or 491. Asceticon"
+                        ],
+                        "genre": [
+                          {
+                            "id": "theological-works",
+                            "label": "Theological works"
+                          }
+                        ],
+                        "creator": [
+                          {
+                            "id": "ark:/21198/s15k50",
+                            "agent_record": {
+                              "ark": "ark:/21198/s15k50",
+                              "type": {
+                                "id": "person",
+                                "label": "Person"
+                              },
+                              "pref_name": "Abba Isaiah",
+                              "gender": {
+                                "id": "man",
+                                "label": "Man"
+                              },
+                              "death": {
+                                "value": "489 CE or 491 CE",
+                                "iso": {
+                                  "not_before": "0489",
+                                  "not_after": "0491"
+                                }
+                              },
+                              "rel_con": [
+                                {
+                                  "label": "Isaiah, Abba, -489 or 491",
+                                  "uri": "http://viaf.org/viaf/79027721",
+                                  "source": "VIAF"
+                                },
+                                {
+                                  "label": "Isaiah, Abba, -489 or 491",
+                                  "uri": "https://id.loc.gov/authorities/names/no2003039117",
+                                  "source": "LoC"
+                                },
+                                {
+                                  "label": "Isaiah, of Scetis, active 5th century",
+                                  "uri": "https://w3id.org/haf/person/576491190443",
+                                  "source": "HAF"
+                                },
+                                {
+                                  "label": "Isaiah of Scetis",
+                                  "uri": "http://syriaca.org/person/548",
+                                  "source": "Syriaca"
+                                },
+                                {
+                                  "label": "Isaias Gazaeus abbas",
+                                  "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/1560/",
+                                  "source": "Pinakes"
+                                }
+                              ]
+                            },
+                            "role": {
+                              "id": "author",
+                              "label": "Author"
+                            }
+                          }
+                        ],
+                        "rel_con": [
+                          {
+                            "label": "Isaiah, Abba, -489 or 491. | Asceticon",
+                            "uri": "http://viaf.org/viaf/180983978",
+                            "source": "VIAF"
+                          },
+                          {
+                            "label": "Isaiah, Abba, -489 or 491. Asceticon",
+                            "uri": "https://w3id.org/haf/work/152400286849",
+                            "source": "HAF"
+                          }
+                        ]
+                      },
+                      "locus": "ff. 131-132, 138, 140-142",
+                      "note": [
+                        "contributors: Rossetto; Tselikas"
+                      ]
+                    }
+                  ],
+                  "note": [
+                    {
+                      "type": {
+                        "id": "contents",
+                        "label": "Contents Note"
+                      },
+                      "value": "The original manuscript also included the UTO Exodus from Arabic NF 28 and the UTOs Genesis and Exodus from Arabic NF 8 (Rossetto)"
+                    }
+                  ],
+                  "bib": [
+                    {
+                      "id": "f3536560-fc15-43db-82b5-0861b86a1107",
+                      "type": {
+                        "id": "cite",
+                        "label": "Citation"
+                      }
+                    }
+                  ],
+                  "parent": [
+                    "ark:/21198/ten0p1ul2"
+                  ],
+                  "internal": [
+                    "Test record, delete after development is complete"
+                  ],
+                  "desc_provenance": {
+                    "program": [
+                      {
+                        "label": "Sinai Palimpests Project",
+                        "description": "Described as part of the Sinai Palimpsests Project (2006-2017). The Sinai Palimpsests Project was sponsored by St. Catherine’s Monastery of the Sinai in partnership with the Early Manuscripts Electronic Library and the UCLA Library, and with funding from Arcadia. The Project provides scholarly identification and description of the undertext objects in a subset of palimpsested manuscripts in the Sinai collection, with minimal metadata for the overtexts of the host manuscripts."
+                      }
+                    ]
+                  }
+                }
+              }
+            ],
+            "para": [
+              {
+                "type": {
+                  "id": "colophon",
+                  "label": "Colophon"
+                },
+                "locus": "f. 1v",
+                "lang": [
+                  {
+                    "id": "greek124",
+                    "label": "Greek"
+                  }
+                ],
+                "assoc_date": [
+                  {
+                    "value": "6th c. CE",
+                    "iso": {
+                      "not_before": "0501",
+                      "not_after": "0600"
+                    },
+                    "type": {
+                      "id": "origin",
+                      "label": "Origin Date"
+                    },
+                    "note": [
+                      "Paleographic dating"
+                    ]
+                  }
+                ]
+              }
+            ],
+            "note": [
+              {
+                "type": {
+                  "id": "foliation",
+                  "label": "Foliation"
+                },
+                "value": "Folios in order of reconstructed undertext: 138v, 138r, 142v, 142r, 140r, 140v, 141v, 141r, 132v, 132r, 131v, 131r"
+              }
+            ],
+            "bib": [
+              {
+                "id": "409fdd9a-3d80-4944-ad02-ac64be40c0da",
+                "type": {
+                  "id": "ref",
+                  "label": "Reference Work"
+                },
+                "range": "p. 29-30"
+              }
+            ],
+            "parent": [
+              "ark:/21198/ten02zkr",
+              "ark:/21198/ten0uto2"
+            ],
+            "internal": [
+              "Test record for development purposes; please delete."
+            ],
+            "desc_provenance": {
+              "program": [
+                {
+                  "label": "Sinai Palimpests Project",
+                  "description": "Described as part of the Sinai Palimpsests Project (2006-2017). The Sinai Palimpsests Project was sponsored by St. Catherine’s Monastery of the Sinai in partnership with the Early Manuscripts Electronic Library and the UCLA Library, and with funding from Arcadia. The Project provides scholarly identification and description of the undertext objects in a subset of palimpsested manuscripts in the Sinai collection, with minimal metadata for the overtexts of the host manuscripts."
+                }
+              ]
+            }
+          },
+          "locus": "ff. 131-132, 138, 140-142"
+        }
+      ]
+    }
+  ],
+  "location": [
+    {
+      "id": "sinai-nf",
+      "collection": "New Finds",
+      "repository": "St. Catherine's Monastery of the Sinai"
+    }
+  ],
+  "note": [
+    {
+      "type": {
+        "id": "foliation",
+        "label": "Foliation"
+      },
+      "value": "Reconstructed folio order: 138v, 138r, 142v, 142r, 140r, 140v, 141v, 141r, 132v, 132r, 131v, 131r"
+    }
+  ],
+  "related_mss": [
+    {
+      "type": {
+        "id": "disjecta",
+        "label": "Disjecta Membra"
+      },
+      "label": "Arabic NF M 28 UTOs + Arabic NF M 8 UTOs (Genesis and Exodus)",
+      "note": [
+        "The original manuscript also included the UTO Exodus from Arabic NF 28 and the UTOs Genesis and Exodus from Arabic NF 8"
+      ],
+      "mss": [
+        {
+          "label": "Exodus from Arabic NF M 28",
+          "id": "ark:/21198/ten0uto1"
+        },
+        {
+          "label": "Genesis from Arabic NF M 8",
+          "id": "ark:/21198/tekduto1gen"
+        },
+        {
+          "label": "Exodus from Arabic NF M 8",
+          "id": "ark:/21198/tekduto2exod"
+        }
+      ]
+    }
+  ],
+  "bib": [
+    {
+      "id": "ebe32f6b-ad60-472c-aceb-d86913448530",
+      "type": {
+        "id": "cite",
+        "label": "Citation"
+      },
+      "range": "28-57",
+      "note": [
+        "Kashouh article"
+      ]
+    }
+  ],
+  "iiif": [
+    {
+      "type": {
+        "id": "main",
+        "label": "Main"
+      },
+      "manifest": "https://sinai-images.library.ucla.edu/iiif/ark:%2F21198%2Fr1qn64nz/manifest",
+      "text_direction": "right-to-left",
+      "behavior": "paged",
+      "thumbnail": "https://iiif.sinaimanuscripts.library.ucla.edu/iiif/2/ark%3A%2F21198%2Fz15f0f9b%2Fp161m45m/full/!200,200/0/default.jpg"
+    }
+  ],
+  "internal": [
+    "This record is used only for purposes of developing the data portal and should therefore not be published, and should be deleted when development is complete"
+  ],
+  "reconstructed_from": [
+    {
+      "id": "ark:/21198/ten02zkr",
+      "shelfmark": "Sinai Arabic NF M 28"
+    }
+  ],
+  "has_bind": false
+}

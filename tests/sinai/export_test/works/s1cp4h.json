@@ -1,0 +1,22 @@
+{
+    "ark": "ark:/21198/s1cp4h",
+    "pref_title": "Timothy",
+    "alt_title": [
+        "Bible. Timothy"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Timothy",
+            "uri": "http://viaf.org/viaf/527154387474530970009",
+            "source": "VIAF"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

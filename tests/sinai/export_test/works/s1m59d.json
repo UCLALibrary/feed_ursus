@@ -1,0 +1,48 @@
+{
+    "ark": "ark:/21198/s1m59d",
+    "pref_title": "Celestial hierarchy",
+    "orig_lang": {
+        "id": "gree1276",
+        "label": "Greek"
+    },
+    "alt_title": [
+        "De coelesti hierarchia",
+        "Celestial hierarchy"
+    ],
+    "genre": [
+        {
+            "id": "theological-works",
+            "label": "Theological works"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Pseudo-Dionysius, the Areopagite. | Celestial hierarchy",
+            "uri": "https://viaf.org/viaf/293071222",
+            "source": "VIAF"
+        },
+        {
+            "label": "Pseudo-Dionysius, the Areopagite. Celestial hierarchy",
+            "uri": "https://id.loc.gov/authorities/names/nr00007867",
+            "source": "LoC"
+        },
+        {
+            "label": "Pseudo-Dionysius, the Areopagite. Celestial hierarchy",
+            "uri": "https://w3id.org/haf/work/428766892157",
+            "source": "HAF"
+        },
+        {
+            "label": "Dionysius Areopagita (pseudo) De coelesti hierarchia",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/oeuvre/2242/",
+            "source": "Pinakes"
+        }
+    ],
+    "refno": [
+        {
+            "label": "De coelesti hierarchia",
+            "idno": "6600",
+            "source": "CPG"
+        }
+    ],
+    "bib": []
+}

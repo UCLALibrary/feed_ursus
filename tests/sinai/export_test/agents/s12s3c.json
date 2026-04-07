@@ -1,0 +1,43 @@
+{
+    "ark": "ark:/21198/s12s3c",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Gregory of Nazianzus",
+    "alt_name": [
+        "Gregory the Theologian"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "ca. 329 CE-390 CE",
+        "iso": {
+            "not_before": "0304",
+            "not_after": "0415"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Gregory, of Nazianzus, Saint",
+            "uri": "http://viaf.org/viaf/46897094",
+            "source": "VIAF"
+        },
+        {
+            "label": "Gregory, of Nazianzus, Saint",
+            "uri": "https://id.loc.gov/authorities/names/n50082276",
+            "source": "LoC"
+        },
+        {
+            "label": "Gregory, of Nazianzus, approximately 329-390",
+            "uri": "https://w3id.org/haf/person/889037265072",
+            "source": "HAF"
+        },
+        {
+            "label": "Gregory Nazianzen",
+            "uri": "http://syriaca.org/person/511",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Gregorius Nazianzenus",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/1239/",
+            "source": "Pinakes"
+        }
+    ]
+}

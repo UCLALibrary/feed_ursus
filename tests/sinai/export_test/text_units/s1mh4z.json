@@ -1,0 +1,37 @@
+{
+    "ark": "ark:/21198/s1mh4z",
+    "reconstruction": false,
+    "label": "Unidentified text",
+    "lang": [
+        {
+            "id": "gree1276",
+            "label": "Greek"
+        }
+    ],
+    "work_wit": [
+        {
+            "work": {
+                "desc_title": "Unidentified text"
+            }
+        }
+    ],
+    "note": [
+        {
+            "type": {
+                "id": "contents",
+                "label": "Contents Note"
+            },
+            "value": "The text is illegible throughout"
+        },
+        {
+            "type": {
+                "id": "general",
+                "label": "Other Notes"
+            },
+            "value": "Description by Giulia Rossetto"
+        }
+    ],
+    "parent": [
+        "ark:/21198/s1zh1x"
+    ]
+}

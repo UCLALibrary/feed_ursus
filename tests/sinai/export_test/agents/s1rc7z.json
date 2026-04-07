@@ -1,0 +1,20 @@
+{
+    "ark": "ark:/21198/s1rc7z",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Joseph Kara",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "birth": {
+        "value": "1065 CE",
+        "iso": {
+            "not_before": "1065"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Kara, Joseph, approximately 1065-",
+            "uri": "https://viaf.org/viaf/59876084/",
+            "source": "VIAF"
+        }
+    ]
+}

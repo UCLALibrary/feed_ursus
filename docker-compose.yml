@@ -1,8 +1,13 @@
-version: "3.6"
-
 services:
+  python:
+    build: .
+    working_dir: /eureka
+    volumes:
+      - ../eureka:/eureka
+
   web:
     image: uclalibrary/ursus
+    platform: linux/amd64  # set up arm64 build but it still won't pull
     hostname: ursus
     depends_on:
       - db
@@ -11,29 +16,35 @@ services:
       - ./dotenv.sample
     environment:
       DATABASE_HOST: db
-      IIIF_URL: https://californica-test.library.ucla.edu/concern/works
-      THUMBNAIL_BASE_URL: http://californica-test.library.ucla.edu
-      SOLR_URL: http://solr:8983/solr/californica
-      SOLR_TEST_URL: http://solr_test:8983/solr/californica
+      SOLR_URL: http://solr:8983/solr/ursus
+      SOLR_TEST_URL: http://solr_test:8983/solr/ursus
     ports:
-      - "127.0.0.1:6003:3000"
+      - "127.0.0.1:3000:3000"
     working_dir: /ursus
 
   db:
     image: mysql:5.6
+    platform: linux/amd64
     volumes:
       - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
       - mysql_data:/var/lib/mysql
     # ports:
-    #   - "127.0.0.1:6306:3306"
+    #   - "127.0.0.1:3306:3306"
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
 
   solr:
-    build: .
+    image: uclalibrary/solr-ursus:8
     ports:
-      - "127.0.0.1:6983:8983"
+      - '127.0.0.1:8983:8983'
+    volumes:
+      - solr_data:/var/solr/data
+
+
+  solr_test:
+    image: uclalibrary/solr-ursus:8
 
 
 volumes:
   mysql_data:
+  solr_data:

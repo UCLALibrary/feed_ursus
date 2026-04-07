@@ -1,0 +1,40 @@
+{
+    "ark": "ark:/21198/s1j011",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Caesarius of Nazianzus",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "death": {
+        "value": "369 CE",
+        "iso": {
+            "not_before": "0369"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Caesarius, of Nazianzus, Saint, -369",
+            "uri": "http://viaf.org/viaf/35250536",
+            "source": "VIAF"
+        },
+        {
+            "label": "Caesarius, of Nazianzus, Saint, -369",
+            "uri": "http://id.loc.gov/authorities/names/no2002065897",
+            "source": "LoC"
+        },
+        {
+            "label": "Caesarius, of Nazianzus, -369",
+            "uri": "https://w3id.org/haf/person/299305271727",
+            "source": "HAF"
+        },
+        {
+            "label": "Caesarius",
+            "uri": "http://syriaca.org/person/1640",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Caesarius frater Gregorii Theologi",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/saint/157/",
+            "source": "Pinakes"
+        }
+    ]
+}

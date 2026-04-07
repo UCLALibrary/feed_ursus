@@ -1,0 +1,20 @@
+{
+    "ark": "ark:/21198/s1d886",
+    "pref_title": "Psalter",
+    "alt_title": [
+        "Psalter"
+    ],
+    "genre": [
+        {
+            "id": "liturgical-texts",
+            "label": "Liturgical texts"
+        },
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [],
+    "refno": [],
+    "bib": []
+}

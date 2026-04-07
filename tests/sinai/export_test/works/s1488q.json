@@ -1,0 +1,27 @@
+{
+    "ark": "ark:/21198/s1488q",
+    "pref_title": "Genesis",
+    "alt_title": [
+        "Bible. Genesis"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Genesis",
+            "uri": "https://viaf.org/viaf/174582712",
+            "source": "VIAF"
+        },
+        {
+            "label": "Bible. Genesis",
+            "uri": "http://id.loc.gov/authorities/names/n80017837",
+            "source": "LoC"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

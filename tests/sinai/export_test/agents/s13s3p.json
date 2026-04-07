@@ -1,0 +1,36 @@
+{
+    "ark": "ark:/21198/s13s3p",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Dorotheus of Tyre",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "255 CE-362 CE",
+        "iso": {
+            "not_before": "0255",
+            "not_after": "0362"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Dorotheus, Saint, Bishop of Tyre, -[362?]",
+            "uri": " http://viaf.org/viaf/297446244",
+            "source": "VIAF"
+        },
+        {
+            "label": "Dorotheus, Saint, 255-362",
+            "uri": "https://id.loc.gov/authorities/names/n85035334",
+            "source": "LoC"
+        },
+        {
+            "label": "Dorotheus, 255-362",
+            "uri": "https://w3id.org/haf/person/597829741463",
+            "source": "HAF"
+        },
+        {
+            "label": "Dorotheus Tyrius",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/967/",
+            "source": "Pinakes"
+        }
+    ]
+}

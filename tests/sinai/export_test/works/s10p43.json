@@ -1,0 +1,22 @@
+{
+    "ark": "ark:/21198/s10p43",
+    "pref_title": "Acts of Sylvester",
+    "alt_title": [
+        "Acts of Sylvester"
+    ],
+    "genre": [
+        {
+            "id": "hagiographies",
+            "label": "Hagiographies"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Hagiographica Siluester p. (S.), Acta",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/oeuvre/17797/",
+            "source": "Pinakes"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

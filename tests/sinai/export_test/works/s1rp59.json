@@ -1,0 +1,38 @@
+{
+    "ark": "ark:/21198/s1rp59",
+    "pref_title": "Homilies on Genesis",
+    "alt_title": [],
+    "genre": [
+        {
+            "id": "theological-works",
+            "label": "Theological works"
+        },
+        {
+            "id": "commentaries",
+            "label": "Commentaries"
+        }
+    ],
+    "creator": [
+        {
+            "id": "ark:/21198/s1x303",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "John Chrysostom, Saint, -407. | Homilies on Genesis",
+            "uri": "https://viaf.org/viaf/185525092",
+            "source": "VIAF"
+        },
+        {
+            "label": "John Chrysostom, Saint, -407. Homilies on Genesis",
+            "uri": "http://id.loc.gov/authorities/names/n85120913",
+            "source": "LoC"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

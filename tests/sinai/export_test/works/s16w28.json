@@ -1,0 +1,36 @@
+{
+    "ark": "ark:/21198/s16w28",
+    "pref_title": "Catecheses",
+    "alt_title": [
+        "Cyril, Saint, Bishop of Jerusalem, approximately 315-386. Catecheses"
+    ],
+    "genre": [
+        {
+            "id": "theological-works",
+            "label": "Theological works"
+        }
+    ],
+    "creator": [
+        {
+            "id": "ark:/21198/s1rg6m",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Cyril, Saint, Bishop of Jerusalem, approximately 315-386. | Catecheses",
+            "uri": "http://viaf.org/viaf/4535170292152177690005",
+            "source": "VIAF"
+        },
+        {
+            "label": "Cyril, Saint, Bishop of Jerusalem, approximately 315-386. Catecheses",
+            "uri": "http://id.loc.gov/authorities/names/n93067997",
+            "source": "LoC"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

@@ -1,0 +1,24 @@
+{
+    "ark": "ark:/21198/s1nk5b",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "John the Baptist",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "rel_con": [
+        {
+            "label": "John the Baptist, Saint",
+            "uri": "http://viaf.org/viaf/27863229",
+            "source": "VIAF"
+        },
+        {
+            "label": "John the Baptist",
+            "uri": "http://syriaca.org/person/1808",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Iohannes Baptista praecursor Domini",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/saint/432/",
+            "source": "Pinakes"
+        }
+    ]
+}

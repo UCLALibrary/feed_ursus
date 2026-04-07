@@ -1,0 +1,38 @@
+{
+    "ark": "ark:/21198/s1d01s",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Theodore the Studite",
+    "alt_name": [
+        "Theodore Studites"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "759 CE-826 CE",
+        "iso": {
+            "not_before": "0759",
+            "not_after": "0826"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Theodore, Studites, Saint, 759-826",
+            "uri": "http://viaf.org/viaf/62875165",
+            "source": "VIAF"
+        },
+        {
+            "label": "Theodore, Studites, Saint, 759-826",
+            "uri": "https://id.loc.gov/authorities/names/n81118597",
+            "source": "LoC"
+        },
+        {
+            "label": "Theodore, Studites, 759-826",
+            "uri": "https://w3id.org/haf/person/636228715607",
+            "source": "HAF"
+        },
+        {
+            "label": "Theodorus Studita",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/2685/",
+            "source": "Pinakes"
+        }
+    ]
+}

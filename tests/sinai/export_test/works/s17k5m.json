@@ -1,0 +1,27 @@
+{
+    "ark": "ark:/21198/s17k5m",
+    "pref_title": "The Life of Andronicus and Athanasia ",
+    "alt_title": [
+        "The Life of Andronicus and Athanasia"
+    ],
+    "genre": [
+        {
+            "id": "martyrologies",
+            "label": "Martyrologies"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Andronicus and Athanasia (text) - ܐܢܕܪܘܢܝܩܘܣ ܘܐܬܢܣܝܐ",
+            "uri": "https://syriaca.org/work/385",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Andronicus et Athanasia coniuges mm. in Aegypto",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/saint/75/",
+            "source": "Pinakes"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

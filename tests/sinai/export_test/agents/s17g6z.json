@@ -1,0 +1,36 @@
+{
+    "ark": "ark:/21198/s17g6z",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Dorotheus of Gaza",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "6th c. CE",
+        "iso": {
+            "not_before": "0501",
+            "not_after": "0600"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Dorotheus, of Gaza, Saint, active 6th century",
+            "uri": "http://viaf.org/viaf/52046984",
+            "source": "VIAF"
+        },
+        {
+            "label": "Dorotheus, of Gaza, Saint, active 6th century",
+            "uri": "https://id.loc.gov/authorities/names/no94029712",
+            "source": "LoC"
+        },
+        {
+            "label": "Dorotheus, of Gaza, active 6th century",
+            "uri": "https://w3id.org/haf/person/801972287055",
+            "source": "HAF"
+        },
+        {
+            "label": "Dorotheus Gazaeus",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/963/",
+            "source": "Pinakes"
+        }
+    ]
+}

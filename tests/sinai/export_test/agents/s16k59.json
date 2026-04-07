@@ -1,0 +1,41 @@
+{
+    "ark": "ark:/21198/s16k59",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Gregorius bar Hebraeus",
+    "alt_name": [
+        "Bar Hebraeus",
+        "Gregorius bar Hebraeus, 1225/6-1286",
+        "Gregory Bar ʿEbroyo",
+        "ܓܪܝܓܘܪܝܘܣ ܒܪ ܥܒܪܝܐ"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "1226 CE-1286 CE",
+        "iso": {
+            "not_before": "1226",
+            "not_after": "1286"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Bar-Hebraeus (1226-1286)",
+            "uri": "http://viaf.org/viaf/81959220",
+            "source": "VIAF"
+        },
+        {
+            "label": "Bar Hebraeus, 1226-1286",
+            "uri": "https://id.loc.gov/authorities/names/n50024350",
+            "source": "LoC"
+        },
+        {
+            "label": "Bar Hebraeus, 1226-1286",
+            "uri": "https://w3id.org/haf/person/459367994922",
+            "source": "HAF"
+        },
+        {
+            "label": "Gregorius bar Hebraeus",
+            "uri": "https://www.syriaca.org/person/239",
+            "source": "Syriaca"
+        }
+    ]
+}

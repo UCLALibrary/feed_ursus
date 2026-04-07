@@ -1,0 +1,84 @@
+{
+    "ark": "ark:/21198/s1bp7b",
+    "reconstruction": false,
+    "label": "Sinai Georgian 34, Undertext (Nuskhurimt)",
+    "locus": "ff. 123v, 138r",
+    "state": {
+        "id": "undertext",
+        "label": "Undertext"
+    },
+    "writing": [
+        {
+            "script": [
+                {
+                    "id": "nuskhurimt",
+                    "label": "Nuskhurimt",
+                    "writing_system": "Georgian"
+                }
+            ],
+            "note": [
+                "Slightly slanted minuscule"
+            ]
+        }
+    ],
+    "layout": [
+        {
+            "columns": "1 columns",
+            "lines": "19 lines, uncertain"
+        }
+    ],
+    "text_unit": [
+        {
+            "id": "ark:/21198/s10q2p",
+            "label": "Item 1"
+        }
+    ],
+    "assoc_date": [
+        {
+            "type": {
+                "id": "origin",
+                "label": "Date of Origin"
+            },
+            "value": "ca. 9th-10th c.  CE",
+            "iso": {
+                "not_before": "0801",
+                "not_after": "0950"
+            }
+        }
+    ],
+    "assoc_place": [
+        {
+            "value": "Possibly Jerusalem",
+            "event": {
+                "id": "origin",
+                "label": "Place of Origin"
+            }
+        }
+    ],
+    "note": [
+        {
+            "type": {
+                "id": "foliation",
+                "label": "Foliation Note"
+            },
+            "value": "Writing only on flesh side"
+        },
+        {
+            "type": {
+                "id": "general",
+                "label": "Other Notes"
+            },
+            "value": "Description of undertext by Jost Gippert, Bernard Outtier"
+        },
+        {
+            "type": {
+                "id": "general",
+                "label": "Other Notes"
+            },
+            "value": "Bibliography: Metreveli ; Kiknadze"
+        }
+    ],
+    "parent": [
+        "ark:/21198/z1h13zxq"
+    ]
+}

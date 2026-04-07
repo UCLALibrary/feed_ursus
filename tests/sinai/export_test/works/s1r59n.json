@@ -1,0 +1,25 @@
+{
+    "ark": "ark:/21198/s1r59n",
+    "pref_title": "Anaphora of St. John Chrysostom",
+    "alt_title": [
+        "Anaphora of St. John Chrysostom"
+    ],
+    "genre": [
+        {
+            "id": "liturgical-texts",
+            "label": "Liturgical texts"
+        }
+    ],
+    "creator": [
+        {
+            "id": "ark:/21198/s1x303",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "rel_con": [],
+    "refno": [],
+    "bib": []
+}

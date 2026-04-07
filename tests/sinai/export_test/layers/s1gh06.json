@@ -1,0 +1,84 @@
+{
+    "ark": "ark:/21198/s1gh06",
+    "reconstruction": false,
+    "label": "Sinai Georgian 34, Undertext (Nuskhurimt)",
+    "locus": "ff. 144–145, 204–205, 208–209, rear pastedown, 140–141",
+    "state": {
+        "id": "undertext",
+        "label": "Undertext"
+    },
+    "writing": [
+        {
+            "script": [
+                {
+                    "id": "nuskhurimt",
+                    "label": "Nuskhurimt",
+                    "writing_system": "Georgian"
+                }
+            ],
+            "note": [
+                "Relatively thick and clumsy"
+            ]
+        }
+    ],
+    "layout": [
+        {
+            "columns": "1 columns",
+            "lines": "17 lines, uncertain"
+        }
+    ],
+    "text_unit": [
+        {
+            "id": "ark:/21198/s14h50",
+            "label": "Item 1"
+        }
+    ],
+    "assoc_date": [
+        {
+            "type": {
+                "id": "origin",
+                "label": "Date of Origin"
+            },
+            "value": "ca. 9th-10th c.  CE",
+            "iso": {
+                "not_before": "0801",
+                "not_after": "0950"
+            }
+        }
+    ],
+    "assoc_place": [
+        {
+            "value": "Possibly Jerusalem",
+            "event": {
+                "id": "origin",
+                "label": "Place of Origin"
+            }
+        }
+    ],
+    "note": [
+        {
+            "type": {
+                "id": "foliation",
+                "label": "Foliation Note"
+            },
+            "value": "Reconstructed folio order, ff. 204r (?), 204v, 205r, 205v, 141r, 141v, 140r, 140v, 145r (?),) 145v, 144r, 144v, 208r, 208v"
+        },
+        {
+            "type": {
+                "id": "general",
+                "label": "Other Notes"
+            },
+            "value": "Description of undertext by Jost Gippert, Bernard Outtier"
+        },
+        {
+            "type": {
+                "id": "general",
+                "label": "Other Notes"
+            },
+            "value": "Bibliography: Metreveli, Č'ank'ievi, and Xevsuriani"
+        }
+    ],
+    "parent": [
+        "ark:/21198/z1h13zxq"
+    ]
+}

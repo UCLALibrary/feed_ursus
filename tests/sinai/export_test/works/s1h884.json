@@ -1,0 +1,35 @@
+{
+    "ark": "ark:/21198/s1h884",
+    "pref_title": "Homilies on the Epistle to the Hebrews",
+    "alt_title": [
+        "John Chrysostom, Saint, -407. Homilies on the Epistle to the Hebrews"
+    ],
+    "genre": [
+        {
+            "id": "theological-works",
+            "label": "Theological works"
+        },
+        {
+            "id": "commentaries",
+            "label": "Commentaries"
+        }
+    ],
+    "creator": [
+        {
+            "id": "ark:/21198/s1x303",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "John Chrysostom, Saint, -407. | Homilies on the Epistle to the Hebrews",
+            "uri": "http://viaf.org/viaf/309536147",
+            "source": "VIAF"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

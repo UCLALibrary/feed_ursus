@@ -1,0 +1,41 @@
+{
+    "ark": "ark:/21198/s18c7m",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "John of Damascus",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "death": {
+        "value": "ca. 750 CE",
+        "iso": {
+            "not_before": "0725",
+            "not_after": "0775"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "John, of Damascus, Saint",
+            "uri": "http://viaf.org/viaf/44435485",
+            "source": "VIAF"
+        },
+        {
+            "label": "John, of Damascus, Saint",
+            "uri": "https://id.loc.gov/authorities/names/n80032173",
+            "source": "LoC"
+        },
+        {
+            "label": "John, of Damascus, -approximately 750",
+            "uri": "https://w3id.org/haf/person/353918456335",
+            "source": "HAF"
+        },
+        {
+            "label": "John of Damascus",
+            "uri": "http://syriaca.org/person/575",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Iohannes Damascenus",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/1464/",
+            "source": "Pinakes"
+        }
+    ]
+}

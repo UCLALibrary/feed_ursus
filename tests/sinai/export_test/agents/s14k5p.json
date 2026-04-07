@@ -1,0 +1,41 @@
+{
+    "ark": "ark:/21198/s14k5p",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "John of Karpathos",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "7th(?) c. CE",
+        "iso": {
+            "not_before": "0575",
+            "not_after": "0725"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "John, of Karpathos, Saint, active 7th century?",
+            "uri": "http://viaf.org/viaf/268305530",
+            "source": "VIAF"
+        },
+        {
+            "label": "John, of Karpathos, Saint, active 7th century?",
+            "uri": "https://id.loc.gov/authorities/names/n88166544",
+            "source": "LoC"
+        },
+        {
+            "label": "John, of Karpathos, active 7th century?",
+            "uri": "https://w3id.org/haf/person/783018785526",
+            "source": "HAF"
+        },
+        {
+            "label": "John of Karpathos",
+            "uri": "http://syriaca.org/person/3543",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Iohannes Carpathius",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/1445/",
+            "source": "Pinakes"
+        }
+    ]
+}

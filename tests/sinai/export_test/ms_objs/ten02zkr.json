@@ -1,0 +1,189 @@
+{
+    "ark": "ark:/21198/ten02zkr",
+    "reconstruction": false,
+    "type": {
+        "id": "manuscript",
+        "label": "Manuscript"
+    },
+    "shelfmark": "Sinai Arabic NF M 28",
+    "summary": "Gospels in Arabic, palimpsest with Greek undertext",
+    "extent": "16 ff.",
+    "weight": "40.1 g",
+    "dim": "192 x 140 x 20.0 mm",
+    "state": {
+        "id": "quire",
+        "label": "Quire(s)"
+        },
+    "fol": "ff. 128-143",
+    "coll": "Quires 1-2: 2x8 (16)",
+    "features": [
+        {
+            "id": "palimpsest",
+            "label": "Palimpsest"
+            } 
+    ],
+    "part": [
+        {
+            "label": "Part 1",
+            "summary": "Synaxarion (Gospel Lectionary for the movable feast days according to the Byzantine rite)",
+            "locus": "ff. 128-143",
+            "support": [
+                {
+                    "id": "parchment",
+                    "label": "Parchment"
+                    }
+                ],
+            "extent": "16 ff.",
+            "dim": "191 x 137 mm (typical folio)",
+            "layer": [
+                {
+                    "id": "ark:/21198/ten0p1ol",
+                    "label": "Overtext layer (late 9th c., Kufic)",
+                    "type": {
+                        "id": "overtext",
+                        "label": "Overtext"
+                        },
+                    "locus": "ff. 128-143"
+                },
+                {
+                    "id": "ark:/21198/ten0p1ul1",
+                    "label": "Undertext layer, Exodus (6th c., Greek majuscule)",
+                    "type": {
+                        "id": "undertext",
+                        "label": "Undertext"
+                        },
+                    "locus": "ff. 128-130, 133-137, 139, 143"
+                },
+                {
+                    "id": "ark:/21198/ten0p1ul2",
+                    "label": "Undertext layer, Genesis (6th c., Greek majuscule)",
+                    "type": {
+                        "id": "undertext",
+                        "label": "Undertext"
+                        },
+                    "locus": "ff. 131-132, 138, 140-142"
+                }
+            ]
+        }
+    ],
+    "has_bind": false,
+    "location": [
+        {
+            "id": "sinai-nf",
+            "collection": "New Finds",
+            "repository": "St. Catherine's Monastery of the Sinai"
+        }
+    ],
+    "note": [
+        {
+            "type": {
+                "id": "foliation",
+                "label": "Foliation"
+            },
+            "value": "Pencil foliation in Arabic NF 28 begins fol. 128"
+        },
+        {
+            "type": {
+                        "id": "condition",
+                        "label": "Condition"
+                        },
+            "value": "Two unsewn quires"
+        }
+        ],
+    "related_mss": [
+        {
+            "type": {
+                "id": "disjecta",
+                "label": "Disjecta Membra"
+            },
+            "label": "Arabic NF M 28 + Arabic NF M 8",
+            "mss": [
+                {
+                    "label": "Sinai Arabic NF 8",
+                    "id": "ark:/21198/z1kd1z25"
+                }
+            ],
+            "note": [
+                "Text continues from Arabic NF 8"
+            ]
+        }
+    ],
+    "viscodex": [
+        {
+            "type": {
+                "id": "reconstruction",
+                "label": "Reconstruction"
+            },
+            "label": "Visualization of Arabic NF 28 and Arabic NF 8",
+            "url": "https://vceditor.library.upenn.edu/project/668da6005d6968000145728e/viewOnly"
+        }
+    ],
+    "bib": [
+        {
+            "id": "cb8b8b52-569b-4d1f-8d5c-adf911afd205",
+            "type": {
+                "id": "ref",
+                "label": "Reference Work"
+            },
+            "range": "p. 29",
+            "note": [
+                "Kamil"
+            ]
+        },
+        {
+            "id": "ebe32f6b-ad60-472c-aceb-d86913448530",
+            "type": {
+                "id": "cite",
+                "label": "Citation"
+            },
+            "range": "28-57",
+            "note": [
+            "Kashouh article"
+            ]
+        },
+        {
+            "id": "01d4a639-d314-4271-b7f8-3f559c6c744c",
+            "type": {
+                "id": "cite",
+                "label": "Citation"
+            },
+            "range": "28-57",
+            "note": [
+            "Kashouh book"
+            ]
+        }
+    ],
+    "iiif": [
+        {
+            "type": {
+                        "id": "main",
+                        "label": "Main"
+                        },
+            "manifest": "https://iiif.library.ucla.edu/ark%3A%2F21198%2Fz1n02zkr/manifest",
+            "text_direction": "right-to-left",
+            "behavior": "paged",
+            "thumbnail": "https://iiif.sinaimanuscripts.library.ucla.edu/iiif/2/ark%3A%2F21198%2Fz15f0f9b%2Fp161m45m/full/!200,200/0/default.jpg"
+        },
+        {
+            "type": {
+                        "id": "reordered",
+                        "label": "Reordered"
+                        },
+            "manifest": "https://sinai-images.library.ucla.edu/iiif/ark:%2F21198%2Fr1qn64nz/manifest",
+            "text_direction": "right-to-left",
+            "behavior": "paged",
+            "thumbnail": "https://iiif.sinaimanuscripts.library.ucla.edu/iiif/2/ark%3A%2F21198%2Fz15f0f9b%2Fp161m45m/full/!200,200/0/default.jpg"
+        }
+    ],
+    "desc_provenance": {
+        "program": [
+            {
+                "label": "Sinai Palimpests Project",
+                "description": "Described as part of the Sinai Palimpsests Project (2006-2017). The Sinai Palimpsests Project was sponsored by St. Catherine’s Monastery of the Sinai in partnership with the Early Manuscripts Electronic Library and the UCLA Library, and with funding from Arcadia. The Project provides scholarly identification and description of the undertext objects in a subset of palimpsested manuscripts in the Sinai collection, with minimal metadata for the overtexts of the host manuscripts."
+            }
+        ]
+    },
+    "internal": [
+        "This record is used only for purposes of developing the data portal and should therefore not be published, and should be deleted when development is complete"
+    ]
+}

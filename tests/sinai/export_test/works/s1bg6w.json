@@ -1,0 +1,20 @@
+{
+    "ark": "ark:/21198/s1bg6w",
+    "pref_title": "Menaia",
+    "alt_title": [
+        "Menaia"
+    ],
+    "genre": [
+        {
+            "id": "liturgical-texts",
+            "label": "Liturgical texts"
+        },
+        {
+            "id": "hymnals",
+            "label": "Hymnals"
+        }
+    ],
+    "rel_con": [],
+    "refno": [],
+    "bib": []
+}

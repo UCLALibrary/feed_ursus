@@ -1,0 +1,32 @@
+{
+    "ark": "ark:/21198/s1pw2m",
+    "pref_title": "Eight Logismoi",
+    "alt_title": [
+        "The Eight Evil Thoughts, chapter 6 of Praktikos",
+        "Eight Logismoi (from Praktikos)"
+    ],
+    "genre": [
+        {
+            "id": "theological-works",
+            "label": "Theological works"
+        }
+    ],
+    "creator": [
+        {
+            "id": "ark:/21198/s1b88k",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Evagrius, Ponticus, 345?-399. | De malignis cogitationibus",
+            "uri": "http://viaf.org/viaf/293353587",
+            "source": "VIAF"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

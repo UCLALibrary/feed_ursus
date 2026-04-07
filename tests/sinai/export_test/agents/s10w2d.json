@@ -1,0 +1,19 @@
+{
+    "ark": "ark:/21198/s10w2d",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "John the Apostle",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "rel_con": [
+        {
+            "label": "John, the Apostle, Saint",
+            "uri": "https://viaf.org/viaf/40648922",
+            "source": "VIAF"
+        },
+        {
+            "label": "John the Evangelist",
+            "uri": "http://syriaca.org/person/1826",
+            "source": "Syriaca"
+        }
+    ]
+}

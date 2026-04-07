@@ -1,0 +1,34 @@
+{
+    "ark": "ark:/21198/s1qp4m",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "ʿAbd Allāh ibn al-Faḍl Anṭākī",
+    "alt_name": [
+        "ʿAbdallāh ibn al-Faḍl",
+        "ʻAbdallāh ibn al-Faḍl al-Anṭākī"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "death": {
+        "value": "ca. 1052 CE",
+        "iso": {
+            "not_before": "1027",
+            "not_after": "1077"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Anṭākī, ʻAbd Allāh ibn al-Faḍl -approximately 1052",
+            "uri": "http://viaf.org/viaf/171321787",
+            "source": "VIAF"
+        },
+        {
+            "label": "Anṭākī, ʻAbd Allāh ibn al-Faḍl, -approximately 1052",
+            "uri": "https://id.loc.gov/authorities/names/no2011096309",
+            "source": "LoC"
+        },
+        {
+            "label": "Anṭākī, ʻAbd Allāh ibn al-Faḍl, -approximately 1052",
+            "uri": "https://w3id.org/haf/person/616044903917",
+            "source": "HAF"
+        }
+    ]
+}

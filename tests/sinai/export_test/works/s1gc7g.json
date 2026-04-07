@@ -1,0 +1,25 @@
+{
+    "ark": "ark:/21198/s1gc7g",
+    "pref_title": "Commentary on Genesis",
+    "alt_title": [
+        "Commentary on Genesis by St. Ephrem"
+    ],
+    "genre": [
+        {
+            "id": "commentaries",
+            "label": "Commentaries"
+        }
+    ],
+    "creator": [
+        {
+            "id": "ark:/21198/s1v887",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "rel_con": [],
+    "refno": [],
+    "bib": []
+}

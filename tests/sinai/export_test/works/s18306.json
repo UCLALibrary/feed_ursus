@@ -1,0 +1,27 @@
+{
+    "ark": "ark:/21198/s18306",
+    "pref_title": "Ezra",
+    "alt_title": [
+        "Bible. Ezra"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Ezra",
+            "uri": "http://viaf.org/viaf/315943963",
+            "source": "VIAF"
+        },
+        {
+            "label": "Bible. Ezra",
+            "uri": "http://id.loc.gov/authorities/names/n80008731",
+            "source": "LoC"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

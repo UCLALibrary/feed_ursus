@@ -1,0 +1,27 @@
+{
+    "ark": "ark:/21198/s1wk5h",
+    "pref_title": "Revelation",
+    "alt_title": [
+        "Bible. Revelation"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Revelation",
+            "uri": "http://viaf.org/viaf/173880729",
+            "source": "VIAF"
+        },
+        {
+            "label": "Bible. Revelation",
+            "uri": "http://id.loc.gov/authorities/names/n78095796",
+            "source": "LoC"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

@@ -1,0 +1,33 @@
+{
+    "ark": "ark:/21198/s15s39",
+    "pref_title": "Passio of Sozon",
+    "orig_lang": {
+        "id": "gree1276",
+        "label": "Greek"
+    },
+    "alt_title": [
+        "Passio of Sozon"
+    ],
+    "genre": [
+        {
+            "id": "hagiographies",
+            "label": "Hagiographies"
+        }
+    ],
+    "creation": {
+        "value": "10th c. CE",
+        "iso": {
+            "not_before": "0901",
+            "not_after": "1000"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Hagiographica Sozon m. Pompeiopoli (S.), Passio metaphrastica",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/oeuvre/17819/",
+            "source": "Pinakes"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

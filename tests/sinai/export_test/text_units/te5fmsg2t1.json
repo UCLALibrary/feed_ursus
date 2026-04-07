@@ -1,0 +1,49 @@
+{
+    "ark": "ark:/21198/te5fmsg2t1",
+    "reconstruction": false,
+    "label": "Unidentified Syriac Text",
+    "summary": "Unidentified Syriac text on reinforcement strips",
+    "locus": "ff. 64–66, 70–72, 105–106, 110–111, 113–114",
+    "lang": [
+        {
+            "id": "class1252",
+            "label": "Syriac"
+        },
+        {
+            "id": "gree1276",
+            "label": "Greek"
+        }
+    ],
+    "work_wit": [
+        {
+            "work": {
+                "desc_title": "Unidentified text of Ephrem",
+                "creator": [
+                    "ark:/21198/s1v887"
+                ],
+                "genre": [
+                    {
+                        "id": "theological-works",
+                        "label": "Theological works"
+                    }]
+            }
+        }
+    ],
+    "features": [
+        {
+            "id": "unidentified-text",
+            "label": "Unidentified Text"
+        }
+    ],
+    "parent": [
+        "ark:/21198/te5fmsg2"
+    ],
+    "desc_provenance": {
+        "program": [
+            {
+                "label": "Syriac Parchment Descriptions Project",
+                "description": "Described as part of the Syriac Parchment Descriptions Project (2022-2025). The Syriac Parchment Descriptions Project was funded by a National Endowment for the Humanities grant. It aimed to provide full and detailed cataloguing of the Syriac manuscripts on parchment in the Sinai collection. Lead Cataloguer: Grigory Kessel; Research Associates: Natalia Smelova and Vevian Zaki."
+            }
+        ]
+    }
+}

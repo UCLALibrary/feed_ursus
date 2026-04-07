@@ -1,0 +1,44 @@
+{
+    "ark": "ark:/21198/s1v887",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Ephrem",
+    "alt_name": [
+        "Ephrem the Syrian",
+        "ܐܦܪܝܡ"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "303 CE-373 CE",
+        "iso": {
+            "not_before": "0303",
+            "not_after": "0373"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Ephraem, Syrus, Saint, 303-373",
+            "uri": "http://viaf.org/viaf/100177778",
+            "source": "VIAF"
+        },
+        {
+            "label": "Ephraem, Syrus, Saint, 303-373",
+            "uri": "http://id.loc.gov/authorities/names/n50082928",
+            "source": "LoC"
+        },
+        {
+            "label": "Ephrem, of Nisibis, 303-373",
+            "uri": "https://w3id.org/haf/person/818572788967",
+            "source": "HAF"
+        },
+        {
+            "label": "Ephrem",
+            "uri": "http://syriaca.org/person/13",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Ephraem Graecus",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/995/",
+            "source": "Pinakes"
+        }
+    ]
+}

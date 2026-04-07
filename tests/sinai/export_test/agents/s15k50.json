@@ -1,0 +1,41 @@
+{
+    "ark": "ark:/21198/s15k50",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Abba Isaiah",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "death": {
+        "value": "489 CE or 491 CE",
+        "iso": {
+            "not_before": "0489",
+            "not_after": "0491"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Isaiah, Abba, -489 or 491",
+            "uri": "http://viaf.org/viaf/79027721",
+            "source": "VIAF"
+        },
+        {
+            "label": "Isaiah, Abba, -489 or 491",
+            "uri": "https://id.loc.gov/authorities/names/no2003039117",
+            "source": "LoC"
+        },
+        {
+            "label": "Isaiah, of Scetis, active 5th century",
+            "uri": "https://w3id.org/haf/person/576491190443",
+            "source": "HAF"
+        },
+        {
+            "label": "Isaiah of Scetis",
+            "uri": "http://syriaca.org/person/548",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Isaias Gazaeus abbas",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/1560/",
+            "source": "Pinakes"
+        }
+    ]
+}

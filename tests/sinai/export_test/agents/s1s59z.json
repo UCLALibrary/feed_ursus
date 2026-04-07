@@ -1,0 +1,41 @@
+{
+    "ark": "ark:/21198/s1s59z",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Socrates Scholasticus",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "ca. 379 CE-ca. 440 CE",
+        "iso": {
+            "not_before": "0354",
+            "not_after": "0465"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Socrates, Scholasticus, approximately 379-approximately 440",
+            "uri": "http://viaf.org/viaf/55571017",
+            "source": "VIAF"
+        },
+        {
+            "label": "Socrates, Scholasticus, approximately 379-approximately 440",
+            "uri": "https://id.loc.gov/authorities/names/n85035333",
+            "source": "LoC"
+        },
+        {
+            "label": "Socrates, Scholasticus, approximately 379-approximately 440",
+            "uri": "https://w3id.org/haf/person/563176559580",
+            "source": "HAF"
+        },
+        {
+            "label": "Socrates Scholasticus",
+            "uri": "http://syriaca.org/person/849",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Socrates scholasticus",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/2530/",
+            "source": "Pinakes"
+        }
+    ]
+}

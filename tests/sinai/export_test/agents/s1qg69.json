@@ -1,0 +1,44 @@
+{
+    "ark": "ark:/21198/s1qg69",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Epiphanius of Constantia",
+    "alt_name": [
+        "Epiphanius of Salamis",
+        "Επιφάνιος Άγιος Επίσκοπος Κωνσταντίας Κύπρου (π. 315-403)"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "310 CE-403 CE",
+        "iso": {
+            "not_before": "0310",
+            "not_after": "0403"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Epiphanius, Saint, Bishop of Constantia in Cyprus, approximately 310-403",
+            "uri": "http://viaf.org/viaf/13651211",
+            "source": "VIAF"
+        },
+        {
+            "label": "Epiphanius, Saint, Bishop of Constantia in Cyprus, approximately 310-403",
+            "uri": "https://id.loc.gov/authorities/names/n82039938",
+            "source": "LoC"
+        },
+        {
+            "label": "Epiphanius, Bishop of Constantia in Cyprus, approximately 310-403",
+            "uri": "https://w3id.org/haf/person/841503316280",
+            "source": "HAF"
+        },
+        {
+            "label": "Epiphanius of Salamis",
+            "uri": "http://syriaca.org/person/477",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Epiphanius Constantiensis",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/1006/",
+            "source": "Pinakes"
+        }
+    ]
+}

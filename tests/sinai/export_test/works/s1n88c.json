@@ -1,0 +1,27 @@
+{
+    "ark": "ark:/21198/s1n88c",
+    "pref_title": "Epistles",
+    "alt_title": [
+        "Bible. Epistles"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Epistles",
+            "uri": "https://viaf.org/viaf/176601852",
+            "source": "VIAF"
+        },
+        {
+            "label": "Bible. Epistles",
+            "uri": "http://id.loc.gov/authorities/names/n80025989",
+            "source": "LoC"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

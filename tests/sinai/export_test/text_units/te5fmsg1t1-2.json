@@ -1,0 +1,129 @@
+{
+  "ark": "ark:/21198/te5fmsg1t1-2",
+  "reconstruction": false,
+  "label": "Guest 1 text unit label",
+  "summary": "Guest 1 text unit summary",
+  "locus": "ff. 58–64, 142–144",
+  "lang": [
+    {
+      "id": "class1252",
+      "label": "Syriac"
+    }
+  ],
+  "work_wit": [
+    {
+      "work": {
+        "desc_title": "Arsenius of Scetis' Commentary on the Pandectes of Antiochus of Palestine",
+        "creator": ["ark:/21198/s13010", "ark:/21198/s1kw2p"],
+        "genre": [
+          {
+            "id": "commentaries",
+            "label": "Commentaries"
+          },
+          {
+            "id": "theological-works",
+            "label": "Theological works"
+          }
+        ]
+      },
+      "alt_title": "Work wit alt title",
+      "as_written": "GUEST ܐܘܢܓܠܝܘܢ [ܩܕ]ܝܫܐ ܟܪܘܙܘܬܐ [ܕ]ܠ[ܘ]ܩܐ",
+      "locus": "ff. 55v-144v",
+      "contents": [
+        {
+          "label": "Easter, GUEST CONTENT",
+          "locus": "f. 3r",
+          "note": [
+            "A note about the Easter season liturigical section GUEST CONTENTS NOTE"
+          ]
+        },
+        {
+          "label": "1st Week: Saturday of <the week of> Rest",
+          "work_id": "ark:/21198/s1xs34",
+          "locus": "f. 4r"
+        }
+      ],
+      "excerpt": [
+        {
+          "type": {
+            "id": "incipit",
+            "label": "Incipit"
+          },
+          "locus": "f. 55v",
+          "as_written": "ܡܛܠ ܕܤܓܝ̈ܐܐ ܨܒ̣ܘ ܕܢܟܬܒܘܢ ܬܫܥܝ̈ܬܐ ܕܤܘܥܖ̈ܢܐ …GUEST",
+          "translation": ["Guest layer excerpt translation"]
+        },
+        {
+          "type": {
+            "id": "des-mut",
+            "label": "Last Preserved Line"
+          },
+          "locus": "f. 144v",
+          "as_written": "ܐܬܝ̈ ܠܒܝܬ ܩܒܘܪܐ ܘܐܝܬܝ",
+          "note": ["Guest excerpt. Corresponds to Luke 24:1"]
+        }
+      ],
+      "note": [
+        "Several liturgical rubrics (some of them are faded) were added in a later Melkite hand (e.g. Holy apostles (f. 75r), Lk 6:12–35)."
+      ],
+      "bib": [
+        {
+          "id": "33aadcf6-1e7a-4533-abd9-052809f06b83",
+          "type": {
+            "id": "cite",
+            "label": "Citation"
+          },
+          "range": "p. 16-17, 129",
+          "note": ["Lewis 1894"]
+        },
+        {
+          "id": "dc777e76-90ae-4fdd-bc69-ae64bb61b74c",
+          "type": {
+            "id": "cite",
+            "label": "Citation"
+          },
+          "range": "p. 17",
+          "note": ["Clark 1952"]
+        }
+      ]
+    },
+    {
+      "work": {
+        "id": "ark:/21198/s1n01z"
+      },
+      "as_written": "ܟܬܒܐ ܕܝܘܚܢܢ",
+      "locus": "ff. 100r-144v",
+      "excerpt": [
+        {
+          "type": {
+            "id": "incipit",
+            "label": "Incipit"
+          },
+          "locus": "f. 100v",
+          "as_written": "ܡܛܠ ܕܤܓܝ̈ܐܐ ܨܒ̣ܘ ܕܢܟܬܒܘܢ ܬܫܥܝ̈ܬܐ ܕܤܘܥܖ̈ܢܐ …"
+        },
+        {
+          "type": {
+            "id": "prologue",
+            "label": "Prologue"
+          },
+          "locus": "f. 100r",
+          "as_written": "ܐܬܝ̈ ܠܒܝܬ ܩܒܘܪܐ ܘܐܝܬܝ",
+          "note": ["Begins with a scribal preface"]
+        }
+      ],
+      "note": [
+        "Several liturgical rubrics (some of them are faded) were added in a later Melkite hand (e.g. Holy apostles (f. 75r), Lk 6:12–35)."
+      ]
+    }
+  ],
+  "parent": ["ark:/21198/te5fmsg1-2"],
+  "desc_provenance": {
+    "program": [
+      {
+        "label": "Syriac Parchment Descriptions Project",
+        "description": "Described as part of the Syriac Parchment Descriptions Project (2022-2025). The Syriac Parchment Descriptions Project was funded by a National Endowment for the Humanities grant. It aimed to provide full and detailed cataloguing of the Syriac manuscripts on parchment in the Sinai collection. Lead Cataloguer: Grigory Kessel; Research Associates: Natalia Smelova and Vevian Zaki."
+      }
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+    "ark": "ark:/21198/s17c79",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Māriyah al-Qibṭīyah",
+    "alt_name": [
+        "Mary the Copt",
+        "Māriyya bint Shamʿūn",
+        "Māriyya al-Qibṭiyya",
+        "مارية القبطية"
+    ],
+    "gender": {"id": "woman", "label": "Woman"},
+    "birth": {
+        "value": "637 CE",
+        "iso": {
+            "not_before": "0637"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Māriyah, al-Qibṭīyah, -637",
+            "uri": "http://viaf.org/viaf/305139441",
+            "source": "VIAF"
+        }
+    ]
+}

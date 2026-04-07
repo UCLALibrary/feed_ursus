@@ -1,0 +1,45 @@
+{
+    "ark": "ark:/21198/s1w30s",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Julian the Emperor",
+    "alt_name": [
+        "Julian the Apostate",
+        "Ιουλιανός ο Παραβάτης",
+        "Flavius Claudius Julianus"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "331 CE-363 CE",
+        "iso": {
+            "not_before": "0331",
+            "not_after": "0363"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Julian, Emperor of Rome, 331-363",
+            "uri": "http://viaf.org/viaf/57406701",
+            "source": "VIAF"
+        },
+        {
+            "label": "Julian, Emperor of Rome, 331-363",
+            "uri": "https://id.loc.gov/authorities/names/n79067875",
+            "source": "LoC"
+        },
+        {
+            "label": "Julian, Emperor of Rome, 331-363",
+            "uri": "https://w3id.org/haf/person/302171069656",
+            "source": "HAF"
+        },
+        {
+            "label": "Julian ",
+            "uri": "http://syriaca.org/person/2283",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Iulianus Flauius Claudius",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/1573/",
+            "source": "Pinakes"
+        }
+    ]
+}

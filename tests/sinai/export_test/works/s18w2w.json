@@ -1,0 +1,27 @@
+{
+    "ark": "ark:/21198/s18w2w",
+    "pref_title": "Pentateuch",
+    "alt_title": [
+        "Bible. Pentateuch"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Pentateuch",
+            "uri": "https://viaf.org/viaf/194861095",
+            "source": "VIAF"
+        },
+        {
+            "label": "Bible. Pentateuch",
+            "uri": "http://id.loc.gov/authorities/names/n79066420",
+            "source": "LoC"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

@@ -1,0 +1,23 @@
+{
+    "ark": "ark:/21198/s1f88h",
+    "pref_title": "Passio of Babylas",
+    "alt_title": [
+        "Life of Babylas",
+        "Passio of Babylas"
+    ],
+    "genre": [
+        {
+            "id": "hagiographies",
+            "label": "Hagiographies"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Hagiographica Babylas ep. Antiochenus m. (S.), Passio metaphrastica",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/oeuvre/14766/",
+            "source": "Pinakes"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

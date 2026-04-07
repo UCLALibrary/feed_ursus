@@ -1,0 +1,36 @@
+{
+    "ark": "ark:/21198/s1f30r",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Hippocrates",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": " 460 BCE-ca. 377 BCE",
+        "iso": {
+            "not_before": "-0460",
+            "not_after": "-0352"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Hippocrates",
+            "uri": "http://viaf.org/viaf/287984736",
+            "source": "VIAF"
+        },
+        {
+            "label": "Hippocrates",
+            "uri": "http://id.loc.gov/authorities/names/n79005643",
+            "source": "LoC"
+        },
+        {
+            "label": "Hippocrates, approximately 460 BCE-approximately 377 BCE",
+            "uri": "https://w3id.org/haf/person/673204385438",
+            "source": "HAF"
+        },
+        {
+            "label": "Hippocrates medicus",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/1355/",
+            "source": "Pinakes"
+        }
+    ]
+}

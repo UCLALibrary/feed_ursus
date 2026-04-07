@@ -1,0 +1,25 @@
+{
+    "ark": "ark:/21198/s11301",
+    "pref_title": "Book of Perfection",
+    "alt_title": [
+        "Book of Perfection"
+    ],
+    "genre": [
+        {
+            "id": "theological-works",
+            "label": "Theological works"
+        }
+    ],
+    "creator": [
+        {
+            "id": "ark:/21198/s1pc7b",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "rel_con": [],
+    "refno": [],
+    "bib": []
+}

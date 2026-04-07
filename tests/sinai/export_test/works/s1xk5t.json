@@ -1,0 +1,22 @@
+{
+    "ark": "ark:/21198/s1xk5t",
+    "pref_title": "Micah",
+    "alt_title": [
+        "Bible. Micah"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Micah",
+            "uri": "http://viaf.org/viaf/316742707",
+            "source": "VIAF"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

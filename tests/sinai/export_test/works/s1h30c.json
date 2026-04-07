@@ -1,0 +1,20 @@
+{
+    "ark": "ark:/21198/s1h30c",
+    "pref_title": "Synaxarion",
+    "alt_title": [
+        "Synaxarion"
+    ],
+    "genre": [
+        {
+            "id": "liturgical-texts",
+            "label": "Liturgical texts"
+        },
+        {
+            "id": "hagiographies",
+            "label": "Hagiographies"
+        }
+    ],
+    "rel_con": [],
+    "refno": [],
+    "bib": []
+}

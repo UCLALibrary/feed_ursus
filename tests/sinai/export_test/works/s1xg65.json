@@ -1,0 +1,25 @@
+{
+    "ark": "ark:/21198/s1xg65",
+    "pref_title": "Homilies on the Song of Songs",
+    "alt_title": [
+        "Homilies on the Song of Songs"
+    ],
+    "genre": [
+        {
+            "id": "commentaries",
+            "label": "Commentaries"
+        }
+    ],
+    "creator": [
+        {
+            "id": "ark:/21198/s1z30d",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "rel_con": [],
+    "refno": [],
+    "bib": []
+}

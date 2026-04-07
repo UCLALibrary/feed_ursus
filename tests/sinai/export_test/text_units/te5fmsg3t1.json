@@ -1,0 +1,42 @@
+{
+    "ark": "ark:/21198/te5fmsg3t1",
+    "reconstruction": false,
+    "label": "Unidentified Arabic Text",
+    "summary": "Unidentified Arabic text on reinforcement strips",
+    "locus": "ff. 55–56, 57–58, 58–59",
+    "lang": [
+        {
+            "id": "arab1395",
+            "label": "Arabic"
+        }
+    ],
+    "work_wit": [
+        {
+            "work": {
+                "desc_title": "Unidentified liturgical text",
+                "genre": [
+                    {
+                        "id": "liturgical-texts",
+                        "label": "Liturgical texts"
+                    }]
+            }
+        }
+    ],
+    "features": [
+        {
+            "id": "unidentified-text",
+            "label": "Unidentified Text"
+        }
+    ],
+    "parent": [
+        "ark:/21198/te5fmsg3"
+    ],
+    "desc_provenance": {
+        "program": [
+            {
+                "label": "Syriac Parchment Descriptions Project",
+                "description": "Described as part of the Syriac Parchment Descriptions Project (2022-2025). The Syriac Parchment Descriptions Project was funded by a National Endowment for the Humanities grant. It aimed to provide full and detailed cataloguing of the Syriac manuscripts on parchment in the Sinai collection. Lead Cataloguer: Grigory Kessel; Research Associates: Natalia Smelova and Vevian Zaki."
+            }
+        ]
+    }
+}

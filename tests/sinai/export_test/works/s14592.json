@@ -1,0 +1,22 @@
+{
+    "ark": "ark:/21198/s14592",
+    "pref_title": "Zephaniah",
+    "alt_title": [
+        "Bible. Zephaniah"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Zephaniah",
+            "uri": "http://viaf.org/viaf/316744693",
+            "source": "VIAF"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

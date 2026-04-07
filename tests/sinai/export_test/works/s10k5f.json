@@ -1,0 +1,31 @@
+{
+    "ark": "ark:/21198/s10k5f",
+    "pref_title": "Gospels",
+    "alt_title": [
+        "Bible. Gospels"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        },
+        {
+            "id": "gospel-books",
+            "label": "Gospel books"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Gospels ",
+            "uri": "https://viaf.org/viaf/317284260",
+            "source": "VIAF"
+        },
+        {
+            "label": "Bible. Gospels",
+            "uri": "http://id.loc.gov/authorities/names/n79063688",
+            "source": "LoC"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

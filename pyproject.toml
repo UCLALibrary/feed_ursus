@@ -1,26 +1,71 @@
-[tool.poetry]
+[project]
 name = "feed-ursus"
-version = "0.1.0"
-description = ""
-authors = ["Your Name <you@example.com>"]
+dynamic = ["version"]
+description = "Command line tool to load CSV content into a Solr index for the UCLA Digital Library's frontend, Ursus (https://digital.library.ucla.edu/)"
+authors = [{ name = "Andy Wallace", email = "andrewwallace@library.ucla.edu" }]
+requires-python = ">=3.11, <4"
 readme = "README.md"
-packages = [{include = "feed_ursus"}]
+dependencies = [
+    "pysolr>=3.8",
+    "requests>=2.32.2",
+    "click>=8.1.3",
+    "rich>=13.4.1",
+    "python-dateutil>=2.8.2",
+    "pyyaml>=6.0.1",
+    "setuptools>=74",
+    "httpx>=0.28.1",
+    "edtf>=5.0.0",
+    "pydantic>=2.12,<3",
+    "packaging>=24.2",
+]
 
-[tool.poetry.dependencies]
-python = "^3.8"
-pysolr = "^3.8"
-requests = "2.22"
-click = "^8.1.3"
-rich = "^13.4.1"
-python-dateutil = "^2.8.2"
-pyyaml = "^6.0.1"
+[project.scripts]
+feed_ursus = "feed_ursus.feed_ursus:feed_ursus"
+sinai = "feed_sinai.feed_sinai:sinai"
 
-[tool.poetry.group.dev.dependencies]
-mypy = "*"
-pytest = "*"
-pytest-mypy = "*"
-pytest-pylint = "*"
+[dependency-groups]
+dev = [
+    "types-python-dateutil>=2.9.0.20250708,<3",
+    "ruff>=0.12.7",
+    "types-pyyaml>=6.0.12.20250516",
+    "types-requests>=2.32.4.20250611",
+    "pyright>=1.1.408",
+    "mypy>=1.19.1",
+]
+test = [
+    "pytest",
+    "pytest-sugar>=1.0.0,<2",
+    "pytest-asyncio>=1.0.0,<2",
+]
+
+[tool.uv]
+default-groups = [
+    "dev",
+    "test",
+]
+
+[tool.ruff.lint]
+select = [
+    "I",  # import sorting
+    "F401", # unused imports
+]
+
+[tool.mypy]
+plugins = ["pydantic.mypy"]
+# only use mypy on the feed_sinai directory (exclude everything else)
+exclude = "^(?!feed_sinai/)"
+disallow_untyped_defs = true
+check_untyped_defs = true
+
+[tool.pyright]
+exclude = ["feed_sinai", "tests/sinai/", "**/node_modules", "**/__pycache__", "**/.*", ".venv"]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.build]
+only-include = ["feed_ursus", "feed_sinai"]

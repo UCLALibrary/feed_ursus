@@ -1,0 +1,19 @@
+{
+    "ark": "ark:/21198/s16p4z",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Antyllus",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "rel_con": [
+        {
+            "label": "Antyllus",
+            "uri": "http://viaf.org/viaf/47152463",
+            "source": "VIAF"
+        },
+        {
+            "label": "Antyllus",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/267/",
+            "source": "Pinakes"
+        }
+    ]
+}

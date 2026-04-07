@@ -1,0 +1,22 @@
+{
+    "ark": "ark:/21198/s1vs3h",
+    "pref_title": "Habakkuk",
+    "alt_title": [
+        "Bible. Habakkuk"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Habakkuk",
+            "uri": "http://viaf.org/viaf/177827389",
+            "source": "VIAF"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

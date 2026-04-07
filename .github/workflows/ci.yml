@@ -2,24 +2,133 @@ name: Run CI Suite
 
 on:
   push:
-    branches: [ master ]
+    branches: [main]
   pull_request:
-    branches: [ master ]
+    branches: [main]
+
+env:
+  DEFAULT_PYTHON_VERSION: 3.13
 
 jobs:
-  pytest:
+  ruff:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Python 
-        uses: actions/setup-python@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
-          python-version: "3.7"
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+
       - name: Install dependencies
+        run: uv sync
+
+      - name: Run Ruff
         run: |
-          python -m pip install --upgrade pip
-          pip install pipenv
-      - name: Test with pytest
-        run: |
-          pipenv install --dev
-          pipenv run pytest --mypy --pylint
+          uv run ruff check --output-format=github .
+          uv run ruff format --check .
+
+  mypy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Run mypy
+        run: uv run mypy .
+
+  pyright:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Run mypy
+        run: uv run pyright .
+
+  pytest:
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12", "3.13", "3.14"]
+    runs-on: ubuntu-latest
+    env:
+      SOLR_URL: http://127.0.0.1:8983/solr/ursus
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Docker Compose
+        run: sudo apt-get install -y docker-compose
+
+      - run: docker-compose up --detach solr
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        run: uv sync --no-dev --group test
+
+      - run: docker-compose ps
+      - run: env
+
+      - run: uv run pytest
+
+  check_labels:
+    name: Check labels
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: docker://agilepathway/pull-request-label-checker:latest
+        with:
+          any_of: major,minor,patch
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+
+  draft-release:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [pytest]
+    permissions:
+      contents: write # for release-drafter/release-drafter to create a github release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: release-drafter/release-drafter@v6.1.0
+        with:
+          config-name: configs/release-drafter.yml
+          latest: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main'}}
+          publish: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main'}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}

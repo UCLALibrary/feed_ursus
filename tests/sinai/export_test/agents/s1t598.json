@@ -1,0 +1,33 @@
+{
+    "ark": "ark:/21198/s1t598",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Paul the Deacon",
+    "alt_name": [
+        "Paul, diacre"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "ca. 720 CE-799(?) CE",
+        "iso": {
+            "not_before": "0695",
+            "not_after": "0824"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Paul, the Deacon, approximately 720-799?",
+            "uri": " http://viaf.org/viaf/40174477",
+            "source": "VIAF"
+        },
+        {
+            "label": "Paul, the Deacon, approximately 720-799?",
+            "uri": "https://id.loc.gov/authorities/names/n80056870",
+            "source": "LoC"
+        },
+        {
+            "label": "Paul, the Deacon, approximately 720-799?",
+            "uri": "https://w3id.org/haf/person/548974472905",
+            "source": "HAF"
+        }
+    ]
+}

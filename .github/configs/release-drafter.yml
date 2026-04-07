@@ -1,0 +1,48 @@
+autolabeler:
+  - label: 'major'
+    title:
+      - '/^major:/i'
+      - '/\b#major\b/i'
+  - label: 'minor'
+    title:
+      - '/^minor:/i'
+      - '/\b#minor\b/i'
+  - label: 'patch'
+    title:
+      - '/^patch:/i'
+      - '/\b#patch\b/i'
+categories:
+  - title: 🚀 Features and Improvements
+    labels:
+      - minor
+  - title: 🌈 Fixes, chores, and Updates
+    labels:
+      - patch
+  - title: ‼️ Breaking Changes
+    labels:
+      - major
+version-resolver:
+  major:
+    labels:
+      - major
+  minor:
+    labels:
+      - minor
+  patch:
+    labels:
+      - patch
+  default: patch
+tag-template: $RESOLVED_VERSION
+name-template: v$RESOLVED_VERSION
+change-template: '* $TITLE (#$NUMBER)'
+change-title-escapes: ''
+exclude-labels:
+  - skip-changelog
+template: |
+  ## What’s Changed
+
+  $CHANGES
+
+  ## Contributors
+
+  $CONTRIBUTORS

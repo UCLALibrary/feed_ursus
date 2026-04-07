@@ -1,0 +1,22 @@
+{
+    "ark": "ark:/21198/s1p88p",
+    "pref_title": "Baruch",
+    "alt_title": [
+        "Bible. Baruch"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Baruch",
+            "uri": "http://viaf.org/viaf/189493336",
+            "source": "VIAF"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

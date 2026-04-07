@@ -1,0 +1,41 @@
+{
+    "ark": "ark:/21198/s1b88k",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Evagrius Ponticus",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "345 CE(?)-399 CE",
+        "iso": {
+            "not_before": "0295",
+            "not_after": "0399"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Evagrius, Ponticus, 345?-399",
+            "uri": "http://viaf.org/viaf/58103843",
+            "source": "VIAF"
+        },
+        {
+            "label": "Evagrius, Ponticus, 345?-399",
+            "uri": "https://id.loc.gov/authorities/names/n86119200",
+            "source": "LoC"
+        },
+        {
+            "label": "Evagrius, Ponticus, 345?-399",
+            "uri": "https://w3id.org/haf/person/219264096524",
+            "source": "HAF"
+        },
+        {
+            "label": "Evagrius of Pontus",
+            "uri": "http://syriaca.org/person/483",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Euagrius Ponticus",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/1022/",
+            "source": "Pinakes"
+        }
+    ]
+}

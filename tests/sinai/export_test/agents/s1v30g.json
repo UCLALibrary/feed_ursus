@@ -1,0 +1,41 @@
+{
+    "ark": "ark:/21198/s1v30g",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Maximus the Confessor",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "ca. 580 CE-662 CE",
+        "iso": {
+            "not_before": "0565",
+            "not_after": "0687"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Maximus, Confessor, Saint, approximately 580-662",
+            "uri": "http://viaf.org/viaf/106970843",
+            "source": "VIAF"
+        },
+        {
+            "label": "Maximus, Confessor, Saint, approximately 580-662",
+            "uri": "https://id.loc.gov/authorities/names/n79055110",
+            "source": "LoC"
+        },
+        {
+            "label": "Maximus, Confessor, approximately 580-662",
+            "uri": "https://w3id.org/haf/person/173824456156",
+            "source": "HAF"
+        },
+        {
+            "label": "https://syriaca.org/person/628",
+            "uri": "http://syriaca.org/person/628",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Maximus confessor",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/1832/",
+            "source": "Pinakes"
+        }
+    ]
+}

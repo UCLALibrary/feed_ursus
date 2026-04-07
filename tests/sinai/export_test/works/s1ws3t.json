@@ -1,0 +1,27 @@
+{
+    "ark": "ark:/21198/s1ws3t",
+    "pref_title": "Ecclesiastes",
+    "alt_title": [
+        "Bible. Ecclesiastes"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Biblioteka \"Sirak\"",
+            "uri": "http://viaf.org/viaf/293200012",
+            "source": "VIAF"
+        },
+        {
+            "label": "Bible. Ecclesiasticus",
+            "uri": "https://id.loc.gov/authorities/names/n80008474.html",
+            "source": "LoC"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

@@ -1,0 +1,41 @@
+{
+    "ark": "ark:/21198/s14s4c",
+    "pref_title": "Regulae morales",
+    "orig_lang": {
+        "id": "gree1276",
+        "label": "Greek"
+    },
+    "alt_title": [],
+    "genre": [],
+    "creator": [
+        {
+            "id": "ark:/21198/s1101c",
+            "role": {
+                "id": "author",
+                "label": "Author"
+            }
+        }
+    ],
+    "creation": {
+        "value": "4th c. CE",
+        "iso": {
+            "not_before": "0301",
+            "not_after": "0400"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Basilius Caesariensis Regulae morales",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/oeuvre/12040/",
+            "source": "Pinakes"
+        }
+    ],
+    "refno": [
+        {
+            "label": "Regulae morales",
+            "idno": "2877",
+            "source": "CPG"
+        }
+    ],
+    "bib": []
+}

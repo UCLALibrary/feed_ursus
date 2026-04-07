@@ -1,0 +1,27 @@
+{
+    "ark": "ark:/21198/s1xs34",
+    "pref_title": "Acts",
+    "alt_title": [
+        "Bible. Acts"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Acts",
+            "uri": "https://viaf.org/viaf/174983206",
+            "source": "VIAF"
+        },
+        {
+            "label": "Bible. Acts",
+            "uri": "http://id.loc.gov/authorities/names/n79022117",
+            "source": "LoC"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

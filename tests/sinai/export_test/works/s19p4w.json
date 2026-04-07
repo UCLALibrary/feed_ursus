@@ -1,0 +1,28 @@
+{
+    "ark": "ark:/21198/s19p4w",
+    "pref_title": "Evangelion",
+    "alt_title": [
+        "Evangelion"
+    ],
+    "genre": [
+        {
+            "id": "liturgical-texts",
+            "label": "Liturgical texts"
+        },
+        {
+            "id": "lectionaries",
+            "label": "Lectionaries"
+        },
+        {
+            "id": "gospel-books",
+            "label": "Gospel books"
+        },
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [],
+    "refno": [],
+    "bib": []
+}

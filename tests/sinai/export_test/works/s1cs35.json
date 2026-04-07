@@ -1,0 +1,27 @@
+{
+    "ark": "ark:/21198/s1cs35",
+    "pref_title": "Ezekiel",
+    "alt_title": [
+        "Bible. Ezekiel"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Ezekiel",
+            "uri": "https://viaf.org/viaf/176193843",
+            "source": "VIAF"
+        },
+        {
+            "label": "Bible. Ezekiel",
+            "uri": "http://id.loc.gov/authorities/names/n79117856",
+            "source": "LoC"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

@@ -1,0 +1,25 @@
+{
+    "ark": "ark:/21198/s1js3q",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Hesychius of Jerusalem",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "death": {
+        "value": "450 CE",
+        "iso": {
+            "not_before": "0450"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Hesychius, Hierosolymitanus",
+            "uri": "http://viaf.org/viaf/262453640",
+            "source": "VIAF"
+        },
+        {
+            "label": "Hesychius Hierosolymitanus",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/1324/",
+            "source": "Pinakes"
+        }
+    ]
+}

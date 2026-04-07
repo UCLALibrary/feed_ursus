@@ -1,0 +1,27 @@
+{
+    "ark": "ark:/21198/s1n30m",
+    "pref_title": "Samuel",
+    "alt_title": [
+        "Bible. Samuel"
+    ],
+    "genre": [
+        {
+            "id": "biblical-texts",
+            "label": "Biblical texts"
+        }
+    ],
+    "rel_con": [
+        {
+            "label": "Bible. Samuel",
+            "uri": " https://viaf.org/viaf/180630917",
+            "source": "VIAF"
+        },
+        {
+            "label": "Bible. Samuel",
+            "uri": "http://id.loc.gov/authorities/names/n80008475",
+            "source": "LoC"
+        }
+    ],
+    "refno": [],
+    "bib": []
+}

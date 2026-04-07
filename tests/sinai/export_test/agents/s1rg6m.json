@@ -1,0 +1,41 @@
+{
+    "ark": "ark:/21198/s1rg6m",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Cyril of Jerusalem",
+    "alt_name": [],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "ca. 315 CE-386 CE",
+        "iso": {
+            "not_before": "0290",
+            "not_after": "0411"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Cyril, Saint, Bishop of Jerusalem, approximately 315-386",
+            "uri": "http://viaf.org/viaf/2437490",
+            "source": "VIAF"
+        },
+        {
+            "label": "Cyril, Saint, Bishop of Jerusalem, approximately 315-386",
+            "uri": "https://id.loc.gov/authorities/names/n80139106",
+            "source": "LoC"
+        },
+        {
+            "label": "Cyril, Bishop of Jerusalem, approximately 315-386",
+            "uri": "https://w3id.org/haf/person/413735579621",
+            "source": "HAF"
+        },
+        {
+            "label": "Cyril of Jerusalem",
+            "uri": "http://syriaca.org/person/431",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Cyrillus Hierosolymitanus",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/auteur/838/",
+            "source": "Pinakes"
+        }
+    ]
+}

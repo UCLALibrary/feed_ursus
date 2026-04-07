@@ -1,0 +1,45 @@
+{
+    "ark": "ark:/21198/s10q2p",
+    "reconstruction": false,
+    "label": "Hymnary (Heirmologion with Theotokia)",
+    "lang": [
+        {
+            "id": "nucl1302",
+            "label": "Georgian"
+        }
+    ],
+    "work_wit": [
+        {
+            "work": {
+                "id": "ark:/21198/s1sp47"
+            },
+            "alt_title": "Heirmologion with Theotokia"
+        }
+    ],
+    "note": [
+        {
+            "type": {
+                "id": "contents",
+                "label": "Contents Note"
+            },
+            "value": "Theotokia partly identical with those found in Metrevli, and in Kikdnadze"
+        },
+        {
+            "type": {
+                "id": "general",
+                "label": "Other Notes"
+            },
+            "value": "Description by Jost Gippert, Bernard Outtier"
+        },
+        {
+            "type": {
+                "id": "general",
+                "label": "Other Notes"
+            },
+            "value": "Bibliography: Metreveli ; Kiknadze"
+        }
+    ],
+    "parent": [
+        "ark:/21198/s1bp7b"
+    ]
+}

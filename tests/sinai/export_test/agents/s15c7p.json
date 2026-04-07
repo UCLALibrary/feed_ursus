@@ -1,0 +1,39 @@
+{
+    "ark": "ark:/21198/s15c7p",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Simeon the Stylite, the Younger",
+    "alt_name": [
+        "St. Simeon of the Admirable Mountain",
+        "Συμεὼν ὁ νεώτερος ὁ στυλίτης"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "521 CE-597 CE",
+        "iso": {
+            "not_before": "0521",
+            "not_after": "0597"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Simeon Stylites, Saint, 521-597",
+            "uri": "https://viaf.org/viaf/121780255",
+            "source": "VIAF"
+        },
+        {
+            "label": "Simeon Stylites, Saint, 521-597",
+            "uri": "https://id.loc.gov/authorities/names/no2006129414",
+            "source": "LoC"
+        },
+        {
+            "label": "Simeon Stylites, 521-597",
+            "uri": "https://w3id.org/haf/person/681432603466",
+            "source": "HAF"
+        },
+        {
+            "label": "Simeon the Stylite, the younger",
+            "uri": "http://syriaca.org/person/1482",
+            "source": "Syriaca"
+        }
+    ]
+}

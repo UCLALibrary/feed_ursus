@@ -1,0 +1,43 @@
+{
+    "ark": "ark:/21198/s16c70",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Pachomius",
+    "alt_name": [
+        "ܦܟܘܡܝܣ"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "floruit": {
+        "value": "ca. 290 CE-346 CE",
+        "iso": {
+            "not_before": "0265",
+            "not_after": "0371"
+        }
+    },
+    "rel_con": [
+        {
+            "label": "Pachomius, Saint",
+            "uri": "http://viaf.org/viaf/100179222",
+            "source": "VIAF"
+        },
+        {
+            "label": "Pachomius, Saint",
+            "uri": "http://id.loc.gov/authorities/names/n50051557",
+            "source": "LoC"
+        },
+        {
+            "label": "Pachomius, approximately 290-346",
+            "uri": "https://w3id.org/haf/person/947776387255",
+            "source": "HAF"
+        },
+        {
+            "label": "Pachomius",
+            "uri": "http://syriaca.org/person/1955",
+            "source": "Syriaca"
+        },
+        {
+            "label": "Pachomius ab. in Thebaide",
+            "uri": "https://pinakes.irht.cnrs.fr/notices/saint/695/",
+            "source": "Pinakes"
+        }
+    ]
+}

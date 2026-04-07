@@ -1,0 +1,17 @@
+{
+    "ark": "ark:/21198/s1959m",
+    "type": {"id": "person", "label": "Person"},
+    "pref_name": "Silas",
+    "alt_name": [
+        "Silvanus",
+        "Silas (Biblical figure)"
+    ],
+    "gender": {"id": "man", "label": "Man"},
+    "rel_con": [
+        {
+            "label": "Silas Biblische Person, Prophet",
+            "uri": "http://viaf.org/viaf/11494936",
+            "source": "VIAF"
+        }
+    ]
+}

@@ -1,0 +1,476 @@
+{
+  "ark": "ark:/21198/ten02zkr",
+  "reconstruction": false,
+  "type": {
+    "id": "manuscript",
+    "label": "Manuscript"
+  },
+  "shelfmark": "Sinai Arabic NF M 28",
+  "summary": "Gospels in Arabic, palimpsest with Greek undertext",
+  "extent": "16 ff.",
+  "weight": "40.1 g",
+  "dim": "192 x 140 x 20.0 mm",
+  "state": {
+    "id": "quire",
+    "label": "Quire(s)"
+  },
+  "fol": "ff. 128-143",
+  "coll": "Quires 1-2: 2x8 (16)",
+  "features": [
+    {
+      "id": "palimpsest",
+      "label": "Palimpsest"
+    }
+  ],
+  "part": [
+    {
+      "label": "Part 1",
+      "summary": "Synaxarion (Gospel Lectionary for the movable feast days according to the Byzantine rite)",
+      "locus": "ff. 128-143",
+      "support": [
+        {
+          "id": "parchment",
+          "label": "Parchment"
+        }
+      ],
+      "extent": "16 ff.",
+      "dim": "191 x 137 mm (typical folio)",
+      "ot_layer": [
+        {
+          "id": "ark:/21198/ten0p1ol",
+          "label": "Overtext layer (late 9th c., Kufic)",
+          "type": {
+            "id": "overtext",
+            "label": "Overtext"
+          },
+          "layer_record": {
+            "ark": "ark:/21198/ten0p1ol",
+            "reconstruction": false,
+            "state": {
+              "id": "overtext",
+              "label": "Overtext"
+            },
+            "label": "Arabic NF M 28, Part 1, Overtext",
+            "locus": "ff. 128-143",
+            "summary": "Gospels, late 9th c., Arabic (Kufic)",
+            "extent": "16 ff.",
+            "writing": [
+              {
+                "script": [
+                  {
+                    "id": "kufic",
+                    "label": "Kufic",
+                    "writing_system": "Arabic"
+                  }
+                ],
+                "locus": "ff. 128-143"
+              }
+            ],
+            "ink": [
+              {
+                "locus": "ff. 128-143",
+                "note": [
+                  "Titles in red ink"
+                ]
+              }
+            ],
+            "text_unit": [
+              {
+                "id": "ark:/21198/ten0p1olt1",
+                "label": "Primary Text Unit 1",
+                "locus": "ff. 128-143",
+                "text_unit_record": {
+                  "ark": "ark:/21198/ten0p1olt1",
+                  "reconstruction": false,
+                  "label": "Arabic Gospels",
+                  "locus": "ff. 128r-143v",
+                  "lang": [
+                    {
+                      "id": "arab1395",
+                      "label": "Arabic"
+                    }
+                  ],
+                  "work_wit": [
+                    {
+                      "work": {
+                        "ark": "ark:/21198/s12c7r",
+                        "pref_title": "Matthew",
+                        "alt_title": [
+                          "Bible. Matthew"
+                        ],
+                        "genre": [
+                          {
+                            "id": "biblical-texts",
+                            "label": "Biblical texts"
+                          },
+                          {
+                            "id": "gospel-books",
+                            "label": "Gospel books"
+                          }
+                        ],
+                        "rel_con": [
+                          {
+                            "label": "Bible. Matthew",
+                            "uri": "https://viaf.org/viaf/188427863",
+                            "source": "VIAF"
+                          },
+                          {
+                            "label": "Bible. Matthew",
+                            "uri": "http://id.loc.gov/authorities/names/n79056834",
+                            "source": "LoC"
+                          }
+                        ]
+                      },
+                      "locus": "ff. 128r-130"
+                    },
+                    {
+                      "work": {
+                        "ark": "ark:/21198/s1630k",
+                        "pref_title": "Mark",
+                        "alt_title": [
+                          "Bible. Mark"
+                        ],
+                        "genre": [
+                          {
+                            "id": "biblical-texts",
+                            "label": "Biblical texts"
+                          },
+                          {
+                            "id": "gospel-books",
+                            "label": "Gospel books"
+                          }
+                        ],
+                        "rel_con": [
+                          {
+                            "label": "Bible. Mark",
+                            "uri": "https://viaf.org/viaf/179823714",
+                            "source": "VIAF"
+                          },
+                          {
+                            "label": "Bible. Mark",
+                            "uri": "http://id.loc.gov/authorities/names/n78095773",
+                            "source": "LoC"
+                          }
+                        ]
+                      },
+                      "locus": "ff. 130v-135r"
+                    },
+                    {
+                      "work": {
+                        "ark": "ark:/21198/s1k88r",
+                        "pref_title": "Luke",
+                        "alt_title": [
+                          "Bible. Luke"
+                        ],
+                        "genre": [
+                          {
+                            "id": "biblical-texts",
+                            "label": "Biblical texts"
+                          },
+                          {
+                            "id": "gospel-books",
+                            "label": "Gospel books"
+                          }
+                        ],
+                        "rel_con": [
+                          {
+                            "label": "Bible. Luke",
+                            "uri": "http://viaf.org/viaf/257061095",
+                            "source": "VIAF"
+                          }
+                        ]
+                      },
+                      "locus": "ff. 135r-140r"
+                    },
+                    {
+                      "work": {
+                        "ark": "ark:/21198/s1388d",
+                        "pref_title": "John",
+                        "alt_title": [
+                          "Bible. John"
+                        ],
+                        "genre": [
+                          {
+                            "id": "biblical-texts",
+                            "label": "Biblical texts"
+                          },
+                          {
+                            "id": "gospel-books",
+                            "label": "Gospel books"
+                          }
+                        ],
+                        "rel_con": [
+                          {
+                            "label": "Bible. John",
+                            "uri": "https://viaf.org/viaf/57145910123927021804",
+                            "source": "VIAF"
+                          },
+                          {
+                            "label": "Bible. John",
+                            "uri": "http://id.loc.gov/authorities/names/n79060414",
+                            "source": "LoC"
+                          }
+                        ]
+                      },
+                      "locus": "ff. 140v-143v"
+                    }
+                  ],
+                  "note": [
+                    {
+                      "type": {
+                        "id": "contents",
+                        "label": "Contents Note"
+                      },
+                      "value": "The Gospels continue in Arabic NF M 8 and NF M 27"
+                    }
+                  ],
+                  "parent": [
+                    "ark:/21198/ten0p1ol"
+                  ],
+                  "internal": [
+                    "Test record, delete after development is complete"
+                  ],
+                  "desc_provenance": {
+                    "program": [
+                      {
+                        "label": "Sinai Palimpests Project",
+                        "description": "Described as part of the Sinai Palimpsests Project (2006-2017). The Sinai Palimpsests Project was sponsored by St. Catherine’s Monastery of the Sinai in partnership with the Early Manuscripts Electronic Library and the UCLA Library, and with funding from Arcadia. The Project provides scholarly identification and description of the undertext objects in a subset of palimpsested manuscripts in the Sinai collection, with minimal metadata for the overtexts of the host manuscripts."
+                      }
+                    ]
+                  }
+                }
+              }
+            ],
+            "assoc_date": [
+              {
+                "value": "Second half 9th c. CE",
+                "iso": {
+                  "not_before": "-0851",
+                  "not_after": "-0800"
+                },
+                "type": {
+                  "id": "origin",
+                  "label": "Origin Date"
+                },
+                "note": [
+                  "Paleographic dating"
+                ]
+              }
+            ],
+            "note": [
+              {
+                "type": {
+                  "id": "ornamentation",
+                  "label": "Ornamentation"
+                },
+                "value": "Decorative headpieces throughout"
+              },
+              {
+                "type": {
+                  "id": "condition",
+                  "label": "Condition"
+                },
+                "value": "Several damaged folios were repaired and reinforced more recently"
+              }
+            ],
+            "bib": [
+              {
+                "id": "36ac2d29-349f-496d-b4ea-aff4e605c4ba",
+                "type": {
+                  "id": "ref",
+                  "label": "Reference Work"
+                },
+                "range": "p. 48-90"
+              }
+            ],
+            "parent": [
+              "ark:/21198/ten02zkr"
+            ],
+            "internal": [
+              "Test record for development purposes; please delete."
+            ],
+            "desc_provenance": {
+              "program": [
+                {
+                  "label": "Sinai Palimpests Project",
+                  "description": "Described as part of the Sinai Palimpsests Project (2006-2017). The Sinai Palimpsests Project was sponsored by St. Catherine’s Monastery of the Sinai in partnership with the Early Manuscripts Electronic Library and the UCLA Library, and with funding from Arcadia. The Project provides scholarly identification and description of the undertext objects in a subset of palimpsested manuscripts in the Sinai collection, with minimal metadata for the overtexts of the host manuscripts."
+                }
+              ]
+            }
+          },
+          "locus": "ff. 128-143"
+        }
+      ],
+      "uto": [
+        {
+          "uto_layer_ark": "ark:/21198/ten0p1ul1",
+          "label": "Undertext layer, Exodus (6th c., Greek majuscule)",
+          "type": {
+            "id": "undertext",
+            "label": "Undertext"
+          },
+          "locus": "ff. 128-130, 133-137, 139, 143",
+          "uto_ms_ark": "ark:/21198/ten0uto1",
+          "script": [
+            "Greek majuscule"
+          ],
+          "lang": [
+            "Greek"
+          ],
+          "orig_date": [
+            {
+              "value": "6th c. CE",
+              "iso": {
+                "not_before": "1001",
+                "not_after": "1050"
+              },
+              "type": {
+                "id": "origin",
+                "label": "Origin Date"
+              },
+              "note": [
+                "Paleographic dating"
+              ]
+            }
+          ]
+        },
+        {
+          "uto_layer_ark": "ark:/21198/ten0p1ul2",
+          "label": "Undertext layer, Genesis (6th c., Greek majuscule)",
+          "type": {
+            "id": "undertext",
+            "label": "Undertext"
+          },
+          "locus": "ff. 131-132, 138, 140-142",
+          "uto_ms_ark": "ark:/21198/ten0uto2",
+          "script": [
+            "Greek majuscule"
+          ],
+          "lang": [
+            "Greek"
+          ]
+        }
+      ]
+    }
+  ],
+  "location": [
+    {
+      "id": "sinai-nf",
+      "collection": "New Finds",
+      "repository": "St. Catherine's Monastery of the Sinai"
+    }
+  ],
+  "note": [
+    {
+      "type": {
+        "id": "foliation",
+        "label": "Foliation"
+      },
+      "value": "Pencil foliation in Arabic NF 28 begins fol. 128"
+    },
+    {
+      "type": {
+        "id": "condition",
+        "label": "Condition"
+      },
+      "value": "Two unsewn quires"
+    }
+  ],
+  "related_mss": [
+    {
+      "type": {
+        "id": "disjecta",
+        "label": "Disjecta Membra"
+      },
+      "label": "Arabic NF M 28 + Arabic NF M 8",
+      "note": [
+        "Text continues from Arabic NF 8"
+      ],
+      "mss": [
+        {
+          "label": "Sinai Arabic NF 8",
+          "id": "ark:/21198/z1kd1z25"
+        }
+      ]
+    }
+  ],
+  "viscodex": [
+    {
+      "type": {
+        "id": "reconstruction",
+        "label": "Reconstruction"
+      },
+      "label": "Visualization of Arabic NF 28 and Arabic NF 8",
+      "url": "https://vceditor.library.upenn.edu/project/668da6005d6968000145728e/viewOnly"
+    }
+  ],
+  "bib": [
+    {
+      "id": "cb8b8b52-569b-4d1f-8d5c-adf911afd205",
+      "type": {
+        "id": "ref",
+        "label": "Reference Work"
+      },
+      "range": "p. 29",
+      "note": [
+        "Kamil"
+      ]
+    },
+    {
+      "id": "ebe32f6b-ad60-472c-aceb-d86913448530",
+      "type": {
+        "id": "cite",
+        "label": "Citation"
+      },
+      "range": "28-57",
+      "note": [
+        "Kashouh article"
+      ]
+    },
+    {
+      "id": "01d4a639-d314-4271-b7f8-3f559c6c744c",
+      "type": {
+        "id": "cite",
+        "label": "Citation"
+      },
+      "range": "28-57",
+      "note": [
+        "Kashouh book"
+      ]
+    }
+  ],
+  "iiif": [
+    {
+      "type": {
+        "id": "main",
+        "label": "Main"
+      },
+      "manifest": "https://iiif.library.ucla.edu/ark%3A%2F21198%2Fz1n02zkr/manifest",
+      "text_direction": "right-to-left",
+      "behavior": "paged",
+      "thumbnail": "https://iiif.sinaimanuscripts.library.ucla.edu/iiif/2/ark%3A%2F21198%2Fz15f0f9b%2Fp161m45m/full/!200,200/0/default.jpg"
+    },
+    {
+      "type": {
+        "id": "reordered",
+        "label": "Reordered"
+      },
+      "manifest": "https://sinai-images.library.ucla.edu/iiif/ark:%2F21198%2Fr1qn64nz/manifest",
+      "text_direction": "right-to-left",
+      "behavior": "paged",
+      "thumbnail": "https://iiif.sinaimanuscripts.library.ucla.edu/iiif/2/ark%3A%2F21198%2Fz15f0f9b%2Fp161m45m/full/!200,200/0/default.jpg"
+    }
+  ],
+  "internal": [
+    "This record is used only for purposes of developing the data portal and should therefore not be published, and should be deleted when development is complete"
+  ],
+  "desc_provenance": {
+    "program": [
+      {
+        "label": "Sinai Palimpests Project",
+        "description": "Described as part of the Sinai Palimpsests Project (2006-2017). The Sinai Palimpsests Project was sponsored by St. Catherine’s Monastery of the Sinai in partnership with the Early Manuscripts Electronic Library and the UCLA Library, and with funding from Arcadia. The Project provides scholarly identification and description of the undertext objects in a subset of palimpsested manuscripts in the Sinai collection, with minimal metadata for the overtexts of the host manuscripts."
+      }
+    ]
+  },
+  "has_bind": false
+}
