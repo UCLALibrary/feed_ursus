@@ -450,8 +450,13 @@ class ScriptItem(BaseModel):
 
 class Place(BaseModel):
     ark: Ark
+    type: Optional[ControlledTerm] = None
     pref_name: NonEmptyStr
     alt_name: tuple[NonEmptyStr, ...] = tuple()
+    desc: Optional[NonEmptyStr] = None
+    rel_con: tuple[RelConItem, ...] = tuple()
+    note: tuple[str, ...] = tuple()
+    cataloguer: tuple[CataloguerItem, ...] = tuple()
 
 
 class AssocPlaceItem(BaseModel):
@@ -781,6 +786,7 @@ class Behavior(Enum):
 class IiifItem(BaseModel):
     type: ControlledTerm
     manifest: AnyUrl
+    label: Optional[NonEmptyStr] = None
     text_direction: Optional[TextDirection] = None
     behavior: Optional[Behavior] = None
     thumbnail: Optional[AnyUrl] = None
