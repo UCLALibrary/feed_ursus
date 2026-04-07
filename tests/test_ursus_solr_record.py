@@ -6,7 +6,12 @@ from typing import Any
 import pytest
 from pydantic import ValidationError
 
-from feed_ursus.controlled_fields import ObjectType, ResourceType, Visibility
+from feed_ursus.controlled_fields import (
+    ObjectType,
+    ResourceType,
+    RightsStatement,
+    Visibility,
+)
 from feed_ursus.ursus_solr_record import UrsusSolrRecord
 
 MINIMAL_RECORD: dict[str, Any] = {
@@ -19,6 +24,43 @@ class TestUrsusSolrRecord:
     def test_basic_validation(self) -> None:
         record = UrsusSolrRecord.model_validate({**MINIMAL_RECORD})
         assert isinstance(record, UrsusSolrRecord)
+
+    class TestRightsStatement:
+        @pytest.mark.parametrize(
+            ["input", "expected"],
+            [
+                ("unknown", ["http://vocabs.library.ucla.edu/rights/unknown"]),
+                ("copyrighted", ["http://vocabs.library.ucla.edu/rights/copyrighted"]),
+                (
+                    "public domain",
+                    ["http://vocabs.library.ucla.edu/rights/publicDomain"],
+                ),
+                ("pd", ["http://vocabs.library.ucla.edu/rights/publicDomain"]),
+                ("", None),
+                (None, None),
+            ],
+        )
+        def test_good_rights_statement(
+            self,
+            input: str | None,
+            expected: RightsStatement | None,
+        ) -> None:
+            result = UrsusSolrRecord.model_validate(
+                {
+                    **MINIMAL_RECORD,
+                    "Rights.copyrightStatus": input,
+                }
+            )
+            assert result.rights_statement_tesim == expected
+
+        def test_bad_rights_statement(self) -> None:
+            with pytest.raises(ValidationError):
+                UrsusSolrRecord.model_validate(
+                    {
+                        **MINIMAL_RECORD,
+                        "Rights.copyrightStatus": "probably fine",
+                    }
+                )
 
     class TestComputedArchivalCollection:
         def test_all_fields(self) -> None:

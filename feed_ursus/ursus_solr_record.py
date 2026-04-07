@@ -39,7 +39,6 @@ from feed_ursus.util import (
     SolrDatetime,
     UrsusId,
     make_ursus_id,
-    parse_list,
 )
 
 solr_date_from_python = Solr("http://nowhere")._from_python
@@ -227,9 +226,13 @@ class UrsusSolrRecord(BaseModel):
     # rights statement
 
     human_readable_rights_statement_tesim: (
-        Annotated[
-            list[RightsStatement],
-            BeforeValidator(parse_list),
+        MARCList[
+            Annotated[
+                RightsStatement,
+                BeforeValidator(
+                    lambda value: "public domain" if value == "pd" else value
+                ),
+            ]
         ]
         | Empty
     ) = Field(
