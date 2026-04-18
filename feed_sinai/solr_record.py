@@ -578,7 +578,7 @@ class ManuscriptSolrRecord(st.BaseModel):
             if iiif.thumbnail:
                 return iiif.thumbnail
 
-        logging.warning(f"no thumbnail for {self.ms_obj.ark}")
+        logging.debug(f"no thumbnail for {self.ms_obj.ark}")
         return None
 
     @computed_field
