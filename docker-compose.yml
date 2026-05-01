@@ -1,9 +1,4 @@
 services:
-  python:
-    build: .
-    working_dir: /eureka
-    volumes:
-      - ../eureka:/eureka
 
   web:
     image: uclalibrary/ursus
