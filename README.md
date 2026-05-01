@@ -72,7 +72,9 @@ feed_ursus --solr_url=http://localhost:8983/solr/ursus [path/to/your.csv]
 
 ### Installing
 
-For development, use the included devcontainer configuration, or install the project requirements with `uv sync` (not supported).
+For development, use the included devcontainer configuration [TO DO: more information about this], or install the project requirements with `uv sync` (not supported).
+
+The devcontainer is designed to use docker's host network driver, which allows it to connect to a solr instance running locally on the host machine, or mapped to a host port via an ssh tunnel. If you are using Docker Desktop on Mac or Windows, this feature must be enabled [as described here](https://docs.docker.com/engine/network/drivers/host/#docker-desktop).
 
 ### Running the tests
 
