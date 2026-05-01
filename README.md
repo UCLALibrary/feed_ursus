@@ -4,7 +4,7 @@ Command line tools to load CSV content into a Solr index for the UCLA Digital Li
 
 ## Using feed_ursus
 
-For basic use, you can install feed_ursus as a systemwide command directly from pypi, without having to first clone the repository.
+To use feed_ursus (e.g. as a librarian), you can install it as a systemwide command directly from pypi, without having to first clone the repository.
 
 ### Installation
 
@@ -59,38 +59,22 @@ It might take a minute or so for solr to get up and running, at which point you 
 To load data from a csv:
 
 ```
-feed_ursus --solr_url=http://localhost:8983/solr/ursus --mapping=dlp load [path/to/your.csv]
+feed_ursus [path/to/your.csv]
 ```
 
-### Mappers
+This assumes that a solr core is running at the default location; you can also use:
 
-Different metadata mappings are included for general Digital Library use (`--mapping=dlp`) and for the Sinai Manuscripts Digital Library (`--mapping=sinai`). The default is "dlp" – "sinai" is not guaranteed to be up to date as the sinai project is using a forked version at https://github.com/uclalibrary/feed_sinai.
+```
+feed_ursus --solr_url=http://localhost:8983/solr/ursus [path/to/your.csv]
+```
 
 ## Developing feed_ursus
 
 ### Installing
 
-For development, clone the repository and use uv to set up the virtualenv:
+For development, use the included devcontainer configuration [TO DO: more information about this], or install the project requirements with `uv sync` (not supported).
 
-```
-git clone git@github.com:UCLALibrary/feed_ursus.git
-cd feed_ursus
-uv install
-```
-
-Then, to activate the virtualenv:
-
-```
-source .venv/bin/activate
-```
-
-The following will assume the virtualenv is active. You could also run e.g. `uv run feed_ursus [path/to/your.csv]`
-
-### Using the development version
-
-```
-feed_ursus --solr_url http://localhost:8983/solr/ursus load [path/to/your.csv]
-```
+The devcontainer is designed to use docker's host network driver, which allows it to connect to a solr instance running locally on the host machine, or mapped to a host port via an ssh tunnel. If you are using Docker Desktop on Mac or Windows, this feature must be enabled [as described here](https://docs.docker.com/engine/network/drivers/host/#docker-desktop).
 
 ### Running the tests
 
@@ -109,10 +93,16 @@ ruff format .
 ruff check --fix
 ```
 
-mypy (static type checker):
+mypy (static type checker, used for `sinai` command):
 
 ```
 mypy
+```
+
+pyright (other type checker, used for `feed_ursus`, handles match-case statements better):
+
+```
+pyright
 ```
 
 ### VSCode Debugger Configuration
