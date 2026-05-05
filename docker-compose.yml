@@ -1,18 +1,39 @@
 services:
+  devcontainer:
+    build: .
+    depends_on:
+      - solr
+      - web
+    command: sleep infinity
+    volumes:
+      - .:/home/devcontainer/feed_ursus
+    working_dir: /home/devcontainer/feed_ursus
+    environment:
+      SOLR_TEST_URL: http://solr_test:8983/solr/ursus
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   web:
     image: uclalibrary/ursus
-    platform: linux/amd64  # set up arm64 build but it still won't pull
+    platform: linux/amd64 # set up arm64 build but it still won't pull
     hostname: ursus
     depends_on:
       - db
       - solr
-    env_file:
-      - ./dotenv.sample
     environment:
+      ADMIN_PASSWORD: password
+      CABLE_CHANNEL_PREFIX: ursus_development
+      DATABASE_ADAPTER: mysql2
       DATABASE_HOST: db
+      DATABASE_MIN_MESSAGES: warning
+      DATABASE_PASSWORD: ursus
+      DATABASE_POOL: 25
+      DATABASE_USERNAME: ursus
+      PROJECT_NAME: ursus
+      RAILS_HOST: localhost
+      RAILS_SERVE_STATIC_FILES: true
       SOLR_URL: http://solr:8983/solr/ursus
-      SOLR_TEST_URL: http://solr_test:8983/solr/ursus
+      USER_ACCOUNT_UI_ENABLED: false
     ports:
       - "127.0.0.1:3000:3000"
     working_dir: /ursus
@@ -23,22 +44,18 @@ services:
     volumes:
       - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
       - mysql_data:/var/lib/mysql
-    # ports:
-    #   - "127.0.0.1:3306:3306"
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
 
   solr:
     image: uclalibrary/solr-ursus:8
-    ports:
-      - '127.0.0.1:8983:8983'
     volumes:
       - solr_data:/var/solr/data
-
+    ports:
+      - "127.0.0.1:8983:8983"
 
   solr_test:
     image: uclalibrary/solr-ursus:8
-
 
 volumes:
   mysql_data:

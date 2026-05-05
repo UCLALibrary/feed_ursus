@@ -2,18 +2,17 @@
 // README at: https://github.com/devcontainers/templates/tree/main/src/python
 {
 	"name": "Python",
-	"build": {
-		"dockerfile": "../Dockerfile",
-		"context": ".."
-	},
+	"dockerComposeFile": [
+		"../docker-compose.yml"
+	],
+	"service": "python",
+	"remoteUser": "devcontainer",
+	"workspaceFolder": "/home/devcontainer/feed_ursus",
 	"features": {
-		// "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
-		"ghcr.io/devcontainers/features/git:1": {},
-		"ghcr.io/devcontainer-community/devcontainer-features/astral.sh-uv:1": {}
+		"ghcr.io/devcontainers/features/git:1": {}
 	},
-	"runArgs": [
-		"--network=host"
-	], // so we can interact with solr servers running on or tunneled to the host machine
+	// "containerEnv": {
+	// },
 	"postCreateCommand": "uv sync --locked --all-groups",
 	"customizations": {
 		"vscode": {
@@ -23,27 +22,17 @@
 				"ms-python.python",
 				"ms-python.debugpy",
 				"charliermarsh.ruff",
-				"ms-python.vscode-python-envs"
+				"redhat.vscode-yaml"
 			],
 			"settings": {
 				"editor.formatOnSave": true,
 				"[python]": {
+					"defaultInterpreterPath": "/home/devcontainer/venv/bin/python",
 					"analysis.typeCheckingMode": "strict",
 					"editor.defaultFormatter": "charliermarsh.ruff",
 					"terminal.activateEnvironment": false
-				},
-				"python-envs.globalSearchPaths": [
-					"/home/feed_ursus"
-				]
+				}
 			}
 		}
 	}
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "pip3 install --user -r requirements.txt",
-	// Configure tool-specific properties.
-	// "customizations": {},
-	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
 }

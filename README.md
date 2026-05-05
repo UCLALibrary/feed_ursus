@@ -22,7 +22,7 @@ Then:
 uv tool install feed_ursus
 ```
 
-UV will install feed_ursus in its own virtualenv, but make the command accessible from anywhere so you don't need to active the virtualenv yourself.
+`uv tool install` will install feed_ursus in its own virtualenv, but make the command accessible from anywhere so you don't need to active the virtualenv yourself.
 
 To upgrade a uv-installed feed ursus to the latest version:
 
@@ -70,11 +70,15 @@ feed_ursus --solr_url=http://localhost:8983/solr/ursus [path/to/your.csv]
 
 ## Developing feed_ursus
 
+For development, a devcontainer configuration is included but we recommend installing directly on the host system using uv, for easier access to docker commands, network ports, and outside directories that might contain csvs. If you do is designed to use docker's host network driver, which allows it to connect to a solr instance running locally on the host machine, or mapped to a host port via an ssh tunnel. If you are using Docker Desktop on Mac or Windows, this feature must be enabled [as described here](https://docs.docker.com/engine/network/drivers/host/#docker-desktop).
+
 ### Installing
 
-For development, use the included devcontainer configuration [TO DO: more information about this], or install the project requirements with `uv sync` (not supported).
-
-The devcontainer is designed to use docker's host network driver, which allows it to connect to a solr instance running locally on the host machine, or mapped to a host port via an ssh tunnel. If you are using Docker Desktop on Mac or Windows, this feature must be enabled [as described here](https://docs.docker.com/engine/network/drivers/host/#docker-desktop).
+```
+git clone https://github.com/uclalibrary/feed_ursus
+cd feed_ursus
+uv sync
+```
 
 ### Running the tests
 
