@@ -1,0 +1,38 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/python
+{
+	"name": "Python",
+	"dockerComposeFile": [
+		"../docker-compose.yml"
+	],
+	"service": "python",
+	"remoteUser": "devcontainer",
+	"workspaceFolder": "/home/devcontainer/feed_ursus",
+	"features": {
+		"ghcr.io/devcontainers/features/git:1": {}
+	},
+	// "containerEnv": {
+	// },
+	"postCreateCommand": "uv sync --locked --all-groups",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.mypy-type-checker",
+				"ms-python.vscode-pylance",
+				"ms-python.python",
+				"ms-python.debugpy",
+				"charliermarsh.ruff",
+				"redhat.vscode-yaml"
+			],
+			"settings": {
+				"editor.formatOnSave": true,
+				"[python]": {
+					"defaultInterpreterPath": "/home/devcontainer/venv/bin/python",
+					"analysis.typeCheckingMode": "strict",
+					"editor.defaultFormatter": "charliermarsh.ruff",
+					"terminal.activateEnvironment": false
+				}
+			}
+		}
+	}
+}
