@@ -12,6 +12,7 @@ import sys
 import typing
 from datetime import datetime, timezone
 from getpass import getuser
+from math import inf
 from pathlib import Path
 
 import click
@@ -23,7 +24,10 @@ from rich.console import Console
 from rich.table import Table
 
 from feed_ursus.controlled_fields import ResourceType
-from feed_ursus.ursus_solr_record import IngestSolrRecord, UrsusSolrRecord
+from feed_ursus.ursus_solr_record import (
+    IngestSolrRecord,
+    UrsusSolrRecord,
+)
 from feed_ursus.util import Ark, Empty, MARCList, UnknownItemError, UrsusId
 
 
@@ -195,6 +199,46 @@ class Importer:
                 self.solr_client.delete(
                     q=f"id:{collection_id} OR member_of_collection_ids_ssim:{collection_id}"
                 )
+
+    def reindex(self, max_errors: int | float = inf) -> None:
+        hits = int(self.solr_client.search("ark_ssi:*", rows=0).hits)
+        rows = 1000
+        n_errors = 0
+        Validator = UrsusSolrRecord.less_strict()
+
+        # # Using the looser validation will result in
+        # warnings.filterwarnings("ignore", module="pydantic")
+
+        for start in self.maybe_progress(
+            range(0, hits, rows), description=f"Reindexing {hits} records..."
+        ):
+            results = self.solr_client.search(
+                "ark_ssi:*",
+                start=start,
+                rows=rows,
+            )
+            hits = results.hits
+            for raw_doc in results:
+                try:
+                    Validator.model_validate(raw_doc).model_dump(mode="json")
+                except pydantic.ValidationError as e:
+                    record_handle = (
+                        raw_doc.get("ark_ssi")
+                        or raw_doc.get("title_tesim")
+                        or raw_doc.get("id")
+                        or str(raw_doc)
+                    )
+                    rich.print(
+                        f"\n{record_handle}",
+                        e,
+                        sep="\n",
+                    )
+
+                    n_errors += 1
+                    if n_errors >= (max_errors or inf):
+                        raise click.ClickException(
+                            f"Reindex cancelled: reached {max_errors} {'errors' if max_errors and max_errors > 1 else 'error'}"
+                        )
 
     def dump(self, output: typing.TextIO = sys.stdout) -> None:
         hits = int(self.solr_client.search("*:*", rows=0).hits)

@@ -7,6 +7,8 @@ Creates a multi-valued 'year_isim' field by parsing 'normalized_date'.
 
 import datetime
 
+import pytest
+
 from feed_ursus import date_parser
 
 
@@ -43,10 +45,18 @@ def test_empty():
     assert date_parser.get_dates([]) == []
 
 
-def test_unparseable():
+def test_unparseable_strict():
+    """Doesn't return anything for unparseable values, but still parses other elements in input."""
+    with pytest.raises(ValueError):
+        date_parser.get_dates(["1953", "[between 1928-1939]"], strict=True)
+
+
+def test_unparseable_lax():
     """Doesn't return anything for unparseable values, but still parses other elements in input."""
     test_date = datetime.datetime(1953, 1, 1)
-    assert date_parser.get_dates(["1953", "[between 1928-1939]"]) == [test_date]
+    assert date_parser.get_dates(["1953", "[between 1928-1939]"], strict=False) == [
+        test_date
+    ]
 
 
 def test_range():

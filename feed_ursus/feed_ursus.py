@@ -5,6 +5,7 @@
 
 import importlib.metadata
 import typing
+from math import inf
 
 import click
 import requests
@@ -90,6 +91,25 @@ def log(ctx: click.Context):
     """Show a log of csv ingests."""
 
     ctx.obj["importer"].print_log()
+
+
+@feed_ursus.command()
+@click.pass_context
+@click.option(
+    "--max-errors",
+    type=click.IntRange(1, None),
+    default=None,
+    help="Skip confirmation prompts.",
+)
+def reindex(ctx: click.Context, max_errors: int | None = None):
+    """Reindex solr index.
+
+    All records will be loaded and parsed as Ursus records, and computed fields will be regenerated, before being fed back to solr. Records will be validated but validation rules will be somewhat looser than when importing from csv.
+
+    Example:
+        >>> feed_ursus reindex
+    """
+    ctx.obj["importer"].reindex(max_errors=(max_errors or inf))
 
 
 @feed_ursus.command()

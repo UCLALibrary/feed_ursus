@@ -12,7 +12,7 @@ from dateutil import parser
 NORMALIZED_RANGE = re.compile(r"(.*)/(.*)")
 
 
-def get_dates(normalized_dates: typing.Any):
+def get_dates(normalized_dates: typing.Any, strict=True):
     """Maps a list of 'normalized_date' strings to a sorted list of datetime.
 
     Args:
@@ -31,18 +31,18 @@ def get_dates(normalized_dates: typing.Any):
         match = NORMALIZED_RANGE.search(normalized_date)
         if match:
             start_str, end_str = match.groups()
-            start = get_date(start_str)
-            end = get_date(end_str)
+            start = get_date(start_str, strict=strict)
+            end = get_date(end_str, strict=strict)
             if start and end:
                 solr_dts.update({start, end})
         else:
-            solr_date = get_date(normalized_date)
+            solr_date = get_date(normalized_date, strict=strict)
             if solr_date:
                 solr_dts.add(solr_date)
     return sorted(solr_dts)
 
 
-def get_date(date: str):
+def get_date(date: str, strict=True):
     """Extracts the single 4-digit year found in the input date string.
 
     Args:
@@ -56,6 +56,7 @@ def get_date(date: str):
         parsed_date = parser.parse(date, default=datetime(1978, 1, 1))
         return parsed_date
     except ValueError as err:
-        print(err)
-        return None
-    return None
+        if strict:
+            raise err
+        else:
+            return None

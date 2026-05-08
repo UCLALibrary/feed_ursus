@@ -1,13 +1,16 @@
 import re
+from collections import abc
 from datetime import datetime
 from enum import Enum
-from typing import Annotated, Any, TypeVar, assert_never, overload
+from typing import Annotated, Any, Literal, TypeVar, assert_never, overload
 
 from pydantic import (
     BeforeValidator,
     StringConstraints,
     TypeAdapter,
     ValidationError,
+    ValidatorFunctionWrapHandler,
+    WrapValidator,
 )
 
 
@@ -149,7 +152,7 @@ MARCList = Annotated[
 ARK_REGEX = re.compile(r"^ark:/\d+(/([a-z]|[0-9])+)+$")
 
 
-def ensure_ark_prefix(value: str) -> str:
+def ensure_ark_prefix(value: str | None) -> str | None:
     """Add the prefix 'ark:/' to an archival resource key, if it is not there already and doing so results in a valid ark.
 
     Args:
@@ -168,7 +171,11 @@ def ensure_ark_prefix(value: str) -> str:
         https://arks.org/about/
         https://datatracker.ietf.org/doc/draft-kunze-ark/
     """
-    if ARK_REGEX.match("ark:/" + value) and not ARK_REGEX.match(value):
+    if (
+        isinstance(value, str)
+        and ARK_REGEX.match("ark:/" + value)
+        and not ARK_REGEX.match(value)
+    ):
         return "ark:/" + value
     else:
         return value
@@ -204,3 +211,58 @@ def make_ursus_id(value: str) -> "UrsusId":
 
 
 UrsusId = Annotated[BaseUrsusId, BeforeValidator(make_ursus_id)]
+
+
+@overload
+def serialize_term(item: Enum | str, by) -> str: ...
+
+
+@overload
+def serialize_term(item: abc.Collection[Enum | str], by) -> list[str]: ...
+
+
+@overload
+def serialize_term(item: None, by) -> None: ...
+
+
+def serialize_term(
+    item: Enum | str | abc.Collection[Enum | str] | None,
+    by: Literal["id", "label"] = "id",
+):
+    """Serialize a controlled field.
+
+    Controlled fields are defined as Python Enums, with the `name` parameter referring to a term id and the `value` parameter referring to the term label.
+
+    Argument can be:
+    - an Enum subtype, in which case the `name` or `value parameter will be returned, depending on the `by` argument.
+    - a string, which we use in the UrsusSolrRecord.less_strict variant of the model to capture bad legacy values, which will be returned as is.
+    - an iterable containing either of the two types above, in which case a list will be returned, with each item having been processed as above.
+    - None, for empty fields, which will be returned unchanged.
+    """
+
+    match item, by:
+        case Enum(), "id":
+            return item.name
+        case Enum(), "label":
+            return item.value
+        case str(), _:
+            return item
+        case abc.Collection(), _:
+            return [serialize_term(member, by=by) for member in item]
+        case None, _:
+            return None
+        case _, _:
+            assert_never(item)
+
+
+def ignore_failed_validator_wrapper(
+    value: Any,
+    handler: ValidatorFunctionWrapHandler,
+) -> str:
+    try:
+        return handler(value)
+    except ValidationError as err:
+        return value
+
+
+ignore_failed_validator = WrapValidator(ignore_failed_validator_wrapper)

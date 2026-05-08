@@ -1,8 +1,9 @@
 # mypy: disable-error-code="prop-decorator"
 
 import re
+from datetime import datetime
 from enum import Enum
-from typing import Annotated, Any, Literal, Self, assert_never
+from typing import Annotated, Any, Literal, Self, Type, assert_never
 from urllib.parse import urlparse
 
 # from urllib.parse import urlparse
@@ -15,6 +16,7 @@ from pydantic import (
     Field,
     ModelWrapValidatorHandler,
     computed_field,
+    create_model,
     field_validator,
     model_validator,
 )
@@ -39,9 +41,15 @@ from feed_ursus.util import (
     SolrDatetime,
     UrsusId,
     make_ursus_id,
+    serialize_term,
 )
 
 solr_date_from_python = Solr("http://nowhere")._from_python
+
+
+class ReindexRecord(BaseModel):
+    solr_id: Literal["ongoing_reingest"] = Field("ongoing_reingest", alias="id")
+    cutoff_timestamp: datetime
 
 
 class IngestSolrRecord(BaseModel):
@@ -100,6 +108,8 @@ class UrsusSolrRecord(BaseModel):
         validate_by_alias=True,
     )
 
+    _strict = True
+
     #
     #   Required Fields
     #
@@ -129,8 +139,7 @@ class UrsusSolrRecord(BaseModel):
     @computed_field
     @property
     def iiif_text_direction_ssi(self) -> str | None:
-        value = self.human_readable_iiif_text_direction_ssi
-        return value.name if isinstance(value, Enum) else None
+        return serialize_term(self.human_readable_iiif_text_direction_ssi, by="id")
 
     #   IIIF Viewing Hint
 
@@ -142,10 +151,7 @@ class UrsusSolrRecord(BaseModel):
     @computed_field
     @property
     def iiif_viewing_hint_ssi(self) -> str | None:
-        if isinstance(value := self.human_readable_iiif_viewing_hint_ssi, Enum):
-            return value.name
-        else:
-            return None
+        return serialize_term(self.human_readable_iiif_viewing_hint_ssi, by="id")
 
     #    Language
 
@@ -174,28 +180,20 @@ class UrsusSolrRecord(BaseModel):
 
     @computed_field
     @property
-    def human_readable_language_sim(self) -> list[Language] | None:
-        return self.human_readable_language_tesim
+    def human_readable_language_sim(self) -> list[str] | None:
+        return serialize_term(self.human_readable_language_tesim, by="label")
 
     @computed_field
     @property
     def language_sim(self) -> list[str] | None:
-        match self.human_readable_language_tesim:
-            case list(values):
-                return [value.name for value in values]
-            case None:
-                return None
+        return serialize_term(self.human_readable_language_tesim, by="id")
 
     @computed_field
     @property
     def language_tesim(self) -> list[str] | None:
-        match self.human_readable_language_tesim:
-            case list(values):
-                return [value.name for value in values]
-            case None:
-                return None
+        # Resource Type
 
-    # Resource Type
+        return serialize_term(self.human_readable_language_tesim, by="id")
 
     human_readable_resource_type_tesim: MARCList[ResourceType] | Empty = Field(
         default=None,
@@ -204,24 +202,18 @@ class UrsusSolrRecord(BaseModel):
 
     @computed_field
     @property
-    def human_readable_resource_type_sim(self) -> list[ResourceType] | None:
-        return self.human_readable_resource_type_tesim
+    def human_readable_resource_type_sim(self) -> list[str] | None:
+        return serialize_term(self.human_readable_resource_type_tesim, by="label")
 
     @computed_field
     @property
     def resource_type_sim(self) -> list[str] | None:
-        match self.human_readable_resource_type_tesim:
-            case [*values]:
-                return [value.name for value in values]
-            case None:
-                return None
-            case _ as rt:
-                assert_never(rt)
+        return serialize_term(self.human_readable_resource_type_tesim, by="id")
 
     @computed_field
     @property
     def resource_type_ssim(self) -> list[str] | None:
-        return self.resource_type_sim
+        return serialize_term(self.human_readable_resource_type_tesim, by="id")
 
     # rights statement
 
@@ -243,10 +235,7 @@ class UrsusSolrRecord(BaseModel):
     @computed_field
     @property
     def rights_statement_tesim(self) -> list[str] | None:
-        if isinstance(values := self.human_readable_rights_statement_tesim, list):
-            return [value.name for value in values]
-        else:
-            return None
+        return serialize_term(self.human_readable_rights_statement_tesim, by="id")
 
     #
     #   Other Fields
@@ -511,11 +500,14 @@ class UrsusSolrRecord(BaseModel):
         match self.normalized_date_tesim:
             case list(dates):
                 return [
-                    solr_date_from_python(date) for date in date_parser.get_dates(dates)
+                    solr_date_from_python(date)
+                    for date in date_parser.get_dates(dates, strict=self._strict)
                 ]  # pyright: ignore[reportPrivateUsage, reportUnknownMemberType]
             case None:
                 return None
 
+    @computed_field
+    @property
     def date_dtsort(self) -> SolrDatetime | None:
         match self.date_dtsim:
             case [] | None:
@@ -678,14 +670,21 @@ class UrsusSolrRecord(BaseModel):
             for lat, long in zip(
                 self.latitude_tesim or [],
                 self.longitude_tesim or [],
-                strict=True,
             )
         ] or None
 
     @model_validator(mode="after")
     def longitudes_match_latitudes(self) -> Self:
         if len(self.latitude_tesim or []) != len(self.longitude_tesim or []):
-            raise ValueError(f"Mismatched lengths: Latitude and Longitude")
+            raise ValueError(
+                "\n".join(
+                    [
+                        "Mismatched lengths:",
+                        f"Latitude {self.latitude_tesim}",
+                        f"Longitude {self.longitude_tesim}",
+                    ]
+                )
+            )
         return self
 
     hand_note_tesim: MARCList[MARCString] | Empty = Field(
@@ -923,7 +922,7 @@ class UrsusSolrRecord(BaseModel):
     def named_subject_sim(self) -> list[str] | None:
         return self.named_subject_tesim
 
-    normalized_date_tesim: MARCList[MARCString] | Empty = Field(
+    normalized_date_tesim: MARCList[str] | Empty = Field(
         default=None,
         validation_alias=AliasChoices("Date.normalized"),
     )
@@ -1084,17 +1083,20 @@ class UrsusSolrRecord(BaseModel):
                 pass
             case list(ids), list(titles) if len(ids) == len(titles):
                 pass
-            case list(ids), list(titles):
+            case (
+                (list(ids), list(titles))
+                | (list(ids), None as titles)
+                | (None as ids, list(titles))
+            ):
                 raise ValueError(
-                    f"related_record_ssm and human_readable_related_record_title_ssm must be of equal length but {len(ids)} != {len(titles)}"
-                )
-            case list(), None:
-                raise ValueError(
-                    "provided related_record_ssm but not human_readable_related_record_title_ssm"
-                )
-            case None, list():
-                raise ValueError(
-                    "provided human_readable_related_record_title_ssm but not related_record_ssm"
+                    "\n".join(
+                        [
+                            "related_record_ssm and human_readable_related_record_title_ssm must be of equal length",
+                            f"related_record_title_ssm == {ids}",
+                            f"human_readable_related_record_title_ssm == {titles}",
+                            "",
+                        ]
+                    )
                 )
             case _ as ids, _ as titles:
                 assert_never(ids or titles)
@@ -1222,14 +1224,6 @@ class UrsusSolrRecord(BaseModel):
                 return first
             case _:
                 return None
-
-    @computed_field
-    @property
-    def sort_year_isi(self) -> int | Empty:
-        if self.year_isim and len(self.year_isim) > 0:
-            return min(self.year_isim)
-        else:
-            return None
 
     @computed_field
     @property
@@ -1371,7 +1365,7 @@ class UrsusSolrRecord(BaseModel):
     @model_validator(mode="before")
     @classmethod
     def map_visibility(cls, data: Self | dict[str, Any]) -> Any:
-        """Handle mapping of deprecated values plus special cases where "Visibility" is not provided. Note that there is different logic depending on whether the "Visibility" column was omitted entirely from the csv, or included but empty for a row."""
+        """Handle mapping of deprecated values plus special cases where "Visibility" is not provided. Note that there is different logic depending on whether the "Visibility" column was omitted entirely from the csv, or included but Empty for a row."""
 
         if not isinstance(data, dict):
             return data
@@ -1396,7 +1390,7 @@ class UrsusSolrRecord(BaseModel):
             case "open" | "public", _:
                 data["Visibility"] = "open"
 
-            # "Visibility" column was in csv but empty for row
+            # "Visibility" column was in csv but Empty for row
             case "", _:
                 data["Visibility"] = "open"
 
@@ -1444,10 +1438,8 @@ class UrsusSolrRecord(BaseModel):
         match self.visibility_ssi:
             case Visibility.UCLA | Visibility.OPEN:
                 return ["public"]
-            case Visibility.AUTHENTICATED:
-                return []
             case _:
-                assert_never(self.visibility_ssi)
+                return []
 
     @computed_field
     @property
@@ -1490,9 +1482,61 @@ class UrsusSolrRecord(BaseModel):
                     errors.append(f"{field_name} ({value} != {validated_value})")
 
             if errors:
-                raise ValueError(f"Inputs do not match computed: {','.join(errors)}")
+                raise ValueError(
+                    "\n".join(
+                        [
+                            "Inputs do not match computed:",
+                            *errors,
+                            "",  # for a final newline
+                        ]
+                    )
+                )
 
             return validated
 
         else:
             return handler(data)
+
+    @classmethod
+    def less_strict(cls) -> Type[BaseModel]:
+        new_fields = {}
+
+        for f_name, f_info in cls.model_fields.items():
+            f_dct = f_info.asdict()
+            new_fields[f_name] = (
+                Annotated[
+                    (
+                        f_dct["annotation"] | Any,
+                        *f_dct["metadata"],
+                        Field(**f_dct["attributes"]),
+                    )
+                ],
+                None,
+            )
+
+        # Create intermediate base class that overrides some validation functions
+        class _LessStrictBase(cls):
+            _strict = False
+
+            @model_validator(mode="after")
+            def longitudes_match_latitudes(self) -> Self:
+                return self
+
+            @model_validator(mode="after")
+            def validate_related_record_titles(self) -> Self:
+                return self
+
+            @model_validator(mode="wrap")
+            @classmethod
+            def validate_computed_fields(
+                cls,
+                data: Self | dict[str, Any],
+                handler: ModelWrapValidatorHandler[Self],
+            ) -> Self:
+                return handler(data)
+
+        return create_model(
+            f"{cls.__name__}LessStrict",
+            __base__=_LessStrictBase,
+            **new_fields,
+        )

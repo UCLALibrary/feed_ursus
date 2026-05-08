@@ -8,7 +8,6 @@ from pydantic import ValidationError
 
 from feed_ursus.controlled_fields import (
     ObjectType,
-    ResourceType,
     RightsStatement,
     Visibility,
 )
@@ -179,10 +178,7 @@ class TestUrsusSolrRecord:
             assert record.geographic_coordinates_ssim == ["1.0, 3.0", "2.0, 4.0"]
 
         def test_different_length(self) -> None:
-            with pytest.raises(
-                ValueError,
-                match="Mismatched lengths: Latitude and Longitude",
-            ):
+            with pytest.raises(ValueError, match="Mismatched lengths:"):
                 UrsusSolrRecord.model_validate(
                     {
                         **MINIMAL_RECORD,
@@ -296,7 +292,7 @@ class TestUrsusSolrRecord:
         def test_different_length(self) -> None:
             with pytest.raises(
                 ValidationError,
-                match="related_record_ssm and human_readable_related_record_title_ssm must be of equal length",
+                match="Value error, related_record_ssm and human_readable_related_record_title_ssm must be of equal length",
             ):
                 UrsusSolrRecord.model_validate(
                     {
@@ -309,7 +305,7 @@ class TestUrsusSolrRecord:
         def test_only_ids(self) -> None:
             with pytest.raises(
                 ValidationError,
-                match="provided related_record_ssm but not human_readable_related_record_title_ssm",
+                match="Value error, related_record_ssm and human_readable_related_record_title_ssm must be of equal length",
             ):
                 UrsusSolrRecord.model_validate(
                     {
@@ -321,7 +317,7 @@ class TestUrsusSolrRecord:
         def test_only_titles(self) -> None:
             with pytest.raises(
                 ValidationError,
-                match="provided human_readable_related_record_title_ssm but not related_record_ssm",
+                match="Value error, related_record_ssm and human_readable_related_record_title_ssm must be of equal length",
             ):
                 UrsusSolrRecord.model_validate(
                     {
@@ -607,16 +603,16 @@ class TestUrsusSolrRecord:
             )
             assert record.visibility_ssi == expected
 
-    class TestSortYear:
+    class TestDateDtsort:
         def test_single(self) -> None:
             result = UrsusSolrRecord.model_validate(
                 {
                     **MINIMAL_RECORD,
                     "Date.normalized": ["1980"],
                 }
-            ).sort_year_isi
+            ).date_dtsort
 
-            assert result == 1980
+            assert result == "1980-01-01T00:00:00Z"
 
         def test_range(self) -> None:
             result = UrsusSolrRecord.model_validate(
@@ -624,12 +620,12 @@ class TestUrsusSolrRecord:
                     **MINIMAL_RECORD,
                     "Date.normalized": ["1980/2026"],
                 }
-            ).sort_year_isi
+            ).date_dtsort
 
-            assert result == 1980
+            assert result == "1980-01-01T00:00:00Z"
 
         def test_empty(self) -> None:
-            assert UrsusSolrRecord.model_validate(MINIMAL_RECORD).sort_year_isi is None
+            assert UrsusSolrRecord.model_validate(MINIMAL_RECORD).date_dtsort is None
 
     def test_title_required(self) -> None:
         record_without_title = deepcopy(MINIMAL_RECORD)
@@ -685,9 +681,7 @@ class TestUrsusSolrRecord:
                 "human_readable_resource_type_sim": ["still image"],
             }
             record = UrsusSolrRecord.model_validate(data, by_name=True, by_alias=False)
-            assert record.human_readable_resource_type_sim == [
-                ResourceType("still image")
-            ]
+            assert record.human_readable_resource_type_sim == ["still image"]
 
         def test_invalid_computed_field_raises(self) -> None:
             # Provide a computed field value that does not match what the model would compute
@@ -696,9 +690,11 @@ class TestUrsusSolrRecord:
                 "architect_sim": ["WrongValue"],  # does not match computed
             }
 
-            with pytest.raises(ValueError) as excinfo:
+            with pytest.raises(
+                ValueError,
+                match="Inputs do not match computed:",
+            ) as excinfo:
                 UrsusSolrRecord.model_validate(data)
-            assert "Inputs do not match computed: architect_sim" in str(excinfo.value)
 
         def test_multiple_invalid_computed_fields(self) -> None:
             # Multiple computed fields do not match
@@ -751,3 +747,27 @@ class TestUrsusSolrRecord:
             }
             record = UrsusSolrRecord.model_validate(data)
             assert record.architect_sim == ["Arch1"]
+
+    @pytest.mark.parametrize(
+        ["bad_data"],
+        [
+            ({"visibility_ssi": "sinai"},),
+            ({"latitude_tesim": None, "longitude_tesim": ["-118.847769"]},),
+            (
+                {
+                    "related_record_ssm": ["ARK:/21198/zz002jgs66"],
+                    "human_readable_related_record_title_ssm": None,
+                },
+            ),
+        ],
+    )
+    def test_less_strict(self, bad_data: dict):
+        record = {
+            **MINIMAL_RECORD,
+            **bad_data,
+        }
+
+        with pytest.raises(ValidationError):
+            UrsusSolrRecord.model_validate(record)
+
+        UrsusSolrRecord.less_strict().model_validate(record)

@@ -152,11 +152,12 @@ class TestArk:
             # This one actually IS valid (even preferred) according to the ark standard, however our arks use the 'old form' with 'ark:/'
             # see https://datatracker.ietf.org/doc/draft-kunze-ark/
             ("ark:123/456",),
+            (None,),
         ],
     )
     def test_errors(self, value: str) -> None:
         with pytest.raises(ValidationError):
-            TypeAdapter(util.Ark).validate_strings(value)
+            TypeAdapter(util.Ark).validate_python(value)
 
 
 class TestUrsusId:
@@ -193,3 +194,51 @@ class TestUrsusId:
     def test_raises_errors(self, value: str):
         with pytest.raises(ValidationError):
             assert TypeAdapter(util.UrsusId).validate_strings(value)
+
+
+class TestSerializeTerm:
+    from enum import Enum
+
+    class TestEnum(Enum):
+        TERM1 = "Label 1"
+        TERM2 = "Label 2"
+
+    def test_enum_by_id(self):
+        result = util.serialize_term(self.TestEnum.TERM1, by="id")
+        assert result == "TERM1"
+
+    def test_enum_by_label(self):
+        result = util.serialize_term(self.TestEnum.TERM1, by="label")
+        assert result == "Label 1"
+
+    def test_string_by_id(self):
+        result = util.serialize_term("some_string", by="id")
+        assert result == "some_string"
+
+    def test_string_by_label(self):
+        result = util.serialize_term("some_string", by="label")
+        assert result == "some_string"
+
+    def test_list_of_enums_by_id(self):
+        result = util.serialize_term(
+            [self.TestEnum.TERM1, self.TestEnum.TERM2], by="id"
+        )
+        assert result == ["TERM1", "TERM2"]
+
+    def test_list_of_enums_by_label(self):
+        result = util.serialize_term(
+            [self.TestEnum.TERM1, self.TestEnum.TERM2], by="label"
+        )
+        assert result == ["Label 1", "Label 2"]
+
+    def test_list_of_strings(self):
+        result = util.serialize_term(["str1", "str2"], by="id")
+        assert result == ["str1", "str2"]
+
+    def test_mixed_list(self):
+        result = util.serialize_term([self.TestEnum.TERM1, "str1"], by="id")
+        assert result == ["TERM1", "str1"]
+
+    def test_none(self):
+        result = util.serialize_term(None, by="id")
+        assert result is None
