@@ -1,8 +1,8 @@
-# mypy: disable-error-code="prop-decorator"
-
 import re
+from collections.abc import Callable
+from datetime import datetime
 from enum import Enum
-from typing import Annotated, Any, Literal, Self, assert_never
+from typing import Annotated, Any, Literal, Self, TypeVar, cast
 from urllib.parse import urlparse
 
 # from urllib.parse import urlparse
@@ -18,7 +18,9 @@ from pydantic import (
     field_validator,
     model_validator,
 )
-from pysolr import Solr  # type: ignore
+from pydantic.functional_serializers import field_serializer
+from pydantic.types import StringConstraints
+from pysolr import Solr  # pyright: ignore[reportMissingTypeStubs]
 
 from feed_ursus import date_parser, year_parser
 from feed_ursus.controlled_fields import (
@@ -29,6 +31,7 @@ from feed_ursus.controlled_fields import (
     TextDirection,
     ViewingHint,
     Visibility,
+    language_names,
 )
 from feed_ursus.util import (
     Ark,
@@ -36,12 +39,21 @@ from feed_ursus.util import (
     MARCList,
     MARCString,
     MARCSubject,
+    NormalizedDate,
     SolrDatetime,
     UrsusId,
     make_ursus_id,
+    now,
+    serialize_term,
 )
 
-solr_date_from_python = Solr("http://nowhere")._from_python
+solr_date_from_python = cast(
+    Callable[[datetime], str],
+    Solr("http://nowhere")._from_python,  # pyright: ignore[reportPrivateUsage, reportUnknownMemberType]
+)
+
+
+T = TypeVar("T")
 
 
 class IngestSolrRecord(BaseModel):
@@ -100,6 +112,8 @@ class UrsusSolrRecord(BaseModel):
         validate_by_alias=True,
     )
 
+    _strict = True
+
     #
     #   Required Fields
     #
@@ -129,8 +143,11 @@ class UrsusSolrRecord(BaseModel):
     @computed_field
     @property
     def iiif_text_direction_ssi(self) -> str | None:
-        value = self.human_readable_iiif_text_direction_ssi
-        return value.name if isinstance(value, Enum) else None
+        return serialize_term(
+            self.human_readable_iiif_text_direction_ssi,
+            by="id",
+            enum_cls=TextDirection,
+        )
 
     #   IIIF Viewing Hint
 
@@ -142,60 +159,37 @@ class UrsusSolrRecord(BaseModel):
     @computed_field
     @property
     def iiif_viewing_hint_ssi(self) -> str | None:
-        if isinstance(value := self.human_readable_iiif_viewing_hint_ssi, Enum):
-            return value.name
-        else:
-            return None
+        return serialize_term(
+            self.human_readable_iiif_viewing_hint_ssi,
+            by="id",
+            enum_cls=ViewingHint,
+        )
 
-    #    Language
+    #    Language (csvs have ids, not labels)
 
-    @staticmethod
-    def validate_language(value: str | Language) -> Language:
-        match value:
-            case Language():
-                return value
-            case str() if value in Language.__members__:
-                return Language[value]
-            case _:
-                return Language(value)
-
-    human_readable_language_tesim: (
-        MARCList[
-            Annotated[
-                Language,
-                BeforeValidator(validate_language),
-            ]
-        ]
-        | Empty
-    ) = Field(
+    language_tesim: MARCList[Language] | Empty = Field(
         default=None,
         validation_alias=AliasChoices("Language"),
     )
 
     @computed_field
     @property
-    def human_readable_language_sim(self) -> list[Language] | None:
-        return self.human_readable_language_tesim
-
-    @computed_field
-    @property
     def language_sim(self) -> list[str] | None:
-        match self.human_readable_language_tesim:
-            case list(values):
-                return [value.name for value in values]
-            case None:
-                return None
+        return self.language_tesim
 
     @computed_field
     @property
-    def language_tesim(self) -> list[str] | None:
-        match self.human_readable_language_tesim:
-            case list(values):
-                return [value.name for value in values]
-            case None:
-                return None
+    def human_readable_language_tesim(self) -> list[str] | None:
+        return [
+            language_names[language_code]
+            for language_code in (self.language_tesim or [])
+            if language_code in language_names
+        ] or None
 
-    # Resource Type
+    @computed_field
+    @property
+    def human_readable_language_sim(self) -> list[str] | None:
+        return self.human_readable_language_tesim
 
     human_readable_resource_type_tesim: MARCList[ResourceType] | Empty = Field(
         default=None,
@@ -204,24 +198,39 @@ class UrsusSolrRecord(BaseModel):
 
     @computed_field
     @property
-    def human_readable_resource_type_sim(self) -> list[ResourceType] | None:
-        return self.human_readable_resource_type_tesim
+    def human_readable_resource_type_sim(self) -> list[str] | None:
+        return serialize_term(
+            self.human_readable_resource_type_tesim,
+            by="label",
+            enum_cls=ResourceType,
+        )
 
     @computed_field
     @property
     def resource_type_sim(self) -> list[str] | None:
-        match self.human_readable_resource_type_tesim:
-            case [*values]:
-                return [value.name for value in values]
-            case None:
-                return None
-            case _ as rt:
-                assert_never(rt)
+        return serialize_term(
+            self.human_readable_resource_type_tesim,
+            by="id",
+            enum_cls=ResourceType,
+        )
 
     @computed_field
     @property
     def resource_type_ssim(self) -> list[str] | None:
-        return self.resource_type_sim
+        return serialize_term(
+            self.human_readable_resource_type_tesim,
+            by="id",
+            enum_cls=ResourceType,
+        )
+
+    @computed_field
+    @property
+    def resource_type_tesim(self) -> list[str] | None:
+        return serialize_term(
+            self.human_readable_resource_type_tesim,
+            by="id",
+            enum_cls=ResourceType,
+        )
 
     # rights statement
 
@@ -230,7 +239,7 @@ class UrsusSolrRecord(BaseModel):
             Annotated[
                 RightsStatement,
                 BeforeValidator(
-                    lambda value: "public domain" if value == "pd" else value
+                    func=lambda value: "public domain" if value == "pd" else value
                 ),
             ]
         ]
@@ -243,10 +252,71 @@ class UrsusSolrRecord(BaseModel):
     @computed_field
     @property
     def rights_statement_tesim(self) -> list[str] | None:
-        if isinstance(values := self.human_readable_rights_statement_tesim, list):
-            return [value.name for value in values]
-        else:
-            return None
+        return serialize_term(
+            self.human_readable_rights_statement_tesim,
+            by="id",
+            enum_cls=RightsStatement,
+        )
+
+    # visibility
+
+    visibility_ssi: Literal[Visibility.OPEN] | Visibility = Field(
+        default=Visibility.OPEN,
+        validation_alias=AliasChoices("Visibility"),
+    )
+
+    @model_validator(mode="before")
+    @classmethod
+    def map_visibility(cls, data: Self | dict[str, Any]) -> Any:
+        """Handle mapping of deprecated values plus special cases where "Visibility" is not provided. Note that there is different logic depending on whether the "Visibility" column was omitted entirely from the csv, or included but Empty for a row."""
+
+        if not isinstance(data, dict):
+            return data
+
+        if not ("Visibility" in data or "Item Status" in data):
+            return data
+
+        # we want to consume "Item Status", it's only used here and not stored
+        match data.get("Visibility"), data.pop("Item Status", None):
+            # Include a bunch of deprecated values that need to be mapped
+            case (
+                "authenticated"
+                | "private"
+                | "registered"
+                | "restricted"
+                | "discovery"
+                | "sinai",
+                _,
+            ):
+                data["Visibility"] = "authenticated"
+
+            case "open" | "public", _:
+                data["Visibility"] = "open"
+
+            # "Visibility" column was in csv but Empty for row
+            case "", _:
+                data["Visibility"] = "open"
+
+            # "Visibility" was not in the csv, use "Item Status"
+            case (
+                None,
+                "Completed" | "Completed with minimal metadata",
+            ):
+                data["Visibility"] = "open"
+
+            # "Visibility" was not in the csv, "Item Status" column exists but isn't "Completed"
+            case None, str():
+                data["Visibility"] = "authenticated"
+
+            # "Visibility" and "Item Status" both absent)
+            case None, None:
+                data["Visibility"] = "open"
+
+            # Probably bad data, pass it on to builtin pydantic validation
+            case _ as value, _:
+                data["Visibility"] = value
+
+        return data
 
     #
     #   Other Fields
@@ -376,13 +446,10 @@ class UrsusSolrRecord(BaseModel):
 
     @computed_field
     @property
-    def binding_note_ssi(self) -> str | None:
-        if self.binding_note_tesim and len(self.binding_note_tesim):
-            return self.binding_note_tesim[0]
-        else:
-            return None
+    def binding_note_tesim(self) -> list[str] | None:
+        return [self.binding_note_ssi] if self.binding_note_ssi else None
 
-    binding_note_tesim: MARCList[MARCString] | Empty = Field(
+    binding_note_ssi: MARCString | Empty = Field(
         default=None,
         validation_alias=AliasChoices("Binding note", "Description.binding"),
     )
@@ -457,18 +524,19 @@ class UrsusSolrRecord(BaseModel):
         validation_alias=AliasChoices("Name.composer"),
     )
 
-    @computed_field
-    @property
-    def condition_note_ssi(self) -> str | None:
-        if self.condition_note_tesim and len(self.condition_note_tesim):
-            return self.condition_note_tesim[0]
-        else:
-            return None
-
     condition_note_tesim: MARCList[MARCString] | Empty = Field(
         default=None,
         validation_alias=AliasChoices("Condition note", "Description.condition"),
     )
+
+    @computed_field
+    @property
+    def condition_note_ssi(self) -> str | None:
+        return (
+            self.condition_note_tesim[0]
+            if (self.condition_note_tesim and len(self.condition_note_tesim) >= 1)
+            else None
+        )
 
     content_disclaimer_ssm: MARCList[MARCString] | Empty = Field(
         default=None,
@@ -512,10 +580,12 @@ class UrsusSolrRecord(BaseModel):
             case list(dates):
                 return [
                     solr_date_from_python(date) for date in date_parser.get_dates(dates)
-                ]  # pyright: ignore[reportPrivateUsage, reportUnknownMemberType]
+                ]
             case None:
                 return None
 
+    @computed_field
+    @property
     def date_dtsort(self) -> SolrDatetime | None:
         match self.date_dtsim:
             case [] | None:
@@ -678,14 +748,21 @@ class UrsusSolrRecord(BaseModel):
             for lat, long in zip(
                 self.latitude_tesim or [],
                 self.longitude_tesim or [],
-                strict=True,
             )
         ] or None
 
     @model_validator(mode="after")
     def longitudes_match_latitudes(self) -> Self:
         if len(self.latitude_tesim or []) != len(self.longitude_tesim or []):
-            raise ValueError(f"Mismatched lengths: Latitude and Longitude")
+            raise ValueError(
+                "\n".join(
+                    [
+                        "Mismatched lengths:",
+                        f"Latitude {self.latitude_tesim}",
+                        f"Longitude {self.longitude_tesim}",
+                    ]
+                )
+            )
         return self
 
     hand_note_tesim: MARCList[MARCString] | Empty = Field(
@@ -719,6 +796,16 @@ class UrsusSolrRecord(BaseModel):
                 raise ValueError(
                     "Object Type should be a string or a list containing just one item"
                 )
+
+    @field_serializer("has_model_ssim", mode="plain")
+    def serialize_has_model(self, value: T) -> list[T]:
+        """
+        Wrap the single-valued field has_model_ssim is a list, since solr treats it as multivalued.
+
+        This is a multivalued field in the hyrax world (meaning a record can have multiple types), but in our practice it is strictly single-valued.
+        """
+
+        return [value]
 
     history_tesim: MARCList[MARCString] | Empty = Field(
         default=None,
@@ -818,6 +905,26 @@ class UrsusSolrRecord(BaseModel):
         default=None,
         validation_alias=AliasChoices("Description.latitude"),
     )
+
+    librettist_tesim: MARCList[MARCString] | Empty = Field(
+        default=None,
+        validation_alias=AliasChoices("Librettist"),
+    )
+
+    @computed_field
+    @property
+    def librettist_sim(self) -> list[str] | None:
+        return self.librettist_tesim
+
+    collector_tesim: MARCList[MARCString] | Empty = Field(
+        default=None,
+        validation_alias=AliasChoices("Collector"),
+    )
+
+    @computed_field
+    @property
+    def collector_sim(self) -> list[str] | None:
+        return self.collector_tesim
 
     license_tesim: MARCList[MARCString] | Empty = Field(
         default=None,
@@ -923,7 +1030,7 @@ class UrsusSolrRecord(BaseModel):
     def named_subject_sim(self) -> list[str] | None:
         return self.named_subject_tesim
 
-    normalized_date_tesim: MARCList[MARCString] | Empty = Field(
+    normalized_date_tesim: MARCList[NormalizedDate] | Empty = Field(
         default=None,
         validation_alias=AliasChoices("Date.normalized"),
     )
@@ -952,7 +1059,7 @@ class UrsusSolrRecord(BaseModel):
         validation_alias=AliasChoices("oai_set"),
     )
 
-    opac_url_ssi: MARCList[MARCString] | Empty = Field(
+    opac_url_ssi: MARCString | Empty = Field(
         default=None,
         validation_alias=AliasChoices("Opac url", "Description.opac"),
     )
@@ -990,19 +1097,18 @@ class UrsusSolrRecord(BaseModel):
     def place_of_origin_sim(self) -> list[str] | None:
         return self.place_of_origin_tesim or None
 
-    preservation_copy_ssi: MARCString | Empty = Field(
+    preservation_copy_ssi: (
+        Annotated[
+            MARCString,
+            StringConstraints(
+                pattern=r"^Masters/(dlmasters|CDLIMasters|Livingstone|Maps|MEAP|othermasters)/.*"
+            ),
+        ]
+        | Empty
+    ) = Field(
         default=None,
         validation_alias=AliasChoices("File Name"),
     )
-
-    @field_validator("preservation_copy_ssi", mode="after")
-    @classmethod
-    def fix_file_path(cls, value: str | Empty) -> str | None:
-        """makes sure the path in preservation_copy starts with "Masters/" """
-
-        if isinstance(value, str) and not value.startswith("Masters/"):
-            value = f"Masters/{value}"
-        return value
 
     printer_tesim: MARCList[MARCString] | Empty = Field(
         default=None,
@@ -1084,20 +1190,21 @@ class UrsusSolrRecord(BaseModel):
                 pass
             case list(ids), list(titles) if len(ids) == len(titles):
                 pass
-            case list(ids), list(titles):
+            case (
+                (list(ids), list(titles))
+                | (list(ids), None as titles)
+                | (None as ids, list(titles))
+            ):
                 raise ValueError(
-                    f"related_record_ssm and human_readable_related_record_title_ssm must be of equal length but {len(ids)} != {len(titles)}"
+                    "\n".join(
+                        [
+                            "related_record_ssm and human_readable_related_record_title_ssm must be of equal length",
+                            f"related_record_title_ssm == {ids}",
+                            f"human_readable_related_record_title_ssm == {titles}",
+                            "",
+                        ]
+                    )
                 )
-            case list(), None:
-                raise ValueError(
-                    "provided related_record_ssm but not human_readable_related_record_title_ssm"
-                )
-            case None, list():
-                raise ValueError(
-                    "provided human_readable_related_record_title_ssm but not related_record_ssm"
-                )
-            case _ as ids, _ as titles:
-                assert_never(ids or titles)
 
         return self
 
@@ -1217,17 +1324,8 @@ class UrsusSolrRecord(BaseModel):
     @computed_field
     @property
     def sort_title_ssort(self) -> str | None:
-        match self.title_tesim:
-            case [str(first), *_]:
-                return first
-            case _:
-                return None
-
-    @computed_field
-    @property
-    def sort_year_isi(self) -> int | Empty:
-        if self.year_isim and len(self.year_isim) > 0:
-            return min(self.year_isim)
+        if self.title_tesim and len(self.title_tesim):
+            return self.title_tesim[0]
         else:
             return None
 
@@ -1310,6 +1408,28 @@ class UrsusSolrRecord(BaseModel):
         validation_alias=AliasChoices("Support"),
     )
 
+    system_create_dtsi: SolrDatetime | None = None
+    system_modified_dtsi: (
+        SolrDatetime  # no pydantic default – use model_validator to populate if empty
+    )
+
+    @model_validator(mode="before")
+    @classmethod
+    def system_modified_default(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            data["system_modified_dtsi"] = (
+                data.get("system_modified_dtsi")  # pyright: ignore[reportUnknownMemberType]
+                or data.get("timestamp")  # pyright: ignore[reportUnknownMemberType]
+                or solr_date_from_python(now())
+            )
+
+        return data  # pyright: ignore[reportUnknownVariableType]
+
+    @computed_field
+    @property
+    def timestamp(self) -> SolrDatetime:
+        return solr_date_from_python(now())
+
     tagline_ssi: MARCString | Empty = Field(
         default=None,
         validation_alias=AliasChoices("Tagline"),
@@ -1363,64 +1483,6 @@ class UrsusSolrRecord(BaseModel):
         validation_alias=AliasChoices("AltTitle.uniform"),
     )
 
-    visibility_ssi: Visibility = Field(
-        default=Visibility.OPEN,
-        validation_alias=AliasChoices("Visibility"),
-    )
-
-    @model_validator(mode="before")
-    @classmethod
-    def map_visibility(cls, data: Self | dict[str, Any]) -> Any:
-        """Handle mapping of deprecated values plus special cases where "Visibility" is not provided. Note that there is different logic depending on whether the "Visibility" column was omitted entirely from the csv, or included but empty for a row."""
-
-        if not isinstance(data, dict):
-            return data
-
-        if not ("Visibility" in data or "Item Status" in data):
-            return data
-
-        # we want to consume "Item Status", it's only used here and not stored
-        match data.get("Visibility"), data.pop("Item Status", None):
-            # Include a bunch of deprecated values that need to be mapped
-            case (
-                "authenticated"
-                | "private"
-                | "registered"
-                | "restricted"
-                | "discovery"
-                | "sinai",
-                _,
-            ):
-                data["Visibility"] = "authenticated"
-
-            case "open" | "public", _:
-                data["Visibility"] = "open"
-
-            # "Visibility" column was in csv but empty for row
-            case "", _:
-                data["Visibility"] = "open"
-
-            # "Visibility" was not in the csv, use "Item Status"
-            case (
-                None,
-                "Completed" | "Completed with minimal metadata",
-            ):
-                data["Visibility"] = "open"
-
-            # "Visibility" was not in the csv, "Item Status" column exists but isn't "Completed"
-            case None, str():
-                data["Visibility"] = "authenticated"
-
-            # "Visibility" and "Item Status" both absent)
-            case None, None:
-                data["Visibility"] = "open"
-
-            # Probably bad data, pass it on to builtin pydantic validation
-            case _ as value, _:
-                data["Visibility"] = value
-
-        return data
-
     @computed_field
     @property
     def writing_system_sim(self) -> list[str] | None:
@@ -1434,7 +1496,10 @@ class UrsusSolrRecord(BaseModel):
     @computed_field
     @property
     def year_isim(self) -> list[int] | None:
-        return year_parser.integer_years(self.normalized_date_tesim) or None
+        if self.normalized_date_tesim:
+            return year_parser.integer_years(self.normalized_date_tesim)
+        else:
+            return None
 
     # groups for blacklight_access_control permissions
 
@@ -1442,12 +1507,10 @@ class UrsusSolrRecord(BaseModel):
     @property
     def discover_access_group_ssim(self) -> list[Literal["public"]]:
         match self.visibility_ssi:
-            case Visibility.UCLA | Visibility.OPEN:
+            case Visibility.UCLA | Visibility.OPEN | "ucla" | "open":  # pyright: ignore[reportUnnecessaryComparison]
                 return ["public"]
-            case Visibility.AUTHENTICATED:
-                return []
             case _:
-                assert_never(self.visibility_ssi)
+                return []
 
     @computed_field
     @property
@@ -1456,7 +1519,7 @@ class UrsusSolrRecord(BaseModel):
 
     @computed_field
     @property
-    def download_access_person_ssim(self) -> list[Literal["public"]]:
+    def download_access_group_ssim(self) -> list[Literal["public"]]:
         return self.discover_access_group_ssim
 
     #
@@ -1490,7 +1553,15 @@ class UrsusSolrRecord(BaseModel):
                     errors.append(f"{field_name} ({value} != {validated_value})")
 
             if errors:
-                raise ValueError(f"Inputs do not match computed: {','.join(errors)}")
+                raise ValueError(
+                    "\n".join(
+                        [
+                            "Inputs do not match computed:",
+                            *errors,
+                            "",  # for a final newline
+                        ]
+                    )
+                )
 
             return validated
 

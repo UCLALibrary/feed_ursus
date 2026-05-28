@@ -45,6 +45,56 @@ class TestEmpty:
             assert "Input should be null" in str(excinfo.value)
 
 
+class TestNormalizedDate:
+    adapter: TypeAdapter[util.NormalizedDate] = TypeAdapter(util.NormalizedDate)
+    GOOD_DATES = [
+        ("1980",),
+        ("2012-12",),
+        ("2020-02-27",),
+        ("0064-07-18",),
+        ("064-07-18",),
+        ("-0043-03-15",),
+        ("-043-03-15",),
+        ("0000",),
+        ("000",),
+        ("0000-12",),
+        ("0000-12-15",),
+    ]
+
+    @pytest.mark.parametrize(("date",), GOOD_DATES)
+    def test_good_single_date(self, date: str):
+        result = self.adapter.validate_python(date)
+        assert result == date
+
+    @pytest.mark.parametrize(("date1",), GOOD_DATES)
+    @pytest.mark.parametrize(("date2",), GOOD_DATES)
+    def test_good_range(self, date1: str, date2: str):
+        expected = f"{date1}/{date2}"
+        result = self.adapter.validate_python(expected)
+        assert result == expected
+
+    @pytest.mark.parametrize(
+        ("date",),
+        [
+            ("",),
+            ("64",),
+            ("64-07-18",),
+            ("05-2026-21",),
+            ("05-21-2026",),
+            ("2026-5-21",),
+            ("2026-04-1",),
+            ("2026-W21-4",),
+            ("2026-005-21",),
+            ("1980/2026/2027",),
+            ("2026/05",),
+            ("2026/05/21",),
+        ],
+    )
+    def test_bad(self, date: str):
+        with pytest.raises(ValidationError):
+            self.adapter.validate_python(date)
+
+
 class TestMARCString:
     class SomeClass(BaseModel):
         field: util.MARCString
@@ -78,7 +128,7 @@ class TestMARCSubject:
 
     def test_marc_symbol_parsing(self) -> None:
         record = self.SomeClass.model_validate({"field": "abc $d xyz"})
-        assert record.field == "abc | xyz"
+        assert record.field == "abc--xyz"
 
     def test_min_length(self) -> None:
         with pytest.raises(
@@ -90,8 +140,8 @@ class TestMARCSubject:
 
 class TestMarcList:
     class RandoClass(BaseModel):
-        strings: util.MARCList[util.MARCString]
-        ints: util.MARCList[int] | util.Empty = None
+        required_strings: util.MARCList[util.MARCString]
+        optional_ints: util.MARCList[int] | util.Empty = None
 
     @pytest.mark.parametrize(
         ["input_str", "expected"],
@@ -101,13 +151,13 @@ class TestMarcList:
         ],
     )
     def test_parses_list(self, input_str: str, expected: list[str]) -> None:
-        record = self.RandoClass.model_validate({"strings": input_str})
-        assert record.strings == expected
+        record = self.RandoClass.model_validate({"required_strings": input_str})
+        assert record.required_strings == expected
 
     def test_uses_MarcString(self) -> None:
         input_str = "parses $s marc $k codes $q|~|  strips whitespace  "
-        record = self.RandoClass.model_validate({"strings": input_str})
-        assert record.strings == ["parses marc codes", "strips whitespace"]
+        record = self.RandoClass.model_validate({"required_strings": input_str})
+        assert record.required_strings == ["parses marc codes", "strips whitespace"]
 
     def test_raises_marc_errors(self) -> None:
         input_str = "no empty items|~|"
@@ -115,14 +165,23 @@ class TestMarcList:
             ValidationError,
             match="String should have at least 1 character",
         ):
-            self.RandoClass.model_validate({"strings": input_str})
+            self.RandoClass.model_validate({"required_strings": input_str})
 
     def test_raises_type_errors(self) -> None:
         with pytest.raises(
             ValidationError,
             match="unable to parse string as an integer",
         ):
-            self.RandoClass.model_validate({"strings": "123", "ints": "abc"})
+            self.RandoClass.model_validate(
+                {
+                    "required_strings": "123",
+                    "optional_ints": "abc",
+                }
+            )
+
+    def test_no_empty_list(self):
+        with pytest.raises(ValidationError):
+            self.RandoClass.model_validate({"required_strings": ""})
 
 
 class TestArk:
@@ -152,11 +211,12 @@ class TestArk:
             # This one actually IS valid (even preferred) according to the ark standard, however our arks use the 'old form' with 'ark:/'
             # see https://datatracker.ietf.org/doc/draft-kunze-ark/
             ("ark:123/456",),
+            (None,),
         ],
     )
     def test_errors(self, value: str) -> None:
         with pytest.raises(ValidationError):
-            TypeAdapter(util.Ark).validate_strings(value)
+            TypeAdapter(util.Ark).validate_python(value)
 
 
 class TestUrsusId:
@@ -193,3 +253,51 @@ class TestUrsusId:
     def test_raises_errors(self, value: str):
         with pytest.raises(ValidationError):
             assert TypeAdapter(util.UrsusId).validate_strings(value)
+
+
+class TestSerializeTerm:
+    from enum import Enum
+
+    class MyEnum(Enum):
+        TERM1 = "Label 1"
+        TERM2 = "Label 2"
+
+    def test_enum_by_id(self):
+        result = util.serialize_term(self.MyEnum.TERM1, by="id")
+        assert result == "TERM1"
+
+    def test_enum_by_label(self):
+        result = util.serialize_term(self.MyEnum.TERM1, by="label")
+        assert result == "Label 1"
+
+    def test_string_by_id_in_enum(self):
+        result = util.serialize_term("Label 1", by="id", enum_cls=self.MyEnum)
+        assert result == "TERM1"
+
+    def test_string_by_id_not_in_enum(self):
+        result = util.serialize_term("some_string", by="id", enum_cls=self.MyEnum)
+        assert result == "some_string"
+
+    def test_string_by_label(self):
+        result = util.serialize_term("some_string", by="label")
+        assert result == "some_string"
+
+    def test_list_of_enums_by_id(self):
+        result = util.serialize_term([self.MyEnum.TERM1, self.MyEnum.TERM2], by="id")
+        assert result == ["TERM1", "TERM2"]
+
+    def test_list_of_enums_by_label(self):
+        result = util.serialize_term([self.MyEnum.TERM1, self.MyEnum.TERM2], by="label")
+        assert result == ["Label 1", "Label 2"]
+
+    def test_list_of_strings(self):
+        result = util.serialize_term(["str1", "str2"], by="id")
+        assert result == ["str1", "str2"]
+
+    def test_mixed_list(self):
+        result = util.serialize_term([self.MyEnum.TERM1, "str1"], by="id")
+        assert result == ["TERM1", "str1"]
+
+    def test_none(self):
+        result = util.serialize_term(None, by="id")
+        assert result is None

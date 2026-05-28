@@ -1,14 +1,19 @@
+import itertools
 import re
-from datetime import datetime
+from collections.abc import Collection, Hashable
+from datetime import UTC, datetime
 from enum import Enum
-from typing import Annotated, Any, TypeVar, assert_never, overload
+from typing import Annotated, Any, Iterable, Literal, TypeVar, assert_never, overload
 
 from pydantic import (
     BeforeValidator,
+    Field,
     StringConstraints,
     TypeAdapter,
     ValidationError,
 )
+
+from feed_ursus.date_parser import parse_normalized_date
 
 
 class UnknownItemError(ValueError):
@@ -36,16 +41,27 @@ SolrDatetime = str  # Annotated[
 #     ),
 # ]
 
+DATE_PATTERN = r"-?\d?\d\d\d(-\d\d){0,2}"
+DATE_REGEX = re.compile(DATE_PATTERN)
+DATE_RANGE_REGEX = re.compile(rf"^{DATE_PATTERN}(/{DATE_PATTERN})?$")
+
+
+def validate_normalized_date(value: str) -> str:
+    parse_normalized_date(value)
+    return value
+
+
+NormalizedDate = Annotated[
+    str,
+    StringConstraints(strip_whitespace=True, pattern=DATE_RANGE_REGEX),
+]
 
 # used in parse_marc
 MARC_SYMBOL = re.compile(r" \$[a-z] ")
 MARC_SYMBOL_INITIAL_OR_FINAL = re.compile(r"(^\$[a-z] )|( \$[a-z]$)")
 
 
-def parse_marc(
-    raw_string: str,
-    marc_symbol_replacement: str = " ",
-) -> str | None:
+def parse_marc(value: Any, marc_symbol_replacement: str = " ") -> str | None:
     """
     Remove sequences of the form `$z`, which UCLA library uses to denote MARC subfields.
 
@@ -59,19 +75,20 @@ def parse_marc(
     Example:
         >>> parse_marc("Title $a Subtitle $z Internal")
         'Title Subtitle Internal'
-        >>> parse_marc("$a Title $b Author", marc_symbol_replacement=" | ")
-        'Title | Author'
+        >>> parse_marc("$a Title $b Author", marc_symbol_replacement="--")
+        'Title--Author'
     """
 
-    parsed = MARC_SYMBOL.sub(marc_symbol_replacement, raw_string)
-    parsed = MARC_SYMBOL_INITIAL_OR_FINAL.sub("", parsed)
-    parsed.strip()
+    if isinstance(value, str):
+        parsed = MARC_SYMBOL.sub(marc_symbol_replacement, value)
+        parsed = MARC_SYMBOL_INITIAL_OR_FINAL.sub("", parsed).strip()
+        return parsed
+    else:
+        return value
 
-    return parsed
 
-
-def parse_marc_subject(parse_marc):
-    return lambda value: parse_marc(value, marc_symbol_replacement=" | ")
+def parse_marc_subject(value: Any):
+    return parse_marc(value, marc_symbol_replacement="--")
 
 
 # Via pydantic magic, add the parse_marc function, a minimimum length, and whitspace-stripping to the str type
@@ -85,10 +102,10 @@ MARCString = Annotated[
 MARCSubject = Annotated[
     str,
     StringConstraints(strip_whitespace=True, min_length=1),
-    BeforeValidator(parse_marc_subject(parse_marc)),
+    BeforeValidator(parse_marc_subject),
 ]
 
-T = TypeVar("T", bound=str | int | Enum | datetime)
+T = TypeVar("T", bound=str | int | Enum | datetime | "Ark")
 
 
 @overload
@@ -141,6 +158,7 @@ def parse_list(value: str | list[T] | None) -> None | list[T] | list[str]:
 MARCList = Annotated[
     list[T],
     BeforeValidator(parse_list),
+    Field(min_length=1),
 ]
 
 
@@ -149,7 +167,7 @@ MARCList = Annotated[
 ARK_REGEX = re.compile(r"^ark:/\d+(/([a-z]|[0-9])+)+$")
 
 
-def ensure_ark_prefix(value: str) -> str:
+def ensure_ark_prefix(value: str | None) -> str | None:
     """Add the prefix 'ark:/' to an archival resource key, if it is not there already and doing so results in a valid ark.
 
     Args:
@@ -168,7 +186,11 @@ def ensure_ark_prefix(value: str) -> str:
         https://arks.org/about/
         https://datatracker.ietf.org/doc/draft-kunze-ark/
     """
-    if ARK_REGEX.match("ark:/" + value) and not ARK_REGEX.match(value):
+    if (
+        isinstance(value, str)
+        and ARK_REGEX.match("ark:/" + value)
+        and not ARK_REGEX.match(value)
+    ):
         return "ark:/" + value
     else:
         return value
@@ -204,3 +226,100 @@ def make_ursus_id(value: str) -> "UrsusId":
 
 
 UrsusId = Annotated[BaseUrsusId, BeforeValidator(make_ursus_id)]
+
+
+@overload
+def serialize_term(
+    item: Enum | str,
+    by: Literal["id", "label"] = "id",
+    enum_cls: type[Enum] | None = None,
+) -> str: ...
+
+
+@overload
+def serialize_term(
+    item: Collection[Enum | str],
+    by: Literal["id", "label"] = "id",
+    enum_cls: type[Enum] | None = None,
+) -> list[str]: ...
+
+
+@overload
+def serialize_term(
+    item: None,
+    by: Literal["id", "label"] = "id",
+    enum_cls: type[Enum] | None = None,
+) -> None: ...
+
+
+def serialize_term(
+    item: Enum | str | Collection[Enum | str] | None,
+    by: Literal["id", "label"] = "id",
+    enum_cls: type[Enum] | None = None,
+) -> str | list[str] | None:
+    """Serialize a controlled field.
+
+    Controlled fields are defined as Python Enums, with the `name` parameter referring to a term id and the `value` parameter referring to the term label.
+
+    Argument can be:
+    - an Enum subtype, in which case the `name` or `value parameter will be returned, depending on the `by` argument.
+    - a string, which we use in the UrsusSolrRecord.less_strict variant of the model to capture bad legacy values, which will be returned as is.
+    - an iterable containing either of the two types above, in which case a list will be returned, with each item having been processed as above.
+    - None, for empty fields, which will be returned unchanged.
+    """
+
+    match item, by:
+        case Enum(), "id":
+            return item.name
+        case Enum(), "label":
+            return item.value
+        case str(), "id" if enum_cls:
+            for member in enum_cls:
+                if member.value == item:
+                    return member.name
+            return item
+        case str(), _:
+            return item
+        case Collection(), _:
+            return [serialize_term(member, by=by, enum_cls=enum_cls) for member in item]
+        case None, _:
+            return None
+
+
+def now() -> datetime:
+    """Mockable proxy for datetime.datetime.now()"""
+
+    return datetime.now(tz=UTC)
+
+
+def deduplicate(*iterables: Iterable[Hashable]) -> list[Hashable]:
+    """Return a list of the unique items in one or more iterables, preserving order."""
+
+    return list(dict.fromkeys(itertools.chain(*iterables)).keys())
+
+
+def get_handle(record: Any) -> str:
+    match record:
+        # ark/id and title
+        case {"ark_ssi": str(ark), "title_tesim": [str(title)]}:
+            return f"{ark} – {title}"
+        case {"Item ARK": str(ark), "title_tesim": [str(title)]}:
+            return f"{ark} – {title}"
+        case {"id": str(id), "title_tesim": [str(title)]}:
+            return f"{id} – {title}"
+
+        # ark/id but no title
+        case {"ark_ssi": str(ark)}:
+            return ark
+        case {"Item ARK": str(ark)}:
+            return ark
+        case {"id": str(id)}:
+            return id
+
+        # title but no ark/id
+        case {"id": str(id), "title_tesim": [str(title)]}:
+            return f"{id} – {title}"
+
+        # anythin else
+        case _:
+            return str(record)

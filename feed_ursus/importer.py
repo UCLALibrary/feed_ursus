@@ -1,8 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# pyright: reportUnknownArgumentType=false
-# pyright: reportUnknownMemberType=false
-# pyright: reportUnknownVariableType=false
+# pyright: standard
 """Convert UCLA Library CSV files for Ursus, our Blacklight installation."""
 
 import csv
@@ -10,21 +6,37 @@ import importlib.metadata
 import logging
 import sys
 import typing
+from collections.abc import Iterable
 from datetime import datetime, timezone
 from getpass import getuser
+from math import inf
 from pathlib import Path
 
 import click
 import pydantic
 import requests
 import rich.progress
+import rich.rule
 from pysolr import Solr, SolrError  # type: ignore
 from rich.console import Console
 from rich.table import Table
 
-from feed_ursus.controlled_fields import ResourceType
-from feed_ursus.ursus_solr_record import IngestSolrRecord, UrsusSolrRecord
-from feed_ursus.util import Ark, Empty, MARCList, UnknownItemError, UrsusId
+from feed_ursus.controlled_fields import (
+    ResourceType,
+)
+from feed_ursus.reindex import UnexplainedChangesError, reindex_record
+from feed_ursus.ursus_solr_record import (
+    IngestSolrRecord,
+    UrsusSolrRecord,
+)
+from feed_ursus.util import (
+    Ark,
+    Empty,
+    MARCList,
+    UnknownItemError,
+    UrsusId,
+    get_handle,
+)
 
 
 class Importer:
@@ -196,6 +208,108 @@ class Importer:
                     q=f"id:{collection_id} OR member_of_collection_ids_ssim:{collection_id}"
                 )
 
+    def iterate_solr_records(self, message, start=0) -> Iterable[dict[str, typing.Any]]:
+        hits: int | float = inf
+        rows = 250
+        progress: rich.progress.Progress | None = None
+        task_id: int | None = None
+
+        try:
+            if self.show_progress:
+                progress = rich.progress.Progress()
+                progress.start()
+                task_id = progress.add_task("{message} 0 / ??????...")
+
+            while start < hits:
+                results = self.solr_client.search(
+                    "ark_ssi:*",
+                    sort="ark_ssi asc",  # must be a field that is not changed by reindex operation
+                    start=start,
+                    rows=rows,
+                )
+                hits = int(results.hits)
+
+                for i, raw_record in enumerate(results):
+                    yield raw_record
+                    if progress and isinstance(task_id, int):
+                        # zero-based indexing for solr `start` and python `enumerate`
+                        completed = start + i + 1
+                        progress.update(
+                            task_id,
+                            description=f"{message} {completed} / {hits}...",
+                            total=int(results.hits),
+                            completed=completed,
+                        )
+
+                start += rows
+
+        finally:
+            if progress:
+                progress.stop()
+
+    def validate(self, start=0, max_errors: int | float = inf) -> None:
+        n_errors = 0
+
+        for record in self.iterate_solr_records("validating", start=start):
+            try:
+                UrsusSolrRecord.model_validate(record)
+
+            except pydantic.ValidationError as e:
+                rich.print(
+                    rich.rule.Rule(title=get_handle(record), align="left"),
+                    e,
+                    "\n",
+                    sep="\n",
+                )
+                n_errors += 1
+
+                if n_errors >= max_errors:
+                    raise click.ClickException(
+                        f"Reindex cancelled: reached {max_errors} {'errors' if max_errors and max_errors > 1 else 'error'}"
+                    )
+
+    def reindex(
+        self,
+        start=0,
+        max_errors: int | float = inf,
+        dry_run: bool = False,
+    ) -> None:
+        n_errors = 0
+
+        validated = []
+        for record in self.iterate_solr_records("reindexing", start=start):
+            try:
+                validated.append(reindex_record(record))
+
+            except UnexplainedChangesError as e:
+                rich.print(rich.rule.Rule(title=get_handle(record), align="left"))
+                print(e.args[0], "\n")  # rich.print messes up deepdiff's pretty colors
+                n_errors += 1
+
+            except pydantic.ValidationError as e:
+                rich.print(
+                    rich.rule.Rule(title=get_handle(record), align="left"),
+                    e,
+                    sep="\n",
+                )
+                n_errors += 1
+
+            if n_errors >= max_errors:
+                if len(validated) and not dry_run:
+                    self.solr_client.add(validated, commit=True)
+                raise click.ClickException(
+                    f"Reindex cancelled: reached {max_errors} {'errors' if max_errors and max_errors > 1 else 'error'}"
+                )
+
+            if len(validated) > 250 and not dry_run:
+                self.solr_client.add(validated, commit=True)
+                validated = []
+
+        if len(validated) and not dry_run:
+            self.solr_client.add(validated, commit=True)
+
+        rich.print(f"{n_errors} records could not be reindexed.")
+
     def dump(self, output: typing.TextIO = sys.stdout) -> None:
         hits = int(self.solr_client.search("*:*", rows=0).hits)
         rows = 250
@@ -350,7 +464,9 @@ class Importer:
                         rich.print(f"Can't load title for collection", doc)
 
         except SolrError as e:
-            print(f"Error querying records: {e}")
+            raise click.ClickException(
+                f"Could not connect to Solr index at {self.solr_url}"
+            )
 
     def get_log(self):  # -> list[IngestLogRecord]:
         ingest_records = [
