@@ -1,7 +1,7 @@
 import itertools
 import re
 from collections.abc import Collection, Hashable
-from datetime import UTC, datetime
+from datetime import datetime
 from enum import Enum
 from typing import Annotated, Any, Iterable, Literal, TypeVar, assert_never, overload
 
@@ -105,7 +105,7 @@ MARCSubject = Annotated[
     BeforeValidator(parse_marc_subject),
 ]
 
-T = TypeVar("T", bound=str | int | Enum | datetime | "Ark")
+T = TypeVar("T", bound="str | int | Enum | datetime | Ark")
 
 
 @overload
@@ -284,12 +284,6 @@ def serialize_term(
             return [serialize_term(member, by=by, enum_cls=enum_cls) for member in item]
         case None, _:
             return None
-
-
-def now() -> datetime:
-    """Mockable proxy for datetime.datetime.now()"""
-
-    return datetime.now(tz=UTC)
 
 
 def deduplicate(*iterables: Iterable[Hashable]) -> list[Hashable]:

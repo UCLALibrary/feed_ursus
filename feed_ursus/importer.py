@@ -202,7 +202,7 @@ class Importer:
                 rows=0,
             ).hits
             if yes or click.confirm(
-                f"Delete collection {self.titles['collection_id']}? {n_children} {'child record' if n_children == 1 else 'child records'} will also be deleted."
+                f"Delete collection {self.titles.get(collection_id, collection_id)}? {n_children} {'child record' if n_children == 1 else 'child records'} will also be deleted."
             ):
                 self.solr_client.delete(
                     q=f"id:{collection_id} OR member_of_collection_ids_ssim:{collection_id}"

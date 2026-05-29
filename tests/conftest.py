@@ -10,6 +10,7 @@ MOCK_NOW = "2026-05-19T19:20:00Z"
 
 @pytest.fixture(autouse=True)
 def patch_now(monkeypatch: pytest.MonkeyPatch):
+    @classmethod
     def mock_now(*args: Any, **kwargs: Any):
         return isoparse(MOCK_NOW)
 

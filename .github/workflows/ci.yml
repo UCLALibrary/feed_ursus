@@ -81,14 +81,14 @@ jobs:
         python-version: ["3.11", "3.12", "3.13", "3.14"]
     runs-on: ubuntu-latest
     env:
-      SOLR_URL: http://127.0.0.1:8983/solr/ursus
+      SOLR_TEST_URL: http://127.0.0.1:8985/solr/ursus
     steps:
       - uses: actions/checkout@v3
 
       - name: Set up Docker Compose
         run: sudo apt-get install -y docker-compose
 
-      - run: docker-compose up --detach solr
+      - run: docker-compose up --detach solr_test
 
       - name: Install uv
         uses: astral-sh/setup-uv@v5

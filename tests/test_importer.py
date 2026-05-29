@@ -291,6 +291,7 @@ class TestDump:
             "has_model_ssim": ["Work"],
             "read_access_group_ssim": ["public"],
             "sort_title_ssort": "Title",
+            "timestamp": "2026-05-19T19:20:00Z",
             "title_sim": ["Title"],
             "visibility_ssi": "open",
         }

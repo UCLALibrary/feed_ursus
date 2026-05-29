@@ -24,8 +24,6 @@ class _LessStrictBase(UrsusSolrRecord):
         validate_by_alias=True,
     )
 
-    _strict = False
-
     @computed_field
     @property
     def date_dtsim(self) -> list[SolrDatetime] | None:

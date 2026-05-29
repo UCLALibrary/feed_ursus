@@ -1,6 +1,6 @@
 import re
 from collections.abc import Callable
-from datetime import datetime
+from datetime import UTC, datetime
 from enum import Enum
 from typing import Annotated, Any, Literal, Self, TypeVar, cast
 from urllib.parse import urlparse
@@ -43,7 +43,6 @@ from feed_ursus.util import (
     SolrDatetime,
     UrsusId,
     make_ursus_id,
-    now,
     serialize_term,
 )
 
@@ -111,8 +110,6 @@ class UrsusSolrRecord(BaseModel):
         validate_by_name=True,
         validate_by_alias=True,
     )
-
-    _strict = True
 
     #
     #   Required Fields
@@ -1420,7 +1417,7 @@ class UrsusSolrRecord(BaseModel):
             data["system_modified_dtsi"] = (
                 data.get("system_modified_dtsi")  # pyright: ignore[reportUnknownMemberType]
                 or data.get("timestamp")  # pyright: ignore[reportUnknownMemberType]
-                or solr_date_from_python(now())
+                or solr_date_from_python(cls._now())
             )
 
         return data  # pyright: ignore[reportUnknownVariableType]
@@ -1428,7 +1425,7 @@ class UrsusSolrRecord(BaseModel):
     @computed_field
     @property
     def timestamp(self) -> SolrDatetime:
-        return solr_date_from_python(now())
+        return solr_date_from_python(self._now())
 
     tagline_ssi: MARCString | Empty = Field(
         default=None,
@@ -1534,11 +1531,10 @@ class UrsusSolrRecord(BaseModel):
         handler: ModelWrapValidatorHandler[Self],
     ) -> Self:
         if isinstance(data, dict):
-            # remove computed fields from the dict, save them to check
             input_data = {
                 field_name: data.pop(field_name)
                 for field_name in cls.model_computed_fields.keys()
-                if field_name in data
+                if field_name in data and field_name != "timestamp"
             }
 
             # validate / ingest / map as normal
@@ -1567,3 +1563,9 @@ class UrsusSolrRecord(BaseModel):
 
         else:
             return handler(data)
+
+    @classmethod
+    def _now(cls) -> datetime:
+        """Easy-to-mock proxy for datetime.now()"""
+
+        return datetime.now(UTC)
