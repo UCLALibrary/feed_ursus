@@ -12,7 +12,7 @@ from pysolr import Solr  # type: ignore
 
 from feed_ursus import feed_ursus
 
-SOLR_URL = os.getenv("SOLR_URL", "http://localhost:8983/solr/ursus")
+SOLR_URL = os.getenv("SOLR_TEST_URL", "http://localhost:8983/solr/ursus")
 
 
 def test_feed_ursus():
