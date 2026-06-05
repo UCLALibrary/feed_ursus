@@ -20,7 +20,7 @@ class UnknownItemError(ValueError):
     pass
 
 
-def parse_empty(value: Any) -> Any | None:
+def parse_empty(value: Any) -> Any | None:  # noqa: ANN401 (any-type)
     if isinstance(value, str):
         value = value.strip()
 
@@ -61,7 +61,7 @@ MARC_SYMBOL = re.compile(r" \$[a-z] ")
 MARC_SYMBOL_INITIAL_OR_FINAL = re.compile(r"(^\$[a-z] )|( \$[a-z]$)")
 
 
-def parse_marc(value: Any, marc_symbol_replacement: str = " ") -> str | None:
+def parse_marc(value: Any, marc_symbol_replacement: str = " ") -> str | None:  # noqa: ANN401 (any-type)
     """
     Remove sequences of the form `$z`, which UCLA library uses to denote MARC subfields.
 
@@ -87,7 +87,7 @@ def parse_marc(value: Any, marc_symbol_replacement: str = " ") -> str | None:
         return value
 
 
-def parse_marc_subject(value: Any):
+def parse_marc_subject(value: Any) -> str | None:  # noqa: ANN401 (any-type)
     return parse_marc(value, marc_symbol_replacement="--")
 
 
@@ -292,7 +292,7 @@ def deduplicate(*iterables: Iterable[Hashable]) -> list[Hashable]:
     return list(dict.fromkeys(itertools.chain(*iterables)).keys())
 
 
-def get_handle(record: Any) -> str:
+def id_for_debugging(record: Any) -> str:  # noqa: ANN401 (any-type)
     match record:
         # ark/id and title
         case {"ark_ssi": str(ark), "title_tesim": [str(title)]}:
@@ -314,6 +314,6 @@ def get_handle(record: Any) -> str:
         case {"id": str(id), "title_tesim": [str(title)]}:
             return f"{id} – {title}"
 
-        # anythin else
+        # anything else
         case _:
             return str(record)

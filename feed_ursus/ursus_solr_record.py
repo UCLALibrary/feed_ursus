@@ -1,3 +1,5 @@
+# flake8: noqa: ANN401 (any-type) - pydantic validators need to handle unexpected types
+
 import re
 from collections.abc import Callable
 from datetime import UTC, datetime
@@ -53,6 +55,10 @@ solr_date_from_python = cast(
 
 
 T = TypeVar("T")
+
+
+def x(y: Any) -> None:
+    return
 
 
 class IngestSolrRecord(BaseModel):

@@ -40,9 +40,18 @@ default-groups = ["dev", "test"]
 
 [tool.ruff.lint]
 select = [
-    "I",    # import sorting
+    "ANN",  # flake8-annotations 
     "F401", # unused imports
+    "I",    # import sorting
 ]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["ANN"]
+"feed_sinai/**" = ["ANN"]
+
+[tool.ruff.lint.flake8-annotations]
+suppress-none-returning = true
+
 
 [tool.mypy]
 plugins = ["pydantic.mypy"]

@@ -108,11 +108,6 @@ def test_duplicates():
     ]
 
 
-def test_non_string():
-    with pytest.raises(ValueError):
-        date_parser.get_dates([datetime.datetime(2012, 12, 15)])
-
-
 def test_range_too_many_parts():
     with pytest.raises(ValueError):
         date_parser.get_dates(["1945", "1980/2012/2020"])

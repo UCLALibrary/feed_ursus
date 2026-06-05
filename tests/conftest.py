@@ -1,4 +1,4 @@
-from typing import Any
+from datetime import datetime
 
 import pytest
 from dateutil.parser import isoparse
@@ -11,14 +11,14 @@ MOCK_NOW = "2026-05-19T19:20:00Z"
 @pytest.fixture(autouse=True)
 def patch_now(monkeypatch: pytest.MonkeyPatch):
     @classmethod
-    def mock_now(*args: Any, **kwargs: Any):
+    def mock_now(cls: type[UrsusSolrRecord]) -> datetime:
         return isoparse(MOCK_NOW)
 
     monkeypatch.setattr(UrsusSolrRecord, "_now", mock_now)
 
 
 @pytest.fixture
-def minimal_csv_record():
+def minimal_csv_record() -> dict[str, str]:
     return {
         "Item ARK": "ark:/123/test",
         "Title": "Test Item",
@@ -26,7 +26,7 @@ def minimal_csv_record():
 
 
 @pytest.fixture
-def minimal_solr_record():
+def minimal_solr_record() -> dict[str, str]:
     return {
         "ark_ssi": "ark:/123/test",
         "title_tesim": "Test Item",

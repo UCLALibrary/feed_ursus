@@ -36,7 +36,7 @@ from feed_ursus.util import (
     MARCList,
     UnknownItemError,
     UrsusId,
-    get_handle,
+    id_for_debugging,
 )
 
 
@@ -48,7 +48,7 @@ class Importer:
     ingest_id: str  # for sync load_csv
     titles: dict[Ark, str]
 
-    def __init__(self, solr_url: str, show_progress=True):
+    def __init__(self, solr_url: str, show_progress: bool = True):
         self.solr_url = solr_url
         self.show_progress = show_progress
 
@@ -209,7 +209,11 @@ class Importer:
                     q=f"id:{collection_id} OR member_of_collection_ids_ssim:{collection_id}"
                 )
 
-    def iterate_solr_records(self, message, start=0) -> Iterable[dict[str, typing.Any]]:
+    def iterate_solr_records(
+        self,
+        message: str,
+        start: int = 0,
+    ) -> Iterable[dict[str, typing.Any]]:
         hits: int | float = inf
         rows = 250
         progress: rich.progress.Progress | None = None
@@ -248,7 +252,7 @@ class Importer:
             if progress:
                 progress.stop()
 
-    def validate(self, start=0, max_errors: int | float = inf) -> None:
+    def validate(self, start: int = 0, max_errors: int | float = inf) -> None:
         n_errors = 0
 
         for record in self.iterate_solr_records("validating", start=start):
@@ -257,7 +261,7 @@ class Importer:
 
             except pydantic.ValidationError as e:
                 rich.print(
-                    rich.rule.Rule(title=get_handle(record), align="left"),
+                    rich.rule.Rule(title=id_for_debugging(record), align="left"),
                     e,
                     "\n",
                     sep="\n",
@@ -271,7 +275,7 @@ class Importer:
 
     def reindex(
         self,
-        start=0,
+        start: int = 0,
         max_errors: int | float = inf,
         dry_run: bool = False,
     ) -> None:
@@ -283,13 +287,13 @@ class Importer:
                 validated.append(reindex_record(record))
 
             except UnexplainedChangesError as e:
-                rich.print(rich.rule.Rule(title=get_handle(record), align="left"))
+                rich.print(rich.rule.Rule(title=id_for_debugging(record), align="left"))
                 print(e.args[0], "\n")  # rich.print messes up deepdiff's pretty colors
                 n_errors += 1
 
             except pydantic.ValidationError as e:
                 rich.print(
-                    rich.rule.Rule(title=get_handle(record), align="left"),
+                    rich.rule.Rule(title=id_for_debugging(record), align="left"),
                     e,
                     sep="\n",
                 )
@@ -467,7 +471,7 @@ class Importer:
                 f"Could not connect to Solr index at {self.solr_url}"
             )
 
-    def get_log(self):  # -> list[IngestLogRecord]:
+    def get_log(self) -> list[IngestLogRecord]:
         ingest_records = [
             IngestLogRecordReturned.model_validate(x)
             for x in self.solr_client.search("is_ingest_bsi:true").docs

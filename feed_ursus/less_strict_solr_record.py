@@ -1,3 +1,4 @@
+# flake8: noqa: ANN401 (any-type) - pydantic validators need to handle unexpected types
 # pyright: standard
 
 from typing import Annotated, Any, Self

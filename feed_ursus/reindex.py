@@ -28,7 +28,7 @@ class UnexplainedChangesError(ValueError):
 #
 
 
-def reindex_record(record: Any) -> dict[str, Any]:
+def reindex_record(record: Any) -> dict[str, Any]:  # noqa: ANN401 (any-type)
     fixed = fix_for_reindex(deepcopy(record))
     validated = LessStrictSolrRecord.model_validate(fixed).model_dump(
         mode="json",
@@ -49,7 +49,7 @@ def reindex_record(record: Any) -> dict[str, Any]:
 #
 
 
-def fix_for_reindex(record: Any) -> dict[str, Any]:
+def fix_for_reindex(record: Any) -> dict[str, Any]:  # noqa: ANN401 (any-type)
     if not (
         isinstance(record, dict)
         and all(isinstance(fieldname, str) for fieldname in record)
@@ -240,7 +240,7 @@ def get_record_diff(
     return diff
 
 
-def normalize_record(record: Any) -> Any:
+def normalize_record(record: Any) -> Any:  # noqa: ANN401 (any-type)
     if not isinstance(record, dict):
         return record
 
@@ -276,7 +276,7 @@ QUICK_FIXES: dict[tuple[str, str], str] = {
 }
 
 
-def normalize_value(value: Any, field_name: str = "") -> Any:
+def normalize_value(value: Any, field_name: str = "") -> Any:  # noqa: ANN401 (any-type)
     match field_name, value:
         case "date_dtsim" | "date_dtsort", str():
             # ignore the time portion of timestamps

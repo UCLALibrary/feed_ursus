@@ -5,12 +5,11 @@ Creates a multi-valued 'year_isim' field by parsing input strings.
 
 import datetime
 import re
-from typing import Any
 
 from dateutil import parser
 
 
-def get_dates(normalized_dates: Any) -> list[datetime.datetime]:
+def get_dates(normalized_dates: list[str]) -> list[datetime.datetime]:
     """Maps a list of 'normalized_date' strings to a sorted list of datetime.
 
     Args:
@@ -21,16 +20,13 @@ def get_dates(normalized_dates: Any) -> list[datetime.datetime]:
 
     """
 
-    if not isinstance(normalized_dates, list):
-        raise ValueError("must be a list of normalized date strings")
-
-    solr_dts: set[datetime.datetime] = set()
-    for normalized_date in normalized_dates:  # pyright: ignore[reportUnknownVariableType]
-        if not isinstance(normalized_date, str):
-            raise ValueError("must be a list of normalized date strings")
-        solr_dts.update(parse_normalized_date(normalized_date))
-
-    return sorted(solr_dts)
+    return sorted(
+        {
+            item
+            for normalized_date in normalized_dates
+            for item in parse_normalized_date(normalized_date)
+        }
+    )
 
 
 def parse_normalized_date(normalized_date: str) -> tuple[datetime.datetime, ...]:
@@ -56,7 +52,7 @@ def parse_normalized_date(normalized_date: str) -> tuple[datetime.datetime, ...]
 THREE_DIGIT_YEAR_REGEX = re.compile(r"^\d\d\d\b")
 
 
-def get_date(date: str):
+def get_date(date: str) -> datetime.datetime:
     """Extracts the single 4-digit year found in the input date string.
 
     Args:
