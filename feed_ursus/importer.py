@@ -24,7 +24,6 @@ from rich.table import Table
 from feed_ursus.controlled_fields import (
     ResourceType,
 )
-from feed_ursus.less_strict_solr_record import LessStrictSolrRecord
 from feed_ursus.reindex import UnexplainedChangesError, reindex_record
 from feed_ursus.ursus_solr_record import (
     IngestSolrRecord,
@@ -322,12 +321,12 @@ class Importer:
         rich.print(f"{n_errors} records could not be reindexed.")
 
     def dump(self, output: typing.TextIO = sys.stdout) -> None:
-        hits = int(self.solr_client.search("*:*", rows=0).hits)
+        hits = int(self.solr_client.search("ark_ssi:*", rows=0).hits)
         rows = 250
 
         for start in range(0, hits, rows):
             results = self.solr_client.search(
-                "*:*",
+                "ark_ssi:*",
                 start=start,
                 rows=rows,
             )
@@ -340,9 +339,8 @@ class Importer:
         record: dict[str, typing.Any],
         output: typing.TextIO = sys.stdout,
     ):
-        adapter = pydantic.TypeAdapter(LessStrictSolrRecord | IngestSolrRecord)
         try:
-            doc = adapter.validate_python(record)
+            doc = UrsusSolrRecord.model_validate(record)
 
             output.write(
                 doc.model_dump_json(
@@ -476,7 +474,7 @@ class Importer:
                 f"Could not connect to Solr index at {self.solr_url}"
             )
 
-    def get_log(self) -> list[IngestLogRecord]:
+    def get_log(self) -> "list[IngestLogRecord]":
         ingest_records = [
             IngestLogRecordReturned.model_validate(x)
             for x in self.solr_client.search("is_ingest_bsi:true").docs

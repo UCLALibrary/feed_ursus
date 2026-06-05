@@ -253,9 +253,9 @@ class TestDump:
 
         # Check that search was called correctly
         assert cast(Mock, importer.solr_client).search.call_count == 2
-        cast(Mock, importer.solr_client).search.assert_any_call("*:*", rows=0)
+        cast(Mock, importer.solr_client).search.assert_any_call("ark_ssi:*", rows=0)
         cast(Mock, importer.solr_client).search.assert_any_call(
-            "*:*",
+            "ark_ssi:*",
             start=0,
             rows=250,
         )
@@ -289,6 +289,7 @@ class TestDump:
             **valid_record,
             "discover_access_group_ssim": ["public"],
             "download_access_group_ssim": ["public"],
+            "has_model_ssim": ["Work"],
             "read_access_group_ssim": ["public"],
             "sort_title_ssort": "Title",
             "timestamp": "2026-05-19T19:20:00Z",
@@ -307,18 +308,7 @@ class TestDump:
         importer.save_record(invalid_record, output)
 
         output_str = output.getvalue().strip()
-        assert output_str  # Should have output now
-
-        parsed = json.loads(output_str)
-        assert parsed == {
-            "ark_ssi": "ark:/123/test",
-            "system_modified_dtsi": "2026-05-19T19:20:00Z",
-            "id": "tset-321",
-            "timestamp": "2026-05-19T19:20:00Z",
-            "discover_access_group_ssim": [],
-            "read_access_group_ssim": [],
-            "download_access_group_ssim": [],
-        }
+        assert output_str == ""
 
 
 class TestGetTitles:

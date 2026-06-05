@@ -72,7 +72,7 @@ jobs:
       - name: Install dependencies
         run: uv sync
 
-      - name: Run mypy
+      - name: Run pyright
         run: uv run pyright .
 
   pytest:
