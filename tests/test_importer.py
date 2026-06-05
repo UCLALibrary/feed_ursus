@@ -276,6 +276,7 @@ class TestDump:
             "id": "54321-89112",
             "title_tesim": ["Title"],
             "ark_ssi": "ark:/21198/12345",
+            "visibility_ssi": "open",
         }
 
         importer.save_record(valid_record, output)
@@ -288,7 +289,6 @@ class TestDump:
             **valid_record,
             "discover_access_group_ssim": ["public"],
             "download_access_group_ssim": ["public"],
-            "has_model_ssim": ["Work"],
             "read_access_group_ssim": ["public"],
             "sort_title_ssort": "Title",
             "timestamp": "2026-05-19T19:20:00Z",
@@ -296,16 +296,29 @@ class TestDump:
             "visibility_ssi": "open",
         }
 
-    def test_save_record_invalid(self, importer: Importer) -> None:
+    def test_save_record_invalid(self, importer: Importer, minimal_solr_record) -> None:
         output = io.StringIO()
         invalid_record = {
-            "id": None,  # Invalid id
+            **minimal_solr_record,
+            "id": None,  # handles bad id (computed field)
         }
+        invalid_record.pop("title_tesim")  # handles missing title (normally required)
 
         importer.save_record(invalid_record, output)
 
         output_str = output.getvalue().strip()
-        assert output_str == ""  # Since validation fails, no output
+        assert output_str  # Should have output now
+
+        parsed = json.loads(output_str)
+        assert parsed == {
+            "ark_ssi": "ark:/123/test",
+            "system_modified_dtsi": "2026-05-19T19:20:00Z",
+            "id": "tset-321",
+            "timestamp": "2026-05-19T19:20:00Z",
+            "discover_access_group_ssim": [],
+            "read_access_group_ssim": [],
+            "download_access_group_ssim": [],
+        }
 
 
 class TestGetTitles:

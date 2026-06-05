@@ -24,6 +24,7 @@ from rich.table import Table
 from feed_ursus.controlled_fields import (
     ResourceType,
 )
+from feed_ursus.less_strict_solr_record import LessStrictSolrRecord
 from feed_ursus.reindex import UnexplainedChangesError, reindex_record
 from feed_ursus.ursus_solr_record import (
     IngestSolrRecord,
@@ -329,9 +330,7 @@ class Importer:
         record: dict[str, typing.Any],
         output: typing.TextIO = sys.stdout,
     ):
-        adapter: pydantic.TypeAdapter[UrsusSolrRecord | IngestSolrRecord] = (
-            pydantic.TypeAdapter(UrsusSolrRecord | IngestSolrRecord)
-        )
+        adapter = pydantic.TypeAdapter(LessStrictSolrRecord | IngestSolrRecord)
         try:
             doc = adapter.validate_python(record)
 
