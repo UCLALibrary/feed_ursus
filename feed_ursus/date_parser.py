@@ -1,7 +1,4 @@
 # mypy: disallow_untyped_defs=False
-"""
-Creates a multi-valued 'year_isim' field by parsing input strings.
-"""
 
 import datetime
 import re
@@ -53,13 +50,14 @@ THREE_DIGIT_YEAR_REGEX = re.compile(r"^\d\d\d\b")
 
 
 def get_date(date: str) -> datetime.datetime:
-    """Extracts the single 4-digit year found in the input date string.
+    """Parses the input date string, which should be in ISO8601 format except insofar as
+    we allow years to be expressed with three (but not fewer) digits.
 
     Args:
-        date: a string containing a date in 'normalized_date' format.
+        date: a string containing a date in modified ISO8601 format.
 
     Returns:
-        A single date.
+        A single datetime object.
 
     """
 

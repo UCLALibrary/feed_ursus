@@ -306,6 +306,10 @@ def deduplicate(*iterables: Iterable[Hashable]) -> list[Hashable]:
 
 
 def id_for_debugging(record: Any) -> str:  # noqa: ANN401 (any-type)
+    """
+    Return a label suitable for use as a header for error messages.
+    """
+
     match record:
         # ark/id and title
         case {"ark_ssi": str(ark), "title_tesim": [str(title)]}:
