@@ -43,7 +43,8 @@ def feed_ursus(
 
     if check_outdated and (new_version := is_outdated()):
         raise click.ClickException(
-            f"feed_ursus is outdated: please upgrade to version {new_version} (e.g. `uv tool upgrade feed_ursus`)"
+            f"feed_ursus is outdated: please upgrade to version {new_version}"
+            "(e.g. `uv tool upgrade feed_ursus`)"
         )
 
     ctx.ensure_object(dict)
@@ -146,7 +147,9 @@ def reindex(
 ):
     """Reindex solr index.
 
-    All records will be loaded and parsed as Ursus records, and computed fields will be regenerated, before being fed back to solr. Records will be validated but validation rules will be somewhat looser than when importing from csv.
+    All records will be loaded and parsed as Ursus records, and computed fields will be
+    regenerated, before being fed back to solr. Records will be validated but validation
+    rules will be somewhat looser than when importing from csv.
 
     Example:
         >>> feed_ursus reindex
@@ -163,7 +166,12 @@ def reindex(
 def dump(ctx: click.Context):
     """Write entire index to stdout.
 
-    Output will be written in jsonl format: json-formatted records separated by newlines. To write to disk, use the `>` redirect operator. The resulting file can then be loaded into a different solr index via the solr post tool (https://solr.apache.org/guide/8_11/post-tool.html), the solr GUI console, or the solr rest API. Solr generally requires the `.jsonl` suffix; if you use `.json` solr will expect a single json object and fail to parse the newline-separated records.
+    Output will be written in jsonl format: json-formatted records separated by
+    newlines. To write to disk, use the `>` redirect operator. The resulting file can
+    then be loaded into a different solr index via the solr post tool
+    (https://solr.apache.org/guide/8_11/post-tool.html), the solr GUI console, or the
+    solr rest API. Solr generally requires the `.jsonl` suffix; if you use `.json` solr
+    will expect a single json object and fail to parse the newline-separated records.
 
     Example:
         >>> feed_ursus dump > dump.jsonl  # writes output to `dump.jsonl`
@@ -172,14 +180,16 @@ def dump(ctx: click.Context):
 
 
 class PyPIInfo(BaseModel):
-    """Very limited model of a PyPI json response – intended only for retrieving version numbers, everything else is ignored."""
+    """Very limited model of a PyPI json response – intended only for retrieving version
+    numbers, everything else is ignored."""
 
     model_config = ConfigDict(extra="ignore")
     version: str
 
 
 class PyPIResponse(BaseModel):
-    """Very limited model of a PyPI json response – intended only for retrieving version numbers, everything else is ignored."""
+    """Very limited model of a PyPI json response – intended only for retrieving version
+    numbers, everything else is ignored."""
 
     model_config = ConfigDict(extra="ignore")
     info: PyPIInfo

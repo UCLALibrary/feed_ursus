@@ -67,7 +67,7 @@ def parse_marc(value: Any, marc_symbol_replacement: str = " ") -> str | None:  #
 
     Args:
         raw_string (str): The input string containing MARC subfield symbols.
-        marc_symbol_replacement (str, optional): The character to replace MARC symbols with.
+        marc_symbol_replacement (str, optional): Replacement for MARC symbols.
             Defaults to a space " ".
     Returns:
         str | None: The parsed string with MARC symbols removed/replaced, or None if the
@@ -91,7 +91,8 @@ def parse_marc_subject(value: Any) -> str | None:  # noqa: ANN401 (any-type)
     return parse_marc(value, marc_symbol_replacement="--")
 
 
-# Via pydantic magic, add the parse_marc function, a minimimum length, and whitspace-stripping to the str type
+# Via pydantic magic, add the parse_marc function, a minimimum length, and whitspace-
+# stripping to the str type
 MARCString = Annotated[
     str,
     StringConstraints(strip_whitespace=True, min_length=1),
@@ -118,14 +119,15 @@ def parse_list(value: None) -> None: ...
 
 def parse_list(value: str | list[T] | None) -> None | list[T] | list[str]:
     """
-    Split strings along the delimiter `|~|`, as used by the dlexport app (https://github.com/UCLALibrary/dlexport) to export multivalued fields.
+    Split strings along the delimiter `|~|`, as used by the dlexport app
+    (https://github.com/UCLALibrary/dlexport) to export multivalued fields.
 
     Args:
-        value: A string, list, or None to be parsed. Strings are split by the `|~|` delimiter.
+        value: A string, list, or None to be parsed. Strings are split by `|~|`.
 
     Returns:
-        A list of strings if the input is a non-empty string or list, or None if the input
-        is None, an empty list, or an empty string.
+        A list of strings if the input is a non-empty string or list, or None if the
+        input is None, an empty list, or an empty string.
 
     Raises:
         AssertionError: If value is an unexpected type (via assert_never).
@@ -168,7 +170,8 @@ ARK_REGEX = re.compile(r"^ark:/\d+(/([a-z]|[0-9])+)+$")
 
 
 def ensure_ark_prefix(value: str | None) -> str | None:
-    """Add the prefix 'ark:/' to an archival resource key, if it is not there already and doing so results in a valid ark.
+    """Add the prefix 'ark:/' to an archival resource key, if it is not there already
+    and doing so results in a valid ark.
 
     Args:
         value: string representing an Archival Resource Key.
@@ -209,11 +212,17 @@ ark_validator: TypeAdapter[Ark] = TypeAdapter(Ark)
 
 
 def make_ursus_id(value: str) -> "UrsusId":
-    """If value passes validation as an ursus id, returns it unchanged. If it does not, but it passes validation as an ark, transforms it into an ursus id.
+    """If value passes validation as an ursus id, returns it unchanged. If it does not,
+    but it passes validation as an ark, transforms it into an ursus id.
 
-    If transformation does not result in a valid ursus id, the value is returned unchanged. Pydantic will reject these values based on the regex pattern in BaseUrsusId.
+    If transformation does not result in a valid ursus id, the value is returned
+    unchanged. Pydantic will reject these values based on the regex pattern in
+    BaseUrsusId.
 
-    Ursus IDs are formed from arks by removing the 'ark:/' prefix, replacing '/' with '-', and reversing the resulting string. The reversal was so that the initial characters would be unique rather than the UCLA Name Assigning Authority Number – an important consideration for Fedora ids back when we used californica."""
+    Ursus IDs are formed from arks by removing the 'ark:/' prefix, replacing '/' with
+    '-', and reversing the resulting string. The reversal was so that the initial
+    characters would be unique rather than the UCLA Name Assigning Authority Number – an
+    important consideration for Fedora ids back when we used californica."""
 
     try:
         return base_id_validator.validate_python(value)
@@ -259,12 +268,16 @@ def serialize_term(
 ) -> str | list[str] | None:
     """Serialize a controlled field.
 
-    Controlled fields are defined as Python Enums, with the `name` parameter referring to a term id and the `value` parameter referring to the term label.
+    Controlled fields are defined as Python Enums, with the `name` parameter referring
+    to a term id and the `value` parameter referring to the term label.
 
     Argument can be:
-    - an Enum subtype, in which case the `name` or `value parameter will be returned, depending on the `by` argument.
-    - a string, which we use in the UrsusSolrRecord.less_strict variant of the model to capture bad legacy values, which will be returned as is.
-    - an iterable containing either of the two types above, in which case a list will be returned, with each item having been processed as above.
+    - an Enum subtype, in which case the `name` or `value parameter will be returned,
+      depending on the `by` argument.
+    - a string, which we use in the UrsusSolrRecord.less_strict variant of the model to
+      capture bad legacy values, which will be returned as is.
+    - an iterable containing either of the two types above, in which case a list will be
+      returned, with each item having been processed as above.
     - None, for empty fields, which will be returned unchanged.
     """
 

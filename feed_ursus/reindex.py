@@ -59,7 +59,8 @@ def fix_for_reindex(record: Any) -> dict[str, Any]:  # noqa: ANN401 (any-type)
     # Remove solr internal stuff
     record.pop("_version_", None)
 
-    # In some instances we find metadata in what we now treat as a computed field, but not in field it gets sourced from
+    # In some instances we find metadata in what we now treat as a computed field,
+    # but not in field it gets sourced from
     for base_field, computed_field, enum_cls in [
         (
             "human_readable_rights_statement_tesim",
@@ -162,31 +163,31 @@ def get_record_diff(
             )
 
     exclude_paths = [
-        "resource_type_sim",  # computed from human_readable; sometimes label replaced with id
+        "resource_type_sim",  # computed from human_readable; some bad data
         "accessControl_ssim",  # hyrax stuff
         "admin_set_sim",  # hyrax stuff
         "admin_set_tesim",  # hyrax stuff
-        "archival_collection_tesi",  # computed field that was done badly in some of our existing data
+        "archival_collection_tesi",  # computed field done badly in some existing data
         "collection_sim",  # should be member_of_collections_ssim
         "collection_ssi",  # should be member_of_collections_ssim
         "collection_type_gid_ssim",  # hyrax stuff
-        "combined_names_ssim",  # not finding this used in Ursus or Sinai, but I think it was a Sinai field at one point?
-        "date_dtsim",  # derived from normalized_date_tesim; a lot of issues with past implementation
-        "date_dtsort",  # derived from normalized_date_tesim; a lot of issues with past implementation
+        "combined_names_ssim",  # former sinai field?
+        "date_dtsim",  # derived from normalized_date_tesim; past implementation bad
+        "date_dtsort",  # derived from normalized_date_tesim; past implementation bad
         "date_modified_dtsi",  # hyrax stuff
         "date_uploaded_dtsi",  # hyrax stuff
         "depositor_ssim",  # hyrax stuff
         "depositor_tesim",  # hyrax stuff
-        "discover_access_group_ssim",  # derivation from "visibility" looks good - errors are bad data
+        "discover_access_group_ssim",  # derivation from "visibility" looks good
         "discover_access_person_ssim",  # should be _group
         "dlcs_collection_name_sim",  # outdated: use member_of_collections_ssim
         "dlcs_collection_name_ssm",  # outdated: use member_of_collections_ssim
-        "download_access_group_ssim",  # derivation from "visibility" looks good - errors are bad data
+        "download_access_group_ssim",  # derivation from "visibility" looks good
         "download_access_person_ssim",  # should be _group
         "edit_access_group_ssim",  # hyrax stuff
         "edit_access_person_ssim",  # hyrax stuff
         "file_set_ids_ssim",  # hyrax stuff
-        "generic_type_sim",  # related to (unused) blacklight user accounts - only non-spec Ursus use at https://github.com/UCLALibrary/ursus/blob/6293d19686ca27de3549e1c2a04885c6e71544e4/app/controllers/catalog_controller.rb#L173
+        "generic_type_sim",  # related to (unused) blacklight user accounts
         "hashed_id_ssi",  # hyrax stuff
         "hasRelatedImage_ssim",  # hyrax stuff
         "hasRelatedMediaFragment_ssim",  # hyrax stuff
@@ -200,13 +201,13 @@ def get_record_diff(
         "nesting_collection__deepest_nested_depth_isi",  # hyrax stuff
         "nesting_collection__parent_ids_ssim",  # hyrax stuff
         "nesting_collection__pathnames_ssim",  # hyrax stuff
-        "read_access_group_ssim",  # derivation from "visibility" looks good - errors are bad data
+        "read_access_group_ssim",  # derivation from "visibility" looks good
         "read_access_person_ssim",  # should be _group
         "recalculate_size_bsi",  # Californica-specific
         "record_origin_ssi",  # discontinued from feed_ursus/californica changeover
         "references_sim",  # sinai
         "references_tesim",  # sinai
-        "reindex_timestamp_dtsi",  # vauge memory of using this in a californica reindex?
+        "reindex_timestamp_dtsi",  # vauge memory of using this in a californica reindex
         "score",  # solr internal
         "sort_title_ssort",  # not stored
         "sort_year_isi",  # outdated - use sort_year_dtsort
@@ -216,10 +217,11 @@ def get_record_diff(
         "timestamp",  # solr internal
         "title_sim",  # not stored
         "ursus_id_ssi",  # outdated – use just plain 'id'
-        "year_isim",  # derived from normalized_date_tesim; a lot of issues with past implementation
+        "year_isim",  # derived from normalized_date_tesim; past implementation bad
     ]
 
-    # if a language code is in language_tesim, it should get deleted from the human_readable_language fields
+    # if a language code is in language_tesim, it should get deleted from the
+    # human_readable_language fields
     for language in original_record.get("language_tesim", []):
         for field in ("human_readable_language_tesim", "human_readable_language_sim"):
             original_record.pop(field, None)

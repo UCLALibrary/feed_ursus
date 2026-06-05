@@ -271,7 +271,12 @@ class UrsusSolrRecord(BaseModel):
     @model_validator(mode="before")
     @classmethod
     def map_visibility(cls, data: Self | dict[str, Any]) -> Any:
-        """Handle mapping of deprecated values plus special cases where "Visibility" is not provided. Note that there is different logic depending on whether the "Visibility" column was omitted entirely from the csv, or included but Empty for a row."""
+        """
+        Handle mapping of deprecated values plus special cases where "Visibility" is not
+        provided. Note that there is different logic depending on whether the
+        "Visibility" column was omitted entirely from the csv, or included but Empty for
+        a row.
+        """
 
         if not isinstance(data, dict):
             return data
@@ -307,7 +312,7 @@ class UrsusSolrRecord(BaseModel):
             ):
                 data["Visibility"] = "open"
 
-            # "Visibility" was not in the csv, "Item Status" column exists but isn't "Completed"
+            # "Visibility" not in csv, "Item Status" column exists but isn't "Completed"
             case None, str():
                 data["Visibility"] = "authenticated"
 
@@ -788,7 +793,9 @@ class UrsusSolrRecord(BaseModel):
                 # Default
                 return "Work"
             case str(item) | [str(item)]:
-                #  Object Type should be single-valued, but was accidentally indexed as a multivalued field, so if it's a list it should only contain a single item to unpack.
+                # Object Type should be single-valued, but was accidentally indexed as a
+                # multivalued field, so if it's a list it should only contain a single
+                # item to unpack.
                 return {
                     "Manuscript": "Work",
                     "Page": "ChildWork",
@@ -803,9 +810,11 @@ class UrsusSolrRecord(BaseModel):
     @field_serializer("has_model_ssim", mode="plain")
     def serialize_has_model(self, value: T) -> list[T]:
         """
-        Wrap the single-valued field has_model_ssim is a list, since solr treats it as multivalued.
+        Wrap the single-valued field has_model_ssim is a list, since solr treats it as
+        multivalued.
 
-        This is a multivalued field in the hyrax world (meaning a record can have multiple types), but in our practice it is strictly single-valued.
+        This is a multivalued field in the hyrax world (meaning a record can have
+        multiple types), but in our practice it is strictly single-valued.
         """
 
         return [value]
@@ -1004,7 +1013,8 @@ class UrsusSolrRecord(BaseModel):
         ids, names = self.member_of_collection_ids_ssim, self.member_of_collections_ssim
         if len(ids or []) != len(names or []):
             raise ValueError(
-                f"Mismatched lengths: member_of_collection_ids_ssim and member_of_collections_ssim"
+                f"Mismatched lengths: member_of_collection_ids_ssim and "
+                "member_of_collections_ssim"
             )
         return self
 
@@ -1183,7 +1193,8 @@ class UrsusSolrRecord(BaseModel):
         validation_alias=AliasChoices("Related Records"),
     )
 
-    # this one is NOT a controlled field based on an Enum, it has to be populated by the importer looking up titles form arks
+    # this one is NOT a controlled field based on an Enum, it has to be populated by the
+    # importer looking up titles form arks
     human_readable_related_record_title_ssm: list[str] | Empty = None
 
     @model_validator(mode="after")
@@ -1201,7 +1212,7 @@ class UrsusSolrRecord(BaseModel):
                 raise ValueError(
                     "\n".join(
                         [
-                            "related_record_ssm and human_readable_related_record_title_ssm must be of equal length",
+                            "related_record_ssm and human_readable_related_record_title_ssm must be of equal length",  # noqa: E501 (line length)
                             f"related_record_title_ssm == {ids}",
                             f"human_readable_related_record_title_ssm == {titles}",
                             "",

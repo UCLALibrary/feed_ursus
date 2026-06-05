@@ -121,7 +121,8 @@ class Importer:
             except (pydantic.ValidationError, UnknownItemError) as e:
                 row_handle = row.get("Item ARK") or row.get("Item Title") or row
 
-                # Note: using "\r" overwrites what would otherwise be a duplicated progress bar
+                # Note: using "\r" overwrites what would otherwise be a duplicated
+                # progress bar
                 rich.print(f"\rCould not import row {row_handle}:")
                 rich.print(e)
                 rich.print("\n")
@@ -202,11 +203,14 @@ class Importer:
                 defType="lucene",
                 rows=0,
             ).hits
+
+            title = self.titles.get(collection_id, collection_id)
+            term = "child record" if n_children == 1 else "child records"
             if yes or click.confirm(
-                f"Delete collection {self.titles.get(collection_id, collection_id)}? {n_children} {'child record' if n_children == 1 else 'child records'} will also be deleted."
+                f"Delete collection {title}? {n_children} {term} will also be deleted."
             ):
                 self.solr_client.delete(
-                    q=f"id:{collection_id} OR member_of_collection_ids_ssim:{collection_id}"
+                    q=f"id:{collection_id} OR member_of_collection_ids_ssim:{collection_id}"  # noqa: E501
                 )
 
     def iterate_solr_records(
@@ -228,7 +232,7 @@ class Importer:
             while start < hits:
                 results = self.solr_client.search(
                     "ark_ssi:*",
-                    sort="ark_ssi asc",  # must be a field that is not changed by reindex operation
+                    sort="ark_ssi asc",  # must be a field that is not changed by reindex operation # noqa: E501
                     start=start,
                     rows=rows,
                 )
@@ -269,8 +273,9 @@ class Importer:
                 n_errors += 1
 
                 if n_errors >= max_errors:
+                    term = "errors" if max_errors and max_errors > 1 else "error"
                     raise click.ClickException(
-                        f"Reindex cancelled: reached {max_errors} {'errors' if max_errors and max_errors > 1 else 'error'}"
+                        f"Reindex cancelled: reached {max_errors} {term}"
                     )
 
     def reindex(
@@ -302,8 +307,9 @@ class Importer:
             if n_errors >= max_errors:
                 if len(validated) and not dry_run:
                     self.solr_client.add(validated, commit=True)
+                term = "errors" if max_errors and max_errors > 1 else "error"
                 raise click.ClickException(
-                    f"Reindex cancelled: reached {max_errors} {'errors' if max_errors and max_errors > 1 else 'error'}"
+                    f"Reindex cancelled: reached {max_errors} {term}"
                 )
 
             if len(validated) > 250 and not dry_run:
@@ -400,10 +406,9 @@ class Importer:
             )
             self.titles.update({doc["ark_ssi"]: doc["title_tesim"][0] for doc in docs})
 
-        if still_unknown := [ark for ark in arks if ark not in self.titles]:
-            raise UnknownItemError(
-                f"Title unknown for item{'s' if len(still_unknown) > 1 else ''} {', '.join(still_unknown)}"
-            )
+        if still_unknown := ", ".join([ark for ark in arks if ark not in self.titles]):
+            term = "items" if len(still_unknown) > 1 else "item"
+            raise UnknownItemError(f"Title unknown for {term} {still_unknown}")
 
         return [self.titles[ark] for ark in arks]
 
@@ -480,9 +485,10 @@ class Importer:
         ingest_id_facets = (
             self.solr_client.search(
                 "*:*",
+                # weird **{...} syntax for arguments allows "facet.field"
                 **{
                     "facet": "on",
-                    "facet.field": "ingest_id_ssi",  # weird **{...} syntax allows "facet.field"
+                    "facet.field": "ingest_id_ssi",
                     "rows": 0,
                 },
             )
@@ -556,7 +562,8 @@ class IngestLogRecordReturned(IngestLogRecordWrite):
 class IngestLogRecord(IngestLogRecordWrite):
     """Ingest log record, as used for reporting.
 
-    Includes the solr-generated 'timestamp' field plus a 'count' field that must be obtained separately with a facet query on the field
+    Includes the solr-generated 'timestamp' field plus a 'count' field that must be
+    obtained separately with a facet query on the field
     """
 
     timestamp: datetime

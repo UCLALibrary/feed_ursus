@@ -1,4 +1,8 @@
-"""Controlled vocabularies. In the past we defined some of these using hyrax authority files; those types have been implemented using the functional Enum syntax to allow identifiers that are not valid python variable names (e.g. URLs, `del`). Other types should be defined with the class Enum syntax and conventional, all-uppercase member names."""
+"""Controlled vocabularies. In the past we defined some of these using hyrax authority
+files; those types have been implemented using the functional Enum syntax to allow
+identifiers that are not valid python variable names (e.g. URLs, `del`). Other types
+should be defined with the class Enum syntax and conventional, all-uppercase member
+names."""
 
 from enum import Enum
 from typing import Annotated
@@ -6,7 +10,8 @@ from typing import Annotated
 from pydantic.functional_validators import AfterValidator
 
 # https://github.com/UCLALibrary/californica/blob/main/config/authorities/licenses.yml
-# included the "active" attributes, which I think had an effect in californica, as comments
+# included the "active" attributes, which I think had an effect in californica, as
+# comments
 License = Enum(
     "License",
     (
@@ -56,11 +61,11 @@ License = Enum(
         ),  # active: true
         (
             "https://creativecommons.org/licenses/by-nc-nd/4.0/",
-            "Creative Commons BY-NC-ND Attribution-NonCommercial-NoDerivs 4.0 International",
+            "Creative Commons BY-NC-ND Attribution-NonCommercial-NoDerivs 4.0 International",  # noqa: E501
         ),  # active: true
         (
             "https://creativecommons.org/licenses/by-nc-sa/4.0/",
-            "Creative Commons BY-NC-SA Attribution-NonCommercial-ShareAlike 4.0 International",
+            "Creative Commons BY-NC-SA Attribution-NonCommercial-ShareAlike 4.0 International",  # noqa: E501
         ),  # active: true
         (
             "http://creativecommons.org/publicdomain/zero/1.0/",
@@ -143,7 +148,8 @@ ViewingHint = Enum(
 )
 
 
-# Based on a complicated, hard-to-track bunch of types in californica; these are the ones we ended up using
+# Based on a complicated, hard-to-track bunch of types in californica; these are the
+# ones we ended up using
 class Visibility(Enum):
     AUTHENTICATED = "authenticated"
     OPEN = "open"
