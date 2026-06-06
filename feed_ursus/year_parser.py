@@ -9,7 +9,7 @@ RANGE = re.compile(r"(.*)/(.*)")
 YEAR = re.compile(r"\b(\d\d\d\d|\d\d\d)\b")
 
 
-def integer_years(dates: typing.Any) -> typing.List[int]:
+def integer_years(dates: list[str]) -> list[int]:
     """Maps a list of 'normalized_date' strings to a sorted list of integer years.
 
     Args:
@@ -19,13 +19,8 @@ def integer_years(dates: typing.Any) -> typing.List[int]:
         A list of years extracted from "dates".
 
     """
-    if not isinstance(dates, typing.Iterable):
-        return []
-
     years: typing.Set[int] = set()
     for date in dates:
-        if not isinstance(date, str):
-            continue
         match = RANGE.search(date)
         if match:
             start_str, end_str = match.groups()

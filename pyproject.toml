@@ -17,6 +17,7 @@ dependencies = [
     "edtf>=5.0.0",
     "pydantic>=2.12,<3",
     "packaging>=24.2",
+    "deepdiff>=9.0.0",
 ]
 
 [project.scripts]
@@ -32,23 +33,26 @@ dev = [
     "pyright>=1.1.408",
     "mypy>=1.19.1",
 ]
-test = [
-    "pytest",
-    "pytest-sugar>=1.0.0,<2",
-    "pytest-asyncio>=1.0.0,<2",
-]
+test = ["pytest", "pytest-sugar>=1.0.0,<2", "pytest-asyncio>=1.0.0,<2"]
 
 [tool.uv]
-default-groups = [
-    "dev",
-    "test",
-]
+default-groups = ["dev", "test"]
 
 [tool.ruff.lint]
 select = [
-    "I",  # import sorting
+    "ANN",  # flake8-annotations 
+    "E501", # line-too-long
     "F401", # unused imports
+    "I",    # import sorting
 ]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["ANN", "E501"]
+"feed_sinai/**" = ["ANN", "E501"]
+
+[tool.ruff.lint.flake8-annotations]
+suppress-none-returning = true
+
 
 [tool.mypy]
 plugins = ["pydantic.mypy"]
@@ -58,7 +62,15 @@ disallow_untyped_defs = true
 check_untyped_defs = true
 
 [tool.pyright]
-exclude = ["feed_sinai", "tests/sinai/", "**/node_modules", "**/__pycache__", "**/.*", ".venv"]
+typeCheckingMode = "strict"
+exclude = [
+    "feed_sinai",
+    "tests/sinai/",
+    "**/node_modules",
+    "**/__pycache__",
+    "**/.*",
+    ".venv",
+]
 
 [build-system]
 requires = ["hatchling", "hatch-vcs"]
