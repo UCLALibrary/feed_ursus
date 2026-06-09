@@ -1,9 +1,8 @@
-# pylint: disable=all
-# mypy: disallow_untyped_defs=False
+from typing import Any
 
 
 class MockResponse:
-    def __init__(self, status_code, json_data):
+    def __init__(self, status_code: int | None, json_data: Any):
         self.json_data = json_data
         self.status_code = status_code
 

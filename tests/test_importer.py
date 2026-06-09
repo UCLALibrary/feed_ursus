@@ -1,8 +1,6 @@
+# pyright: standard
+
 """Tests for feed_ursus.py"""
-# pyright: reportUnknownArgumentType=false
-# pyright: reportUnknownLambdaType=false
-# pyright: reportUnknownMemberType=false
-# pyright: reportUnknownVariableType=false
 
 import io
 import json
@@ -16,7 +14,6 @@ import feed_ursus.importer
 from feed_ursus.importer import Importer
 from feed_ursus.ursus_solr_record import UrsusSolrRecord
 from feed_ursus.util import UnknownItemError
-from tests.test_ursus_solr_record import MINIMAL_RECORD
 
 from . import fixtures  # pylint: disable=wrong-import-order
 
@@ -50,10 +47,10 @@ class TestLoadCsv:
 
 class TestMapRecord:
     class TestThumbnailUrl:
-        def test_from_access_copy(self, importer: Importer) -> None:
+        def test_from_access_copy(self, importer: Importer, minimal_csv_record) -> None:
             result = importer.map_record(
                 {
-                    **MINIMAL_RECORD,
+                    **minimal_csv_record,
                     "IIIF Access URL": "https://iiif.library.ucla.edu/iiif/2/ark%3A%2F21198%2F123abc",
                 }
             )
@@ -62,10 +59,12 @@ class TestMapRecord:
                 == "https://iiif.library.ucla.edu/iiif/2/ark%3A%2F21198%2F123abc/full/!200,200/0/default.jpg"
             )
 
-        def test_with_bad_access_copy(self, importer: Importer) -> None:
+        def test_with_bad_access_copy(
+            self, importer: Importer, minimal_csv_record
+        ) -> None:
             result = importer.map_record(
                 {
-                    **MINIMAL_RECORD,
+                    **minimal_csv_record,
                     "IIIF Access URL": "https://wowza.library.ucla.edu/iiif_av_public/definst/mp4:MEAP/pairtree_root/21/19/8=/z1/j7/7t/4n/21198=z1j77t4n/ark%2B=21198=z1j77t4n.mp4%7B%7D",
                 }
             )
@@ -73,10 +72,13 @@ class TestMapRecord:
             assert result.thumbnail_url_ss is None
 
         def test_calls_thumbnail_from_manifest(
-            self, importer: Importer, monkeypatch: pytest.MonkeyPatch
+            self,
+            importer: Importer,
+            monkeypatch: pytest.MonkeyPatch,
+            minimal_csv_record,
         ) -> None:
             row = {
-                **MINIMAL_RECORD,
+                **minimal_csv_record,
                 "Type.typeOfResource": "still image",
                 "IIIF Manifest URL": "https://nowhere.really/iiif/2/abcxyz",
             }
@@ -91,10 +93,13 @@ class TestMapRecord:
             cast(Mock, importer.thumbnail_from_manifest).assert_called_once()
 
         def test_streaming_no_thumbnail_from_manifest(
-            self, importer: Importer, monkeypatch: pytest.MonkeyPatch
+            self,
+            importer: Importer,
+            monkeypatch: pytest.MonkeyPatch,
+            minimal_csv_record,
         ) -> None:
             row = {
-                **MINIMAL_RECORD,
+                **minimal_csv_record,
                 "Type.typeOfResource": "moving image",
                 "IIIF Manifest URL": "https://nowhere.really/iiif/2/abcxyz",
             }
@@ -109,10 +114,12 @@ class TestMapRecord:
 
 @pytest.fixture
 def record() -> UrsusSolrRecord:
-    return UrsusSolrRecord(
-        ark_ssi="ark:/123/abc",
-        title_tesim=["Title"],
-        iiif_manifest_url_ssi="http://test.manifest/url/",
+    return UrsusSolrRecord.model_validate(
+        {
+            "ark_ssi": "ark:/123/abc",
+            "title_tesim": ["Title"],
+            "iiif_manifest_url_ssi": "http://test.manifest/url/",
+        }
     )
 
 
@@ -246,9 +253,9 @@ class TestDump:
 
         # Check that search was called correctly
         assert cast(Mock, importer.solr_client).search.call_count == 2
-        cast(Mock, importer.solr_client).search.assert_any_call("*:*", rows=0)
+        cast(Mock, importer.solr_client).search.assert_any_call("ark_ssi:*", rows=0)
         cast(Mock, importer.solr_client).search.assert_any_call(
-            "*:*",
+            "ark_ssi:*",
             start=0,
             rows=250,
         )
@@ -269,6 +276,7 @@ class TestDump:
             "id": "54321-89112",
             "title_tesim": ["Title"],
             "ark_ssi": "ark:/21198/12345",
+            "visibility_ssi": "open",
         }
 
         importer.save_record(valid_record, output)
@@ -280,24 +288,27 @@ class TestDump:
         assert parsed == {
             **valid_record,
             "discover_access_group_ssim": ["public"],
-            "download_access_person_ssim": ["public"],
-            "has_model_ssim": "Work",
+            "download_access_group_ssim": ["public"],
+            "has_model_ssim": ["Work"],
             "read_access_group_ssim": ["public"],
             "sort_title_ssort": "Title",
+            "timestamp": "2026-05-19T19:20:00Z",
             "title_sim": ["Title"],
             "visibility_ssi": "open",
         }
 
-    def test_save_record_invalid(self, importer: Importer) -> None:
+    def test_save_record_invalid(self, importer: Importer, minimal_solr_record) -> None:
         output = io.StringIO()
         invalid_record = {
-            "id": None,  # Invalid id
+            **minimal_solr_record,
+            "id": None,  # handles bad id (computed field)
         }
+        invalid_record.pop("title_tesim")  # handles missing title (normally required)
 
         importer.save_record(invalid_record, output)
 
         output_str = output.getvalue().strip()
-        assert output_str == ""  # Since validation fails, no output
+        assert output_str == ""
 
 
 class TestGetTitles:

@@ -7,13 +7,21 @@ Creates a multi-valued 'year_isim' field by parsing 'normalized_date'.
 
 import datetime
 
+import pytest
+
 from feed_ursus import date_parser
 
 
-def test_iso_8601():
+@pytest.mark.parametrize(
+    ("normalized_dates", "expected"),
+    [
+        (["1941-10-01"], [datetime.datetime(1941, 10, 1)]),
+    ],
+)
+def test_iso_8601(normalized_dates: list[str], expected: list[datetime.datetime]):
     """Parses an iso 8601 standard string"""
-    test_date = datetime.datetime(1941, 10, 1)
-    assert date_parser.get_dates(["1941-10-01"]) == [test_date]
+    result = date_parser.get_dates(normalized_dates)
+    assert result == expected
 
 
 def test_just_year():
@@ -43,10 +51,17 @@ def test_empty():
     assert date_parser.get_dates([]) == []
 
 
-def test_unparseable():
-    """Doesn't return anything for unparseable values, but still parses other elements in input."""
-    test_date = datetime.datetime(1953, 1, 1)
-    assert date_parser.get_dates(["1953", "[between 1928-1939]"]) == [test_date]
+@pytest.mark.parametrize(
+    ("normalized_dates", "expected"),
+    [
+        (["1953", "[between 1928-1939]"], [datetime.datetime(1953, 1, 1)]),
+        (["1989-4-20"], []),
+    ],
+)
+def test_unparseable(normalized_dates: list[str], expected: list[datetime.datetime]):
+    """Raises an error when it encounters unparseable values."""
+    with pytest.raises(ValueError):
+        date_parser.get_dates(normalized_dates)
 
 
 def test_range():
@@ -76,6 +91,13 @@ def test_range_with_months():
     ]
 
 
+def test_impossible_range():
+    """Months can be included in range elements, but are ingored."""
+
+    with pytest.raises(ValueError):
+        date_parser.get_dates(["2026/1980"])
+
+
 def test_duplicates():
     """Deduplicates elements in output."""
 
@@ -84,3 +106,8 @@ def test_duplicates():
         datetime.datetime(1934, 6, 1),
         datetime.datetime(1935, 7, 1),
     ]
+
+
+def test_range_too_many_parts():
+    with pytest.raises(ValueError):
+        date_parser.get_dates(["1945", "1980/2012/2020"])

@@ -43,7 +43,8 @@ class SinaiJsonImporter:
     def get_filename(ark: str) -> str:
         """Returns a filename based on an item's ark.
 
-        Drops "ark:/21198/" (all records are assigned the UCLA NAAN) and adds the ".json" suffix"
+        Drops "ark:/21198/" (all records are assigned the UCLA NAAN) and adds the
+        ".json" suffix"
         """
 
         return ark.replace("ark:/21198/", "").replace("/", "-") + ".json"
@@ -155,7 +156,8 @@ class SinaiJsonImporter:
 
         if len(arks) > 1:
             logging.warning(
-                f"Multiple values found for `uto_ms_ark` in {layer_record}, using the first and discarding the rest"
+                f"Multiple values found for `uto_ms_ark` in {layer_record}, using the "
+                "first and discarding the rest"
             )
 
         return arks[0]
@@ -225,7 +227,8 @@ class SinaiJsonImporter:
                 for text_unit in layer_record.text_unit
                 for lang in text_unit.text_unit_record.lang
             ],
-            # Prefer origin dates directly in the layer_record, if none are found used para.assoc_date
+            # Prefer origin dates directly in the layer_record, if none are found used
+            # para.assoc_date
             orig_date=[
                 date
                 for date in (layer_record.assoc_date or [])
@@ -327,7 +330,8 @@ class SinaiJsonImporter:
 
     async def load_to_solr(self, batch_size: float = inf) -> None:
         """
-        Loads records to Solr in batches. `batch_size` should be a positive integer or `math.inf`.
+        Loads records to Solr in batches. `batch_size` should be a positive integer or
+        `math.inf`.
         """
         batch: list[dict] = list()
         results: list[Awaitable[None]] = list()
