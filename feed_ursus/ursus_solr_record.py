@@ -1338,6 +1338,11 @@ class UrsusSolrRecord(BaseModel):
     @computed_field
     @property
     def sort_title_ssort(self) -> str | None:
+        return self.sort_title_tsort
+
+    @computed_field
+    @property
+    def sort_title_tsort(self) -> str | None:
         if self.title_tesim and len(self.title_tesim):
             return self.title_tesim[0]
         else:
