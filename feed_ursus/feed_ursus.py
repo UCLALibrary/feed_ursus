@@ -165,13 +165,13 @@ def reindex(
 @click.option(
     "--filename-prefix",
     type=click.STRING,
-    default="dump",
+    default="data",
     help="Prefix for filenames.",
 )
 @click.option(
     "--batch-size",
     type=click.IntRange(1, None),
-    default=10000,
+    default=1000,
     help="Number of records to save per file.",
 )
 @click.pass_context

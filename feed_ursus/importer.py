@@ -320,7 +320,7 @@ class Importer:
 
         rich.print(f"{n_errors} records could not be reindexed.")
 
-    def dump(self, filename_prefix: str, batch_size: int) -> None:
+    def dump(self, filename_prefix: str = "data", batch_size: int = 1000) -> None:
         hits = int(self.solr_client.search("ark_ssi:*", rows=0).hits)
 
         # number of digits in file suffix
