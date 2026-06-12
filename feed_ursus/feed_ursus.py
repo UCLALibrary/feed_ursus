@@ -162,21 +162,40 @@ def reindex(
 
 
 @feed_ursus.command()
+@click.option(
+    "--filename-prefix",
+    type=click.STRING,
+    default="dump",
+    help="Prefix for filenames.",
+)
+@click.option(
+    "--batch-size",
+    type=click.IntRange(1, None),
+    default=10000,
+    help="Number of records to save per file.",
+)
 @click.pass_context
-def dump(ctx: click.Context):
-    """Write entire index to stdout.
-
-    Output will be written in jsonl format: json-formatted records separated by
-    newlines. To write to disk, use the `>` redirect operator. The resulting file can
-    then be loaded into a different solr index via the solr post tool
-    (https://solr.apache.org/guide/8_11/post-tool.html), the solr GUI console, or the
-    solr rest API. Solr generally requires the `.jsonl` suffix; if you use `.json` solr
-    will expect a single json object and fail to parse the newline-separated records.
+def dump(ctx: click.Context, filename_prefix: str, batch_size: int):
+    """Write entire index to disk.
 
     Example:
-        >>> feed_ursus dump > dump.jsonl  # writes output to `dump.jsonl`
+        >>> feed_ursus dump --filename-prefix data
+        # writes output to `data01.jsonl`, `data02.jsonl`, etc.
     """
-    ctx.obj["importer"].dump()
+    ctx.obj["importer"].dump(filename_prefix=filename_prefix, batch_size=batch_size)
+
+
+@feed_ursus.command()
+@click.pass_context
+@click.argument("filenames", nargs=-1, type=click.Path(exists=True, dir_okay=False))
+def loaddump(ctx: click.Context, filenames: tuple[str, ...]):
+    """
+    Reload data saved with 'feed_ursus dump'.
+
+    Example:
+        >>> feed_ursus load_dump data*.jsonl
+    """
+    ctx.obj["importer"].load_dump(filenames)
 
 
 class PyPIInfo(BaseModel):

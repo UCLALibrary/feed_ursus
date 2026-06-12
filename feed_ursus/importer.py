@@ -3,13 +3,13 @@
 
 import csv
 import importlib.metadata
+import json
 import logging
-import sys
 import typing
 from collections.abc import Iterable
 from datetime import datetime, timezone
 from getpass import getuser
-from math import inf
+from math import ceil, inf
 from pathlib import Path
 
 import click
@@ -320,38 +320,40 @@ class Importer:
 
         rich.print(f"{n_errors} records could not be reindexed.")
 
-    def dump(self, output: typing.TextIO = sys.stdout) -> None:
+    def dump(self, filename_prefix: str, batch_size: int) -> None:
         hits = int(self.solr_client.search("ark_ssi:*", rows=0).hits)
-        rows = 250
 
-        for start in range(0, hits, rows):
+        # number of digits in file suffix
+        n_files = ceil(hits / batch_size)
+        digits = 0 if n_files == 1 else len(str(n_files))
+
+        for n in self.maybe_progress(range(n_files), "Saving"):
             results = self.solr_client.search(
                 "ark_ssi:*",
-                start=start,
-                rows=rows,
-            )
-            hits = results.hits
-            for raw_doc in results:
-                self.save_record(raw_doc, output)
-
-    def save_record(
-        self,
-        record: dict[str, typing.Any],
-        output: typing.TextIO = sys.stdout,
-    ):
-        try:
-            doc = UrsusSolrRecord.model_validate(record)
-
-            output.write(
-                doc.model_dump_json(
-                    by_alias=True,
-                    exclude_none=True,
-                )
-                + "\n"
+                start=n * batch_size,
+                rows=batch_size,
             )
 
-        except pydantic.ValidationError as e:
-            logging.warning(f"Could not export {record.get('id', record)}: {e}")
+            suffix = "" if digits == 0 else str(n + 1).zfill(digits)
+            filename = filename_prefix + suffix + ".jsonl"
+
+            with open(filename, "w", encoding="utf-8") as file:
+                for raw_doc in results:
+                    json.dump(raw_doc, file)
+                    file.write("\n")
+
+    def load_dump(self, filenames: Iterable[str]) -> None:
+        for filename in self.maybe_progress(filenames, "loading"):
+            batch = []
+            with open(filename, "r", encoding="utf-8") as file:
+                for line in file:
+                    try:
+                        batch.append(reindex_record(json.loads(line)))
+                    except pydantic.ValidationError as e:
+                        label = id_for_debugging(json.loads(line))
+                        logging.warning(f"Could not import {label}: {e}")
+
+            self.solr_client.add(batch)
 
     def map_record(self, record: dict[str, str]) -> UrsusSolrRecord:
         related_record_links = [
