@@ -348,7 +348,7 @@ class Importer:
             with open(filename, "r", encoding="utf-8") as file:
                 for line in file:
                     try:
-                        batch.append(reindex_record(json.loads(line)))
+                        batch.append(reindex_record(json.loads(line), check=False))
                     except pydantic.ValidationError as e:
                         label = id_for_debugging(json.loads(line))
                         logging.warning(f"Could not import {label}: {e}")
