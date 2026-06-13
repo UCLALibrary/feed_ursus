@@ -28,7 +28,7 @@ class UnexplainedChangesError(ValueError):
 #
 
 
-def reindex_record(record: Any) -> dict[str, Any]:  # noqa: ANN401 (any-type)
+def reindex_record(record: Any, check: bool = True) -> dict[str, Any]:  # noqa: ANN401 (any-type)
     fixed = fix_for_reindex(deepcopy(record))
     validated = LessStrictSolrRecord.model_validate(fixed).model_dump(
         mode="json",
@@ -36,9 +36,7 @@ def reindex_record(record: Any) -> dict[str, Any]:  # noqa: ANN401 (any-type)
         exclude_none=True,
     )
 
-    if normalized_diff := get_record_diff(fixed, validated):
-        # rich.print(Rule(title=get_handle(record)))
-        # print(normalized_diff)
+    if check and (normalized_diff := get_record_diff(fixed, validated)):
         raise UnexplainedChangesError(normalized_diff)
 
     return validated

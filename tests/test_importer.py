@@ -2,8 +2,8 @@
 
 """Tests for feed_ursus.py"""
 
-import io
-import json
+import tempfile
+from pathlib import Path
 from typing import cast
 from unittest.mock import Mock
 
@@ -224,91 +224,74 @@ def test_titles_from_solr() -> None:
     raise NotImplementedError
 
 
-class TestDump:
-    def test_dump_calls_search_and_save_record(self, importer: Importer) -> None:
-        output = io.StringIO()
-        # Mock the solr search to return some hits and docs
+def test_dump(importer: Importer) -> None:
+    with tempfile.TemporaryDirectory() as tmpdir:
+        filename_prefix = str(Path(tmpdir) / "dump")
+
+        # Mock solr search
         mock_docs = [
-            {
-                "id": "54321-89112",
-                "title_tesim": ["Title"],
-                "ark_ssi": "ark:/21198/12345",
-            },
-            {
-                "id": "09876-89112",
-                "title_tesim": ["Title"],
-                "ark_ssi": "ark:/21198/67890",
-            },
+            {"ark_ssi": "ark:/21198/1", "title_tesim": ["Title 1"]},
+            {"ark_ssi": "ark:/21198/2", "title_tesim": ["Title 2"]},
         ]
         mock_result = Mock()
-        mock_result.docs = mock_docs
-        mock_result.hits = 2
         mock_result.__iter__ = Mock(return_value=iter(mock_docs))
         cast(Mock, importer.solr_client).search.side_effect = [
-            Mock(hits=2),  # First call for hits
+            Mock(hits=2),  # First call for total hits
             mock_result,  # Second call for docs
         ]
 
-        importer.dump(output)
+        importer.dump(filename_prefix=filename_prefix, batch_size=10000)
 
-        # Check that search was called correctly
-        assert cast(Mock, importer.solr_client).search.call_count == 2
-        cast(Mock, importer.solr_client).search.assert_any_call("ark_ssi:*", rows=0)
-        cast(Mock, importer.solr_client).search.assert_any_call(
-            "ark_ssi:*",
-            start=0,
-            rows=250,
+        # Verify file was created without suffix
+        output_file = Path(filename_prefix + ".jsonl")
+        assert output_file.exists()
+        assert (
+            output_file.read_text(encoding="utf-8")
+            == '{"ark_ssi": "ark:/21198/1", "title_tesim": ["Title 1"]}\n{"ark_ssi": "ark:/21198/2", "title_tesim": ["Title 2"]}\n'
         )
 
-        # Check output
-        output_str = output.getvalue().strip()
-        output_lines = output_str.split("\n")
-        assert len(output_lines) == 2  # Two records
 
-        # Parse JSON and check
-        for line in output_lines:
-            record = json.loads(line)
-            assert "id" in record
+def test_load_dump_single_file(importer: Importer) -> None:
+    with tempfile.TemporaryDirectory() as tmpdir:
+        # Create a dump file with valid records
+        dump_file = Path(tmpdir) / "dump.jsonl"
+        dump_file.write_text(
+            '{"ark_ssi": "ark:/21198/1", "title_tesim": ["Title 1"]}'
+            "\n"
+            '{"ark_ssi": "ark:/21198/2", "title_tesim": ["Title 2"]}'
+        )
 
-    def test_save_record_valid(self, importer: Importer) -> None:
-        output = io.StringIO()
-        valid_record = {
-            "id": "54321-89112",
-            "title_tesim": ["Title"],
-            "ark_ssi": "ark:/21198/12345",
-            "visibility_ssi": "open",
-        }
+        importer.load_dump([str(dump_file)])
 
-        importer.save_record(valid_record, output)
-
-        output_str = output.getvalue().strip()
-        assert output_str  # Should have output now
-
-        parsed = json.loads(output_str)
-        assert parsed == {
-            **valid_record,
-            "discover_access_group_ssim": ["public"],
-            "download_access_group_ssim": ["public"],
-            "has_model_ssim": ["Work"],
-            "read_access_group_ssim": ["public"],
-            "sort_title_ssort": "Title",
-            "timestamp": "2026-05-19T19:20:00Z",
-            "title_sim": ["Title"],
-            "visibility_ssi": "open",
-        }
-
-    def test_save_record_invalid(self, importer: Importer, minimal_solr_record) -> None:
-        output = io.StringIO()
-        invalid_record = {
-            **minimal_solr_record,
-            "id": None,  # handles bad id (computed field)
-        }
-        invalid_record.pop("title_tesim")  # handles missing title (normally required)
-
-        importer.save_record(invalid_record, output)
-
-        output_str = output.getvalue().strip()
-        assert output_str == ""
+        # Verify add was called with correct records
+        cast(Mock, importer.solr_client).add.assert_called_once()
+        added_records = cast(Mock, importer.solr_client).add.call_args[0][0]
+        assert added_records == [
+            {
+                "ark_ssi": "ark:/21198/1",
+                "title_tesim": ["Title 1"],
+                "system_modified_dtsi": "2026-05-19T19:20:00Z",
+                "id": "1-89112",
+                "sort_title_ssort": "Title 1",
+                "timestamp": "2026-05-19T19:20:00Z",
+                "title_sim": ["Title 1"],
+                "discover_access_group_ssim": [],
+                "download_access_group_ssim": [],
+                "read_access_group_ssim": [],
+            },
+            {
+                "ark_ssi": "ark:/21198/2",
+                "title_tesim": ["Title 2"],
+                "system_modified_dtsi": "2026-05-19T19:20:00Z",
+                "id": "2-89112",
+                "sort_title_ssort": "Title 2",
+                "timestamp": "2026-05-19T19:20:00Z",
+                "title_sim": ["Title 2"],
+                "discover_access_group_ssim": [],
+                "download_access_group_ssim": [],
+                "read_access_group_ssim": [],
+            },
+        ]
 
 
 class TestGetTitles:
