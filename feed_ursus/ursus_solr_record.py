@@ -1,7 +1,7 @@
 # flake8: noqa: ANN401 (any-type) - pydantic validators need to handle unexpected types
 
 import re
-from collections.abc import Callable
+from collections.abc import Callable, Generator
 from datetime import UTC, datetime
 from enum import Enum
 from typing import Annotated, Any, Literal, Self, TypeVar, cast
@@ -417,6 +417,16 @@ class UrsusSolrRecord(BaseModel):
 
         return result
 
+    arranger_tesim: MARCList[MARCString] | Empty = Field(
+        default=None,
+        validation_alias=AliasChoices("Arranger", "Name.arranger"),
+    )
+
+    @computed_field
+    @property
+    def arranger_sim(self) -> list[str] | None:
+        return self.arranger_tesim or None
+
     @computed_field
     @property
     def artist_sim(self) -> list[str] | None:
@@ -500,6 +510,47 @@ class UrsusSolrRecord(BaseModel):
         default=None,
         validation_alias=AliasChoices("Colophon", "Description.colophon"),
     )
+
+    @computed_field
+    @property
+    def combined_names_ssim(self) -> list[str] | None:
+        return list(dict.fromkeys(self._combine_names())) or None
+
+    def _combine_names(self) -> Generator[str]:
+        for field in [
+            self.architect_tesim,
+            self.arranger_tesim,
+            self.artist_tesim,
+            self.author_tesim,
+            self.calligrapher_tesim,
+            self.cartographer_tesim,
+            self.collector_tesim,
+            self.commentator_tesim,
+            self.composer_tesim,
+            self.creator_tesim,
+            self.director_tesim,
+            self.editor_tesim,
+            self.engraver_tesim,
+            self.host_tesim,
+            self.illuminator_tesim,
+            self.illustrator_tesim,
+            self.interviewee_tesim,
+            self.interviewer_tesim,
+            self.librettist_tesim,
+            self.lyricist_tesim,
+            self.musician_tesim,
+            self.photographer_tesim,
+            self.printer_tesim,
+            self.printmaker_tesim,
+            self.producer_tesim,
+            self.recipient_tesim,
+            self.researcher_tesim,
+            self.rubricator_tesim,
+            self.scribe_tesim,
+            self.translator_tesim,
+        ]:
+            if field:
+                yield from field
 
     @computed_field
     @property
