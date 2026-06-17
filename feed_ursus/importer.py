@@ -28,6 +28,7 @@ from feed_ursus.reindex import UnexplainedChangesError, reindex_record
 from feed_ursus.ursus_solr_record import (
     IngestSolrRecord,
     UrsusSolrRecord,
+    solr_date_from_python,
 )
 from feed_ursus.util import (
     Ark,
@@ -217,10 +218,12 @@ class Importer:
         message: str,
         start: int = 0,
     ) -> Iterable[dict[str, typing.Any]]:
-        hits: int | float = inf
-        rows = 250
+        hits = self.solr_client.search("ark_ssi:*").hits
         progress: rich.progress.Progress | None = None
         task_id: int | None = None
+
+        cutoff = solr_date_from_python(UrsusSolrRecord._now())
+        completed = 0
 
         try:
             if self.show_progress:
@@ -228,28 +231,22 @@ class Importer:
                 progress.start()
                 task_id = progress.add_task("{message} 0 / ??????...")
 
-            while start < hits:
-                results = self.solr_client.search(
-                    "ark_ssi:*",
-                    sort="ark_ssi asc",  # must be a field that is not changed by reindex operation # noqa: E501
-                    start=start,
-                    rows=rows,
-                )
-                hits = int(results.hits)
-
-                for i, raw_record in enumerate(results):
-                    yield raw_record
-                    if progress and isinstance(task_id, int):
-                        # zero-based indexing for solr `start` and python `enumerate`
-                        completed = start + i + 1
-                        progress.update(
-                            task_id,
-                            description=f"{message} {completed} / {hits}...",
-                            total=int(results.hits),
-                            completed=completed,
-                        )
-
-                start += rows
+            for raw_record in self.solr_client.search(
+                "ark_ssi:*",
+                sort="timestamp asc, id asc",
+                fq=f"timestamp:[* TO {cutoff}]",
+                cursorMark="*",
+            ):
+                yield raw_record
+                if progress and isinstance(task_id, int):
+                    # zero-based indexing for solr `start` and python `enumerate`
+                    completed += 1
+                    progress.update(
+                        task_id,
+                        description=f"{message} {completed} / {hits}...",
+                        total=int(hits),
+                        completed=completed,
+                    )
 
         finally:
             if progress:
