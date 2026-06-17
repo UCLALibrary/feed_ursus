@@ -121,6 +121,20 @@ def validate(ctx: click.Context, start: int = 0, max_errors: int | None = None):
 
 @feed_ursus.command()
 @click.pass_context
+@click.argument("query", nargs=1, type=click.STRING, default="ark_ssi:*")
+def count(ctx: click.Context, query: str = "ark_ssi:*"):
+    """Display the number of items matching QUERY.
+
+    Example:
+        >>> feed_ursus count "NOT sort_title_tsort:*"
+
+        Displays number of records missing the field `sort_title_tsort`
+    """
+    ctx.obj["importer"].count(query=query)
+
+
+@feed_ursus.command()
+@click.pass_context
 @click.option(
     "--start",
     type=click.IntRange(0, None),
@@ -139,8 +153,10 @@ def validate(ctx: click.Context, start: int = 0, max_errors: int | None = None):
     default=False,
     help="Check data processing but do not resubmit to solr.",
 )
+@click.argument("query", nargs=1, type=click.STRING, default="ark_ssi:*")
 def reindex(
     ctx: click.Context,
+    query: str = "ark_ssi:*",
     start: int = 0,
     max_errors: int | None = None,
     dry_run: bool = False,
@@ -155,6 +171,7 @@ def reindex(
         >>> feed_ursus reindex
     """
     ctx.obj["importer"].reindex(
+        query=query,
         start=start,
         max_errors=(max_errors or inf),
         dry_run=dry_run,

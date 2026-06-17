@@ -215,6 +215,7 @@ class Importer:
     def iterate_solr_records(
         self,
         message: str,
+        query: str = "ark_ssi:*",
         start: int = 0,
     ) -> Iterable[dict[str, typing.Any]]:
         hits: int | float = inf
@@ -230,7 +231,7 @@ class Importer:
 
             while start < hits:
                 results = self.solr_client.search(
-                    "ark_ssi:*",
+                    query,
                     sort="ark_ssi asc",  # must be a field that is not changed by reindex operation # noqa: E501
                     start=start,
                     rows=rows,
@@ -245,11 +246,22 @@ class Importer:
                         progress.update(
                             task_id,
                             description=f"{message} {completed} / {hits}...",
-                            total=int(results.hits),
+                            total=hits,
                             completed=completed,
                         )
 
                 start += rows
+
+        except Exception as e:
+            # Knock the counter back to the start of the interrupted batch
+            if progress and isinstance(task_id, int):
+                progress.update(
+                    task_id,
+                    description=f"{message} {start} / {hits}...",
+                    total=hits,
+                    completed=start,
+                )
+            raise e
 
         finally:
             if progress:
@@ -277,8 +289,13 @@ class Importer:
                         f"Reindex cancelled: reached {max_errors} {term}"
                     )
 
+    def count(self, query: str = "ark_ssi:*") -> None:
+        results = self.solr_client.search(query, rows=0)
+        click.echo(f"{results.hits} items")
+
     def reindex(
         self,
+        query: str = "ark_ssi:*",
         start: int = 0,
         max_errors: int | float = inf,
         dry_run: bool = False,
@@ -286,7 +303,7 @@ class Importer:
         n_errors = 0
 
         validated = []
-        for record in self.iterate_solr_records("reindexing", start=start):
+        for record in self.iterate_solr_records("reindexing", query=query, start=start):
             try:
                 validated.append(reindex_record(record))
 
