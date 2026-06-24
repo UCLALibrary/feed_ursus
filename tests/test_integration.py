@@ -12,7 +12,7 @@ from pysolr import Solr  # type: ignore
 
 from feed_ursus import feed_ursus
 
-SOLR_URL = os.getenv("SOLR_URL", "http://localhost:8983/solr/ursus")
+SOLR_URL = os.getenv("SOLR_TEST_URL", "http://localhost:8985/solr/ursus")
 
 
 def test_feed_ursus():
@@ -49,16 +49,6 @@ def test_feed_ursus():
         "Nin (Anais) Papers, circa 1910-1977"
     ]
     assert work_record["member_of_collection_ids_ssim"] == ["xp6xn100zz-89112"]
-
-    # Test dump command
-    result = runner.invoke(
-        feed_ursus.feed_ursus,
-        ["--solr_url", SOLR_URL, "dump"],
-    )
-    assert result.exit_code == 0
-    # Since there are records, output should not be empty
-    # but this isn't currently working because we don't use `click.echo` to write the data, and the click test runner doesn't capture stdout otherwise.
-    # assert result.output.strip() != ""
 
     # Delete and confirm
     result = runner.invoke(

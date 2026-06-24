@@ -1,30 +1,42 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# pyright: reportUnknownArgumentType=false
-# pyright: reportUnknownMemberType=false
-# pyright: reportUnknownVariableType=false
+# pyright: standard
 """Convert UCLA Library CSV files for Ursus, our Blacklight installation."""
 
 import csv
 import importlib.metadata
+import json
 import logging
-import sys
 import typing
+from collections.abc import Iterable
 from datetime import datetime, timezone
 from getpass import getuser
+from math import ceil, inf
 from pathlib import Path
 
 import click
 import pydantic
 import requests
 import rich.progress
+import rich.rule
 from pysolr import Solr, SolrError  # type: ignore
 from rich.console import Console
 from rich.table import Table
 
-from feed_ursus.controlled_fields import ResourceType
-from feed_ursus.ursus_solr_record import IngestSolrRecord, UrsusSolrRecord
-from feed_ursus.util import Ark, Empty, MARCList, UnknownItemError, UrsusId
+from feed_ursus.controlled_fields import (
+    ResourceType,
+)
+from feed_ursus.reindex import UnexplainedChangesError, reindex_record
+from feed_ursus.ursus_solr_record import (
+    IngestSolrRecord,
+    UrsusSolrRecord,
+)
+from feed_ursus.util import (
+    Ark,
+    Empty,
+    MARCList,
+    UnknownItemError,
+    UrsusId,
+    id_for_debugging,
+)
 
 
 class Importer:
@@ -35,7 +47,7 @@ class Importer:
     ingest_id: str  # for sync load_csv
     titles: dict[Ark, str]
 
-    def __init__(self, solr_url: str, show_progress=True):
+    def __init__(self, solr_url: str, show_progress: bool = True):
         self.solr_url = solr_url
         self.show_progress = show_progress
 
@@ -108,7 +120,8 @@ class Importer:
             except (pydantic.ValidationError, UnknownItemError) as e:
                 row_handle = row.get("Item ARK") or row.get("Item Title") or row
 
-                # Note: using "\r" overwrites what would otherwise be a duplicated progress bar
+                # Note: using "\r" overwrites what would otherwise be a duplicated
+                # progress bar
                 rich.print(f"\rCould not import row {row_handle}:")
                 rich.print(e)
                 rich.print("\n")
@@ -189,48 +202,175 @@ class Importer:
                 defType="lucene",
                 rows=0,
             ).hits
+
+            title = self.titles.get(collection_id, collection_id)
+            term = "child record" if n_children == 1 else "child records"
             if yes or click.confirm(
-                f"Delete collection {self.titles['collection_id']}? {n_children} {'child record' if n_children == 1 else 'child records'} will also be deleted."
+                f"Delete collection {title}? {n_children} {term} will also be deleted."
             ):
                 self.solr_client.delete(
-                    q=f"id:{collection_id} OR member_of_collection_ids_ssim:{collection_id}"
+                    q=f"id:{collection_id} OR member_of_collection_ids_ssim:{collection_id}"  # noqa: E501
                 )
 
-    def dump(self, output: typing.TextIO = sys.stdout) -> None:
-        hits = int(self.solr_client.search("*:*", rows=0).hits)
-        rows = 250
-
-        for start in range(0, hits, rows):
-            results = self.solr_client.search(
-                "*:*",
-                start=start,
-                rows=rows,
-            )
-            hits = results.hits
-            for raw_doc in results:
-                self.save_record(raw_doc, output)
-
-    def save_record(
+    def iterate_solr_records(
         self,
-        record: dict[str, typing.Any],
-        output: typing.TextIO = sys.stdout,
-    ):
-        adapter: pydantic.TypeAdapter[UrsusSolrRecord | IngestSolrRecord] = (
-            pydantic.TypeAdapter(UrsusSolrRecord | IngestSolrRecord)
-        )
-        try:
-            doc = adapter.validate_python(record)
+        message: str,
+        query: str = "ark_ssi:*",
+        start: int = 0,
+    ) -> Iterable[dict[str, typing.Any]]:
+        hits: int | float = inf
+        rows = 250
+        progress: rich.progress.Progress | None = None
+        task_id: int | None = None
 
-            output.write(
-                doc.model_dump_json(
-                    by_alias=True,
-                    exclude_none=True,
+        try:
+            if self.show_progress:
+                progress = rich.progress.Progress()
+                progress.start()
+                task_id = progress.add_task("{message} 0 / ??????...")
+
+            while start < hits:
+                results = self.solr_client.search(
+                    query,
+                    sort="ark_ssi asc",  # must be a field that is not changed by reindex operation # noqa: E501
+                    start=start,
+                    rows=rows,
                 )
-                + "\n"
+                hits = int(results.hits)
+
+                for i, raw_record in enumerate(results):
+                    yield raw_record
+                    if progress and isinstance(task_id, int):
+                        # zero-based indexing for solr `start` and python `enumerate`
+                        completed = start + i + 1
+                        progress.update(
+                            task_id,
+                            description=f"{message} {completed} / {hits}...",
+                            total=hits,
+                            completed=completed,
+                        )
+
+                start += rows
+
+        except Exception as e:
+            # Knock the counter back to the start of the interrupted batch
+            if progress and isinstance(task_id, int):
+                progress.update(
+                    task_id,
+                    description=f"{message} {start} / {hits}...",
+                    total=hits,
+                    completed=start,
+                )
+            raise e
+
+        finally:
+            if progress:
+                progress.stop()
+
+    def validate(self, start: int = 0, max_errors: int | float = inf) -> None:
+        n_errors = 0
+
+        for record in self.iterate_solr_records("validating", start=start):
+            try:
+                UrsusSolrRecord.model_validate(record)
+
+            except pydantic.ValidationError as e:
+                rich.print(
+                    rich.rule.Rule(title=id_for_debugging(record), align="left"),
+                    e,
+                    "\n",
+                    sep="\n",
+                )
+                n_errors += 1
+
+                if n_errors >= max_errors:
+                    term = "errors" if max_errors and max_errors > 1 else "error"
+                    raise click.ClickException(
+                        f"Reindex cancelled: reached {max_errors} {term}"
+                    )
+
+    def count(self, query: str = "ark_ssi:*") -> None:
+        results = self.solr_client.search(query, rows=0)
+        click.echo(f"{results.hits} items")
+
+    def reindex(
+        self,
+        query: str = "ark_ssi:*",
+        start: int = 0,
+        max_errors: int | float = inf,
+        dry_run: bool = False,
+    ) -> None:
+        n_errors = 0
+
+        validated = []
+        for record in self.iterate_solr_records("reindexing", query=query, start=start):
+            try:
+                validated.append(reindex_record(record))
+
+            except UnexplainedChangesError as e:
+                rich.print(rich.rule.Rule(title=id_for_debugging(record), align="left"))
+                print(e.args[0], "\n")  # rich.print messes up deepdiff's pretty colors
+                n_errors += 1
+
+            except pydantic.ValidationError as e:
+                rich.print(
+                    rich.rule.Rule(title=id_for_debugging(record), align="left"),
+                    e,
+                    sep="\n",
+                )
+                n_errors += 1
+
+            if n_errors >= max_errors:
+                if len(validated) and not dry_run:
+                    self.solr_client.add(validated, commit=True)
+                term = "errors" if max_errors and max_errors > 1 else "error"
+                raise click.ClickException(
+                    f"Reindex cancelled: reached {max_errors} {term}"
+                )
+
+            if len(validated) > 250 and not dry_run:
+                self.solr_client.add(validated, commit=True)
+                validated = []
+
+        if len(validated) and not dry_run:
+            self.solr_client.add(validated, commit=True)
+
+        rich.print(f"{n_errors} records could not be reindexed.")
+
+    def dump(self, filename_prefix: str = "data", batch_size: int = 1000) -> None:
+        hits = int(self.solr_client.search("ark_ssi:*", rows=0).hits)
+
+        # number of digits in file suffix
+        n_files = ceil(hits / batch_size)
+        digits = 0 if n_files == 1 else len(str(n_files))
+
+        for n in self.maybe_progress(range(n_files), "Saving"):
+            results = self.solr_client.search(
+                "ark_ssi:*",
+                start=n * batch_size,
+                rows=batch_size,
             )
 
-        except pydantic.ValidationError as e:
-            logging.warning(f"Could not export {record.get('id', record)}: {e}")
+            suffix = "" if digits == 0 else str(n + 1).zfill(digits)
+            filename = filename_prefix + suffix + ".jsonl"
+
+            with open(filename, "w", encoding="utf-8") as file:
+                for raw_doc in results:
+                    json.dump(raw_doc, file)
+                    file.write("\n")
+
+    def load_dump(self, filenames: Iterable[str]) -> None:
+        for filename in self.maybe_progress(filenames, "loading"):
+            batch = []
+            with open(filename, "r", encoding="utf-8") as file:
+                for line in file:
+                    try:
+                        batch.append(reindex_record(json.loads(line), check=False))
+                    except pydantic.ValidationError as e:
+                        label = id_for_debugging(json.loads(line))
+                        logging.warning(f"Could not import {label}: {e}")
+
+            self.solr_client.add(batch)
 
     def map_record(self, record: dict[str, str]) -> UrsusSolrRecord:
         related_record_links = [
@@ -283,10 +423,9 @@ class Importer:
             )
             self.titles.update({doc["ark_ssi"]: doc["title_tesim"][0] for doc in docs})
 
-        if still_unknown := [ark for ark in arks if ark not in self.titles]:
-            raise UnknownItemError(
-                f"Title unknown for item{'s' if len(still_unknown) > 1 else ''} {', '.join(still_unknown)}"
-            )
+        if still_unknown := ", ".join([ark for ark in arks if ark not in self.titles]):
+            term = "items" if len(still_unknown) > 1 else "item"
+            raise UnknownItemError(f"Title unknown for {term} {still_unknown}")
 
         return [self.titles[ark] for ark in arks]
 
@@ -350,9 +489,11 @@ class Importer:
                         rich.print(f"Can't load title for collection", doc)
 
         except SolrError as e:
-            print(f"Error querying records: {e}")
+            raise click.ClickException(
+                f"Could not connect to Solr index at {self.solr_url}"
+            )
 
-    def get_log(self):  # -> list[IngestLogRecord]:
+    def get_log(self) -> "list[IngestLogRecord]":
         ingest_records = [
             IngestLogRecordReturned.model_validate(x)
             for x in self.solr_client.search("is_ingest_bsi:true").docs
@@ -361,9 +502,10 @@ class Importer:
         ingest_id_facets = (
             self.solr_client.search(
                 "*:*",
+                # weird **{...} syntax for arguments allows "facet.field"
                 **{
                     "facet": "on",
-                    "facet.field": "ingest_id_ssi",  # weird **{...} syntax allows "facet.field"
+                    "facet.field": "ingest_id_ssi",
                     "rows": 0,
                 },
             )
@@ -437,7 +579,8 @@ class IngestLogRecordReturned(IngestLogRecordWrite):
 class IngestLogRecord(IngestLogRecordWrite):
     """Ingest log record, as used for reporting.
 
-    Includes the solr-generated 'timestamp' field plus a 'count' field that must be obtained separately with a facet query on the field
+    Includes the solr-generated 'timestamp' field plus a 'count' field that must be
+    obtained separately with a facet query on the field
     """
 
     timestamp: datetime

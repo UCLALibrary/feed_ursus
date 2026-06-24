@@ -1,11 +1,9 @@
-"""Tests for feed_ursus.py"""
-# pyright: reportUnknownArgumentType=false
-# pyright: reportUnknownLambdaType=false
-# pyright: reportUnknownMemberType=false
-# pyright: reportUnknownVariableType=false
+# pyright: standard
 
-import io
-import json
+"""Tests for feed_ursus.py"""
+
+import tempfile
+from pathlib import Path
 from typing import cast
 from unittest.mock import Mock
 
@@ -16,7 +14,6 @@ import feed_ursus.importer
 from feed_ursus.importer import Importer
 from feed_ursus.ursus_solr_record import UrsusSolrRecord
 from feed_ursus.util import UnknownItemError
-from tests.test_ursus_solr_record import MINIMAL_RECORD
 
 from . import fixtures  # pylint: disable=wrong-import-order
 
@@ -50,10 +47,10 @@ class TestLoadCsv:
 
 class TestMapRecord:
     class TestThumbnailUrl:
-        def test_from_access_copy(self, importer: Importer) -> None:
+        def test_from_access_copy(self, importer: Importer, minimal_csv_record) -> None:
             result = importer.map_record(
                 {
-                    **MINIMAL_RECORD,
+                    **minimal_csv_record,
                     "IIIF Access URL": "https://iiif.library.ucla.edu/iiif/2/ark%3A%2F21198%2F123abc",
                 }
             )
@@ -62,10 +59,12 @@ class TestMapRecord:
                 == "https://iiif.library.ucla.edu/iiif/2/ark%3A%2F21198%2F123abc/full/!200,200/0/default.jpg"
             )
 
-        def test_with_bad_access_copy(self, importer: Importer) -> None:
+        def test_with_bad_access_copy(
+            self, importer: Importer, minimal_csv_record
+        ) -> None:
             result = importer.map_record(
                 {
-                    **MINIMAL_RECORD,
+                    **minimal_csv_record,
                     "IIIF Access URL": "https://wowza.library.ucla.edu/iiif_av_public/definst/mp4:MEAP/pairtree_root/21/19/8=/z1/j7/7t/4n/21198=z1j77t4n/ark%2B=21198=z1j77t4n.mp4%7B%7D",
                 }
             )
@@ -73,10 +72,13 @@ class TestMapRecord:
             assert result.thumbnail_url_ss is None
 
         def test_calls_thumbnail_from_manifest(
-            self, importer: Importer, monkeypatch: pytest.MonkeyPatch
+            self,
+            importer: Importer,
+            monkeypatch: pytest.MonkeyPatch,
+            minimal_csv_record,
         ) -> None:
             row = {
-                **MINIMAL_RECORD,
+                **minimal_csv_record,
                 "Type.typeOfResource": "still image",
                 "IIIF Manifest URL": "https://nowhere.really/iiif/2/abcxyz",
             }
@@ -91,10 +93,13 @@ class TestMapRecord:
             cast(Mock, importer.thumbnail_from_manifest).assert_called_once()
 
         def test_streaming_no_thumbnail_from_manifest(
-            self, importer: Importer, monkeypatch: pytest.MonkeyPatch
+            self,
+            importer: Importer,
+            monkeypatch: pytest.MonkeyPatch,
+            minimal_csv_record,
         ) -> None:
             row = {
-                **MINIMAL_RECORD,
+                **minimal_csv_record,
                 "Type.typeOfResource": "moving image",
                 "IIIF Manifest URL": "https://nowhere.really/iiif/2/abcxyz",
             }
@@ -109,10 +114,12 @@ class TestMapRecord:
 
 @pytest.fixture
 def record() -> UrsusSolrRecord:
-    return UrsusSolrRecord(
-        ark_ssi="ark:/123/abc",
-        title_tesim=["Title"],
-        iiif_manifest_url_ssi="http://test.manifest/url/",
+    return UrsusSolrRecord.model_validate(
+        {
+            "ark_ssi": "ark:/123/abc",
+            "title_tesim": ["Title"],
+            "iiif_manifest_url_ssi": "http://test.manifest/url/",
+        }
     )
 
 
@@ -217,87 +224,76 @@ def test_titles_from_solr() -> None:
     raise NotImplementedError
 
 
-class TestDump:
-    def test_dump_calls_search_and_save_record(self, importer: Importer) -> None:
-        output = io.StringIO()
-        # Mock the solr search to return some hits and docs
+def test_dump(importer: Importer) -> None:
+    with tempfile.TemporaryDirectory() as tmpdir:
+        filename_prefix = str(Path(tmpdir) / "dump")
+
+        # Mock solr search
         mock_docs = [
-            {
-                "id": "54321-89112",
-                "title_tesim": ["Title"],
-                "ark_ssi": "ark:/21198/12345",
-            },
-            {
-                "id": "09876-89112",
-                "title_tesim": ["Title"],
-                "ark_ssi": "ark:/21198/67890",
-            },
+            {"ark_ssi": "ark:/21198/1", "title_tesim": ["Title 1"]},
+            {"ark_ssi": "ark:/21198/2", "title_tesim": ["Title 2"]},
         ]
         mock_result = Mock()
-        mock_result.docs = mock_docs
-        mock_result.hits = 2
         mock_result.__iter__ = Mock(return_value=iter(mock_docs))
         cast(Mock, importer.solr_client).search.side_effect = [
-            Mock(hits=2),  # First call for hits
+            Mock(hits=2),  # First call for total hits
             mock_result,  # Second call for docs
         ]
 
-        importer.dump(output)
+        importer.dump(filename_prefix=filename_prefix, batch_size=10000)
 
-        # Check that search was called correctly
-        assert cast(Mock, importer.solr_client).search.call_count == 2
-        cast(Mock, importer.solr_client).search.assert_any_call("*:*", rows=0)
-        cast(Mock, importer.solr_client).search.assert_any_call(
-            "*:*",
-            start=0,
-            rows=250,
+        # Verify file was created without suffix
+        output_file = Path(filename_prefix + ".jsonl")
+        assert output_file.exists()
+        assert (
+            output_file.read_text(encoding="utf-8")
+            == '{"ark_ssi": "ark:/21198/1", "title_tesim": ["Title 1"]}\n{"ark_ssi": "ark:/21198/2", "title_tesim": ["Title 2"]}\n'
         )
 
-        # Check output
-        output_str = output.getvalue().strip()
-        output_lines = output_str.split("\n")
-        assert len(output_lines) == 2  # Two records
 
-        # Parse JSON and check
-        for line in output_lines:
-            record = json.loads(line)
-            assert "id" in record
+def test_load_dump_single_file(importer: Importer) -> None:
+    with tempfile.TemporaryDirectory() as tmpdir:
+        # Create a dump file with valid records
+        dump_file = Path(tmpdir) / "dump.jsonl"
+        dump_file.write_text(
+            '{"ark_ssi": "ark:/21198/1", "title_tesim": ["Title 1"]}'
+            "\n"
+            '{"ark_ssi": "ark:/21198/2", "title_tesim": ["Title 2"]}'
+        )
 
-    def test_save_record_valid(self, importer: Importer) -> None:
-        output = io.StringIO()
-        valid_record = {
-            "id": "54321-89112",
-            "title_tesim": ["Title"],
-            "ark_ssi": "ark:/21198/12345",
-        }
+        importer.load_dump([str(dump_file)])
 
-        importer.save_record(valid_record, output)
-
-        output_str = output.getvalue().strip()
-        assert output_str  # Should have output now
-
-        parsed = json.loads(output_str)
-        assert parsed == {
-            **valid_record,
-            "discover_access_group_ssim": ["public"],
-            "download_access_person_ssim": ["public"],
-            "has_model_ssim": "Work",
-            "read_access_group_ssim": ["public"],
-            "sort_title_ssort": "Title",
-            "title_sim": ["Title"],
-            "visibility_ssi": "open",
-        }
-
-    def test_save_record_invalid(self, importer: Importer) -> None:
-        output = io.StringIO()
-        invalid_record = {
-            "id": None,  # Invalid id
-        }
-
-        importer.save_record(invalid_record, output)
-
-        output_str = output.getvalue().strip()
-        assert output_str == ""  # Since validation fails, no output
+        # Verify add was called with correct records
+        cast(Mock, importer.solr_client).add.assert_called_once()
+        added_records = cast(Mock, importer.solr_client).add.call_args[0][0]
+        assert added_records == [
+            {
+                "ark_ssi": "ark:/21198/1",
+                "title_tesim": ["Title 1"],
+                "system_modified_dtsi": "2026-05-19T19:20:00Z",
+                "id": "1-89112",
+                "sort_title_ssort": "Title 1",
+                "sort_title_tsort": "Title 1",
+                "timestamp": "2026-05-19T19:20:00Z",
+                "title_sim": ["Title 1"],
+                "discover_access_group_ssim": [],
+                "download_access_group_ssim": [],
+                "read_access_group_ssim": [],
+            },
+            {
+                "ark_ssi": "ark:/21198/2",
+                "title_tesim": ["Title 2"],
+                "system_modified_dtsi": "2026-05-19T19:20:00Z",
+                "id": "2-89112",
+                "sort_title_ssort": "Title 2",
+                "sort_title_tsort": "Title 2",
+                "timestamp": "2026-05-19T19:20:00Z",
+                "title_sim": ["Title 2"],
+                "discover_access_group_ssim": [],
+                "download_access_group_ssim": [],
+                "read_access_group_ssim": [],
+            },
+        ]
 
 
 class TestGetTitles:

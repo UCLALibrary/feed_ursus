@@ -422,7 +422,8 @@ class WorkWitItem(BaseModel):
     work: WorkBrief | WorkStub | ConceptualWorkMerged
     alt_title: Optional[str] = Field(
         None,
-        description="An alternative title providing witness-specific information about the work",
+        description="An alternative title providing witness-specific information about"
+        " the work",
     )
     as_written: Optional[NonEmptyStr] = None
     locus: Optional[NonEmptyStr] = None
@@ -806,7 +807,8 @@ class Image(BaseModel):
     delivery: Optional[str] = None
     msi_processing: tuple[str, ...] = Field(
         tuple(),
-        description="Names of the person(s) responsible for processing the MSI data for this record",
+        description="Names of the person(s) responsible for processing the MSI data for"
+        " this record",
     )
     program: Optional[str] = None
     condition_category: Optional[str] = None
