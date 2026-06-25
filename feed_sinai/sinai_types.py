@@ -558,6 +558,7 @@ class TextUnit(BaseModel):
 class TextUnitUnmerged(TextUnit):
     work_wit: tuple[WorkWitItemUnmerged, ...] = Field(..., min_length=1)
     para: tuple[ParaItemUnmerged, ...] = tuple()
+    reconstructed_from: tuple[Ark, ...] = tuple()
 
 
 class TextUnitMerged(TextUnit):
@@ -671,6 +672,7 @@ class InscribedLayerUnmerged(InscribedLayer):
     text_unit: tuple[LayerTextUnitUnmerged, ...] = Field(..., min_length=1)
     para: tuple[ParaItemUnmerged, ...] = tuple()
     assoc_name: tuple[AssocNameItemUnmerged, ...] = tuple()
+    reconstructed_from: tuple[Ark, ...] = tuple()
     assoc_place: tuple[AssocPlaceItemUnmerged, ...] = tuple()
 
 
