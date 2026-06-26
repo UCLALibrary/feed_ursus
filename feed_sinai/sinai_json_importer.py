@@ -299,14 +299,12 @@ class SinaiJsonImporter:
             assoc_name=[self.get_assoc_name_item(name) for name in raw.assoc_name],
             assoc_place=[self.get_assoc_place_item(place) for place in raw.assoc_place],
             para=[self.get_para(para) for para in raw.para],
-            reconstructed_from=list(
-                {
-                    ark: st.ReconstructedFrom(
-                        id=ark, shelfmark=self.get_merged_manuscript(ark).shelfmark
-                    )
-                    for ark in raw.reconstructed_from
-                }.values()
-            ),
+            reconstructed_from=[
+                st.ReconstructedFrom(
+                    id=ark, shelfmark=self.get_merged_manuscript(ark).shelfmark
+                )
+                for ark in raw.reconstructed_from
+            ],
         )
 
         return self._ms_objs_merged[path]
