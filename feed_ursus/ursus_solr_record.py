@@ -539,6 +539,7 @@ class UrsusSolrRecord(BaseModel):
             self.librettist_tesim,
             self.lyricist_tesim,
             self.musician_tesim,
+            self.named_subject_tesim,
             self.photographer_tesim,
             self.printer_tesim,
             self.printmaker_tesim,
