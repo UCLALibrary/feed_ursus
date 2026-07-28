@@ -144,6 +144,7 @@ ViewingHint = Enum(
         ("http://iiif.io/api/presentation/2#continuousHint", "continuous"),
         ("http://iiif.io/api/presentation/2#nonPagedHint", "non-paged"),
         ("http://iiif.io/api/presentation/2#facingPagesHint", "facing-pages"),
+        ("http://iiif.io/api/presentation/2#multiPartHint", "multi-part"),
     ),
 )
 
