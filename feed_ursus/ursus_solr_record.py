@@ -755,6 +755,8 @@ class UrsusSolrRecord(BaseModel):
         validation_alias=AliasChoices("Features"),
     )
 
+    feed_ursus_version_ssi: str | Empty = None
+
     finding_aid_url_ssm: MARCList[MARCString] | Empty = Field(
         default=None,
         validation_alias=AliasChoices("Finding Aid URL", "Alt ID.url"),
@@ -1395,10 +1397,7 @@ class UrsusSolrRecord(BaseModel):
     @computed_field
     @property
     def sort_title_tsort(self) -> str | None:
-        if self.title_tesim and len(self.title_tesim):
-            return self.title_tesim[0]
-        else:
-            return None
+        return self.title_tesim[0]
 
     @computed_field
     @property
