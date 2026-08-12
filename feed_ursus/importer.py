@@ -384,6 +384,8 @@ class Importer:
         mapped_record = UrsusSolrRecord.model_validate(
             {
                 **record,
+                "feed_ursus_version_ssi": importlib.metadata.version("feed_ursus"),
+                "ingest_id_ssi": self.ingest_id,
                 "member_of_collections_ssim": self.get_titles(record, "Parent ARK"),
                 "human_readable_related_record_title_ssm": related_record_links,
             }
@@ -398,6 +400,9 @@ class Importer:
             mapped_record.thumbnail_url_ss = self.thumbnail_from_access_copy(
                 mapped_record
             ) or self.thumbnail_from_manifest(mapped_record)
+
+        if not mapped_record.sort_title_tsort:
+            raise ValueError("sort_title not populated")
 
         return mapped_record
 
