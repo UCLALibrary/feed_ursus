@@ -351,6 +351,14 @@ class ManuscriptSolrRecord(st.BaseModel):
     def shelfmark_ssi(self) -> str:
         return self.ms_obj.shelfmark
 
+    @computed_field
+    def shelfmark_tsi(self) -> str:
+        return self.ms_obj.shelfmark
+
+    @computed_field
+    def shelfmark_tsort(self) -> str:
+        return self.ms_obj.shelfmark
+
     @generator_field
     @filter_none
     def titles_tesim(self) -> Iterator[str | None]:
