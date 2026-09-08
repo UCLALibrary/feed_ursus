@@ -763,6 +763,7 @@ language_names = {
     "zbl": "Blissymbolics",
     "zen": "Zenaga",
     "zha": "Zhuang",
+    "zkh": "Khorezmian Turkic",
     "znd": "Zande languages",
     "zoqu1261": "Zoque",
     "zul": "Zulu",
