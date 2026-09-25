@@ -6,6 +6,7 @@ import importlib.metadata
 import json
 import logging
 import typing
+from collections import Counter
 from collections.abc import Iterable
 from datetime import datetime, timezone
 from getpass import getuser
@@ -90,16 +91,31 @@ class Importer:
 
         Args:
             filenames: A list of CSV filenames.
+        Raises:
+            ValueError: If any CSV file contains duplicate headers.
         """
+        # Helper that checks if first row of CSV (assumed header row) contains unique headers
+        def _check_headers_are_unique(filename: str) -> None:
+            headers = next(csv.reader(open(filename,'r')))
+            header_counts = Counter(headers)
+            duplicate_headers = {header: count for header, count in header_counts.items() if count > 1}
+            if duplicate_headers:
+                message = f"Duplicate column headers found in {filename}\n"
+                for header, count in duplicate_headers.items():
+                    message += f"  Header '{header}' found {count} times\n"
+                raise ValueError(message)
 
-        csv_data = {
-            row["Item ARK"]: row
-            for filename in self.maybe_progress(
-                filenames,
-                description=f"loading {len(filenames)} files...",
-            )
-            for row in csv.DictReader(open(filename, encoding="utf-8"))
-        }
+        csv_data = {}
+        for filename in self.maybe_progress(
+            filenames,
+            description=f"Loading {len(filenames)} files...",
+        ):
+            _check_headers_are_unique(filename)  # ensure CSV header are unique before proceeding
+            
+            csv_data.update({
+                row["Item ARK"]: row
+                for row in csv.DictReader(open(filename, encoding="utf-8"))
+            })
 
         self.ingest_id = f"{datetime.now(timezone.utc).isoformat()}-{getuser()}"
         self.titles.update({row["Item ARK"]: row["Title"] for row in csv_data.values()})
