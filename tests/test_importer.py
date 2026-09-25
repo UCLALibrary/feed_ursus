@@ -48,7 +48,9 @@ class TestLoadCsv:
         """raises an error if CSV file contains duplicate headers"""
 
         with pytest.raises(ValueError):
-            importer.load_csv(filenames=["tests/fixtures/duplicate_columns.csv"], batch=True)
+            importer.load_csv(
+                filenames=["tests/fixtures/duplicate_columns.csv"], batch=True
+            )
 
 
 class TestMapRecord:
