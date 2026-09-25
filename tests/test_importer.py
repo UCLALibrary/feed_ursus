@@ -44,6 +44,12 @@ class TestLoadCsv:
         with pytest.raises(FileNotFoundError):
             importer.load_csv(filenames=["tests/fixtures/nonexistent.csv"], batch=True)
 
+    def test_duplicate_headers_raises_error(self, importer: Importer) -> None:
+        """raises an error if CSV file contains duplicate headers"""
+
+        with pytest.raises(ValueError):
+            importer.load_csv(filenames=["tests/fixtures/duplicate_columns.csv"], batch=True)
+
 
 class TestMapRecord:
     class TestThumbnailUrl:
