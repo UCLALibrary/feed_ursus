@@ -73,8 +73,8 @@ class SinaiJsonImporter:
             agent_record=self.get_agent(raw.id) if raw.id else None,
         )
 
-    def get_conceptual_work(self, stub: st.WorkStub) -> st.ConceptualWorkMerged:
-        path = self.base_path / "works" / self.get_filename(stub.id)
+    def get_conceptual_work(self, ark: st.Ark) -> st.ConceptualWorkMerged:
+        path = self.base_path / "works" / self.get_filename(ark)
         raw = st.ConceptualWorkUnmerged.model_validate_json(path.read_text())
 
         return raw.convert(
@@ -87,6 +87,7 @@ class SinaiJsonImporter:
     def get_work_brief(self, raw: st.WorkBriefUnmerged) -> st.WorkBriefMerged:
         return raw.convert(
             st.WorkBriefMerged,
+            id=[self.get_conceptual_work(id) for id in raw.id],
             creator=[
                 st.WorkBriefCreator(id=id, agent_record=self.get_agent(id))
                 for id in raw.creator
@@ -97,18 +98,14 @@ class SinaiJsonImporter:
         if not raw.work_id:
             return raw.convert(st.ContentsMerged)
 
-        work_record = self.get_conceptual_work(stub=st.WorkStub(id=raw.work_id))
+        work_record = self.get_conceptual_work(raw.work_id)
 
         return raw.convert(st.ContentsMerged, pref_title=work_record.pref_title)
 
     def get_work_wit(self, raw: st.WorkWitItemUnmerged) -> st.WorkWitItemMerged:
         return raw.convert(
             st.WorkWitItemMerged,
-            work=(
-                self.get_work_brief(raw.work)
-                if isinstance(raw.work, st.WorkBrief)
-                else self.get_conceptual_work(raw.work)
-            ),
+            work=self.get_work_brief(raw.work),
             contents=[self.get_contents_item(raw_item) for raw_item in raw.contents],
         )
 
