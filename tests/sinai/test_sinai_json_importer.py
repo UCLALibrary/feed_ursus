@@ -103,16 +103,14 @@ def test_get_assoc_name_item(importer: SinaiJsonImporter) -> None:
 
 class TestGetWork:
     def test_good_get_work(self, importer: SinaiJsonImporter) -> None:
-        stub = st.WorkStub(id="ark:/21198/s1b015")
-        result = importer.get_conceptual_work(stub)
+        result = importer.get_conceptual_work("ark:/21198/s1b015")
         assert isinstance(result, st.ConceptualWorkMerged)
         assert result.pref_title == "2 John"
 
     def test_loads_all_works(self, importer: SinaiJsonImporter) -> None:
         n_files = 0
         for path in (importer.base_path / "works").glob("*.json"):
-            stub = st.WorkStub(id="ark:/21198/" + path.stem)
-            importer.get_conceptual_work(stub)
+            importer.get_conceptual_work("ark:/21198/" + path.stem)
             n_files += 1
         assert n_files == 129
 
@@ -159,14 +157,27 @@ def test_get_contents_item(
 
 
 class TestGetWorkWit:
-    def test_get_work_wit_with_stub(self, importer: SinaiJsonImporter) -> None:
+    def test_get_work_wit_with_single_id(self, importer: SinaiJsonImporter) -> None:
         raw = st.WorkWitItemUnmerged(
-            work=st.WorkStub(id="ark:/21198/s1b015"),
+            work=st.WorkBriefUnmerged(id=["ark:/21198/s1b015"], desc_title="2 John")
         )
         result = importer.get_work_wit(raw)
         assert isinstance(result, st.WorkWitItemMerged)
-        assert isinstance(result.work, st.ConceptualWorkMerged)
-        assert result.work.pref_title == "2 John"
+        assert [work.pref_title for work in result.work.id] == ["2 John"]
+
+    def test_get_work_wit_with_multiple_ids_and_desc_title(
+        self, importer: SinaiJsonImporter
+    ) -> None:
+        raw = st.WorkWitItemUnmerged(
+            work=st.WorkBriefUnmerged(
+                id=["ark:/21198/s1b015", "ark:/21198/s12g6d"],
+                desc_title="Letters of John",
+            )
+        )
+        result = importer.get_work_wit(raw)
+        assert result.work.desc_title == "Letters of John"
+        assert all(isinstance(work, st.ConceptualWorkMerged) for work in result.work.id)
+        assert [work.pref_title for work in result.work.id] == ["2 John", "3 John"]
 
     def test_get_work_wit_with_workbrief(self, importer: SinaiJsonImporter) -> None:
         raw = st.WorkWitItemUnmerged(
@@ -335,37 +346,42 @@ class TestGetLayer:
                             "work_wit": (
                                 {
                                     "work": {
-                                        "ark": "ark:/21198/s12c7r",
-                                        "pref_title": "Matthew",
-                                        "alt_title": ("Bible. Matthew",),
-                                        "genre": (
+                                        "desc_title": "Matthew",
+                                        "id": (
                                             {
-                                                "id": "biblical-texts",
-                                                "label": "Biblical texts",
-                                            },
-                                            {
-                                                "id": "gospel-books",
-                                                "label": "Gospel books",
-                                            },
-                                        ),
-                                        "rel_con": (
-                                            {
-                                                "label": "Bible. Matthew",
-                                                "uri": st.AnyUrl(
-                                                    st.AnyUrl(
-                                                        "https://viaf.org/viaf/188427863"
-                                                    )
+                                                "ark": "ark:/21198/s12c7r",
+                                                "pref_title": "Matthew",
+                                                "alt_title": ("Bible. Matthew",),
+                                                "genre": (
+                                                    {
+                                                        "id": "biblical-texts",
+                                                        "label": "Biblical texts",
+                                                    },
+                                                    {
+                                                        "id": "gospel-books",
+                                                        "label": "Gospel books",
+                                                    },
                                                 ),
-                                                "source": st.RelatedConceptSource.VIAF,
-                                            },
-                                            {
-                                                "label": "Bible. Matthew",
-                                                "uri": st.AnyUrl(
-                                                    st.AnyUrl(
-                                                        "http://id.loc.gov/authorities/names/n79056834"
-                                                    )
+                                                "rel_con": (
+                                                    {
+                                                        "label": "Bible. Matthew",
+                                                        "uri": st.AnyUrl(
+                                                            st.AnyUrl(
+                                                                "https://viaf.org/viaf/188427863"
+                                                            )
+                                                        ),
+                                                        "source": st.RelatedConceptSource.VIAF,
+                                                    },
+                                                    {
+                                                        "label": "Bible. Matthew",
+                                                        "uri": st.AnyUrl(
+                                                            st.AnyUrl(
+                                                                "http://id.loc.gov/authorities/names/n79056834"
+                                                            )
+                                                        ),
+                                                        "source": st.RelatedConceptSource.LoC,
+                                                    },
                                                 ),
-                                                "source": st.RelatedConceptSource.LoC,
                                             },
                                         ),
                                     },
@@ -373,33 +389,38 @@ class TestGetLayer:
                                 },
                                 {
                                     "work": {
-                                        "ark": "ark:/21198/s1630k",
-                                        "pref_title": "Mark",
-                                        "alt_title": ("Bible. Mark",),
-                                        "genre": (
+                                        "desc_title": "Mark",
+                                        "id": (
                                             {
-                                                "id": "biblical-texts",
-                                                "label": "Biblical texts",
-                                            },
-                                            {
-                                                "id": "gospel-books",
-                                                "label": "Gospel books",
-                                            },
-                                        ),
-                                        "rel_con": (
-                                            {
-                                                "label": "Bible. Mark",
-                                                "uri": st.AnyUrl(
-                                                    "https://viaf.org/viaf/179823714"
+                                                "ark": "ark:/21198/s1630k",
+                                                "pref_title": "Mark",
+                                                "alt_title": ("Bible. Mark",),
+                                                "genre": (
+                                                    {
+                                                        "id": "biblical-texts",
+                                                        "label": "Biblical texts",
+                                                    },
+                                                    {
+                                                        "id": "gospel-books",
+                                                        "label": "Gospel books",
+                                                    },
                                                 ),
-                                                "source": st.RelatedConceptSource.VIAF,
-                                            },
-                                            {
-                                                "label": "Bible. Mark",
-                                                "uri": st.AnyUrl(
-                                                    "http://id.loc.gov/authorities/names/n78095773"
+                                                "rel_con": (
+                                                    {
+                                                        "label": "Bible. Mark",
+                                                        "uri": st.AnyUrl(
+                                                            "https://viaf.org/viaf/179823714"
+                                                        ),
+                                                        "source": st.RelatedConceptSource.VIAF,
+                                                    },
+                                                    {
+                                                        "label": "Bible. Mark",
+                                                        "uri": st.AnyUrl(
+                                                            "http://id.loc.gov/authorities/names/n78095773"
+                                                        ),
+                                                        "source": st.RelatedConceptSource.LoC,
+                                                    },
                                                 ),
-                                                "source": st.RelatedConceptSource.LoC,
                                             },
                                         ),
                                     },
@@ -407,26 +428,31 @@ class TestGetLayer:
                                 },
                                 {
                                     "work": {
-                                        "ark": "ark:/21198/s1k88r",
-                                        "pref_title": "Luke",
-                                        "alt_title": ("Bible. Luke",),
-                                        "genre": (
+                                        "desc_title": "Luke",
+                                        "id": (
                                             {
-                                                "id": "biblical-texts",
-                                                "label": "Biblical texts",
-                                            },
-                                            {
-                                                "id": "gospel-books",
-                                                "label": "Gospel books",
-                                            },
-                                        ),
-                                        "rel_con": (
-                                            {
-                                                "label": "Bible. Luke",
-                                                "uri": st.AnyUrl(
-                                                    "http://viaf.org/viaf/257061095"
+                                                "ark": "ark:/21198/s1k88r",
+                                                "pref_title": "Luke",
+                                                "alt_title": ("Bible. Luke",),
+                                                "genre": (
+                                                    {
+                                                        "id": "biblical-texts",
+                                                        "label": "Biblical texts",
+                                                    },
+                                                    {
+                                                        "id": "gospel-books",
+                                                        "label": "Gospel books",
+                                                    },
                                                 ),
-                                                "source": st.RelatedConceptSource.VIAF,
+                                                "rel_con": (
+                                                    {
+                                                        "label": "Bible. Luke",
+                                                        "uri": st.AnyUrl(
+                                                            "http://viaf.org/viaf/257061095"
+                                                        ),
+                                                        "source": st.RelatedConceptSource.VIAF,
+                                                    },
+                                                ),
                                             },
                                         ),
                                     },
@@ -434,33 +460,38 @@ class TestGetLayer:
                                 },
                                 {
                                     "work": {
-                                        "ark": "ark:/21198/s1388d",
-                                        "pref_title": "John",
-                                        "alt_title": ("Bible. John",),
-                                        "genre": (
+                                        "desc_title": "John",
+                                        "id": (
                                             {
-                                                "id": "biblical-texts",
-                                                "label": "Biblical texts",
-                                            },
-                                            {
-                                                "id": "gospel-books",
-                                                "label": "Gospel books",
-                                            },
-                                        ),
-                                        "rel_con": (
-                                            {
-                                                "label": "Bible. John",
-                                                "uri": st.AnyUrl(
-                                                    "https://viaf.org/viaf/57145910123927021804"
+                                                "ark": "ark:/21198/s1388d",
+                                                "pref_title": "John",
+                                                "alt_title": ("Bible. John",),
+                                                "genre": (
+                                                    {
+                                                        "id": "biblical-texts",
+                                                        "label": "Biblical texts",
+                                                    },
+                                                    {
+                                                        "id": "gospel-books",
+                                                        "label": "Gospel books",
+                                                    },
                                                 ),
-                                                "source": st.RelatedConceptSource.VIAF,
-                                            },
-                                            {
-                                                "label": "Bible. John",
-                                                "uri": st.AnyUrl(
-                                                    "http://id.loc.gov/authorities/names/n79060414"
+                                                "rel_con": (
+                                                    {
+                                                        "label": "Bible. John",
+                                                        "uri": st.AnyUrl(
+                                                            "https://viaf.org/viaf/57145910123927021804"
+                                                        ),
+                                                        "source": st.RelatedConceptSource.VIAF,
+                                                    },
+                                                    {
+                                                        "label": "Bible. John",
+                                                        "uri": st.AnyUrl(
+                                                            "http://id.loc.gov/authorities/names/n79060414"
+                                                        ),
+                                                        "source": st.RelatedConceptSource.LoC,
+                                                    },
                                                 ),
-                                                "source": st.RelatedConceptSource.LoC,
                                             },
                                         ),
                                     },

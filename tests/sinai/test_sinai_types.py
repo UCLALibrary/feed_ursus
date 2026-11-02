@@ -1053,17 +1053,6 @@ class TestManuscriptObject:
             )
 
 
-class TestWorkStub:
-    def test_good_WorkStub(self) -> None:
-        """example from https://github.com/UCLALibrary/sinaiportal_data/blob/d58a6555cf08448fa0b0b95e0ff91717992d67f2/text_units/s1cd6h.json"""
-        st.WorkStub.model_validate_json(
-            """
-            {
-                "id": "ark:/21198/s12c7r"
-            }
-        """
-        )
-
 
 class TestWorkBrief:
     def test_good_WorkBrief(self) -> None:
@@ -1107,18 +1096,79 @@ class TestContents:
 
 
 class TestWorkWitItem:
-    def test_good_WorkWitItem_with_WorkStub(self) -> None:
-        """example from https://github.com/UCLALibrary/sinaiportal_data/blob/d58a6555cf08448fa0b0b95e0ff91717992d67f2/text_units/s1cd6h.json"""
+    def test_bad_WorkWitItem_without_desc_title(self) -> None:
+        with pytest.raises(ValidationError, match="desc_title"):
+            st.WorkWitItem.model_validate_json(
+                """
+                {
+                    "work": {
+                        "id": ["ark:/21198/s12c7r"]
+                    }
+                }
+            """
+            )
+
+    def test_bad_WorkWitItem_with_string_id(self) -> None:
+        with pytest.raises(ValidationError, match="id"):
+            st.WorkWitItem.model_validate_json(
+                """
+                {
+                    "work": {
+                        "id": "ark:/21198/s12c7r",
+                        "desc_title": "Matthew"
+                    }
+                }
+            """
+            )
+
+    def test_good_WorkWitItem_with_multiple_ids_and_desc_title(self) -> None:
         result = st.WorkWitItem.model_validate_json(
             """
             {
                 "work": {
-                    "id": "ark:/21198/s12c7r"
+                    "id": ["ark:/21198/s12c7r", "ark:/21198/s1630k"],
+                    "desc_title": "Gospels"
                 }
             }
         """
         )
-        assert isinstance(result.work, st.WorkStub)
+        assert result.work.id == ("ark:/21198/s12c7r", "ark:/21198/s1630k")
+        assert result.work.desc_title == "Gospels"
+
+    @pytest.mark.parametrize(
+        "supplied",
+        (
+            '"creator": ["ark:/21198/s1b59x"]',
+            '"genre": [{"id": "biblical-texts", "label": "Biblical texts"}]',
+        ),
+    )
+    def test_bad_supplied_values_with_id(self, supplied: str) -> None:
+        with pytest.raises(ValidationError, match="come from the work records"):
+            st.WorkWitItem.model_validate_json(
+                f"""
+                {{
+                    "work": {{
+                        "id": ["ark:/21198/s12c7r"],
+                        "desc_title": "Gospels",
+                        {supplied}
+                    }}
+                }}
+            """
+            )
+
+    def test_good_supplied_values_without_id(self) -> None:
+        result = st.WorkWitItem.model_validate_json(
+            """
+            {
+                "work": {
+                    "desc_title": "Gospels",
+                    "creator": ["ark:/21198/s1b59x"],
+                    "genre": [{"id": "biblical-texts", "label": "Biblical texts"}]
+                }
+            }
+        """
+        )
+        assert result.work.creator == ("ark:/21198/s1b59x",)
 
     def test_good_WorkWitItem_with_WorkBrief(self) -> None:
         """example from https://github.com/UCLALibrary/sinaiportal_data/blob/d58a6555cf08448fa0b0b95e0ff91717992d67f2/text_units/s1cd6h.json"""
@@ -1165,7 +1215,8 @@ class TestTextUnit:
                 "work_wit": [
                     {
                         "work": {
-                            "id": "ark:/21198/s12c7r"
+                            "id": ["ark:/21198/s12c7r"],
+                            "desc_title": "Gospel of Matthew, chs. 15-27"
                         }
                     }
                 ],

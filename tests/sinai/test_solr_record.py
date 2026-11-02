@@ -1,9 +1,11 @@
 # mypy: disable-error-code=truthy-function
 from pathlib import Path
 from typing import Iterator
+from unittest.mock import patch
 
 import pytest
 
+import feed_sinai.sinai_types as st
 from feed_sinai.sinai_json_importer import SinaiJsonImporter
 from feed_sinai.solr_record import ManuscriptSolrRecord, filter_none
 
@@ -222,3 +224,35 @@ def test_origin_date_values_tesim(result: ManuscriptSolrRecord) -> None:
         "AM 6,104 = 1292 CE",
         "7th c. CE",
     }
+
+
+def test_works_facet_includes_every_id_and_no_desc_titles() -> None:
+    work_wit = IMPORTER.get_work_wit(
+        st.WorkWitItemUnmerged(
+            work=st.WorkBriefUnmerged(
+                id=["ark:/21198/s1b015", "ark:/21198/s12g6d"],
+                desc_title="Letters of John",
+            )
+        )
+    )
+    with patch.object(ManuscriptSolrRecord, "get_work_wits", return_value=[work_wit]):
+        assert SOLR_RECORD.ot_works_ssim == ["2 John", "3 John"]
+
+
+def test_works_ssim_combines_overtext_and_guest_layers() -> None:
+    def work_wit(ark: str, desc_title: str) -> st.WorkWitItemMerged:
+        return IMPORTER.get_work_wit(
+            st.WorkWitItemUnmerged(
+                work=st.WorkBriefUnmerged(id=[ark], desc_title=desc_title)
+            )
+        )
+
+    def by_layer(_: ManuscriptSolrRecord, layer_type: str | None = None) -> list:
+        ot = [work_wit("ark:/21198/s1b015", "Overtext")]
+        guest = [work_wit("ark:/21198/s12g6d", "Guest")]
+        return {"ot_layer": ot, "guest_layer": guest}.get(layer_type, ot + guest)
+
+    with patch.object(ManuscriptSolrRecord, "get_work_wits", by_layer):
+        assert SOLR_RECORD.works_ssim == ["2 John", "3 John"]
+        assert SOLR_RECORD.ot_works_ssim == ["2 John"]
+        assert SOLR_RECORD.para_works_ssim == ["3 John"]
