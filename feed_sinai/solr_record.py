@@ -207,6 +207,10 @@ class ManuscriptSolrRecord(st.BaseModel):
         )
 
     @computed_field
+    def works_ssim(self) -> list[str]:
+        return sorted(set(self.get_work_titles(pref_only=True)))
+
+    @computed_field
     def ot_works_ssim(self) -> list[str]:
         return sorted(set(self.get_work_titles(layer_type="ot_layer", pref_only=True)))
 
@@ -722,13 +726,13 @@ class ManuscriptSolrRecord(st.BaseModel):
         self, layer_type: LAYER_FIELDS | None = None, pref_only: bool = True
     ) -> Iterator[str | None]:
         for work_wit in self.get_work_wits(layer_type=layer_type):
-            if isinstance(work_wit.work, st.ConceptualWork):
-                yield work_wit.work.pref_title
+            for work_record in work_wit.work.id:
+                yield work_record.pref_title
                 if not pref_only:
-                    yield work_wit.work.orig_lang_title
-                    yield from work_wit.work.alt_title
+                    yield work_record.orig_lang_title
+                    yield from work_record.alt_title
 
-            elif isinstance(work_wit.work, st.WorkBrief) and not pref_only:
+            if not pref_only:
                 yield work_wit.work.desc_title
 
             for contents_item in work_wit.contents:
