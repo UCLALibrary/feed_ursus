@@ -1053,7 +1053,6 @@ class TestManuscriptObject:
             )
 
 
-
 class TestWorkBrief:
     def test_good_WorkBrief(self) -> None:
         """example from https://github.com/UCLALibrary/sinaiportal_data/blob/626274aac4d5f9004db44615827ebc167da00036/export_test/text_units/s1mh4z.json"""
