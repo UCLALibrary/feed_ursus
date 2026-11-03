@@ -12,7 +12,8 @@
     "work_wit": [
         {
             "work": {
-                "id": "ark:/21198/s1501m"
+                "id": ["ark:/21198/s1501m"],
+                "desc_title": "Asceticon"
             },
             "locus": "ff. 131-132, 138, 140-142",
             "note": [

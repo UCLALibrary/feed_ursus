@@ -371,21 +371,29 @@ class WorkBriefCreator(BaseModel):
     agent_record: Agent
 
 
-class WorkStub(BaseModel):
-    id: Ark
-
-
 class WorkBrief(BaseModel):
-    desc_title: Optional[NonEmptyStr] = None
+    id: tuple[Ark | ConceptualWorkMerged, ...] = tuple()
+    desc_title: NonEmptyStr
     creator: tuple[Ark, ...] | tuple[WorkBriefCreator, ...] = tuple()
     genre: tuple[ControlledTerm, ...] = tuple()
 
+    @model_validator(mode="after")
+    def no_supplied_values_with_id(self) -> Self:
+        if self.id and (self.creator or self.genre):
+            raise ValueError(
+                "`WorkBrief.creator` and `.genre` come from the work records when"
+                " `.id` is present"
+            )
+        return self
+
 
 class WorkBriefUnmerged(WorkBrief):
+    id: tuple[Ark, ...] = tuple()
     creator: tuple[Ark, ...] = tuple()
 
 
 class WorkBriefMerged(WorkBrief):
+    id: tuple[ConceptualWorkMerged, ...] = tuple()
     creator: tuple[WorkBriefCreator, ...] = tuple()
 
 
@@ -419,7 +427,7 @@ class ContentsMerged(Contents):
 
 
 class WorkWitItem(BaseModel):
-    work: WorkBrief | WorkStub | ConceptualWorkMerged
+    work: WorkBrief
     alt_title: Optional[str] = Field(
         None,
         description="An alternative title providing witness-specific information about"
@@ -434,12 +442,12 @@ class WorkWitItem(BaseModel):
 
 
 class WorkWitItemUnmerged(WorkWitItem):
-    work: WorkBriefUnmerged | WorkStub
+    work: WorkBriefUnmerged
     contents: tuple[ContentsUnmerged, ...] = tuple()
 
 
 class WorkWitItemMerged(WorkWitItem):
-    work: WorkBriefMerged | ConceptualWorkMerged
+    work: WorkBriefMerged
     contents: tuple[ContentsMerged, ...] = tuple()
 
 

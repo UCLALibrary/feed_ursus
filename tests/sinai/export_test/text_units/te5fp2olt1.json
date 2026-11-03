@@ -82,7 +82,8 @@
             },
         {
             "work": {
-                "id": "ark:/21198/s1n01z"
+                "id": ["ark:/21198/s1n01z"],
+                "desc_title": "Homilies on John"
             },
             "as_written": "ܟܬܒܐ ܕܝܘܚܢܢ",
             "locus": "ff. 100r-144v",

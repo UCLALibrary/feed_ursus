@@ -13,7 +13,8 @@
     "work_wit": [
         {
             "work": {
-                "id": "ark:/21198/s1gc7g"
+                "id": ["ark:/21198/s1gc7g"],
+                "desc_title": "Commentary on Genesis"
             },
             "alt_title": "Synaxarion for the whole year according to the rite of the Greeks",
             "as_written": "ܣܘܢܟܣܪܝܢ ܕܫܢܬܐ ܟܠܗ̇ ܐܝܟ ܛܟܣܐ ܕܝܘ̈ܢܝܐ",

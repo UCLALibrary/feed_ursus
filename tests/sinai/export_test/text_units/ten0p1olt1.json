@@ -12,25 +12,29 @@
     "work_wit": [
         {
             "work": {
-                "id": "ark:/21198/s12c7r"
+                "id": ["ark:/21198/s12c7r"],
+                "desc_title": "Matthew"
             },
             "locus": "ff. 128r-130"
             },
         {
             "work": {
-                "id": "ark:/21198/s1630k"
+                "id": ["ark:/21198/s1630k"],
+                "desc_title": "Mark"
             },
             "locus": "ff. 130v-135r"
         },
         {
             "work": {
-                "id": "ark:/21198/s1k88r"
+                "id": ["ark:/21198/s1k88r"],
+                "desc_title": "Luke"
             },
             "locus": "ff. 135r-140r"
         },
         {
             "work": {
-                "id": "ark:/21198/s1388d"
+                "id": ["ark:/21198/s1388d"],
+                "desc_title": "John"
             },
             "locus": "ff. 140v-143v"
         }
